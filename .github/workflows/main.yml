@@ -19,9 +19,10 @@ jobs:
         SERVER_IP: ${{ secrets.SERVER_IP }}
         SERVER_USER: ${{ secrets.SERVER_USER }}
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+
+        - name: Fix Private Key Formatting
       run: |
-        echo "🚀 Saving the SSH private key..."
-        echo "${PRIVATE_KEY}" > private_key.pem
+        echo "${PRIVATE_KEY}" | awk '{gsub(/\\n/,"\n")}1' > private_key.pem
         chmod 600 private_key.pem
 
         echo "🔑 Adding the server to known_hosts..."
