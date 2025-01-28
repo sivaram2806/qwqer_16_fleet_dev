@@ -1,9 +1,9 @@
 name: CI/CD for Odoo Custom Addons
 
 on:
-  push:
-    branches:
-      - development  # Trigger on changes to the main branch
+  workflow_dispatch:
+      branches:
+        - development  # Trigger on changes to the main branch
 
 jobs:
   deploy:
