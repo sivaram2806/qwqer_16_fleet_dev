@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_einvoice_config,access_einvoice_config,model_einvoice_config,base.group_user,1,1,1,1
+access_einvoice_scheduler_failed_log,access_einvoice_scheduler_failed_log,model_einvoice_scheduler_failed_log,base.group_user,1,1,1,1
+access_einvoice_details,access_einvoice_details,model_einvoice_details,base.group_user,1,1,1,1
+access_outgoing_api_log,access_outgoing_api_log,model_outgoing_api_log,base.group_user,1,1,1,1
+
+account_einvoice.access_einvoice_bulk_invoice_wizard,access_einvoice_bulk_invoice_wizard,account_einvoice.model_einvoice_bulk_invoice_wizard,base.group_user,1,1,1,1

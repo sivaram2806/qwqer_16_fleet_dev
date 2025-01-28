@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    <data noupdate="1">-->
+    <record id="crm_send_quotation_mail_template" model="mail.template">
+        <field name="name">CRM: Send Email Quotation</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="subject">Qwqer Proposal</field>
+        <field name="email_from"> </field>
+        <field name="email_to">{{ object.email_from }}</field>
+        <field name="description">Used by salespeople when they send quotations to leads</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 18px;">
+                    Hi
+                    <t t-out="object.user_id and object.user_id.name or ''"/>
+                    <br/>
+                    <br/>
+                    Greeting from QWQER !!
+                    <br/>
+                    <br/>
+                    We are excited to be part your growth.
+                    <br/>
+                    <br/>
+                    QWQER Express is a reputable platform specializing in hyper local delivery services tailored to meet
+                    the demands of both clients and customers.
+                    Our service footprint spans across 26 cities in South India, offering a comprehensive range of
+                    flexible delivery solutions designed to cater to businesses of all scales.
+                </p>
+                <br/>
+                <br/>
+                <t t-if="object.km_pricing_plan_ids">
+                    <p>Please find below the rate charts for your consideration</p>
+                    <br/>
+                    <br/>
+                    <h3 style="font-weight: bolder;text-align:center;font-weight:bold;font-size:16px;">PRICING TABLE
+                    </h3>
+                    <br/>
+                    <!--                To fetch pricing plans with respect to the pricing model -->
+                    <t t-if="object.pricing_model == 'KM'">
+                        <div class="pricing-table" style="width: 83%; margin-left: 75px;">
+                            <div class="km_pricing-header"
+                                 style="display: flex; border: 2px solid black; font-weight: bold; font-size: 13x;">
+                                <div class="header-item"
+                                     style="flex: 1; text-align: left;border-right: 1px solid black;">
+                                    &#160;FROM WEIGHT
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    TO WEIGHT
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    MINIMUM DISTANCE
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    MINIMUM COST
+                                </div>
+                                <div class="header-item" style="flex: 1; text-align: right;">PER KM CHARGE&#160;</div>
+                            </div>
+                            <t t-foreach="object.km_pricing_plan_ids" t-as="km_plan">
+                                <div class="pricing-row"
+                                     style="display: flex; border-bottom: 1px solid black;font-size: 12x;">
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: left;border-right: 1px solid black;border-left: 2px solid black;">
+                                        &#160;<span t-esc="km_plan.minimum_weight"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="km_plan.maximum_weight"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="km_plan.min_distance"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="km_plan.min_cost"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: right;border-right: 2px solid black;">
+                                        <span t-esc="km_plan.per_km_charge"/>&#160;
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-if="object.pricing_model=='flat'">
+                        <div class="flat-pricing-table" style="width: 83%; margin-left: 75px;">
+                            <div class="flat-pricing-header"
+                                 style="display: flex; border: 2px solid black; font-weight: bold; font-size: 13px;">
+                                <div class="header-item"
+                                     style="flex: 1; text-align: left;border-right: 1px solid black;">
+                                    &#160;FROM WEIGHT
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    TO WEIGHT
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: right;border-right: 1px solid black;">
+                                    PRICE&#160;
+                                </div>
+                            </div>
+                            <t t-foreach="object.flat_pricing_plan_ids" t-as="flat_plan">
+                                <div class="flat-pricing-row"
+                                     style="display: flex; border-bottom: 1px solid black;font-size: 12x;">
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: left;border-right: 1px solid black;border-left: 2px solid black;">
+                                        &#160;<span t-esc="flat_plan.minimum_weight"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="flat_plan.maximum_weight"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: right;border-right: 1px solid black;border-right: 2px solid black;">
+                                        <span t-esc="flat_plan.price"/>&#160;
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-if="object.pricing_model=='slab'">
+                        <div class="slab-pricing-table" style="width: 83%; margin-left: 75px;">
+                            <div class="slab-pricing-header"
+                                 style="display: flex; border: 2px solid black; font-weight: bold; font-size: 13px;">
+                                <div class="header-item"
+                                     style="flex: 1; text-align: left;border-right: 1px solid black;border-left: 1px solid black;">
+                                    &#160;FROM DISTANCE
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    TO DISTANCE
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    FROM WEIGHT
+                                </div>
+                                <div class="header-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    TO WEIGHT
+                                </div>
+                                <div class="header-item" style="flex: 1; text-align: right;">PRICE&#160;</div>
+                            </div>
+                            <t t-foreach="object.slab_pricing_plan_ids" t-as="slab_plan">
+                                <div class="slab_pricing-row"
+                                     style="display: flex; border-bottom: 1px solid black;border-left: 1px solid black;font-size: 12x;">
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: left;border-right: 1px solid black;">
+                                        &#160;<span t-esc="slab_plan.from_distance"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="slab_plan.to_distance"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="slab_plan.minimum_weight"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                        <span t-esc="slab_plan.maximum_weight"/>
+                                    </div>
+                                    <div class="row-item"
+                                         style="flex: 1; text-align: right;border-right: 2px solid black;">
+                                        <span t-esc="slab_plan.price"/>&#160;
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+                <br/>
+                <br/>
+                <t t-if="object.customer_stop_count_ids">
+                    <h4 style="font-weight: bolder;text-align:center;font-weight:bold;font-size:16px;">ADDITIONAL
+                        CHARGES
+                    </h4>
+                    <br/>
+                    <div class="charge-pricing-table" style="width: 83%; margin-left: 75px;">
+                        <div class="charge-header"
+                             style="display: flex; border: 2px solid black; font-weight: bold; font-size: 13px;">
+                            <div class="header-item"
+                                 style="flex: 1; text-align: left;border-right: 1px solid black;">
+                                &#160;CHARGE TYPE
+                            </div>
+                            <div class="header-item"
+                                 style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                AMOUNT TYPE
+                            </div>
+                            <div class="header-item"
+                                 style="flex: 1; text-align: right;border-right: 1px solid black;">
+                                AMOUNT / PERCENTAGE&#160;
+                            </div>
+                        </div>
+                        <t t-foreach="object.customer_stop_count_ids" t-as="charge">
+                            <div class="charge-pricing-row"
+                                 style="display: flex; border-bottom: 1px solid black;font-size: 12x;">
+                                <div class="row-item"
+                                     style="flex: 1; text-align: left;border-right: 1px solid black;border-left: 2px solid black;">
+                                    &#160;<span t-esc="charge.charge_type_id.name"/>
+                                </div>
+                                <div class="row-item"
+                                     style="flex: 1; text-align: center;border-right: 1px solid black;">
+                                    <span t-esc="charge.amount_type"/>
+                                </div>
+                                <div class="row-item"
+                                     style="flex: 1; text-align: right;border-right: 1px solid black;">
+                                    <span t-esc="charge.amount"/>&#160;
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                <br/>
+                <br/>
+                <p style="margin: 0px; padding: 0px; font-size: 18px;">
+                    Thank you for considering QWQER as a partner to your delivery needs.
+                    <br/>
+                    <br/>
+                    We look forward to the possibility of collaborating with you and contributing to your continued
+                    success.
+                </p>
+                <br/>
+                <br/>
+                Regards ,
+                <br/>
+                QWQER
+            </div>
+        </field>
+        <field name="report_name">{{ (object.name or '').replace('/','_') }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+    <!--    </data>-->
+</odoo>

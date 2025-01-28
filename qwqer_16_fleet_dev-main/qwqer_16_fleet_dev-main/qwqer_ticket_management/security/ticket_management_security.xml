@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.module.category" id="module_category_helpdesk">
+        <field name="name">Enquiry</field>
+        <field name="description">Enquiry Access Groups</field>
+        <field name="sequence">20</field>
+    </record>
+<!--    Helpdesk user access-->
+    <record id="helpdesk_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="qwqer_ticket_management.module_category_helpdesk"/>
+    </record>
+<!--    Helpdesk leader access-->
+    <record id="helpdesk_team_leader" model="res.groups">
+        <field name="name">Team Leader</field>
+        <field name="category_id" ref="qwqer_ticket_management.module_category_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('qwqer_ticket_management.helpdesk_user'))]"/>
+    </record>
+<!--    Helpdesk manager access-->
+    <record id="helpdesk_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="qwqer_ticket_management.module_category_helpdesk"/>
+        <field name="implied_ids" eval="[(4, ref('qwqer_ticket_management.helpdesk_team_leader'))]"/>
+    </record>
+    <record id="group_show_category" model="res.groups">
+        <field name="name">group_show_category</field>
+    </record>
+    <record id="group_show_subcategory" model="res.groups">
+        <field name="name">group_show_subcategory</field>
+    </record>
+<!--Record Rule for team leader-->
+    <record id="help_desk_dashboard_team_leader"
+            model="ir.rule">
+        <field name="name">Record Rule for team leader</field>
+        <field ref="model_help_ticket" name="model_id"/>
+        <field name="groups"
+               eval="[(4, ref('qwqer_ticket_management.helpdesk_team_leader'))]"/>
+        <field name="domain_force">['&amp;', ('team_head.id', '=', user.id), ('stage_id.group_ids.users', 'in', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+<!--Record Rule for manage-->
+    <record id="help_desk_dashboard_manager"
+            model="ir.rule">
+        <field name="name">Record Rule for manager</field>
+        <field ref="model_help_ticket" name="model_id"/>
+        <field name="groups"
+               eval="[(4, ref('qwqer_ticket_management.helpdesk_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+<!--Record Rule for user-->
+    <record id="help_desk_dashboard_user"
+            model="ir.rule">
+        <field name="name">Record Rule for user</field>
+        <field ref="model_help_ticket" name="model_id"/>
+        <field name="groups"
+               eval="[(4, ref('qwqer_ticket_management.helpdesk_user'))]"/>
+        <field name="domain_force">['|', '|', ('assigned_user', '=', user.id), ('stage_id.group_ids.users', 'in', user.id), ('create_uid','=',user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+
+        <record id="help_ticket_company_rule" model="ir.rule">
+        <field name="name">Ticketing Multi-Company</field>
+        <field name="model_id" ref="model_help_ticket"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

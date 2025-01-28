@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+         <!--  travel.mode model form view  -->
+        <record id="travel_mode_tree_view" model="ir.ui.view">
+            <field name="name">travel.mode.tree</field>
+            <field name="model">travel.mode</field>
+            <field name="arch" type="xml">
+                <tree string="Travel Modes" editable="bottom">
+                    <field name="travel_mode" string="Travel Mode" required="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="travel_mode_action" model="ir.actions.act_window">
+            <field name="name">Travel modes</field>
+            <field name="res_model">travel.mode</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="travel_mode_tree_view"/>
+        </record>
+
+        <menuitem id="menu_hr_expense_travel_modes" name="Travel Modes"
+                  parent="hr_expense.menu_hr_expense_configuration" sequence="0" action="travel_mode_action"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

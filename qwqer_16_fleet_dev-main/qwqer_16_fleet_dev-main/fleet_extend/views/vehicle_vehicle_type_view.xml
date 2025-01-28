@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        Vehicle Type form view-->
+        <record id="vehicle_vehicle_type_form_view" model="ir.ui.view">
+            <field name="name">vehicle.vehicle.type.form</field>
+            <field name="model">vehicle.vehicle.type</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="20 FT Container/Flatbed Trailer/19 FT LCV Open"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <label for="height" string="Dimension(if any)"/>
+								<div class="oe_inline">
+									<span style="width:6%; text-align:right;margin-right:2%;">L</span>
+									<field name="length" placeholder="Length" style="width:10%;" />
+									<span style="width:12%; text-align:right;margin-right:2%;">X</span>
+									<span style="width:6%; text-align:right;margin-right:2%;">W</span>
+									<field name="height" placeholder="Height" style="width:10%;"/>
+									<span style="width:12%; text-align:right;margin-right:2%;">X</span>
+									<span style="width:6%; text-align:right;margin-right:2%;">H</span>
+									<field name="width" placeholder="Width" style="width:10%;"/>
+								</div>
+                            </group>
+                            <group>
+                                <label for="max_tonnage" string="Max Tonnage"/>
+                                <div class="oe_inline">
+                                 <field name="max_tonnage" placeholder="1" style="width:20%;"/><span style="width:12%; margin-right:10%;">Ton</span>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!--        Vehicle Type tree view-->
+        <record id="vehicle_vehicle_type_tree_view" model="ir.ui.view">
+            <field name="name">vehicle.vehicle.type.tree</field>
+            <field name="model">vehicle.vehicle.type</field>
+            <field name="arch" type="xml">
+                <tree string="Vehicle Type">
+                    <field name="name"/>
+                    <field name="length" placeholder="Length"  string="Length(FT)" />
+                    <field name="height" placeholder="Height" string="Height(FT)"/>
+                    <field name="width" placeholder="Width" string="Width(FT)"/>
+                    <field name="max_tonnage"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        Vehicle Type menu action-->
+
+        <record id="vehicle_vehicle_type_act_window" model="ir.actions.act_window">
+            <field name="name">Vehicle Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vehicle.vehicle.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+<!--        Vehicle Type configuration menu-->
+        <menuitem id="vehicle_vehicle_type_menu" name="Vehicle Type"
+                  parent="fleet_config_vehicle_conf_menu" action="vehicle_vehicle_type_act_window"
+                  sequence="7"/>
+
+
+    </data>
+</odoo>

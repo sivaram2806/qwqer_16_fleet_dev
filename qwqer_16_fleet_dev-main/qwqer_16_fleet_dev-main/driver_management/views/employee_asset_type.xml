@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="employee_asset_type_tree" model="ir.ui.view">
+            <field name="name">employee.asset.type.tree</field>
+            <field name="model">employee.asset.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_asset_type_action" model="ir.actions.act_window">
+            <field name="name">Asset Type</field>
+            <field name="res_model">employee.asset.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_employee_asset_type" name="Asset Type" sequence="4" action="employee_asset_type_action"
+                  parent="hr.menu_config_employee"/>
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+   <menuitem id="menu_cash_free" name="Cash Free Settlement" parent="account_base.menu_reconciliation" sequence="5"/>
+
+</odoo>

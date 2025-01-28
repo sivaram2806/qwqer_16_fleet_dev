@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<!-- server action to update user partner -->
+	<record id="action_update_related_user_partner" model="ir.actions.server">
+		<field name="name">Update Related Partner</field>
+		<field name="model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="state">code</field>
+		<field name="code">action = records.create_employee_partner()</field>
+	</record>
+
+	<!-- server action to update user partner driver -->
+	<record id="action_update_related_user_partner_driver_id" model="ir.actions.server">
+		<field name="name">Update Related Partner Driver ID</field>
+		<field name="model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="state">code</field>
+		<field name="code">action = records.action_relate_partner_driver_uid()</field>
+	</record>
+
+	<!-- server action to update user partner driver account -->
+	<record id="action_set_account_for_related_partner_driver" model="ir.actions.server">
+		<field name="name">Update Related Partner Account</field>
+		<field name="model_id" ref="hr.model_hr_employee"/>
+		<field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+		<field name="binding_model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="state">code</field>
+		<field name="code">action = records.action_set_account_for_related_partner()</field>
+	</record>
+
+</odoo>

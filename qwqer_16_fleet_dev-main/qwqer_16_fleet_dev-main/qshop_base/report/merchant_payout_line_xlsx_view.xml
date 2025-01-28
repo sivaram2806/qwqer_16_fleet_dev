@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        
+    
+    <record id="qshop_merchant_payout_line_form_view_xlsx_report" model="ir.actions.report">
+        <field name="name">Qwqer Shop Merchant Payout Details</field>
+        <field name="model">qshop.merchant.payout.lines</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">qshop_merchant_payout_lines_xlsx</field>
+        <field name="report_file">Shop Merchant Payout Lines</field>
+    </record>
+    
+</odoo>

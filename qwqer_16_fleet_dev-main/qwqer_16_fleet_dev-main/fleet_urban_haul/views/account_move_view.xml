@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_form_view_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.view.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name='vehicle_customer_consolidate_id'
+                       attrs="{'invisible': [('vehicle_customer_consolidate_id', '=',False)]}"
+                       context="{'default_partner_type':'customer'}"/>
+                <field name='utr_ref'
+					   attrs="{'invisible': ['|',('vehicle_customer_consolidate_id', '=',False),('move_type', 'not in',('in_invoice','in_refund'))]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="invoice_excetion_log_tree" model="ir.ui.view">
+		<field name="name">invoice.exception.log.tree</field>
+		<field name="model">invoice.exception.log</field>
+		<field name="arch" type="xml">
+			<tree string="Invoice Exception Log">
+				<field name="invoice_id"/>
+                <field name="order_id"/>
+                <field name="access_date"/> 
+                <field name="response" />
+                <field name="is_reexecuted_completed" readonly="1" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_invoice_exception_log" model="ir.actions.act_window">
+		<field name="name">Invoice Exception Log</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">invoice.exception.log</field>
+		<field name="view_mode">tree</field>
+	</record>
+	
+       <menuitem id="menu_invoice_exception_log"
+            action="action_invoice_exception_log"
+            parent="base.menu_custom"
+            sequence="200"   
+             /> 
+</odoo>

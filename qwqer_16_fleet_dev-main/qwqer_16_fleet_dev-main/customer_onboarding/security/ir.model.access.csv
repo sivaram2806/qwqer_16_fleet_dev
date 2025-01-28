@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customer_onboard,customer.onboard,model_customer_onboard,,1,1,1,1
+access_user_comments,user.comments,model_user_comments,,1,1,1,1
+access_onboard_user_action_history,onboard.user.action.history,model_onboard_user_action_history,,1,1,1,1
+access_potential_orders,potential.orders,model_potential_orders,,1,1,1,1
+access_message_wizard,message.wizard,model_message_wizard,,1,1,1,1
+access_invoice_frequency,invoice.frequency,model_invoice_frequency,,1,1,1,1
+access_settlement_time,settlement.time,model_settlement_time,,1,1,1,1
+access_source_type,source.type,model_source_type,,1,1,1,1
+
+

@@ -1,0 +1,217 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+    
+    	 <!--Mail template for generating mails if Send for approval button action is called-->
+        <record id="batch_trip_ftl_send_for_approval_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Send for Approval</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Trip No. {{object.name}} Send for Approval</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         <t t-out="user.partner_id.name"/> has submitted trip no. <t t-out="object.name"/> and awaiting your approval.<br/>
+
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=batch.trip.ftl&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                         Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+         <!--Mail template for generating mails if Send to ops approve button action is called-->
+        <record id="batch_trip_ftl_ops_approved_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Ops Approved</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Trip No. {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Trip No. <t t-out="object.name"/> has been approved by operations manager <t t-out="user.partner_id.name"/> and sent to finance manager.<br/>
+
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=batch.trip.ftl&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                         Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Send to finanace approve button action is called-->
+        <record id="batch_trip_ftl_finance_approved_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Finance Approved</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Trip No. {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Trip No. <t t-out="object.name"/> has been approved by finance manager <t t-out="user.partner_id.name"/>.<br/>
+
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=batch.trip.ftl&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                         Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if complete button action is called-->
+        <record id="batch_trip_ftl_completed_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Completed</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Trip No. {{object.name}} Completed</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Trip No. <t t-out="object.name"/> has been completed by <t t-out="user.partner_id.name"/>.<br/>
+
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=batch.trip.ftl&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                         Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+         <!--Mail template for generating mails if Return button action is called-->
+        <record id="batch_trip_ftl_returned_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Returned</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Trip No. {{object.name}} Returned</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Trip No. <t t-out="object.name"/> has been returned to you by
+                         <t t-if="object.state=='pending_approval'"> operations manager <t t-out="user.partner_id.name"/>.</t>
+                         <t t-else=""> finance manager <t t-out="user.partner_id.name"/>.</t>
+                         <br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+
+                    	 Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+
+        <!--Mail template for generating mails if Reject button action is called-->
+        <record id="batch_trip_ftl_rejected_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Rejected</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Trip No. {{object.name}} Rejected</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Trip No. <t t-out="object.name"/> has been rejected by
+                         <t t-if="object.state=='pending_approval'"> operations manager <t t-out="user.partner_id.name"/>.</t>
+                         <t t-else=""> finance manager <t t-out="user.partner_id.name"/>.</t>
+                         <br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+
+                    	 Regards<br/>
+						 QWQER
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Send to customer button action is called-->
+		<record id="batch_trip_ftl_send_to_customer_email_template" model="mail.template">
+            <field name="name">Batch Trip FTL: Send to Customer</field>
+            <field name="model_id" ref="fleet_ftl.model_batch_trip_ftl"/>
+            <field name="subject">{{object.name}} Trip Summary - {{object.trip_date.strftime('%d-%m-%Y') or 'n/a' }}</field>
+            <field name="email_to">{{object.customer_id.email}},{{object.customer_id.order_sales_person.work_email}},{{user.partner_id.email}}</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Hi<br/><br/>
+
+                            Good Day!<br/><br/>
+
+                            Please find attached the vehicle trip summary against request number <t t-out="object.name"/> as on <t t-out="object.trip_date.strftime('%d-%m-%Y')"/>.<br/><br/>
+
+                            Regards<br/>
+                            Qwqer
+                        </p>
+
+                    </div>
+            </field>
+            <field name="report_name">Batch Trip FTL</field>
+        </record>
+        
+        <!--Mail template for generating mails if consolidated customer trip is created and send to customer is called-->
+        <record id="consolidated_customer_trip_ftl_send_to_customer_email_template" model="mail.template">
+            <field name="name">Trip Summary FTL: Send to Customer</field>
+            <field name="model_id" ref="fleet_ftl.model_trip_summary_ftl"/>
+            <field name="email_to">{{object.customer_id.email}},{{object.customer_id.order_sales_person.work_email}},{{user.partner_id.email}}</field>
+            <field name="subject">{{object.name}} Trip Summary - {{object.from_date.strftime('%d-%m-%Y') or 'n/a'}} to {{object.to_date.strftime('%d-%m-%Y') or 'n/a'}}</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Hi<br/><br/>
+
+                            Good Day!<br/><br/>
+
+                            Please find attached the vehicle trip summary against request number <t t-out="object.name"/> from <t t-out="object.from_date.strftime('%d-%m-%Y')"/> to <t t-out="object.to_date.strftime('%d-%m-%Y')"/>.<br/><br/>
+
+                            Regards<br/>
+                            Qwqer
+                        </p>
+
+                    </div>
+            </field>
+            <field name="report_name">FTL Consolidated Customer Trip</field>
+        </record>
+        
+    </data>
+</odoo>

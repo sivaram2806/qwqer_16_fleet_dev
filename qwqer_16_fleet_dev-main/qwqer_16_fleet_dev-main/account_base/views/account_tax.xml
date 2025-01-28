@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--  account tax form inherited  -->
+        <record id="view_tax_form_tds_inherited" model="ir.ui.view">
+            <field name="name">account.tax.form.tis</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_tds"/>
+                    <field name="tds_applicable"/>
+                    <field name="payment_excess"/>
+                </field>
+            </field>
+        </record>
+        <!--  account tax tree inherit  -->
+        <record id="view_tax_tree_tds_inherit" model="ir.ui.view">
+            <field name="name">account.tax.tree.tis</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_tax_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_tds"/>
+                </field>
+            </field>
+        </record>
+        <!-- account tax search inherit -->
+        <record id="view_account_tax_search_tds_inherit" model="ir.ui.view">
+            <field name="name">account.tax.search.tds</field>
+            <field name="model">account.tax</field>
+            <field name="inherit_id" ref="account.view_account_tax_search"/>
+            <field name="arch" type="xml">
+                <filter name="sale" position="before">
+                    <filter string="TDS" name="is_tds" domain="[('is_tds','=',True)]"/>
+                </filter>
+            </field>
+        </record>
+        <!--action for view TDS TAX-->
+        <record id="action_tds_form" model="ir.actions.act_window">
+            <field name="name">TDS / Withholding</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.tax</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_is_tds': True }</field>
+        </record>
+        <menuitem id="menu_action_tds_form"
+                  parent="account.account_account_menu"
+                  action="action_tds_form"
+                  sequence="2"/>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--  partner.service.type model tree view  -->
+    <record id="partner_service_type_tree_extended_view" model="ir.ui.view">
+        <field name="name">partner.service.type.tree.extended.view</field>
+        <field name="model">partner.service.type</field>
+        <field name="inherit_id" ref="qwqer_base.partner_service_type_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="is_fleet_service"/>
+			</xpath>
+        </field>
+    </record>
+
+</odoo>

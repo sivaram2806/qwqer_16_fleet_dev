@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Record to create Help Ticket Template Report-->
+        <record id="helpdesk_ticket_report_xlsx" model="ir.actions.report">
+            <field name="name">Enquiry Export</field>
+            <field name="model">help.ticket</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">qwqer_ticket_management.report_helpdesk_ticket_xlsx</field>
+            <field name="report_file">qwqer_ticket_management.report_helpdesk_ticket_xlsx</field>
+            <field name="print_report_name">'Enquiries'</field>
+            <field name="binding_model_id" ref="model_help_ticket"/>
+            <field name="binding_type">report</field>
+        </record>
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<!--Email template for send monthly revenue report-->
+		<record id="mail_template_uh_monthly_revenue_report" model="mail.template">
+			<field name="name">Email Template For Urban Haul Monthly Revenue Report</field>
+			<field name="model_id" ref="fleet_urban_haul.model_batch_trip_uh" />
+			<field name="subject">Odoo ERP V16 - Urban Haul Monthly Revenue Report</field>
+			<field name="body_html" type="html">
+
+				<body style="margin: 0; padding: 0;">
+					<p>Hi</p>
+					<br />
+
+					<div style="margin: 0px; padding: 0px;">
+
+						<t t-set="rev_for_cust_data" t-value="ctx.get('revenue_for_customer')"/>
+
+		            	<t t-if="rev_for_cust_data">
+
+		            		<p>Please find below
+								<b>consolidated</b>
+						 		urban haul revenue report from Qwqer-Fleet management for the month of
+								<b><t t-out="ctx.get('month')"/></b>
+							</p>
+							<br />
+
+		            		<table border="1" cellpadding="0" cellspacing="0" style="min-width: 800px; background-color: white; border-collapse:separate;">
+				                <t t-foreach="rev_for_cust_data" t-as="company_wise">
+				                	<tr><td colspan="6"><b><t t-esc="company_wise['company_name']"/></b></td></tr>
+					                <tr>
+					                	<td align="center"><b>Customer</b></td>
+					                	<td align="center"><b>Region</b></td>
+					                	<td align="center"><b>Revenue</b></td>
+					                	<td align="center"><b>Cost</b></td>
+					                	<td align="center"><b>Margin</b></td>
+					                	<td align="center"><b>Margin Percentage</b></td>
+					                </tr>
+					                <t t-if="company_wise['data']">
+										<tr t-foreach="company_wise['data']" t-as="row">
+											<td><t t-esc="row['customer']"/></td>
+											<td><t t-esc="row['region']"/></td>
+											<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(row['revenue'], 2))"/></td>
+											<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(row['cost'], 2))"/></td>
+											<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(row['margin'], 2))"/></td>
+											<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(row['margin_percentage'], 2))"/></td>
+										</tr>
+						            </t>
+				            		<tr>
+					                	<td><b>Grand Total</b></td>
+					                	<td></td>
+					                	<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(company_wise['total']['total_revenue'], 2))"/></td>
+					                	<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(company_wise['total']['total_cost'], 2))"/></td>
+					                	<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(company_wise['total']['total_margin'], 2))"/></td>
+					                	<td style="text-align: end; padding-right:5px"><t t-esc="'%.2f' %(round(company_wise['total']['total_margin_percentage'], 2))"/></td>
+					                </tr>
+					        	</t>
+		            		</table>
+		            		<br/>
+		            	</t>
+		            	
+		            	<t t-else="">
+                        	<p><h3>No Qwqer urban haul revenue customer wise data to show for the mentioned period</h3></p>
+                        </t>
+                        
+					</div>
+					<br />
+					<p>Regards<br /> QWQER </p>
+				</body>
+
+			</field>
+		</record>
+	</data>
+</odoo>

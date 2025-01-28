@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customer_master_change_req,customer.master.change.request,model_customer_master_change_request,,1,1,1,1
+access_change_field,change.field,model_change_field,,1,1,1,1
+access_user_action_log,user.action.log,model_user_action_log,,1,1,1,1
+access_pricing_plan_update_log,pricing.plan.update.log,model_pricing_plan_update_log,,1,1,1,1
+access_customer_update_log,customer.update.log,model_customer_update_log,,1,1,1,1
+access_additional_charge_update_log,access_additional_charge_update_log,model_additional_charge_update_log,,1,1,1,1
+
+
+

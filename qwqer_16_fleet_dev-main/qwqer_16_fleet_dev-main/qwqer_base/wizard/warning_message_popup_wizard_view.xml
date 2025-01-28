@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <record id="view_message_generation_form_wizard" model="ir.ui.view">
+            <field name="name">message.generation.form</field>
+            <field name="model">warning.message.popup</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                        <field name="message" nolabel="1"/>
+                    <footer>
+                        <button string="OK" special="cancel" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+</odoo>

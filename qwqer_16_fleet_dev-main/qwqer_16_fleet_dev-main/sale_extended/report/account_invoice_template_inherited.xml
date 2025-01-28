@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--	Invoice Template Consolidated Sale Invoice-->
+    <template id="report_account_invoice_sale_extended_customization"
+              inherit_id="account_base.accountinvoice_layout_document">
+        <xpath expr="//div[hasclass('page')]" position='inside'>
+
+            <t t-if="o.consolidated_invoice_id and o.move_type == 'out_invoice'">
+                <t>
+                    <p style="page-break-before:always;"/>
+                    <div style="padding-top: 50px;">
+                        <center>
+                            <strong>Order Statment</strong>
+                        </center>
+                        <br/>
+                        <br/>
+                        <table style="width:100%;table-layout:fixed;border-color:
+								#fff !important;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+                                        Order ID
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+                                        Merchant Order ID
+                                    </th>
+
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+                                        Order Date
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+                                        Description
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:2px; width:40px">
+                                        Est.Dis
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+                                        From Name
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; width:35px;">
+                                        Qty
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                        Unit Price
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                        To Name
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                        Amount
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.order_line_ids">
+                                    <t t-foreach="o.order_line_ids" t-as="lines">
+                                        <tr>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.order_id"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.merchant_order_id"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.date_order"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.description"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.estimated_distance"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.from_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <t t-if="lines.total_product_qty &gt; 0">
+                                                    <span t-field="lines.total_product_qty"/>
+                                                </t>
+                                                <t t-else="not lines.total_product_qty &gt; 0">
+                                                    1.00
+                                                </t>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.amount"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.to_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.amount_total"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-if="o.consolidated_invoice_id">
+                                    <t t-foreach="o.consolidated_invoice_id.order_ids" t-as="lines">
+                                        <tr>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.order_id"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.merchant_order_id"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.date_order"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.description"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.estimated_distance"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.from_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <t t-if="lines.total_product_qty &gt; 0">
+                                                    <span t-field="lines.total_product_qty"/>
+                                                </t>
+                                                <t t-else="not lines.total_product_qty &gt; 0">
+                                                    1.00
+                                                </t>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.total_amount"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.to_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+                                                <span t-field="lines.amount_total"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+
+        </xpath>
+    </template>
+</odoo>

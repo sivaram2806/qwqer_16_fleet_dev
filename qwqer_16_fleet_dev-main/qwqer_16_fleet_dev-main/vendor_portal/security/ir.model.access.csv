@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_group_portal,res_partner group_portal,base.model_res_partner,base.group_portal,1,1,0,0
+access_bulk_upload_trip,access.bulk.upload.trip,model_bulk_upload_trip,base.group_portal,1,1,1,1
+access_bulk_upload_trip_line,access.bulk.upload.trip.line,model_bulk_upload_trip_line,base.group_portal,1,1,1,1
+
+
+

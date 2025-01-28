@@ -1,0 +1,36 @@
+.btn-custom-green {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+    height:43px;
+    width:110px;
+    border-radius: 50px;
+}
+
+.btn-custom-red {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+    height:43px;
+    width:110px;
+    border-radius: 50px;
+}
+.btn-custom-blue {
+    color: white !important;
+    height:43px;
+    width:110px;
+    border-radius: 50px;
+}
+.button-group button {
+    margin-right: 5px;
+}
+.header-button-right {
+    float:right;
+}
+.inline-group {
+    display: flex;
+    align-items: center;
+}
+.inline-group label {
+    margin-right: 5px; /* Adjust label spacing */
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_bulk_import_action" model="ir.actions.act_window">
+        <field name="name">CRM Bulk Import</field>
+        <field name="res_model">crm.bulk.import</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="crm_bulk_import_form" model="ir.ui.view">
+        <field name="name">crm.bulk.import.form</field>
+        <field name="model">crm.bulk.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="print_xlsx" context="{'download_template':True}" string="Download Template"
+                            type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="print_xlsx" context="{'download_import_failed_records':True}"
+                            string="Download Failed Imports" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'complete_with_fail')]}"/>
+
+                    <button name="action_submit" string="Import Leads" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_success_leads"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-archive icon"
+                                string='Leads'>
+                            <field name="success_record_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="name" invisible="1" force_save="1"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="upload_file" filename="file_name"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="user_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Failed Record Details">
+                            <field name="bulk_import_line_ids" attrs="{'invisible': [('state', '=', 'success')]}"
+                                   options='{"no_open":True, "no_create": True}'>
+                                <tree create="false" delete="false">
+                                    <field name="row_no" width="300px"/>
+                                    <field name="state"/>
+                                    <field name="failure_reason"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Bulk Import Ticket tree view-->
+    <record id="crm_lead_import_view_tree" model="ir.ui.view">
+        <field name="name">crm.bulk.import.tree</field>
+        <field name="model">crm.bulk.import</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="name"/>
+                <field name="file_name"/>
+                <field name="company_id"/>
+                <field name="create_uid"/>
+                <field name="create_date" widget="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

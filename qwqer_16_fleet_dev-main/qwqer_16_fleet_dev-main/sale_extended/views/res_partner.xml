@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--inherited base res partner tree view for adding new fields -->
+    <record id="view_partner_tree_inherit_delivery_base" model="ir.ui.view">
+        <field name="name">view.partner.tree.inherit.delivery.base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="credit" optional="hide"/>
+                <field name="debit" optional="hide"/>
+                <field name="partner_age"/>
+                <field name="sale_order_age"/>
+                <field name="company_id"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='company_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='country_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//tree/field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='activity_ids']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+
+
+            <xpath expr="//tree/field[@name='phone']" position="before">
+                <field name="is_new_customer"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_inherit_sale_extended" model="ir.ui.view">
+        <field name="name">res.partner.select.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//search/filter[@name='inactive']" position="before">
+                <filter string="New Customers" name="new_customers_filter"
+                        domain="[('is_new_customer','=', True)]"/>
+                <filter string="Old Customers" name="old_customers_filter"
+                        domain="[('is_new_customer','=', False)]"/>
+                <separator/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>
+
+
+

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- account.move.line filter inherited -->
+    <record id="view_move_line_order_filter_inherit_driver_mgmt" model="ir.ui.view">
+        <field name="name">move.line.filter.inherit.driver.mgmt</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+        <field name="arch" type="xml">
+			<xpath expr="//filter[@name='group_by_partner']" position="before">
+                <separator/>
+                <filter string="Current Year" name="current_year"
+                        domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" />
+				<filter string="Last 3 Month" name="last3_month"
+                        domain="[('date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+				<filter string="Last 6 Month" name="last6_month"
+                        domain="[('date','&gt;=',(datetime.datetime.now() - relativedelta(months=5)).strftime('%Y-%m-01'))]"/>
+			</xpath>
+			<xpath expr="//search/field[@name='reconcile_model_id']" position="after">
+				<field name="driver_uid" string="Driver ID" />
+			</xpath>
+			<xpath expr="//search/filter[@name='date']" position="after">
+                <separator/>
+                <filter string="Merchant Sale Order" name="merchant_order" domain="[('merchant_order_id', '!=', False)]"/>
+				<separator/>
+			</xpath>
+			<xpath expr="//search/group[1]/filter[@name='groupby_date']" position="after">
+				<filter string="Driver ID" name="group_by_driver_uid" domain="[]" context="{'group_by': 'driver_uid'}"/>
+			</xpath>
+			<xpath expr="//search/group[1]/filter[@name='group_by_partner']" position="before">
+				<filter string="Driver Region" name="group_by_driver_region" domain="[]" context="{'group_by': 'driver_region_id'}"/>
+			</xpath>
+        </field>
+    </record>
+
+    <!-- account.move.line pivot view -->
+	<record id="view_account_move_line_pivot_driver_summary" model="ir.ui.view">
+        <field name="name">account.move.line.driver.pivot</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Driver Journal Items">
+                <field name="journal_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="debit" type="measure"/>
+                <field name="credit" type="measure"/>
+                <field name="balance" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--  tree view account.move.line  -->
+    <record id="view_move_line_tree_driver_mgmt" model="ir.ui.view">
+        <field name="name">account.move.line.tree.driver.mgmt</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="field[@name='partner_id']" position="after">
+                <field name="driver_uid" optional="show"/>
+                <field name="driver_region_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action to show driver journal tree view-->
+    <record id="action_driver_transaction_summary" model="ir.actions.act_window">
+        <field name="name">Driver Journal Summary</field>
+        <field name="res_model">account.move.line</field>
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')),
+            ('move_id.state', '!=', 'cancel'), ('account_id.is_driver_account', '=', True),
+            ('partner_id','!=',False)]
+        </field>
+        <field name="view_id" ref="view_account_move_line_pivot_driver_summary"/>
+        <field name="context">{'search_default_group_by_driver_region': True,
+            'search_default_group_by_partner': True, 'tree_view_ref':'account.view_move_line_tree',
+            'is_pivot_partner':True, 'search_default_last3_month':1}</field>
+        <field name="view_mode">pivot</field>
+    </record>
+
+    <!-- Action to show driver journal tree view-->
+    <record id="action_driver_journal_items" model="ir.actions.act_window">
+        <field name="name">Driver Journal Items</field>
+        <field name="res_model">account.move.line</field>
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')),
+            ('move_id.state', '!=','cancel'), ('account_id.is_driver_account', '=', True),
+            ('partner_id','!=',False)]</field>
+        <field name="view_id" ref="account.view_move_line_tree"/>
+        <field name="context">{'search_default_group_by_partner': True}</field>
+        <field name="view_mode">tree,pivot,graph,form,kanban</field>
+    </record>
+    <!--#TODO <field name="domain">[('journal_id','!=',29)] </field>    -->
+
+    <!-- menu for Driver journal items Accounting module -->
+    <menuitem id="menu_accounting_driver_journal"
+              name="Driver Journal"
+              parent="account.menu_finance_entries" sequence="7"/>
+
+    <!-- menu for Driver journal items Accounting module -->
+    <menuitem id="menu_accounting_driver_journal_items"
+              action="driver_management.action_driver_journal_items"
+              name="Driver Journal Items"
+              parent="menu_accounting_driver_journal" sequence="2"/>
+
+    <!-- menu for Driver journal Summary Accounting module -->
+    <menuitem id="menu_accounting_driver_journal_summary"
+              action="action_driver_transaction_summary"
+              name="Driver Journal Summary"
+              parent="menu_accounting_driver_journal" sequence="5"/>
+
+<!--     menu for Driver journal items, driver management module -->
+    <menuitem id="menu_driver_mgmt_journal_items"
+              name="Driver Journal Items"
+              action="driver_management.action_driver_journal_items"
+              sequence="30"
+              parent="driver_management.menu_driver_reports_main_menu"/>
+
+    <!-- menu for Driver journal Summary, driver management module -->
+    <menuitem id="menu_driver_mgmt_journal_summary" name="Driver Journal Summary"
+              action="action_driver_transaction_summary"
+              sequence="35"
+              parent="driver_management.menu_driver_reports_main_menu"/>
+
+</odoo>

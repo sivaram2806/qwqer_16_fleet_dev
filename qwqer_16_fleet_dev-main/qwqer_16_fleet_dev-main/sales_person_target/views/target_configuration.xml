@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="view_target_configuration_form" model="ir.ui.view">
+            <field name="name">target.configuration.form</field>
+            <field name="model">target.configuration</field>
+            <field name="arch" type="xml">
+                <form string="Target Configuration">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1" force_save="1"
+                                       style="font-size: 15px;"/>
+                                <field name="period" required='1'/>
+                                <field name="create_date" invisible="1"/>
+                                <field name="country_id" invisible="1"/>
+                                <field name="state_id" required='1' domain="[('country_id', '=', country_id)]"
+                                       force_save="1" options="{'no_create': True, 'no_edit': True}"/>
+                                <field name="from_date" invisible="1" force_save="1"/>
+                                <field name="to_date" invisible="1" force_save="1"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="company_id" invisible="1" force_save="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="target" string="Target">
+                                <field name="target_list_ids" delete="false" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="state_id" width="70px" force_save="1" invisible="1" required="1"/>
+                                        <field name="region_domain" width="70px" force_save="1" invisible="1"/>
+                                        <field name="region_id" width="70px" required="1"
+                                               attrs="{'readonly':[('state_id','=',False)]}"
+                                               domain="[('id', 'in', region_domain)]" force_save="1" options="{'no_create': True, 'no_edit': True}"/>
+                                        <field name="sales_person_domain" width="70px" force_save="1" invisible="1"/>
+                                        <field name="sales_person_id" width="70px" required="1"
+                                               attrs="{'readonly':[('state_id','=',False)]}" force_save="1"
+                                               domain="[('id', 'in', sales_person_domain)]" options="{'no_create': True, 'no_edit': True}"/>
+                                        <field name="period" width="70px" required="1" invisible="1"/>
+                                        <field name="target_revenue" width="50px"/>
+                                        <field name="collection_target" width="50px"/>
+                                        <field name="from_date" invisible="1" force_save="1"/>
+                                        <field name="to_date" invisible="1" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_target_configuration_tree" model="ir.ui.view">
+            <field name="name">target.configuration.tree</field>
+            <field name="model">target.configuration</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="name" required='1'/>
+                    <field name="period" required='1'/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="create_date"/>
+                    <field name="state_id" required='1'/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_target_configuration_filter" model="ir.ui.view">
+            <field name="name">target.configuration.filter</field>
+            <field name="model">target.configuration</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="name" string="Sales Person"
+                           filter_domain="[('target_list_ids.sales_person_id.name', 'ilike', self)]"/>
+                    <field name="name" string="Region"
+                           filter_domain="[('target_list_ids.region_id.name', 'ilike', self)]"/>
+
+                </search>
+            </field>
+        </record>
+        <record id="action_target_configuration" model="ir.actions.act_window">
+            <field name="name">Sales Person Target</field>
+            <field name="res_model">target.configuration</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
+
+

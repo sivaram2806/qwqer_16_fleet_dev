@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  expense.claim.adv.payment.wizard form view  -->
+    <record id="expense_claim_adv_payment_wizard_view_form" model="ir.ui.view">
+        <field name="name">expense.claim.payment.wizard.form</field>
+        <field name="model">expense.claim.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Payment">
+                <group>
+                    <group>
+                        <field name="partner_id" required='1' options="{'no_create': True, 'no_edit': True}"/>
+                        <field name="payment_through" required='1'/>
+                        <field name="journal_id" required='1' options="{'no_create': True, 'no_edit': True}"
+                               domain="[('type','in', ('bank','cash'))]" widget="selection" force_save='1'/>
+                        <field name="payment_method_id" options="{'no_create': True, 'no_edit': True}" widget="radio"
+                               domain="[('payment_type', '=', 'outbound'),('code', '=', 'manual')]" invisible='1'/>
+                    </group>
+                    <group>
+                        <field name="amount"/>
+                        <field name="date" required='1'/>
+                        <field name="comments" required='1'/>
+                    </group>
+                </group>
+                <footer>
+                    <button string='Payment' name="action_advance_payment" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--expense.claim.adv.payment.wizard action manager-->
+    <record id="action_expense_claim_payment_wizard" model="ir.actions.act_window">
+        <field name="name">Expense Claim Advance Payment</field>
+        <field name="res_model">expense.claim.payment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="expense_claim_adv_payment_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

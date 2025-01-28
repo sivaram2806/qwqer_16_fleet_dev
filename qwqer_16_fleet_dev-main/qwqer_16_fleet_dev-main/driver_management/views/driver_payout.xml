@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--  driver.payout model form view  -->
+    <record id="driver_payout_form_view" model="ir.ui.view">
+        <field name="name">driver.payout.form</field>
+        <field name="model">driver.payout</field>
+        <field name="arch" type="xml">
+             <form string="Daily Driver Transaction">
+                 <header>
+		            	<button name="action_recompute" string="Recompute" type="object" />
+		            	<button name="action_recompute" string="Recompute with Order Date" type="object"
+                                groups="base.group_system"
+                                context="{'with_order_date': True}"/>
+		            	<field name="status" widget="statusbar"/>
+                 </header>
+                 <sheet>
+                     <group>
+                         <group>
+                             <field name="employee_id" readonly="1" context="{'employee_edit': True,'driver_employee': True,'form_view_ref':'hr.view_employee_form'}"/>
+                             <field name="driver_uid" readonly="1"/>
+                             <field name="date" readonly="1"/>
+                             <field name="company_id" readonly="1"/>
+                             <field name="region_id" readonly="1"/>
+                             <field name="no_of_orders" invisible="1"/>
+                             <field name="worked_hours" attrs="{'readonly': [('status', 'in',('approve','pending','complete'))]}" widget="float_time"/>
+                             <field name="total_distance" attrs="{'readonly': [('status', 'in',('approve','pending','complete'))]}" string="Total Attn: Distance"/>
+                             <field name="total_estimated_distance" readonly="1"/>
+                             <field name="order_qty" readonly="1"/>
+                             <field name="total_revenue" readonly="1"/>
+                         </group>
+                         <group>
+                             <field name="minimum_wage"/>
+                             <field name="order_km_incentive"/>
+                             <field name="day_km_incentive"/>
+                             <field name="orders_incentive"/>
+                             <field name="hours_incentive"/>
+                             <field name="stop_count_incentive" readonly="1" force_save="1"/>
+                             <field name="holiday_incentive" readonly="1"/>
+                             <field name="total_payout"/>
+                             <field name="batch_payout_id" readonly="1"/>
+                         </group>
+                     </group>
+                 </sheet>
+                 <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+                 </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_payout_tree_view" model="ir.ui.view">
+        <field name="name">driver.payout.tree</field>
+        <field name="model">driver.payout</field>
+        <field name="arch" type="xml">
+             <tree string="Daily Driver Transaction">
+                 <field name="employee_id"/>
+                 <field name="driver_uid"/>
+                 <field name="region_id"/>
+                 <field name="date"/>
+                 <field name="worked_hours" widget="float_time" sum="Total"/>
+                 <button class="oe_stat_button" type="object" name="action_get_attendance" icon="fa-arrow-right" />
+                 <field name="total_distance" string="Total Attn: Distance" sum="Total"/>
+                 <field name="order_qty" string="No.of Orders(Qty)" sum="Total"/>
+                 <button class="oe_stat_button" type="object" name="action_get_driver_so" icon="fa-arrow-right" />
+                 <field name="total_revenue" sum="Total"/>
+                 <field name="total_estimated_distance" sum="Total"/>
+                 <field name="minimum_wage" sum="Total"/>
+                 <field name="order_km_incentive" sum="Total"/>
+                 <field name="day_km_incentive" sum="Total"/>
+                 <field name="orders_incentive" sum="Total"/>
+                 <field name="hours_incentive" sum="Total"/>
+                 <field name="stop_count_incentive" sum="Total"/>
+                 <field name="holiday_incentive" string="Holiday Bonus" sum="Total"/>
+                 <field name="total_payout" sum="Total"/>
+                 <field name="batch_payout_id"/>
+                 <field name="status"/>
+             </tree>
+        </field>
+    </record>
+
+    <record id="driver_payout_search_view" model="ir.ui.view">
+        <field name="name">driver.payout.search</field>
+        <field name="model">driver.payout</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="employee_id"/>
+                <field name="region_id"/>
+                <field name="driver_uid"/>
+                <separator/>
+                <filter string="Today" name="today_created"
+                        domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Yesterday" name="yesterday_created" domain="['&amp;',
+	                	('date', '&lt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('date', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <filter string="Current Week" name="current_week"
+                        domain="[('date', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+        						('date', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"/>
+                <filter string="Current Month" name="this_month"
+                        domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-01 00:00:00'))]"/>
+                <filter string="Last Week" name="week"
+                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last Month" name="month"
+                        domain="[('date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last 3 Month" name="last3_month"
+                        domain="[('date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                <filter string="Current Year" name="current_year"
+                        domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <filter string="Drivers" name="employee_id_gp" context="{'group_by':'employee_id'}"/>
+                <filter string="Region" name="region_id_gp" context="{'group_by':'region_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!--  Action for driver payout model  -->
+    <record id="driver_payout_action" model="ir.actions.act_window">
+        <field name="name">Daily Driver Transaction</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">driver.payout</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                      (0, 0, {'view_mode': 'tree', 'view_id': ref('driver_payout_tree_view')}),
+                      (0, 0, {'view_mode': 'form', 'view_id': ref('driver_payout_form_view')})]"/>
+        <field name="context">{"create":False}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new driver transaction.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_multi_recompute" model="ir.actions.server">
+	        <field name="name">Recompute</field>
+	        <field name="model_id" ref="driver_management.model_driver_payout"/>
+	        <field name="binding_model_id" ref="driver_management.model_driver_payout"/>
+	        <field name="state">code</field>
+	        <field name="code">records.action_recompute()</field>
+		</record>
+
+    <menuitem id="menu_driver_payout_main_menu" name="Payout"
+              sequence="25"
+              parent="driver_management.menu_driver_management_root"/>
+
+    <menuitem id="menu_driver_payout" name="Daily Driver Transaction"
+              sequence="5" action="driver_payout_action"
+              parent="driver_management.menu_driver_payout_main_menu"/>
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<template
+        id="inherit_web_layout_for_navbar_color"
+        inherit_id="web.layout"
+        name="Main Navbar color"
+    >
+  <xpath expr="//body" position="inside">
+    <t t-if="request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids')[0] == '1'">
+      <style>.o_main_navbar {background: linear-gradient(45deg, #8057A4, #8057A4);
+                                         background-color: #8057A4!important;border-bottom: 0px;}</style></t>
+    <t t-if="request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids')[0] == '2'">
+      <style>.o_main_navbar {background: linear-gradient(45deg, #248FFF, #248FFF);
+                                         background-color: #248FFF!important;border-bottom: 0px;}</style></t>
+   </xpath>
+</template>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!--    Company Form view inherited for adding seal and sign for invoice-->
+    <record id="inherit_company_form" model="ir.ui.view">
+        <field name="name">inherit.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="image_signature" widget="image" class="float-left oe_avatar"/>
+                <field name="image_seal" widget="image" class="float-left oe_avatar"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

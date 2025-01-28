@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="application_customer_balance_form" model="ir.ui.view">
+            <field name="name">application.customer.balance.form</field>
+            <field name="model">application.customer.balance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="cus_id"/>
+                                <field name="time_balance_update"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="application_customer_balance_tree" model="ir.ui.view">
+            <field name="name">application.customer.balance.tree</field>
+            <field name="model">application.customer.balance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="partner_id"/>
+                    <field name="cus_id"/>
+                    <field name="time_balance_update"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="application_customer_balance_action" model="ir.actions.act_window">
+            <field name="name">Update Customer Balance</field>
+            <field name="res_model">application.customer.balance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Server Action -->
+        <record id="action_update_customer_balance_api" model="ir.actions.server">
+            <field name="name">Update Customer Balance</field>
+            <field name="model_id" ref="model_application_customer_balance"/>
+            <field name="binding_model_id" ref="model_application_customer_balance"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                    if records:
+                        records.action_update_customer_balance()
+            </field>
+        </record>
+
+                <record id="ir_cron_application_customer_balance_schedule" model="ir.cron">
+            <field name="name">Update Customer Balance Api</field>
+            <field name="model_id" ref="model_application_customer_balance"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.update_customer_balance()</field>
+            <field name="interval_number">30</field>
+            <field name="active">0</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    <menuitem id="menu_application_customer_balance"
+              name="Update Customer Balance"
+              parent="account_base.menu_customer_journal_items"
+              action="application_customer_balance_action"
+              sequence="6"/>
+
+            <!--ir_rule for ftl trip summary-->
+    <record id="application_customer_balance_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Customer Balance</field>
+        <field name="model_id" ref="model_application_customer_balance"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    </data>
+</odoo>

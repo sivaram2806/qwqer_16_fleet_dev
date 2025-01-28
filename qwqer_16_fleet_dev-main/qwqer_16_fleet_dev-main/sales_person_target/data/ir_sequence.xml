@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    Sequence for Set Target Form -->
+    <record id="sequence_bulk_import_lead" model="ir.sequence">
+        <field name="name">Target Configuration Sequence</field>
+        <field name="code">target.configuration.sequence</field>
+        <field name="prefix"></field>
+        <field name="padding">4</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

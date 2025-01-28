@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <report
+            id="salesperson_summary_report_xl"
+            model="sale.order"
+            string="Sales Person Summary Report"
+            report_type="xlsx"
+            name="kpi_reports.salesperson_summary_report_xlsx"
+            file="Sales Person Summary Report"
+    />
+</odoo>

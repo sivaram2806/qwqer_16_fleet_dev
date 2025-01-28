@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+partner_sync_api,partner_sync_api,model_partner_sync_api,,1,1,1,1
+api_credentials,api_credentials,model_qwqer_api_credentials,,1,1,1,1
+api_create_api_details,api_create_api_details,model_create_api_details,,1,1,1,1

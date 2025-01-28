@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.module.category" id="category_menu_visibility_control">
+        <field name="name">Menu Visibility Control</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="accounting_visibility_group" model="res.groups">
+        <field name="name">Accounting</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="sales_visibility_group" model="res.groups">
+        <field name="name">Sales</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="employees_visibility_group" model="res.groups">
+        <field name="name">Employees</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="fleet_menu_access_group" model="res.groups">
+        <field name="name">Fleet Management</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="apps_menu_access_group" model="res.groups">
+        <field name="name">Apps</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="link_tracker_menu_access_group" model="res.groups">
+        <field name="name">Link Tracker</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="discuss_menu_access_group" model="res.groups">
+        <field name="name">Discuss</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="contacts_menu_access_group" model="res.groups">
+        <field name="name">Contacts</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="dashboard_menu_access_group" model="res.groups">
+        <field name="name">Dashboard</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="inventory_menu_access_group" model="res.groups">
+        <field name="name">Inventory</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="crm_visibility_group" model="res.groups">
+        <field name="name">CRM</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="ticket_management_visibility_group" model="res.groups">
+        <field name="name">Ticketing</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="driver_management_visibility_group" model="res.groups">
+        <field name="name">Driver Management</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="hr_attendance_visibility_group" model="res.groups">
+        <field name="name">Attendances</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="customer_onboarding_visibility_group" model="res.groups">
+        <field name="name">Onboard Customer</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+    <record id="onboard_vendor_visibility_group" model="res.groups">
+        <field name="name">Vendor Onboarding Menu</field>
+        <field name="category_id" ref="category_menu_visibility_control"/>
+    </record>
+</odoo>

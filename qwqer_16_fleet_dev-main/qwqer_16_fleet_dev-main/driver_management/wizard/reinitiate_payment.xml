@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+		<record id="view_reinitiate_payment_wiz_form" model="ir.ui.view">
+            <field name="name">reinitiate.payment.wiz.form</field>
+            <field name="model">reinitiate.payment.wiz</field>
+			<field name="arch" type="xml">
+				<form string="Reinitiate Payment">
+					<sheet>
+							<field name="payout_ids" required="1" nolabel="1" widget="one2many_list" options="{'no_open':True, 'no_create_edit': True, 'no_edit': True}"  readonly="0">
+								<tree edit="false">
+									<field name="from_date"/>
+									<field name="to_date"/>
+									<field name="driver_uid"/>
+									<field name="employee_id"/>
+									<field name="daily_payout_amount"/>
+									<field name="incentive_amount"/>
+									<field name="deduction_amount"/>
+									<field name="no_of_orders"/>
+									<field name="avg_order_cost"/>
+									<field name="payment_state"/>
+									<field name="create_date"/>
+								</tree>
+							</field>
+						<footer>
+							<button  name="action_repayment"
+									 string="Reinitiate"
+									 type="object"
+									 class="oe_highlight"/>
+
+							<button string="Cancel"
+									class="oe_link"
+									special="cancel"/>
+						</footer>
+					</sheet>
+				</form>
+			</field>
+        </record>
+		<record id="reinitiate_payment_wiz_action" model="ir.actions.act_window">
+		    <field name="name">Reinitiate Payment</field>
+		    <field name="res_model">reinitiate.payment.wiz</field>
+		    <field name="type">ir.actions.act_window</field>
+		    <field name="view_mode">form</field>
+		    <field name="view_id" ref="view_reinitiate_payment_wiz_form"/>
+		    <field name="target">new</field>
+		</record>
+</odoo>

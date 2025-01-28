@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_view_account_form_inherit_account_base" model="ir.ui.view">
+        <field name="name">account.view.account.form.inherit.account.base</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='account_type']" position="after">
+                    <field name="is_driver_account"/>
+                    <field name="is_expense_credit"/>
+                    <field name="default_employee_account"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>
+

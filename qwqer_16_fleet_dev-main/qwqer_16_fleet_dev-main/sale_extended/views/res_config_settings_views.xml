@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.delivery.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='invoicing_setting_container']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" id="credit_conf">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Credit Jornal Id</span>
+                        <div class="text-muted">
+                            Journal for create credit journals
+                        </div>
+                        <div class="text-muted">
+                            <field name="credit_journal_id"/>
+                        </div>
+                        <span class="o_form_label">Credit Jornal Limit</span>
+                        <div class="text-muted">
+                            Credit Journal Fetch Limit
+                        </div>
+                        <div class="text-muted">
+                            <field name="credit_journal_limit"/>
+                        </div>
+
+                        <span class="o_form_label">Credit Jornal Date</span>
+                        <div class="text-muted">
+                            Fetch From date
+                        </div>
+                        <div class="text-muted">
+                            <field name="credit_journal_date"/>
+                        </div>
+                        <span class="o_form_label">Product</span>
+                        <div class="text-muted">
+                            Delivery Service Product
+                        </div>
+                        <div class="text-muted">
+                            <field name="product_id"/>
+                        </div>
+                        <span class="o_form_label">Batch Limit</span>
+                        <div class="text-muted">
+                            Limit for fetching the csv Report Export
+                        </div>
+                        <div class="text-muted">
+                            <field name="csv_fetch_batch_limit"/>
+                        </div>
+                        <span class="o_form_label">File Path</span>
+                        <div class="text-muted">
+                            Path for downloading the csv report
+                        </div>
+                        <div class="text-muted">
+                            <field name="report_download_file_path"/>
+                        </div>
+                        <span class="o_form_label">Module Name</span>
+                        <div class="text-muted">
+                            Module Name for Report File Path
+                        </div>
+                        <div class="text-muted">
+                            <field name="path"/>
+                        </div>
+
+                    </div>
+                </div>
+
+            </xpath>
+            <xpath expr="//div[@name='invoicing_setting_container']" position="after">
+
+                        <h2>Customer Balance Sync API Configuration</h2>
+                        <div class="row mt16 o_settings_container" name="cus_balance_sync_container">
+                            <div class="col-12 col-lg-6 o_setting_box" id="customer_balance_sync_api_auth">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="customer_balance_sync_api_auth"/>
+                                    <div class="text-muted">
+                                        Auth Key
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="customer_balance_sync_api_auth"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="customer_balance_sync_api_url">
+                                <div class="o_setting_right_pane">
+                                    <label for="customer_balance_sync_api_url"/>
+                                    <div class="text-muted">
+                                        Complete URL
+                                    </div>
+                                <div class="text-muted">
+                                    <field name="customer_balance_sync_api_url"/>
+                                </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="customer_balance_sync_api_limit">
+                                <div class="o_setting_right_pane">
+                                    <label for="customer_balance_sync_api_limit"/>
+                                    <div class="text-muted">
+                                        Record limit to update in a single API call
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="customer_balance_sync_api_limit"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                </xpath>
+
+        </field>
+    </record>
+</odoo>

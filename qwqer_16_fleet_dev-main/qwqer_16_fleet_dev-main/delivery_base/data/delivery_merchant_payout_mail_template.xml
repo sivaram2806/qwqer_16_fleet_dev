@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_delivery_merchant_payout" model="mail.template">
+            <field name="name">Task: Delivery Merchant Payout</field>
+            <field name="model_id" ref="delivery_base.model_delivery_merchant_payout_lines"/>
+            <field name="email_from">noreply@qwqer.in</field>
+            <field name="email_to">{{object.customer_id.email}}</field>
+            <field name="subject">PayOut Report for {{object.customer_id.name}}</field>
+            <field name="body_html" type="html">
+                <div>
+                    Hi,
+                    <br/>
+                    <p>Please find attachment of your payout details
+                        <t t-if="ctx['local_transfer_date']">
+                             as on  <t t-out="ctx.get('local_transfer_date')"/>
+                        </t>
+                        with this mail for reference.
+                    </p>
+                    <br/>
+                    <br/>
+                    Regards
+                    <br/>
+                    QWQER
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

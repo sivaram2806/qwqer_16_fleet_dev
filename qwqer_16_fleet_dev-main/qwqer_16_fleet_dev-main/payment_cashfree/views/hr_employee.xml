@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Cashfree buttons added in employee master-->
+    <record id="view_hr_employee_form_view_only_inherit_cashfree" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.cashfree</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="account_base.view_employee_form_inherit_account_base"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='beneficiary_uid']" position="after">
+                <field name="cashfree_payment" attrs="{'invisible': [('is_under_vendor', '=', False)]}"/>
+                <field name="is_under_vendor" invisible="1"/>
+            </xpath>
+            <xpath expr="//group[@name='online_payment_info']" position="after">
+                <group col="2">
+                    <button string="Get Cashfree Beneficiary " name="get_emp_beneficiary" type="object"
+                            class="oe_highlight large_button single_line_button"/>
+                    <button string="Add Cashfree Beneficiary " name="add_emp_beneficiary" type="object"
+                            class="oe_highlight large_button single_line_button"/>
+                </group>
+                <group col="2">
+                    <button string="Remove Cashfree Beneficiary " name="remove_emp_beneficiary"
+                            type="object" class="oe_highlight large_button single_line_button"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- server.action to enable cashfree_payment boolean -->
+	<record id="action_update_cashfree_payment" model="ir.actions.server">
+		<field name="name">Enable Cashfree Payment</field>
+		<field name="type">ir.actions.server</field>
+		<field name="model_id" ref="model_hr_employee"/>
+		<field name="binding_model_id" ref="model_hr_employee"/>
+		<field name="state">code</field>
+		<field name="code">records.enable_cashfree_payment()</field>
+	</record>
+
+	<!-- server.action to disable cashfree payment -->
+	<record id="action_remove_cashfree_payment" model="ir.actions.server">
+		<field name="name">Disable Cashfree Payment</field>
+		<field name="type">ir.actions.server</field>
+		<field name="model_id" ref="model_hr_employee"/>
+		<field name="binding_model_id" ref="model_hr_employee"/>
+		<field name="state">code</field>
+		<field name="code">records.disable_cashfree_payment()</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    custom qwqer fleet login screen template-->
+    <template id="qwqer_fleet_login_page" name="Qwqer Fleet Login">
+
+        <t t-call="web.frontend_layout">
+            <t t-set="company" t-value="request.env.company.sudo()"></t>
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+            <div class="login-page-background login-background d-md-block d-none"
+                 t-attf-style="background-image: url(/vendor_portal/static/src/image/vendor_portal_background.png);">
+            </div>
+            <t t-set="body_classname" t-value="'bg-100 backend-login-page background-image'"/>
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+
+            <div class="container py-5">
+                <div t-attf-class="card border-0 mx-auto mx-inherit bg-100 {{login_card_classes}} o_database_list o_box"
+                     style="max-width: 500px;">
+
+                    <div class="card-body">
+                        <div class="text-center pb-3 border-bottom" style="border: none !important;">
+                            <img t-attf-src="/web/image/res.company/#{company.id}/logo" alt="Logo"
+                                 class="img img-fluid w-50 mx-auto"/>
+                            <h2 class="d-block d-md-none">QWQER Fleet</h2>
+                        </div>
+                        <t t-raw="0"/>
+                        <form class="oe_login_form" role="form" t-attf-action="/web/login" method="post"
+                              onsubmit="this.action = this.action + location.hash">
+                            <div class="form-group form-custom field-login d-flex align-items-center">
+                                <label for="login"></label>
+                                <i class="login-icon ml-2 fa fa-envelope fa-lg" t-att-style="'color: #808080;'"/>
+                                <input type="text" placeholder="Email" name="login" t-att-value="login" id="login"
+                                       t-attf-class="form-control #{'form-control-sm' if form_small else ''} o_input_box"
+                                       required="required" autofocus="autofocus" autocapitalize="off"/>
+                            </div>
+
+                            <div class="form-group form-custom field-password d-flex align-items-center">
+                                <label for="password"></label>
+                                <i class="login-icon ml-2 fa fa-lock fa-lg" t-att-style="'color: #808080;'"></i>
+                                <input type="password" placeholder="Password" name="password" id="password"
+                                       t-attf-class="form-control #{'form-control-sm' if form_small else ''} o_input_box"
+                                       required="required" autocomplete="current-password"
+                                       t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                            </div>
+
+                            <p class="alert alert-danger" t-if="error" role="alert">
+                                <t t-esc="error"/>
+                            </p>
+                            <p class="alert alert-success" t-if="message" role="status">
+                                <t t-esc="message"/>
+                            </p>
+
+                            <div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}"
+                                 style="padding: 0 !important;">
+                                <button type="submit" class="btn btn-primary btn-block o_button_block"
+                                        t-att-style="'background-color:#f27127 !important;''border-color: #f27127;'">Log
+                                    in
+                                </button>
+                                <div class="justify-content-between mt-2 d-flex small">
+                                    <a t-if="signup_enabled" t-attf-href="/web/signup?{{ keep_query() }}">Create
+                                        Account
+                                    </a>
+                                    <a t-attf-href="/web/reset_password?{{ keep_query() }}">Forgot Password?</a>
+                                </div>
+                                <t t-if="debug">
+                                    <button type="submit" name="redirect" value="/web/become" style="display:none;"
+                                            class="btn btn-link btn-sm btn-block"></button>
+                                </t>
+                                <div class="o_login_auth"/>
+                            </div>
+
+                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </t>
+
+    </template>
+
+<!--    disabled the website login template-->
+    <record id="website.login_layout" model="ir.ui.view">
+        <field name="active" eval="False"/>
+    </record>
+
+<!--    removed website footer-->
+    <template id="portal_footer" inherit_id="website.layout" name="Portal Footer">
+        <xpath expr="//html" position="before">
+            <t t-set="no_footer" t-value="True"/>
+        </xpath>
+    </template>
+    <record id="website.menu_website_configuration" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('base.group_system'))]"/>
+    </record>
+
+</odoo>

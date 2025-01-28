@@ -1,0 +1,596 @@
+<odoo>
+        <data noupdate="1">
+        <record id="hr_job_managing_director" model="hr.job">
+                <field name="name">Managing Director</field>
+                <field name="department_id" ref="hr_dep_director" />
+        </record>
+        <record id="hr_job_regional_manager" model="hr.job">
+                <field name="name">Regional Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_asst_regional_manager" model="hr.job">
+                <field name="name">Asst. Regional Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_finance_manager" model="hr.job">
+                <field name="name">Finance Manager</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_finance_executive" model="hr.job">
+                <field name="name">Finance Executive</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_technical_architect" model="hr.job">
+                <field name="name">Technical Architect</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_mu_sales" model="hr.job">
+                <field name="name">MU Sales</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sales_and_ops_coordinator" model="hr.job">
+                <field name="name">Sales &amp; Ops Coordinator</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_marketing_manager" model="hr.job">
+                <field name="name">Marketing Manager</field>
+                <field name="department_id" ref="hr_dep_marketing" />
+        </record>
+        <record id="hr_job_sales_team_lead" model="hr.job">
+                <field name="name">Sales Team Lead</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_regional_head___b2b_(tnandts)" model="hr.job">
+                <field name="name">Regional Head - B2B (TN&amp;TS)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sales_coordinator" model="hr.job">
+                <field name="name">Sales Coordinator</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_marketing_head" model="hr.job">
+                <field name="name">Marketing Head</field>
+                <field name="department_id" ref="hr_dep_marketing" />
+        </record>
+        <record id="hr_job_asst_manager___operations" model="hr.job">
+                <field name="name">Asst. Manager - Operations</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_asst_manager___sales" model="hr.job">
+                <field name="name">Asst. Manager - Sales</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_digital_marketing_executive" model="hr.job">
+                <field name="name">Digital Marketing Executive</field>
+                <field name="department_id" ref="hr_dep_marketing" />
+        </record>
+        <record id="hr_job_sales_executive" model="hr.job">
+                <field name="name">Sales Executive</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_delivery_executive" model="hr.job">
+                <field name="name">Delivery Executive</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_field_supervisor" model="hr.job">
+                <field name="name">Field Supervisor</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_mu_head" model="hr.job">
+                <field name="name">MU Head</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_business_development_manager" model="hr.job">
+                <field name="name">Business Development Manager</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_operations_manager" model="hr.job">
+                <field name="name">Operations Manager</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_sr_customer_relationship_officer" model="hr.job">
+                <field name="name">Sr. Customer Relationship Officer</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_accounts_and_admin_manager" model="hr.job">
+                <field name="name">Accounts &amp; Admin Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_business_development_head" model="hr.job">
+                <field name="name">Business Development Head</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_software_engineer" model="hr.job">
+                <field name="name">Software Engineer</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_customer_service_representative" model="hr.job">
+                <field name="name">Customer Service Representative</field>
+                <field name="department_id" ref="hr_dep_customer_experience" />
+        </record>
+        <record id="hr_job_sales_head" model="hr.job">
+                <field name="name">Sales Head</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_operations_support_manager" model="hr.job">
+                <field name="name">Operations Support Manager</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_operations_supervisor" model="hr.job">
+                <field name="name">Operations Supervisor</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_operations_head" model="hr.job">
+                <field name="name">Operations Head</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_operations_executive" model="hr.job">
+                <field name="name">Operations Executive</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_senior_inside_sales_associate" model="hr.job">
+                <field name="name">Senior Inside Sales Associate</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sales_manager" model="hr.job">
+                <field name="name">Sales Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_fleet_manager" model="hr.job">
+                <field name="name">Fleet Manager</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_supply_and_operations_manager" model="hr.job">
+                <field name="name">Supply &amp; Operations Manager</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_sales_lead" model="hr.job">
+                <field name="name">Sales Lead</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sourcing_executive" model="hr.job">
+                <field name="name">Sourcing Executive</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_accounts_trainee" model="hr.job">
+                <field name="name">Accounts Trainee</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_consultant" model="hr.job">
+                <field name="name">Consultant</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_coordinator" model="hr.job">
+                <field name="name">Coordinator</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_technical_support" model="hr.job">
+                <field name="name">Technical Support</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_product_owner" model="hr.job">
+                <field name="name">Product Owner</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_senior_operations_executive" model="hr.job">
+                <field name="name">Senior Operations Executive</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_v_p_operations" model="hr.job">
+                <field name="name">V P Operations</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_associate_sales_manager" model="hr.job">
+                <field name="name">Associate Sales Manager</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_collection_manager" model="hr.job">
+                <field name="name">Collection Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_head_of_accounts_and_admin" model="hr.job">
+                <field name="name">Head of Accounts &amp; Admin</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_business_analyst" model="hr.job">
+                <field name="name">Business Analyst</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_customer_experience_head" model="hr.job">
+                <field name="name">Customer Experience Head</field>
+                <field name="department_id" ref="hr_dep_customer_experience" />
+        </record>
+        <record id="hr_job_team_lead" model="hr.job">
+                <field name="name">Team Lead</field>
+                <field name="department_id" ref="hr_dep_customer_experience" />
+        </record>
+        <record id="hr_job_management_trainee" model="hr.job">
+                <field name="name">Management Trainee</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_software_engineer_trainee" model="hr.job">
+                <field name="name">Software Engineer Trainee</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_coo" model="hr.job">
+                <field name="name">COO</field>
+                <field name="department_id" ref="hr_dep_management" />
+        </record>
+        <record id="hr_job_assistant_vp___sales_and_business_development" model="hr.job">
+                <field name="name">Assistant VP - Sales &amp; Business Development</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_manager___finance_and_investor_relations" model="hr.job">
+                <field name="name">Manager - Finance &amp; Investor Relations</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_vp___operations_and_international_projects" model="hr.job">
+                <field name="name">VP - Operations &amp; International Projects</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_operations_coordinator" model="hr.job">
+                <field name="name">Operations Coordinator</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_catalogue_specialist" model="hr.job">
+                <field name="name">Catalogue Specialist</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_senior_sales_executive" model="hr.job">
+                <field name="name">Senior Sales Executive</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_business_manager___e_commerce" model="hr.job">
+                <field name="name">Business Manager - E-Commerce</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_hr_manager" model="hr.job">
+                <field name="name">HR Manager</field>
+                <field name="department_id" ref="hr_dep_hr" />
+        </record>
+        <record id="hr_job_catalog_manager" model="hr.job">
+                <field name="name">Catalog Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_assistant_manager_(finance)" model="hr.job">
+                <field name="name">Assistant Manager (Finance)</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_data_analyst" model="hr.job">
+                <field name="name">Data Analyst</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_assistant_manager_(ops_support)" model="hr.job">
+                <field name="name">Assistant Manager (Ops Support)</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_area_sales_head" model="hr.job">
+                <field name="name">Area Sales Head</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_lead_engineer" model="hr.job">
+                <field name="name">Lead Engineer</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_team_lead_(sourcing)" model="hr.job">
+                <field name="name">Team Lead (Sourcing)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_head_of_special_projects" model="hr.job">
+                <field name="name">Head of Special Projects</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_head_of_finance_and_accounts" model="hr.job">
+                <field name="name">Head of Finance &amp; Accounts</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_manager___finance" model="hr.job">
+                <field name="name">Manager - Finance</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_team_lead___finance" model="hr.job">
+                <field name="name">Team Lead - Finance</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_finance_executive_(partner_management)" model="hr.job">
+                <field name="name">Finance Executive (Partner Management)</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_manager___receivables" model="hr.job">
+                <field name="name">Manager - Receivables</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_senior_finance_executive" model="hr.job">
+                <field name="name">Senior Finance Executive</field>
+                <field name="department_id" ref="hr_dep_finance" />
+        </record>
+        <record id="hr_job_senior_bdm" model="hr.job">
+                <field name="name">Senior BDM</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_senior_marketing_manager" model="hr.job">
+                <field name="name">Senior Marketing Manager</field>
+                <field name="department_id" ref="hr_dep_marketing" />
+        </record>
+        <record id="hr_job_key_account_manager" model="hr.job">
+                <field name="name">Key Account Manager</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_senior_software_engineer" model="hr.job">
+                <field name="name">Senior Software Engineer</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_head_of_technology" model="hr.job">
+                <field name="name">Head of Technology</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_business_head" model="hr.job">
+                <field name="name">Business Head</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_operations_executive_(field)" model="hr.job">
+                <field name="name">Operations Executive (Field)</field>
+                <field name="department_id" ref="hr_dep_operations" />
+        </record>
+        <record id="hr_job_vp_(digital_business_operations)" model="hr.job">
+                <field name="name">VP (Digital Business Operations)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_test_engineer" model="hr.job">
+                <field name="name">Senior Test Engineer</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_business_development_executive" model="hr.job">
+                <field name="name">Business Development Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_business_development_executive" model="hr.job">
+                <field name="name">Senior Business Development Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_test_engineer_trainee" model="hr.job">
+                <field name="name">Test Engineer Trainee</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_marketing_executive" model="hr.job">
+                <field name="name">Marketing Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_executive_(partner_management)" model="hr.job">
+                <field name="name">Executive (Partner Management)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_catalogue_manager" model="hr.job">
+                <field name="name">Catalogue Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_business_head___sme_and_b2c_(ka_and_ts)" model="hr.job">
+                <field name="name">Business Head - SME &amp; B2C (KA &amp; TS)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_regional_head___sme_and_b2c_(kl_and_tn)" model="hr.job">
+                <field name="name">Regional Head - SME &amp; B2C (KL &amp; TN)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_vp_sales" model="hr.job">
+                <field name="name">VP Sales</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_head___cs_and_ps" model="hr.job">
+                <field name="name">Head - CS &amp; PS</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_training_and_recruitment_coordinator" model="hr.job">
+                <field name="name">Training and Recruitment Coordinator</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_key_account_executive" model="hr.job">
+                <field name="name">Key Account Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_vp_operations" model="hr.job">
+                <field name="name">VP Operations</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_partner_support_executive" model="hr.job">
+                <field name="name">Partner Support Executive</field>
+                <field name="department_id" ref="hr_dep_customer_experience" />
+        </record>
+        <record id="hr_job_head_logistics" model="hr.job">
+                <field name="name">Head Logistics</field>
+                <field name="department_id" ref="hr_dep_sales" />
+        </record>
+        <record id="hr_job_senior_devops_engineer" model="hr.job">
+                <field name="name">Senior Devops Engineer</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_operations_support_executive" model="hr.job">
+                <field name="name">Operations Support Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_manager_finance" model="hr.job">
+                <field name="name">Manager Finance</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_catalogue_associate" model="hr.job">
+                <field name="name">Catalogue Associate</field>
+                <field name="department_id" ref="hr_dep_qwqer_shop" />
+        </record>
+        <record id="hr_job_senior_bdm,_logistics" model="hr.job">
+                <field name="name">Senior BDM, Logistics</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_test_engineer" model="hr.job">
+                <field name="name">Test Engineer</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_hr_executive" model="hr.job">
+                <field name="name">Senior HR Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_asst_hr_manager" model="hr.job">
+                <field name="name">Asst HR Manager</field>
+                <field name="department_id" ref="hr_dep_hr" />
+        </record>
+        <record id="hr_job_senior_business_analyst" model="hr.job">
+                <field name="name">Senior Business Analyst</field>
+                <field name="department_id" ref="hr_dep_product_development" />
+        </record>
+        <record id="hr_job_senior_ux_designer" model="hr.job">
+                <field name="name">Senior UX Designer</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_senior_bdm_enterprise_accounts" model="hr.job">
+                <field name="name">Senior BDM Enterprise Accounts</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_program_manager" model="hr.job">
+                <field name="name">Program Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_assistant_marketing_manager" model="hr.job">
+                <field name="name">Assistant Marketing Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_business_development_manager" model="hr.job">
+                <field name="name">Senior Business Development Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_assistant_manager_finance" model="hr.job">
+                <field name="name">Assistant Manager Finance</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_supply_manager" model="hr.job">
+                <field name="name">Supply Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_accounts_receivables" model="hr.job">
+                <field name="name">Senior Accounts Receivables</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_supply_executive" model="hr.job">
+                <field name="name">Supply Executive</field>
+                <field name="department_id" ref="hr_dep_qwqer_fleet_operations" />
+        </record>
+        <record id="hr_job_senior_vp(business_operations)" model="hr.job">
+                <field name="name">Senior VP(Business Operations)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_logistics_manager" model="hr.job">
+                <field name="name">Logistics Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_assistant_operations_manager" model="hr.job">
+                <field name="name">Assistant Operations Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sr_sales_associate_(inside_sales)" model="hr.job">
+                <field name="name">Sr Sales Associate (Inside Sales)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_jr_sales_associate_(inside_sales)" model="hr.job">
+                <field name="name">Jr Sales Associate (Inside Sales)</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_traffic_executive" model="hr.job">
+                <field name="name">Traffic Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_traffic_manager" model="hr.job">
+                <field name="name">Traffic Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_recruiter" model="hr.job">
+                <field name="name">Recruiter</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_finance_trainee" model="hr.job">
+                <field name="name">Finance Trainee</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_associate__key_accounts_and_supply" model="hr.job">
+                <field name="name">Associate- Key Accounts &amp; Supply</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_manager__operational_excellence" model="hr.job">
+                <field name="name">Senior Manager- Operational Excellence</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_national_accounts_manager" model="hr.job">
+                <field name="name">National Accounts Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_regional_business_head" model="hr.job">
+                <field name="name">Regional Business Head</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sr_manager__enterprise_sales_and_marketing" model="hr.job">
+                <field name="name">Sr Manager- Enterprise Sales and Marketing</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sr_manager__enterprise_sales_and_marketing" model="hr.job">
+                <field name="name">Sr Manager- Enterprise Sales and Marketing</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_assistant_manager___traffic" model="hr.job">
+                <field name="name">Assistant Manager - Traffic</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_customer_service_executive" model="hr.job">
+                <field name="name">Senior Customer Service Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_admin_executive" model="hr.job">
+                <field name="name">Senior Admin Executive</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_vp_marketing" model="hr.job">
+                <field name="name">VP Marketing</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_hr_manager" model="hr.job">
+                <field name="name">Senior HR Manager</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_recruiter" model="hr.job">
+                <field name="name">Senior Recruiter</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sr_manager__enterprise_sales_and_marketing___cs" model="hr.job">
+                <field name="name">Sr Manager- Enterprise Sales and Marketing / CS</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_functional_consultant" model="hr.job">
+                <field name="name">Functional Consultant</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_telecaller" model="hr.job">
+                <field name="name">Telecaller</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_sr_vice_president___sales_and_operations" model="hr.job">
+                <field name="name">Sr. Vice President - Sales &amp; Operations</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_senior_marketing_executive" model="hr.job">
+                <field name="name">Senior Marketing Executive</field>
+                <field name="department_id" ref="hr_dep_marketing" />
+        </record>
+        <record id="hr_job_odoo_functional_consultant" model="hr.job">
+                <field name="name">Odoo Functional Consultant</field>
+                <field name="department_id" ref="hr_dep_technology" />
+        </record>
+        <record id="hr_job_head__last_mile" model="hr.job">
+                <field name="name">Head- Last Mile</field>
+                <field name="department_id" ref="hr_dep_qwqer_express_sales" />
+        </record>
+        <record id="hr_job_head_last_mile" model="hr.job">
+                <field name="name">Head-Last Mile</field>
+                <field name="department_id" eval="False" />
+        </record>
+        <record id="hr_job_lead__operations" model="hr.job">
+                <field name="name">Lead- Operations</field>
+                <field name="department_id" eval="False" />
+        </record>
+    </data>
+</odoo>

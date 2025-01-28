@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_request,payment.request,model_payment_request,base.group_user,1,1,1,1
+access_bill_import_config,bill.import.config,model_bill_import_config,base.group_user,1,1,1,1
+access_import_bank_xlxs_wizard,import.bank.xlxs.wizard,model_import_bank_xlxs_wizard,base.group_user,1,1,1,1
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="qwqer_age_configuration_tree" model="ir.ui.view">
+		<field name="name">qwqer.age.configurations.tree</field>
+		<field name="model">qwqer.age.configurations</field>
+		<field name="arch" type="xml">
+			<tree string="Age Configuration">
+				<field name="name"/>
+                <field name="no_of_days"/>
+			</tree>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="qwqer_age_configuration_form">
+            <field name="name">qwqer.age.configurations.form</field>
+            <field name="model">qwqer.age.configurations</field>
+            <field name="arch" type="xml">
+                <form string="Age Configuration">
+                    <sheet>
+                    <group>
+						<field name="name"/>
+		                <field name="no_of_days"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+	<record id="action_age_configuration" model="ir.actions.act_window">
+		<field name="name">Age configuration</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">qwqer.age.configurations</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+       <menuitem id="menu_age_configuration"
+            action="action_age_configuration"
+            parent="base.menu_custom"
+            sequence="201"   
+             /> 
+</odoo>

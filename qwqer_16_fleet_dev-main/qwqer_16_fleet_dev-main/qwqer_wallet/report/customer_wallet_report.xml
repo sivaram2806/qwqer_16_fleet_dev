@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_wallet_report_pivot" model="ir.ui.view">
+            <field name="name">customer.wallet.report.pivot</field>
+            <field name="model">customer.wallet.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Customer Wallet Report" disable_linking="True">
+                    <field name="partner_id" type="row"/>
+                    <field name="debit_amt" type="measure" string="Debit"/>
+                    <field name="credit_amt" type="measure" string="Credit"/>
+                    <field name="wallet_balance" type="measure" string="Wallet Balance"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_customer_wallet_report_tree" model="ir.ui.view">
+            <field name="name">customer.wallet.report.list</field>
+            <field name="model">customer.wallet.report</field>
+            <field name="arch" type="xml">
+                <tree delete="0" create="0" edit="0" string="Customer Wallet Report">
+                    <field name="partner_id" string="Customer"/>
+                    <field name="wallet_id"/>
+                    <field name="phone_number"/>
+                    <field name="region_id"/>
+                    <field name="customer_type"/>
+                    <field name="service_type_id"/>
+                    <field name="debit_amt" sum="Total Debit"/>
+                    <field name="credit_amt" sum="Total Credit"/>
+                    <field name="wallet_balance" sum="Total Balance"/>
+                    <button class="oe_stat_button" type="object" name="action_wallet_details"
+                            icon="fa-arrow-circle-right" string="Details"/>
+                </tree>
+            </field>
+        </record>
+
+            <record id="wallet_report_search_view" model="ir.ui.view">
+                    <field name="name">wallet_report.search.view</field>
+                    <field name="model">customer.wallet.report</field>
+                    <field name="arch" type="xml">
+                        <search string="Customer Wallet Report Search">
+                        	<field name="partner_id" string="Customer"/>
+                        	<field name="wallet_id" string="Wallet ID"/>
+                        	<field name="phone_number" string="Phone No"/>
+                        	<group string="Group By">
+                        		<filter string="Region" name="region_id" context="{'group_by':'region_id'}"/>
+                        		<filter string="Customer Type" name="customer_type" context="{'group_by':'customer_type'}"/>
+                        	</group>
+                        	<separator/>
+                    		<filter string="B2B" name="customer_type_b2b" domain="[('customer_type','=','b2b')]"/>
+                    		<filter string="B2C" name="customer_type_b2c" domain="[('customer_type','=','b2c')]"/>
+        	                <filter string="Delivery Service" name="delivery_customers" domain="[('service_type_id.is_delivery_service', '=', True)]"/>
+        	                <filter string="Shop Service" name="qwqer_shop_customers" domain="[('service_type_id.is_qshop_service', '=', True)]"/>
+        				<separator/>
+                        </search>
+                    </field>
+           	</record>
+
+
+        <record id="action_customer_wallet_report" model="ir.actions.act_window">
+            <field name="name">Customer wallet Report</field>
+            <field name="res_model">customer.wallet.report</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="help">From this report, you can have an overview of the amount invoiced to your customers. The
+                search tool can also be used to personalise your Invoices reports and so, match this analysis to your
+                needs.
+            </field>
+        </record>
+
+
+        <menuitem id="menu_sale_wallet"
+                  name="Wallet"
+                  parent="sale.sale_menu_root"
+                  groups="visible_wallet_listing_group"
+                  sequence="26"/>
+
+        <menuitem id="menu_customer_wallet_sale_menu" action="action_customer_wallet_report"
+                  parent="menu_sale_wallet" sequence="1" name="Customer Wallet"/>
+
+
+    </data>
+</odoo>

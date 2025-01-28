@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="bill_import_config_form" model="ir.ui.view">
+            <field name="name">bill.import.config.form</field>
+            <field name="model">bill.import.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="e.g. HDFC Adv Payment Configuration" required="1"/></h1>
+                        </div>
+                        <group name="main_group">
+                            <group name="sub_main_group1">
+                                <field name="journal_id" options="{'no_create_edit':True}"/>
+                                <field name="partner_type"/>
+                            </group>
+                            <group name="sub_main_group2">
+                            	<field name="payment_type"/>
+                                <field name="payment_method_id"  widget="selection" />
+                                <field name="company_id" readonly="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="bill_import_config_tree" model="ir.ui.view">
+            <field name="name">bill.import.config.tree</field>
+            <field name="model">bill.import.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="journal_id" />
+                    <field name="partner_type"/>
+                    <field name="payment_type"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+        <record id="bill_import_config_action" model="ir.actions.act_window">
+            <field name="name">Bill Import Configuration</field>
+            <field name="res_model">bill.import.config</field>
+            <field name="view_id" ref="bill_import_config_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        
+               
+        <menuitem id="menu_bill_import_config" name="Bill Import Configuration" action="payment_request.bill_import_config_action"
+		            parent="payment_request.menu_all_mail_main"
+               sequence="3"/>
+    </data>
+</odoo>

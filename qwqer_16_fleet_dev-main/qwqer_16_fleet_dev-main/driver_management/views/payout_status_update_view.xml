@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="payout_status_tree" model="ir.ui.view">
+            <field name="name">payout.status.update.tree</field>
+            <field name="model">payout.status.update</field>
+            <field name="arch" type="xml">
+                <tree create="0" default_order='id desc'>
+                    <field name="batch_payout_id"/>
+                    <field name="create_date"/>
+                    <field name="is_check"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="payout_status_update_search" model="ir.ui.view">
+            <field name="name">payout.status.update.search</field>
+            <field name="model">payout.status.update</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="batch_payout_id" string="Payout" filter_domain="[('batch_payout_id', 'ilike', self)]"/>
+                    <filter name="filter_checked" string="Checked" domain="[('is_check', '=', True)]"/>
+                    <filter name="filter_not_checked" string="Not Checked" domain="[('is_check', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="payout_status_action" model="ir.actions.act_window">
+            <field name="name">Completed Payout Status</field>
+            <field name="res_model">payout.status.update</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_payout_status"
+                  name="Completed Payout Status"
+                  sequence="5"
+                  action="payout_status_action"
+                  parent="menu_drivers_payout_configuration"/>
+
+    </data>
+</odoo>

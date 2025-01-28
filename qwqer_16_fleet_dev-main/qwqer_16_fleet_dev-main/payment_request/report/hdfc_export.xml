@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="hdfc_export_xlsx" model="ir.actions.report">
+        <field name="name">HDFC Export</field>
+        <field name="model">account.move</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">payment_request.hdfc_export_xlsx</field>
+        <field name="report_file">payment_request.hdfc_export_xlsx</field>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+    </data>
+</odoo>

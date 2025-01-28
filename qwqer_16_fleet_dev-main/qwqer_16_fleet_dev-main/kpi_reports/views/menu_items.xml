@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+            id="sale_order_kpi_report_menu"
+            name="KPI Reports"
+            sequence="232"
+            web_icon="kpi_reports,static/description/kpi_report.png"
+    />
+    <menuitem
+            id="kpi_report_main_menu"
+            name="KPI Report"
+            parent="sale_order_kpi_report_menu"
+            sequence="1"/>
+
+    <menuitem
+            id="kpi_view_report_menu"
+            name="KPI View Reports"
+            parent="kpi_report_main_menu"
+            sequence="2"/>
+    <menuitem
+            id="sale_download_report_menu"
+            name="KPI Download Reports"
+            parent="kpi_report_main_menu"
+            sequence="3"/>
+    <menuitem id="sale_order_report_wizard_menu"
+              name="Sale Order Report"
+              parent="sale_download_report_menu"
+              action="action_sale_order_report_wizard"
+              sequence="1"/>
+    <menuitem id="invoice_summary_report_menu_xl"
+              name="Invoice Summary Report"
+              parent="sale_download_report_menu"
+              action="action_invoice_summary_wizard_xl"
+              sequence="3"/>
+    <menuitem id="salesperson_report_menu_xl"
+              name="Sales Person Summary Report"
+              parent="sale_download_report_menu"
+              action="action_salesperson_summary_report_wizard"
+              sequence="4"/>
+
+
+    <menuitem id="revenue_report_menu_xl"
+              name="Revenue Report"
+              parent="sale_download_report_menu"
+              action="action_revenue_report_xl"
+              sequence="4"/>
+</odoo>

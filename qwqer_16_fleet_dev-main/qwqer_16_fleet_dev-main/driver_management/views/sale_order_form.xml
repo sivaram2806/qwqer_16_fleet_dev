@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_tree_driver_management" model="ir.ui.view">
+        <field name="name">sale.order.tree.driver.management</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="stop_count" invisible="not context.get('daily_driver_so', False)"/>
+                <field name="estimated_distance" sum="Total"  invisible="not context.get('daily_driver_so', False)"/>
+                <field name="order_cost" avg="Avg" invisible="not context.get('from_kpi', False)"/>
+                <field name="vehicle_type" optional="hide" force_save="1"/>
+                <field name="vehicle_category_id" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_driver_management_inherit" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <field name="order_cost"/>
+
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="sale_order_driver_management_view_form" model="ir.ui.view">
+        <field name="name">sale_order_driver_management_view_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="vehicle_type" invisible="1"/>
+                <field name="vehicle_category_id" invisible="1"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,163 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Example Departments -->
+        <record id="hr_dep_administration" model="hr.department">
+            <field name="name">ADMIN</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_contract" model="hr.department">
+            <field name="name">CONTRACT</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_customer_experience" model="hr.department">
+            <field name="name">CUSTOMER EXPERIENCE</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <!-- Sub-departments under CONTRACT -->
+        <record id="hr_dep_de_ap" model="hr.department">
+            <field name="name">DE - AP</field>
+            <field name="parent_id" ref="hr_dep_contract" />
+        </record>
+
+        <record id="hr_dep_de_ka" model="hr.department">
+            <field name="name">DE - KA</field>
+            <field name="parent_id" ref="hr_dep_contract" />
+        </record>
+
+        <record id="hr_dep_de_kl" model="hr.department">
+            <field name="name">DE - KL</field>
+            <field name="parent_id" ref="hr_dep_contract" />
+        </record>
+
+        <record id="hr_dep_de_tn" model="hr.department">
+            <field name="name">DE - TN</field>
+            <field name="parent_id" ref="hr_dep_contract" />
+        </record>
+
+        <record id="hr_dep_de_ts" model="hr.department">
+            <field name="name">DE - TS</field>
+            <field name="parent_id" ref="hr_dep_contract" />
+        </record>
+
+        <!-- Other Departments -->
+        <record id="hr_dep_director" model="hr.department">
+            <field name="name">DIRECTOR</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_finance" model="hr.department">
+            <field name="name">FINANCE</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_hr" model="hr.department">
+            <field name="name">HR</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_inside_sales" model="hr.department">
+            <field name="name">Inside Sales</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_operations" model="hr.department">
+            <field name="name">OPERATIONS</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <!-- Sub-departments under OPERATIONS -->
+        <record id="hr_dep_ka_operations" model="hr.department">
+            <field name="name">KA</field>
+            <field name="parent_id" ref="hr_dep_operations" />
+        </record>
+
+        <record id="hr_dep_kl_operations" model="hr.department">
+            <field name="name">KL</field>
+            <field name="parent_id" ref="hr_dep_operations" />
+        </record>
+
+        <record id="hr_dep_tn_operations" model="hr.department">
+            <field name="name">TN</field>
+            <field name="parent_id" ref="hr_dep_operations" />
+        </record>
+
+        <record id="hr_dep_ts_operations" model="hr.department">
+            <field name="name">TS</field>
+            <field name="parent_id" ref="hr_dep_operations" />
+        </record>
+
+        <!-- Sub-departments under SALES -->
+        <record id="hr_dep_sales" model="hr.department">
+            <field name="name">SALES</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_ka_sales" model="hr.department">
+            <field name="name">KA</field>
+            <field name="parent_id" ref="hr_dep_sales" />
+        </record>
+
+        <record id="hr_dep_kl_sales" model="hr.department">
+            <field name="name">KL</field>
+            <field name="parent_id" ref="hr_dep_sales" />
+        </record>
+
+        <record id="hr_dep_tn_sales" model="hr.department">
+            <field name="name">TN</field>
+            <field name="parent_id" ref="hr_dep_sales" />
+        </record>
+
+        <record id="hr_dep_ts_sales" model="hr.department">
+            <field name="name">TS</field>
+            <field name="parent_id" ref="hr_dep_sales" />
+        </record>
+
+        <record id="hr_dep_management" model="hr.department">
+            <field name="name">MANAGEMENT</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_marketing" model="hr.department">
+            <field name="name">MARKETING</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_product_development" model="hr.department">
+            <field name="name">Product Development</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_qwqer_express_operations" model="hr.department">
+            <field name="name">QWQER Express Operations</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_qwqer_express_sales" model="hr.department">
+            <field name="name">QWQER Express Sales</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_qwqer_fleet_operations" model="hr.department">
+            <field name="name">QWQER Fleet Operations</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_qwqer_fleet_sales" model="hr.department">
+            <field name="name">QWQER Fleet Sales</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_qwqer_shop" model="hr.department">
+            <field name="name">QWQER Shop</field>
+            <field name="parent_id" eval="False" />
+        </record>
+
+        <record id="hr_dep_technology" model="hr.department">
+            <field name="name">TECHNOLOGY</field>
+            <field name="parent_id" eval="False" />
+        </record>
+    </data>
+</odoo>

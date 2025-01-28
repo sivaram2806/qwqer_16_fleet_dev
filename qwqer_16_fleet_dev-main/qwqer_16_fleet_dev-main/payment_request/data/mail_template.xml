@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    
+    <data noupdate="0">
+
+        <!--Email templates -->
+        
+        <record id="payment_req_replay_mail" model="mail.template">
+            <field name="name">Payment Request: Replay email</field>
+            <field name="model_id" ref="model_payment_request"/>
+            <field name="email_to">{{(object.email) }}</field>
+            <field name="email_cc">{{(object.cc_email)}}</field>
+            <field name="subject">{{(object.subject)}}</field>
+            <field name="body_html" type="html">
+                 <div>
+                     <p>
+                         
+                         Hi,<br/><br/>
+
+                         Your payment has been made against <b>UTR XXXXXXXX</b> as on <b><t t-out="ctx.get('time')"/></b><br/><br/>
+						
+						Regards<br/>
+						QWQER
+                         
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+           
+ 		
+    </data>
+</odoo>

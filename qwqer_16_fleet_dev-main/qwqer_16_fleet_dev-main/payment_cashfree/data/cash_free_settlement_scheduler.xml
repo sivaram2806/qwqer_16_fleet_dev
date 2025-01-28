@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Cron job to call the Cashfree settlement API and generate records in the settlement as well as in
+    payments if they are verified-->
+    <record id="ir_cron_cash_free_api_import" model="ir.cron">
+        <field name="name">Auto Cash Free Statement Scheduler</field>
+        <field name="model_id" ref="model_cash_free_settlement"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model._cron_cash_free_api_import()</field>
+        <field name="interval_number">1</field>
+        <field name="active">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

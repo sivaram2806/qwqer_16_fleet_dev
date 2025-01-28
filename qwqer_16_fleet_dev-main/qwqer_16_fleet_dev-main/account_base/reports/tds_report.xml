@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Record to create TDS Report-->
+    <record id="tds_export_xlsx_report" model="ir.actions.report">
+        <field name="name">Tds Report</field>
+        <field name="model">tds.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">account_base.tds_report_export.xlsx</field>
+        <field name="report_file">TDS Report</field>
+    </record>
+</odoo>

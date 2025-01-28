@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- FTL batch trip form view -->
+    <record id="batch_trip_ftl_form" model="ir.ui.view">
+        <field name="name">batch.trip.ftl.form</field>
+        <field name="model">batch.trip.ftl</field>
+        <field name="arch" type="xml">
+            <form duplicate="0">
+                <header>
+                    <button type="object"
+                            name="action_ftl_send_for_approval"
+                            class="btn btn-primary" string="Send For Approval"
+                            attrs="{'invisible': [('state', '!=', 'new')]}"
+                            groups="fleet_ftl.group_ftl_user,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_ops_approve"
+                            class="btn btn-primary" string="Approve"
+                            attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+                            groups="fleet_ftl.group_ftl_approver,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_trip_finance_approve"
+                            class="btn btn-primary" string="Approve"
+                            attrs="{'invisible': [('state', '!=', 'ops_approved')]}"
+                            groups="fleet_ftl.ftl_finance_manger,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_trip_complete"
+                            class="btn btn-primary" string="Complete"
+                            attrs="{'invisible': [('state', '!=', 'finance_approved')]}"
+                            groups="fleet_ftl.group_ftl_trip_complete,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_return"
+                            class="btn btn-primary" string="Return"
+                            attrs="{'invisible': [('state', '!=','pending_approval')]}"
+                            groups="fleet_ftl.group_ftl_approver,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_return"
+                            class="btn btn-primary" string="Return"
+                            attrs="{'invisible': [('state', '!=','ops_approved')]}"
+                            groups="fleet_ftl.ftl_finance_manger,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_trip_rejected"
+                            class="btn btn-primary" string="Reject"
+                            attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+                            groups="fleet_ftl.group_ftl_approver,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_ftl_trip_rejected"
+                            class="btn btn-primary" string="Reject"
+                            attrs="{'invisible': [('state', '!=', 'ops_approved')]}"
+                            groups="fleet_ftl.ftl_finance_manger,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="action_send_to_customer"
+                            class="btn btn-primary" string="Send to Customer"
+                            attrs="{'invisible': [('state', 'in', ('new','rejected'))]}"
+                            groups="fleet_ftl.group_ftl_user,fleet.fleet_group_manager"/>
+
+                    <button type="object"
+                            name="print_ftl_xlsx"
+                            string="Download"
+                            attrs="{'invisible': [('state', '=', 'rejected')]}"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,pending_approval,ops_approved,finance_approved,completed"
+                           required="1"/>
+                </header>
+                <div class="alert alert-danger" role="alert" style="margin-bottom: 0px;"
+                     attrs="{'invisible': [('amount_alert_bool', '=', False)]}">The Work Order
+                    Amount is
+                    <b>
+                        <field name="work_order_amount" readonly="True"/>
+                    </b>
+                    and the Total Trip Amount is
+                    <b>
+                        <field name="total_trip_amount" readonly="True"/>
+                    </b>
+                </div>
+                <sheet>
+                    <div class="oe_title">
+                        <h4 class="d-flex">
+                            <span class="o_form_label">Daily Trip</span>
+                        </h4>
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id" string="Customer" required='1'
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('customer_rank','>', 0),('company_id','in', (company_id,False)), ('service_type_id.is_fleet_service','=',True),('is_ftl_customer','=',True)]"
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="vendor_id" string="Vendor" required='1'
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('supplier_rank','>', 0),('company_id','in', (company_id,False)), ('service_type_id.is_fleet_service','=',True)]"
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="region_id" string="Trip Region"
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   required='1' attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="source_id" required='1' attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="destination_id" required='1'
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="work_order_id" required='1'
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('customer_id','=', customer_id),('state','=','finance_approve'),
+                                   ('company_id', 'in', (company_id, False))]"/>
+                            <field name="sales_person_id" readonly='1' force_save='1'/>
+                            <field name="work_order_amount" readonly='1' force_save='1'/>
+                            <field name="work_order_shipping_address" readonly='1' force_save='1'/>
+                        </group>
+                        <group>
+                            <field name="trip_date" string="Trip Date" required='1'
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="lorry_receipt_no"
+                                   attrs="{'readonly': [('state', 'in', ['completed', 'rejected'])]}"/>
+                            <field name="invoice_state" readonly="1" force_save='1'/>
+                            <field name='create_uid'/>
+                            <field name="comments" string="Comments"
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name='eway_bill_number'
+                                   attrs="{'readonly': [('state', 'in', ['completed', 'rejected'])]}"/>
+                            <field name="ftl_multi_attachment_ids" widget="many2many_binary" string="Attachment"
+                                   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="amount_alert_bool" invisible="1"/>
+                            <field name="pod_attachment_name" invisible="1"/>
+                            <field name="pod_attachment" string="POD Attachment" filename="pod_attachment_name"
+                                   attrs="{'readonly': [('state', 'in', ['completed', 'rejected'])]}"/>
+                            <field name="is_editable" invisible="1"/>
+                            <field name="total_trip_amount" invisible="1"/>
+                            <field name="company_id" options="{'no_open': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string='Trip Details'>
+                            <group>
+                                <group>
+                                    <group>
+                                        <field name="start_date" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="end_date" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="vehicle_id" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="total_km" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="tonnage" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="vehicle_model_id"/>
+
+                                    </group>
+
+
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="total_trip_amount"
+                                               attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="vehicle_description"
+                                               attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="vehicle_type_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="package_description"
+                                               attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                        <field name="quantity" invisible="1"/>
+
+                                    </group>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="User Action History">
+                            <field name="user_action_ids" options="{'no_create_edit': True}" readonly="1">
+                                <tree editable="bottom">
+                                    <field name="create_uid" string="User"/>
+                                    <field name="create_date" string="Time of Action"/>
+                                    <field name="action" string="Action Performed"/>
+                                    <field name="description" string="Comments"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="description" string="Comments"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- FTL batch trip tree view -->
+    <record id="batch_trip_ftl_tree" model="ir.ui.view">
+        <field name="name">batch.trip.ftl.tree</field>
+        <field name="model">batch.trip.ftl</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string='Vehicle Request Number'/>
+                <field name="trip_date" string="Trip Date"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="vendor_id" string="Vendor"/>
+                <field name="region_id" string="Region"/>
+                <field name="work_order_id" string="Work Order"/>
+                <field name='source_id'/>
+                <field name='destination_id'/>
+                <field name='total_trip_amount'/>
+                <field name='vehicle_id' optional="hide"/>
+                <field name='vehicle_model_id' optional="show"/>
+                <field name='vehicle_type_id' optional="hide"/>
+                <field name='start_date' optional="hide"/>
+                <field name='end_date' optional="hide"/>
+                <field name='total_km' optional="hide"/>
+                <field name='tonnage' optional="hide"/>
+                <field name='create_uid'/>
+                <field name="state" string='Status' optional="show" widget="badge"
+                       decoration-success="state == 'completed'"/>
+                <field name="invoice_state" string='Invoice Status'/>
+                <field name="company_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FTL batch trip pivot view -->
+    <record model="ir.ui.view" id="ftl_batch_trip_ftl_pivot">
+        <field name="name">batch.trip.ftl.pivot</field>
+        <field name="model">batch.trip.ftl</field>
+        <field name="arch" type="xml">
+            <pivot string="Work Order">
+                <field name="create_date" interval="month" type="col"/>
+                <field name="work_order_id" type="row"/>
+                <field name="total_amount" type="measure"/>
+                <field name="vendor_cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- FTL batch trip search view -->
+    <record id="batch_trip_ftl_search" model="ir.ui.view">
+        <field name="name">batch.trip.ftl.search</field>
+        <field name="model">batch.trip.ftl</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Vehicle Request Number"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="vendor_id" string="Vendor"/>
+                <field name="region_id" string="Region"/>
+                <field name="work_order_id" string="Work Order"/>
+                <field name="batch_trip_line_ids" string="Trip Number"
+                       filter_domain="[('batch_trip_line_ids.trip_no', 'ilike', self)]"/>
+                <field name="batch_trip_line_ids" string="Vehicle No"
+                       filter_domain="[('batch_trip_line_ids.vehicle_id.vehicle_no', 'ilike', self)]"/>
+                <field name="batch_trip_line_ids" string="Vehicle Model"
+                       filter_domain="[('batch_trip_line_ids.vehicle_id.vehicle_model_id.name', 'ilike', self)]"/>
+                <field name="batch_trip_line_ids" string="Vehicle Type"
+                       filter_domain="[('batch_trip_line_ids.vehicle_id.vehicle_type_id.name', 'ilike', self)]"/>
+                <filter name="filter_new" string="New" domain="[('state', '=', 'new')]"/>
+                <filter name="filter_pending_approval" string="Pending Approval"
+                        domain="[('state', '=', 'pending_approval')]"/>
+                <filter name="filter_ops_approved" string="Ops Approved" domain="[('state', '=', 'ops_approved')]"/>
+                <filter name="filter_fin_approved" string="Finance Approved"
+                        domain="[('state', '=', 'finance_approved')]"/>
+                <separator/>
+                <filter name="filter_completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="filter_rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_date" date="create_date" default_period="this_month"/>
+                <filter name="filter_trip_date_365" string="Trip Date: Last 365 Days"
+                        domain="[('create_date', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(days=-365), datetime.time(0,0,0))).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <separator/>
+                <filter name="filter_to_invoice" string="To Invoice"
+                        domain="[('invoice_state', '=', 'to_invoice')]"/>
+                <filter name="filter_invoiced" string="Invoiced" domain="[('invoice_state', '=', 'invoiced')]"/>
+                <filter name="filter_nothing_to_invoice" string="Nothing to Invoice"
+                        domain="[('invoice_state', '=', 'nothing_to_invoice')]"/>
+                <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+                <filter string="Invoice Status" name="invoice_state" context="{'group_by': 'invoice_state'}"/>
+                <filter string="Customer" name="customer_id" context="{'group_by': 'customer_id'}"/>
+                <filter string="Region" name="group_by_region_id" context="{'group_by': 'region_id'}"/>
+                <filter string="Trip Date" name="trip_date" context="{'group_by': 'trip_date'}"/>
+                <filter string="Vendor" name="vendor_id" context="{'group_by': 'vendor_id'}"/>
+                <filter string="Work Order" name="work_order_id" context="{'group_by': 'work_order_id'}"/>
+                <group expand="1" string="Group By">
+                    <filter string="Trip" name="Trip" context="{'group_by':'name'}"/>
+                    <filter string="Work Order" name="Work Order" context="{'group_by':'work_order_id'}"/>
+                    <filter string="Sales Region" name="Sales Region" context="{'group_by':'region_id'}"/>
+                    <filter string="Sales Person" name="Sales Person" context="{'group_by':'sales_person_id'}"/>
+                    <filter string="Customer" name="Customer" context="{'group_by':'customer_id'}"/>
+                    <filter string="Vendor" name="Vendor" context="{'group_by':'vendor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- FTL batch trip line search view -->
+    <record id="batch_trip_ftl_line_search" model="ir.ui.view">
+        <field name="name">batch.trip.ftl.line.search</field>
+        <field name="model">batch.trip.ftl.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ftl_batch_trip_id" string="Vehicle Request Number"/>
+                <field name="source_id" string="Source"/>
+                <field name="destination_id" string="Destination"/>
+                <field name="work_order_id" string="Work Order"/>
+                <separator/>
+
+                <filter name="filter_date" date="create_date" default_period="this_month"/>
+                <filter name="filter_trip_date_365" string="Trip Date: Last 365 Days"
+                        domain="[('create_date', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(days=-365), datetime.time(0,0,0))).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Trip" name="Trip" context="{'group_by':'ftl_batch_trip_id'}"/>
+                    <filter string="Work Order" name="Work Order" context="{'group_by':'work_order_id'}"/>
+                    <filter string="Source" name="Trip" context="{'group_by':'source_id'}"/>
+                    <filter string="Destination" name="Trip" context="{'group_by':'destination_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- FTL batch trip pivot search view -->
+    <record model="ir.ui.view" id="ftl_batch_trip_ftl_line_pivot">
+        <field name="name">batch.trip.ftl.line.pivot</field>
+        <field name="model">batch.trip.ftl.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Work Order">
+                <field name="create_date" interval="month" type="col"/>
+                <field name="work_order_id" type="row"/>
+                <field name="total_amount" type="measure"/>
+                <field name="vendor_cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--  Action for batch.trip.ftl model  -->
+    <record id="daily_trip_ftl_action" model="ir.actions.act_window">
+        <field name="name">FTL Daily Trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">batch.trip.ftl</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new work order.
+            </p>
+        </field>
+    </record>
+
+    <!--  Action for batch.trip.ftl.line model  -->
+    <record id="ftl_batch_trip_line_pivot_action" model="ir.actions.act_window">
+        <field name="name">FTL Source Destination</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">batch.trip.ftl.line</field>
+        <field name="view_mode">pivot</field>
+        <field name="search_view_id" ref="batch_trip_ftl_line_search"/>
+        <field name="domain">[('ftl_batch_trip_id.state', '!=', 'rejected'),
+            ('ftl_batch_trip_id.work_order_id.wo_type_id.is_single_trip', '=', True)]
+        </field>
+        <field name="context">{
+            'search_default_filter_trip_date_365': 1,
+            'pivot_measures': ['__count__', 'total_amount', 'vendor_cost']
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                No records found for this report.
+            </p>
+        </field>
+    </record>
+
+    <!--  Action for batch.trip.ftl model  -->
+    <record id="ftl_daily_trip_pivot_action" model="ir.actions.act_window">
+        <field name="name">FTL Daily Trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">batch.trip.ftl</field>
+        <field name="view_mode">pivot</field>
+        <field name="search_view_id" ref="batch_trip_ftl_search"/>
+        <field name="domain">[('state', '!=', 'rejected'), ('work_order_id.wo_type_id.is_single_trip', '=', True)]
+        </field>
+        <field name="context">{
+            'search_default_filter_trip_date_365': 1,
+            'pivot_measures': ['__count__', 'total_amount', 'vendor_cost']
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                No records found for this report.
+            </p>
+        </field>
+    </record>
+
+    <!--  menu item of FTL Work order Fleet > FTL > Daily Trip 	-->
+    <menuitem id="fleet_vehicle_ftl_daily_trip_menu"
+              name="Daily Trip"
+              parent="fleet_ftl.fleet_vehicle_ftl_menu"
+              action="daily_trip_ftl_action"
+              groups="fleet_ftl.ftl_finance_manger,fleet_ftl.group_ftl_user,fleet_ftl.group_ftl_approver,fleet.fleet_group_manager"
+              sequence="20"/>
+
+    <!-- FTL cost analysis report wizard menu Fleet > Reports > FTL > FTL Report -->
+    <menuitem id="menu_ftl_daily_trip_report"
+              name="FTL Report"
+              action="ftl_daily_trip_pivot_action"
+              parent="fleet_ftl.menu_ftl_reports"
+              sequence="10"/>
+
+    <!--	action for Set modified batch trip ftl values from line: to remove after migration-->
+    <record id="batch_trip_ftl_set_new_values_trip_in_action_button" model="ir.actions.server">
+        <field name="name">Set Values From Line</field>
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+        <field name="model_id" ref="model_batch_trip_ftl"/>
+        <field name="binding_model_id" ref="model_batch_trip_ftl"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.set_data_from_batch_trip_line_ids()
+        </field>
+    </record>
+</odoo>
+
+
+

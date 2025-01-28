@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--  tree view account.move.line  -->
+    <record id="view_move_line_tree_account_base" model="ir.ui.view">
+        <field name="name">account.move.line.tree.account.base</field>
+        <field name="model">account.move.line</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="tax_ids" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="balance" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!--    action for General Ledger-->
+    <record id="action_account_moves_ledger_general" model="ir.actions.act_window">
+        <field name="context">{'journal_type':'general', 'search_default_group_by_account': 1,
+            'search_default_posted':1}
+        </field>
+        <field name="name">General Ledger</field>
+        <field name="res_model">account.move.line</field>
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note'))]</field>
+        <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+        <field name="view_mode">tree,pivot,graph</field>
+    </record>
+
+    <!--    action for Partner Ledger-->
+    <record id="action_account_moves_ledger_partner" model="ir.actions.act_window">
+        <field name="context">{'journal_type':'general', 'search_default_group_by_partner': 1,
+            'search_default_posted':1, 'search_default_payable':1, 'search_default_receivable':1,
+            'search_default_unreconciled':1}
+        </field>
+        <field name="name">Partner Ledger</field>
+        <field name="res_model">account.move.line</field>
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note'))]</field>
+        <field name="view_id" ref="account.view_move_line_tree_grouped_partner"/>
+        <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+        <field name="view_mode">tree,pivot,graph</field>
+    </record>
+
+    <!--    menu for journals-->
+    <menuitem id="menu_finance_entries_accounting_journals"
+              name="Journals"
+              parent="account.menu_finance_entries"
+              sequence="2"/>
+    <!--    menu for Sales journals-->
+    <menuitem
+            id="menu_action_account_moves_journal_sales"
+            action="account.action_account_moves_journal_sales"
+            parent="account_base.menu_finance_entries_accounting_journals"
+            groups="account.group_account_user"
+            sequence="1"/>
+    <!--    menu for purchase journals-->
+    <menuitem
+            id="menu_action_account_moves_journal_purchase"
+            action="account.action_account_moves_journal_purchase"
+            parent="account_base.menu_finance_entries_accounting_journals"
+            groups="account.group_account_user"
+            sequence="1"/>
+    <!--    menu for bank and cash journals-->
+    <menuitem
+            id="menu_action_account_moves_journal_bank_cash"
+            action="account.action_account_moves_journal_bank_cash"
+            parent="account_base.menu_finance_entries_accounting_journals"
+            groups="account.group_account_user"
+            sequence="1"/>
+    <!--    menu for miscellaneous journals-->
+    <menuitem
+            id="menu_action_account_moves_journal_misc"
+            action="account.action_account_moves_journal_misc"
+            parent="account_base.menu_finance_entries_accounting_journals"
+            groups="account.group_account_user"
+            sequence="1"/>
+    <!--    main menu for ledger-->
+    <menuitem id="menu_finance_entries_accounting_ledgers"
+              name="Ledgers"
+              parent="account.menu_finance_entries"
+              sequence="3"
+              active="False"/>
+    <!--    menu for general ledger -->
+    <menuitem
+            id="menu_action_account_moves_ledger_general"
+            action="action_account_moves_ledger_general"
+            parent="account_base.menu_finance_entries_accounting_ledgers"
+            groups="account.group_account_user"
+            sequence="1"
+            active="False"/>
+    <!--menu for partner ledger -->
+    <menuitem
+            id="menu_action_account_moves_ledger_partner"
+            action="action_account_moves_ledger_partner"
+            parent="account_base.menu_finance_entries_accounting_ledgers"
+            groups="account.group_account_user"
+            sequence="1"
+            active="False"/>
+</odoo>

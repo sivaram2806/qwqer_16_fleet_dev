@@ -1,0 +1,66 @@
+
+<odoo>
+    <!--	trip summary report wizard form view-->
+    <record id="trip_summary_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">trip.summary.report.wizard.view.form</field>
+        <field name="model">trip.summary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Comments">
+				<group>
+					<group>
+                		<field name="from_date" required = '1'/>
+                		<field name="region_id" string="Region" options="{'no_create': True, 'no_edit': True}" required='1'/>
+                		<field name="sales_person_id" string="Sales Person" options="{'no_create': True, 'no_edit': True}"/>
+                	</group>
+                	<group>
+						<field name="to_date" required = '1'/>
+                		<field name="customer_id"  options="{'no_create': True, 'no_edit': True}" domain="[('customer_rank','>', 0), ('service_type_id.is_fleet_service','=',True)]"  attrs="{'invisible': [('action_type', '!=', 'customer')]}"/>
+                		<field name="vendor_id"  options="{'no_create': True, 'no_edit': True}" domain="[('supplier_rank','>', 0), ('service_type_id.is_fleet_service','=',True)]"  attrs="{'invisible': [('action_type', '!=', 'vendor')]}"/>
+                		<field name='action_type' invisible='1'/>
+                	</group>
+                </group>
+                <footer>
+                    <button string='Print' name="action_vendor_trip_summary" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+    <!--    Vendor Trip summary Report Wizard Action  -->
+    <record id="action_vendor_trip_report" model="ir.actions.act_window">
+        <field name="name">Vendor Trip Summary</field>
+        <field name="res_model">trip.summary.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'default_action_type': 'vendor'}</field>
+        <field name="view_id" ref="trip_summary_report_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <!-- vendor trip summary report wizard menu: Fleet > Reports > Urban Haul-->
+    <menuitem id="menu_vendor_trip_summary_report"
+              name="Vendor Trip Summary"
+              action="fleet_urban_haul.action_vendor_trip_report"
+              parent="fleet_urban_haul.menu_urban_haul_reports"
+              sequence="1"/>
+
+    <!--    Customer Trip summary Report Wizard Action  -->
+    <record id="action_customer_trip_report" model="ir.actions.act_window">
+        <field name="name">Customer Trip Summary</field>
+        <field name="res_model">trip.summary.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'default_action_type': 'customer'}</field>
+        <field name="view_id" ref="trip_summary_report_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+
+            <!-- customer trip summary report wizard menu: Fleet > Reports > Urban Haul -->
+    <menuitem id="menu_customer_trip_summary_report"
+              name="Customer Trip Summary"
+              action="fleet_urban_haul.action_customer_trip_report"
+              parent="fleet_urban_haul.menu_urban_haul_reports"
+              sequence="2"/>
+
+
+</odoo>

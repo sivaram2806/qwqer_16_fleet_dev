@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="mail_activity_report_xlsx" model="ir.actions.report">
+        <field name="name">Salesperson Activity Report</field>
+        <field name="model">mail.activity</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">qwy_scheduled_activity_report.report_mail_activity_xlsx</field>
+        <field name="report_file">qwy_scheduled_activity_report.report_mail_activity_xlsx</field>
+        <field name="print_report_name">'Sales Person Activity Report'</field>
+        <field name="binding_model_id" ref="mail.model_mail_activity"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

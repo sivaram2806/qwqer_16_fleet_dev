@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  work.order model form view  -->
+	<record id="work_order_form_view" model="ir.ui.view">
+		<field name="name">work.order.form.view</field>
+		<field name="model">work.order</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button type="object"
+						name="action_send_for_approve"
+						class="btn btn-primary"
+						string="Send For Approval"
+						attrs="{'invisible': [('state', '!=', 'new')]}"
+						groups="fleet_ftl.group_ftl_work_order_send_for_approval,fleet.fleet_group_manager"/>
+
+					<button type="object"
+						name="action_mu_approve"
+						class="btn btn-primary"
+						string="MU Approve"
+						attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+						groups="fleet_ftl.group_ftl_work_order_mu_approve,fleet.fleet_group_manager"/>
+
+					<button type="object"
+						name="action_finance_approve"
+						class="btn btn-primary"
+						string="Finance Approve"
+						attrs="{'invisible': [('state', '!=', 'mu_approve')]}"
+						groups="fleet_ftl.group_ftl_work_order_finance_approve,fleet.fleet_group_manager"/>
+
+					<button type="object"
+						name="action_return"
+						class="btn btn-primary"
+						string="Return"
+						attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+						context="{'button_mu_user': True}"
+						groups="fleet_ftl.group_ftl_work_order_mu_approve,fleet.fleet_group_manager"/>
+
+					<button type="object"
+						name="action_return"
+						class="btn btn-primary"
+						string="Return"
+						attrs="{'invisible': [('state', '!=', 'mu_approve')]}"
+						groups="fleet_ftl.group_ftl_work_order_finance_approve,fleet.fleet_group_manager"
+						context="{'button_finance_user': True}"/>
+
+					<button type="object"
+						name="action_reject"
+						string="Reject"
+						attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+						groups="fleet_ftl.group_ftl_work_order_mu_approve,fleet.fleet_group_manager"
+						context="{'button_mu_user': True}"/>
+
+					<button type="object"
+						name="action_reject"
+						string="Reject"
+						attrs="{'invisible': [('state', '!=', 'mu_approve')]}"
+						groups="fleet_ftl.group_ftl_work_order_finance_approve,fleet.fleet_group_manager"
+						context="{'button_finance_user': True}"/>
+
+					<button type="action"
+						name="%(fleet_ftl.action_wo_adv_payment_wizard)d"
+						class="btn btn-primary"
+						string="Payment"
+						context="{'adv_payment_type': adv_payment_type}"
+						groups="fleet_ftl.group_ftl_work_order_finance_approve,fleet.fleet_group_manager"
+						attrs="{'invisible': [('state', '!=', 'finance_approve')]}"/>
+
+					<field name="state" widget="statusbar" statusbar_visible="new,pending_approval,mu_approve,finance_approve"/>
+				</header>
+
+                <div class="alert alert-warning mb-0" role="alert"
+					 attrs="{'invisible': ['|', ('is_credit_warning_visible', '=', False), ('customer_credit_warning', '=', False)]}">
+					<field name="customer_credit_warning" readonly="1"/>
+                    <field name='is_credit_warning_visible' invisible="1"/>
+				</div>
+				<div class="alert alert-danger mb-0" role="alert"
+					 attrs="{'invisible': ['|', ('is_credit_warning_visible', '=', True), ('customer_credit_warning', '=', False)]}">
+					<field name="customer_credit_warning" readonly="1"/>
+				</div>
+
+				<sheet>
+					<div class="oe_button_box" name='button_box'>
+						<button class="oe_stat_button" type="object" name="action_view_trip" icon="fa-truck"
+								attrs="{'invisible': [('trip_count', '&lt;=', 0)]}">
+							<div class="o_form_field o_stat_info">
+                        		<span class="o_stat_value">
+									<field name="trip_count" class="oe_clear"/>
+                        		</span>
+                        		<span class="o_stat_text">
+                         			Trips
+                        		</span>
+							</div>
+						</button>
+						<button class="oe_stat_button" type="object" name="action_view_invoice" icon="fa-pencil-square-o"
+								attrs="{'invisible': [('invoice_count', '&lt;=', 0)]}">
+							<div class="o_form_field o_stat_info">
+                        		<span class="o_stat_value">
+									<field name="invoice_count" class="oe_clear"/>
+                        		</span>
+                        		<span class="o_stat_text">
+                         			Invoices
+                        		</span>
+							</div>
+						</button>
+						<button class="oe_stat_button" type="object" name="action_view_bill" icon="fa-pencil-square-o"
+								attrs="{'invisible': [('bill_count', '&lt;=', 0)]}">
+							<div class="o_form_field o_stat_info">
+                        		<span class="o_stat_value">
+									<field name="bill_count" class="oe_clear"/>
+                        		</span>
+                        		<span class="o_stat_text">
+                         			Bills
+                        		</span>
+							</div>
+						</button>
+						<button class="oe_stat_button" type="object" name="action_view_payment" icon="fa-file"
+								attrs="{'invisible': [('payment_count', '&lt;=', 0)]}">
+							<div class="o_form_field o_stat_info">
+                        		<span class="o_stat_value">
+									<field name="payment_count" class="oe_clear"/>
+                        		</span>
+                        		<span class="o_stat_text">
+                         			Payments
+                        		</span>
+							</div>
+						</button>
+					</div>
+                    <div class="oe_title">
+                        <span class="o_form_label">Work Order</span>
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+					<group>
+						<group>
+							<field name="customer_id" required='1'
+								   options="{'no_create': True, 'no_edit': True, 'always_reload': True}"
+								   context="{'show_address': 1}" attrs="{'readonly': [('is_editable', '=', False)]}"
+								   />
+							<field name="vendor_id" required='1' context="{'show_address': 1}"
+								   options="{'no_create': True, 'no_edit': True, 'always_reload': True}"
+								   attrs="{'readonly': [('is_editable', '=', False)]}"
+								   />
+							<field name="vendor_code" attrs="{'readonly': [('is_editable', '=', False)]}" invisible="1"/>
+							<field name="sales_person_id" readonly="1" force_save='1'/>
+							<label for="driver_phone" string="Driver Phone"/>
+							<div class="o_row" style="width:90% !important;">
+								<div>
+									<span>+91</span>
+								</div>
+								<div style="width:80% !important;" modifiers="{}">
+									<field name="driver_phone" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+								</div>
+                            </div>
+                            <field name="is_editable" invisible="1"/>
+                            <field name="contract_id" options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('contract_classification','=', 'ftl'),('customer_id.id', '=', customer_id),('state','=', 'running')]"/>
+							<field name="wo_type_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+								   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+							<field name="region_id" options="{'no_create': True, 'no_edit': True}"
+								   attrs="{'readonly': [('is_editable', '=', False)]}" required="1" string="Customer Region"/>
+							<field name='customer_price' attrs="{'readonly': [('is_editable', '=', False)]}" invisible="1"/>
+                            <field name='vendor_cost' attrs="{'readonly': [('is_editable', '=', False)]}" required="1"/>
+                            <field name='adv_payment_type' widget="radio" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+							<field name='adv_payment_percentage' attrs="{'required': [('adv_payment_type', '=', 'percentage')],
+									'invisible': [('adv_payment_type', '=', 'flat')],'readonly': [('is_editable', '=', False)]}" />
+							<field name='adv_amount' attrs="{'invisible': [('adv_payment_type', '=', 'flat')]}" />
+							<field name="currency_id" invisible="1"/>
+
+						</group>
+						<group>
+							<field name="payment_term_id" options="{'no_create': True, 'no_edit': True}"
+								   attrs="{'readonly': [('is_editable', '=', False)]}" force_save='1'/>
+							<field name="shipping_id" attrs="{'readonly': [('is_editable', '=', False)]}"
+								   domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+							<label for="delivery_date_from" string="Delivery Period"/>
+								<div class="oe_inline">
+									<field name="delivery_date_from" placeholder="From" style="width:40%;"
+										   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+									<span style="width:20%; margin-right:10%;">To</span>
+									<field name="delivery_date_to" placeholder="To" style="width:40%;"
+										   attrs="{'readonly': [('is_editable', '=', False)]}"/>
+								</div>
+							<field name="shipping_address" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+							<field name='pick_up_loc' attrs="{'readonly': [('is_editable', '=', False)]}"/>
+							<field name='create_date'/>
+							<field name='quotation_ref' attrs="{'readonly': [('is_editable', '=', False)]}"/>
+							<field name='create_uid' invisible='1'/>
+							<field name="invoice_state" string="Payment Method" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+							<field name='total_amount'/>
+							<field name='vendor_advance_paid'/>
+							<field name='bill_amount'/>
+                             <field name="company_id" options="{'no_open': True}"/>
+						</group>
+					</group>
+
+					<notebook>
+						<page string='Work Order Line'>
+							<field name='work_order_line_ids' attrs="{'readonly': [('is_editable', '=', False)]}">
+								<tree editable="bottom">
+									<field name="sequence" widget="handle"/>
+									<field name="description" required="1"/>
+									<field name="lr_num"/>
+									<field name='due_on'/>
+									<field name="quantity" invisible="1"/>
+									<field name="tonnage"/>
+									<field name="unit_price"/>
+									<field name="total"/>
+								</tree>
+							</field>
+							<group>
+								<group class="oe_subtotal_footer oe_right" name="amount_total">
+                                    <field name="total_amount"/>
+                            	</group>
+							</group>
+						</page>
+						<page string='Attachments'>
+							<group>
+								<group>
+                                    <field name='attachment_ids' widget="many2many_binary"/>
+                            	</group>
+							</group>
+						</page>
+						<page string="User Action History">
+							<field name="user_action_ids" options="{'no_create_edit': True}" readonly="1">
+								<tree editable="bottom">
+									<field name="create_uid" string="User" />
+									<field name="create_date" string="Time of Action" />
+									<field name="action" string="Action Performed"/>
+									<field name="description" string="Comments" />
+								</tree>
+								<form>
+									<group>
+										<field name="description" string="Comments" />
+									</group>
+								</form>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+				<div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+			</form>
+		</field>
+	</record>
+    <!--  work.order.type model tree view  -->
+	<record id="work_order_type_tree" model="ir.ui.view">
+		<field name="name">work.order.type.tree</field>
+		<field name="model">work.order.type</field>
+		<field name="arch" type="xml">
+			<tree string="Work Order Type" editable="bottom">
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="code"/>
+				<field name='active' invisible='1'/>
+				<field name="is_single_trip"/>
+				<field name="company_id" optional="show"/>
+			</tree>
+		</field>
+	</record>
+    <!--  work.order model tree view  -->
+	<record id="work_order_tree_view" model="ir.ui.view">
+		<field name="name">work.order.tree.view</field>
+		<field name="model">work.order</field>
+		<field name="arch" type="xml">
+			<tree string="Work Order" sample="1" decoration-danger="invoice_amount == 0 and vendor_advance_paid &gt; 0">
+				<field name="name" optional="show" colspan="3"/>
+				<field name='create_date' optional="show" widget="date"/>
+				<field name="customer_id" optional="show"/>
+				<field name="vendor_id" optional="show"/>
+				<field name="region_id" optional="show"/>
+				<field name='contract_id' optional="hide"/>
+				<field name='total_amount' string="Customer Amount" optional="show" sum="Total"/>
+				<field name="invoice_amount" optional="show" sum="Total"/>
+				<field name="amount_receivable" optional="show" sum="Total"/>
+				<field name='vendor_cost' string="Vendor Cost" optional="show" sum="Total"/>
+				<field name="bill_amount" optional="show" sum="Total"/>
+				<field name='vendor_advance_paid' optional="show" sum="Total"/>
+				<field name='amount_payable' optional="show" sum="Total"/>
+				<field name="state" optional="show" widget="badge" decoration-success="state == 'finance_approve'"/>
+				<field name="company_id" optional="hide"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="ftl_work_order_search" model="ir.ui.view">
+        <field name="name">ftl.work.order.search</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <search>
+				<field name="name" string = "Work Order" />
+				<field name="customer_id" string = "Customer"/>
+				<field name="contract_id" string="Contract"/>
+				<field name="region_id"/>
+				<field name="state" string="Status"/>
+				<filter name="filter_new" string = "New" domain = "[('state', '=', 'new')]"/>
+            	<filter name="filter_pending_approval" string = "Pending Approval" domain = "[('state', '=', 'pending_approval')]"/>
+            	<filter name="filter_mu_approved" string = "MU Approved" domain = "[('state', '=', 'mu_approve')]"/>
+            	<separator/>
+            	<filter name="invoice_not_generated" string = "Invoice Not Generated" domain = "[('invoice_count', '=', 0)]"/>
+            	<filter name="advance_paid" string = "Advance Paid" domain = "[('vendor_advance_paid', '>', 0)]"/>
+            	<filter name="advance_paid_without_inv" string = "Advance Paid Without Invoice" domain = "[('invoice_count', '=', 0), ('vendor_advance_paid', '>', 0)]"/>
+            	<separator/>
+            	<filter name="filter_finance_approve" string = "Finance Approved" domain = "[('state', '=', 'finance_approve')]"/>
+            	<filter name="filter_reject" string = "Rejected" domain = "[('state', '=', 'rejected')]"/>
+            	<separator/>
+            	<filter name="filter_payable" string = "Payable" domain = "[('amount_payable', '>', 0)]"/>
+            	<filter name="filter_receivable" string = "Receivable" domain = "[('amount_receivable', '>', 0)]"/>
+            	<separator/>
+				<filter string = "Status" name = "group_by_state" context = "{'group_by': 'state'}"/>
+				<filter string = "Customer" name = "group_by_customer_id" context = "{'group_by': 'customer_id'}"/>
+				<filter string = "Region" name = "group_by_region_id" context = "{'group_by': 'region_id'}"/>
+				<separator/>
+				<filter string = "Contract" name = "group_by_contract_id" context = "{'group_by': 'contract_id'}"/>
+				<filter string = "Date" name = "group_by_create_date" context = "{'group_by': 'create_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!--  Action for work.order.type model  -->
+	<record id="action_work_order_type" model="ir.actions.act_window">
+		<field name="name">Work Order Type</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">work.order.type</field>
+		<field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a work order type.
+            </p>
+        </field>
+	</record>
+    <!--  Action for work.order model  -->
+    <record id="work_order_action" model="ir.actions.act_window">
+        <field name="name">Work Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">work.order</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new work order.
+            </p>
+        </field>
+    </record>
+    <!--  Menu added for work.order.type: Fleet > Configuration > FTL Config  -->
+    <menuitem id="fleet_config_ftl_conf_menu"
+			  name="FTL Config"
+			  parent="fleet.fleet_configuration"
+              sequence="30"/>
+    <!--  Menu added for work.order.type: Fleet > Configuration > FTL Config > Work Order Type  -->
+    <menuitem id="fleet_config_work_order_type_menu"
+			  name="Work Order Type"
+			  parent="fleet_config_ftl_conf_menu"
+              action="action_work_order_type"
+			  groups="fleet.fleet_group_manager"
+			  sequence="10"/>
+    <!--  Menu added for : Fleet > Configuration > Shipping Method  -->
+    <menuitem id="fleet_config_shipping_method_menu"
+              name="Shipping Methods"
+              parent="fleet_ftl.fleet_config_ftl_conf_menu"
+              action="delivery.action_delivery_carrier_form"
+			  groups="fleet.fleet_group_manager"
+              sequence="50"/>
+	<!--  menu item of FTL Work order Fleet > FTL 	-->
+    <menuitem id="fleet_vehicle_ftl_menu"
+              name="FTL"
+              parent="fleet.menu_root"
+              sequence="50"/>
+    <!--  menu item of FTL Work order Fleet > FTL > Work Order 	-->
+    <menuitem id="fleet_vehicle_ftl_work_order_menu"
+              name="Work Order"
+              parent="fleet_vehicle_ftl_menu"
+              action="work_order_action"
+			  groups="fleet_ftl.group_ftl_work_order_send_for_approval,fleet_ftl.group_ftl_work_order_mu_approve,fleet_ftl.group_ftl_work_order_finance_approve,fleet.fleet_group_manager"
+              sequence="10"/>
+</odoo>

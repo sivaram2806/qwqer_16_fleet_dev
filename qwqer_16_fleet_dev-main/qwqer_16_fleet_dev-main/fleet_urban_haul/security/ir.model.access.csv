@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_batch_trip_uh,access.batch.trip.uh,model_batch_trip_uh,base.group_user,1,1,1,1
+access_batch_trip_uh_line,access.batch.trip.uh.line,model_batch_trip_uh_line,base.group_user,1,1,1,1
+access_user_action_history,access.user.action.history.wizard,model_user_action_history,base.group_user,1,1,1,1
+access_user_action_comment_wizard,access.user.action.comment.wizard,model_user_action_comment_wizard,base.group_user,1,1,1,1
+access_bulk_trip_approve_wizard,access.bulk.trip.approve.wizard,model_bulk_trip_approve_wizard,base.group_user,1,1,1,1
+
+access_portal_batch_trip_uh,access.portal.batch.trip,model_batch_trip_uh,base.group_portal,1,1,1,1
+access_portal_batch_trip_uh_line,access.portal.batch.trip.line,model_batch_trip_uh_line,base.group_portal,1,1,1,1
+access_trip_summary_uh,access.trip.summary.uh,model_trip_summary_uh,,1,1,1,1
+access_trip_summary_line_uh,access.trip.summary.line.uh,model_trip_summary_line_uh,,1,1,1,1
+
+fleet_urban_haul.access_trip_summary_report_wizard,access_trip_summary_report_wizard,fleet_urban_haul.model_trip_summary_report_wizard,base.group_user,1,1,1,1
+fleet_urban_haul.access_cost_analysis_report_wizard,access_cost_analysis_report_wizard,fleet_urban_haul.model_cost_analysis_report_wizard,base.group_user,1,1,1,1
+
+fleet_urban_haul.access_batch_trip_uh_report,access_batch_trip_uh_report,fleet_urban_haul.model_batch_trip_uh_report,base.group_user,1,1,1,1

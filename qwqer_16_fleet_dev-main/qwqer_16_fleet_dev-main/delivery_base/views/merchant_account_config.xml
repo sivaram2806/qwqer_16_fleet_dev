@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="merchant_payout_config_form" model="ir.ui.view">
+            <field name="name">merchant.payout.account.config.delivery.form</field>
+            <field name="model">merchant.payout.account.config</field>
+            <field name="inherit_id" ref="sale_extended.merchant_payout_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@id='configs']" position="after">
+                    <group string="Qwqer Express Transfer">
+                        <field name="delivery_credit_transfer_account_id" required="1"/>
+                        <field name="delivery_debit_transfer_account_id" required="1"/>
+                        <field name="delivery_transfer_journal_id" required="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record id="merchant_payout_config_delivery_tree" model="ir.ui.view">-->
+        <!--            <field name="name">merchant.payout.account.config.delivery.tree</field>-->
+        <!--            <field name="model">merchant.payout.account.config</field>-->
+        <!--            <field name="inherit_id" ref="sale_extended.merchant_payout_config_tree"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                    <xpath expr="//tree" position="replace">-->
+        <!--                    <tree>-->
+        <!--                        <field name="delivery_credit_transfer_account_id" required="1"/>-->
+        <!--                        <field name="delivery_debit_transfer_account_id" required="1"/>-->
+        <!--                        <field name="delivery_transfer_journal_id" required="1"/>-->
+        <!--                    </tree>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

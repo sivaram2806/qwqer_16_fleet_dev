@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="driver_payout_date_config_form" model="ir.ui.view">
+            <field name="name">driver.payout.date.config.form</field>
+            <field name="model">driver.payout.date.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                    	<group>
+	                        <group>
+	                               <field name="daily_trans_date" />
+	                               <field name="weekly_trans_date" />
+	                               <field name="payout_status_date" />
+	                               <field name="pending_payout_sts_date" />
+	                        </group>
+	                        <group>
+	                               <field name="so_daily_trans_date" />
+	                               <field name="so_daily_trans" invisible="1"/>
+	                               <field name="monthly_trans_date" />
+	                               <field name="pending_payout_limit" />
+	                               <field name="company_id" readonly="1" force_save="1"/>
+	                        </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="driver_payout_date_config_tree" model="ir.ui.view">
+            <field name="name">driver.payout.date.config.tree</field>
+            <field name="model">driver.payout.date.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="daily_trans_date"/>
+                    <field name="so_daily_trans_date" />
+                    <field name="weekly_trans_date"/>
+                    <field name="monthly_trans_date"/>
+                    <field name="payout_status_date" />
+                    <field name="pending_payout_sts_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="driver_payout_date_config_action" model="ir.actions.act_window">
+            <field name="name">Payout Update Date Config</field>
+            <field name="res_model">driver.payout.date.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_driver_payout_date_config"
+                  name="Payout Update Date Config" sequence="5"
+                  action="driver_payout_date_config_action"
+                  parent="menu_drivers_payout_configuration"/>
+
+    </data>
+</odoo>

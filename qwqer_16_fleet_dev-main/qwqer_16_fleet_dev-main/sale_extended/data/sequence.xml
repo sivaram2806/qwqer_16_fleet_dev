@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- sequence for manual delivery sale order -->
+        <record id="delivery_order_id_seq_number" model="ir.sequence">
+            <field name="name">Delivery Order ID Sequence Number</field>
+            <field name="code">delivery.order.id.sequence</field>
+            <field name="prefix">MDSO</field>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- sequence for manual QShop sale order -->
+        <record id="qshop_order_id_seq_number" model="ir.sequence">
+            <field name="name">QShop Order ID Sequence Number</field>
+            <field name="code">qshop.order.id.sequence</field>
+            <field name="prefix">MQSO</field>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- sequence for delivery merchant payout -->
+<!--        <record id="merchant_payout_seq" model="ir.sequence">-->
+<!--            <field name="name">Merchant Payout</field>-->
+<!--            <field name="code">merchant.payout.seq</field>-->
+<!--            <field name="prefix">MP-</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="company_id" eval="False"/>-->
+<!--        </record>-->
+
+
+<!--        <record id="merchant_payout_lines_seq" model="ir.sequence">-->
+<!--            <field name="name">Merchant Payout Lines</field>-->
+<!--            <field name="code">merchant.payout.lines.seq</field>-->
+<!--            <field name="prefix">MPY-</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="company_id" eval="False"/>-->
+<!--        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="account_move_pivot">
+        <field name="name">account.move.pivot</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <pivot string="Invoice" display_quantity="True">
+				<field name="create_date" interval="month" type="col"/>
+                <field name="region_id" type="row"/>
+                <field name="amount_untaxed" type="measure"/>
+                <field name="amount_total" type="measure"/>
+                <field name="amount_residual" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="inherit_account_invoice_search_view_date" model="ir.ui.view">
+    	<field name="name">inherit.account.invoice.search.date.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+        <xpath expr="//filter[@name='due_date']" position="after">
+                <separator/>
+                <filter string="Current Month" name="current_month_inv" domain="[('invoice_date', '&gt;=', context_today().strftime('%%Y-%%m-01 00:00:00'))]"/>
+                <filter string="Last Month" name="last_month_inv" domain="[('invoice_date','&gt;=',(datetime.datetime.now() - relativedelta(months=1)).strftime('%Y-%m-01')),('invoice_date','&lt;',(datetime.datetime.now()).strftime('%Y-%m-01'))]"/>
+                <filter string="Last 3 Months" name="last_3month_inv" domain="[('invoice_date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                <filter string="Last 6 Months" name="last_6month_inv" domain="[('invoice_date','&gt;=',(datetime.datetime.now() - relativedelta(months=5)).strftime('%Y-%m-01'))]"/>
+                <separator/>
+       </xpath>
+       </field>
+    </record>
+
+    <record id="action_invoice_analysis_inherit" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">pivot</field>
+        <field name="domain">[('move_type', '=', 'out_invoice')]</field>
+        <field name="context">{'default_move_type': 'out_invoice','search_default_last_3month_inv':1,'search_default_posted':1}</field>
+    </record>
+
+        <menuitem id="invoice_analysis_report_menu"
+              name="Invoice Analysis Report"
+              parent="kpi_view_report_menu"
+              action="action_invoice_analysis_inherit"
+              sequence="1"/>
+</odoo>

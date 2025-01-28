@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--        Helpdesk dashboard action-->
+        <record id="action_help_ticket_dashboard" model="ir.actions.client">
+            <field name="name">Enquiry Dashboard</field>
+            <field name="tag">helpdesk_dashboard_tag</field>
+        </record>
+<!--        Helpdesk module menus-->
+        <menuitem id="helpdesk_dashboard_menu_root"
+                  name="Fleet Enquiry"
+                  web_icon="qwqer_ticket_management,static/description/icon.png"
+                  sequence="100"/>
+        <menuitem id="helpdesk_dashboard_menu"
+                  name="Dashboard"
+                  parent="helpdesk_dashboard_menu_root"
+                  action="action_help_ticket_dashboard"
+                  sequence="2"/>
+        <menuitem id="help_ticket_menu"
+                  parent="helpdesk_dashboard_menu_root"
+                  name="Enquiries"
+                  sequence="3"/>
+        <menuitem id="help_ticket_menu_my_ticket"
+                  parent="help_ticket_menu"
+                  name="My Enquiries"
+                  action="help_ticket_my_ticket_action"
+                  sequence="1"/>
+        <menuitem id="help_ticket_menu_all_ticket"
+                  parent="help_ticket_menu"
+                  name="All Enquiries"
+                  action="help_ticket_action"
+                  sequence="2"
+                  groups="qwqer_ticket_management.helpdesk_manager"/>
+        <menuitem id="help_ticket_menu_bulk_import"
+                  parent="help_ticket_menu"
+                  name="Bulk Import"
+                  action="help_ticket_bulk_import_action"
+                  sequence="3"/>
+        <menuitem id="helpdesk_configuration_menu"
+                  name="Configuration"
+                  sequence="50"
+                  parent="helpdesk_dashboard_menu_root"
+                  groups="qwqer_ticket_management.helpdesk_manager"/>
+        <menuitem id="helpdesk_categories_menu"
+                  name="Categories"
+                  action="helpdesk_categories_action"
+                  groups="qwqer_ticket_management.group_show_category"
+                  parent="helpdesk_configuration_menu"
+                  sequence="10"/>
+        <menuitem id="help_team_menu"
+                  name="Teams"
+                  action="help_team_action"
+                  parent="helpdesk_configuration_menu"
+                  sequence="3"/>
+        <menuitem id="helpdesk_tag_menu"
+                  name="Tags"
+                  action="helpdesk_tag_action"
+                  parent="helpdesk_configuration_menu"
+                  sequence="4"/>
+        <menuitem id="ticket_stage_menu"
+                  name="Stages"
+                  action="ticket_stage_action"
+                  parent="helpdesk_configuration_menu"
+                  groups="qwqer_ticket_management.helpdesk_manager"
+                  sequence="5"/>
+        <menuitem id="helpdesk_types_menu"
+                  name="Types"
+                  action="helpdesk_types_action"
+                  parent="helpdesk_configuration_menu"
+                  sequence="6"/>
+        <menuitem id="helpdesk_city_menu"
+                  name="City"
+                  action="qwqer_base.res_state_city_view_action"
+                  parent="helpdesk_configuration_menu"
+                  sequence="7"/>
+        <menuitem id="helpdesk_vehicle_type_menu"
+                  name="Vehicle Type"
+                  action="fleet_extend.vehicle_vehicle_type_act_window"
+                  parent="helpdesk_configuration_menu"
+                  sequence="8"/>
+        <menuitem id="help_ticket_menu_report"
+                  name="Report"
+                  parent="helpdesk_dashboard_menu_root"
+                  sequence="4"
+                  action="help_ticket_report_action"/>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="consolidate_sale_invoice_view_form_qshop_base" model="ir.ui.view">
+        <field name="name">consolidate.sale.invoice.view.form.qshop.base</field>
+        <field name="model">consolidate.sale.invoice</field>
+        <field name="inherit_id" ref="sale_extended.consolidate_sale_invoice_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='service_type_id']" position="attributes">
+                <attribute name="domain">['|', ('is_delivery_service', '=', True), ('is_qshop_service', '=', True)]
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

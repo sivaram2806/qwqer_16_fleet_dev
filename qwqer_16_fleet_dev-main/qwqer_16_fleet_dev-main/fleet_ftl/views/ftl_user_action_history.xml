@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--  ftl.user.action.history.form view  -->
+    <record id="ftl_user_action_history_form" model="ir.ui.view">
+        <field name="name">ftl.user.action.history.form</field>
+        <field name="model">ftl.user.action.history</field>
+        <field name="arch" type="xml">
+            <form string="Comments">
+                <group>
+                    <field name="description" required='1'/>
+                </group>
+                <footer>
+                    <button string='Submit' name="action_post_user_comment" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+<!--  ftl.user.action.history.form action record  -->
+    <record id="action_ftl_user_action_history" model="ir.actions.act_window">
+        <field name="name">Comments</field>
+        <field name="res_model">ftl.user.action.history</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="ftl_user_action_history_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

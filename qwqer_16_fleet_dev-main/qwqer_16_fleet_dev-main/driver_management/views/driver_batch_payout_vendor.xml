@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="driver_batch_payout_vendor_form_view" model="ir.ui.view">
+            <field name="name">driver.batch.payout.vendor.form</field>
+            <field name="model">driver.batch.payout</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="is_vendor_payout" invisible="1"/>
+                        <field name="bill_ids" invisible="1"/>
+                        <button name="set_to_draft" string="Set to Draft" type="object" class="oe_highlight"
+                                states="ready_verify,verify"
+                                groups="driver_management.group_verify_payout,driver_management.group_edit_create_payout"/>
+                        <button name="action_ready_to_verify" string="Send For Verify" class="oe_highlight"
+                                type="object" states="draft" groups="driver_management.group_edit_create_payout"/>
+                        <button name="action_recompute_lines" string="Recompute Lines" type="object"
+                                states="draft,ready_verify,verify"
+                                class="oe_highlight"
+                                context="{'parent_id': id, 'parent_model': 'driver.batch.payout','from_date': from_date, 'to_date': to_date}"
+                                groups="driver_management.group_approve_payout,driver_management.group_verify_payout,driver_management.group_edit_create_payout"
+                                confirm="Are you sure you want to recompute? This action will override all previously entered data in the columns Incentive (B) and Deduction (C).Do you want to proceed?"/>
+                        <button name="action_load_drivers" string="Load Drivers" class="oe_highlight" type="object"
+                                groups="driver_management.group_edit_create_payout"
+                                attrs="{'invisible': ['|', ('is_vendor_payout', '=', False),('state', '!=', 'draft')]}"/>
+                        <button name="action_compute_deduction" string="Compute Deduction" type="object"
+                                groups="driver_management.group_edit_create_payout"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                confirm="Are you sure you want to compute the deduction? This action will override all previously entered data in the column Deduction(C). Do you want to proceed?"/>
+                        <button name="action_verify" string="Verify" type="object" class="oe_highlight"
+                                states="ready_verify" groups="driver_management.group_verify_payout"/>
+                        <button name="%(reject_reason_action)d" string="Reject" type="action" states="verify,approve"
+                                groups="driver_management.group_approve_payout"/>
+                        <button name="%(reinitiate_payment_wiz_action)d" string="Reinitiate Payment" class="oe_highlight"
+                                type="action" states="complete_with_fail" groups="driver_management.group_approve_payout"/>
+                        <button name="action_approve" string="Approve" type="object" class="oe_highlight"
+                                states="verify" groups="driver_management.group_approve_payout"/>
+                        <button name="action_create_bill" string="Create Bill" class="oe_highlight" type="object"
+                                confirm="Are you sure to create Bill?"
+                                groups="driver_management.group_payout_batch_payment"
+                                attrs="{'invisible': ['|', '|', ('is_vendor_payout', '=', False),('state', '!=', 'approve'),('bill_ids', '!=', [])]}"/>
+                        <button name="action_cost_per_order" string="Compute Cost Per Order" type="object"
+                                class="oe_highlight" states="approve,pending,complete_with_fail,complete"/>
+                        <button name="print_xlsx" string="Download" type="object"/>
+                        <button name="%(daily_driver_payout_update_wizard_action)d" string="Upload" type="action"
+                                attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name='button_box'>
+                            <button class="oe_stat_button" type="object" name="action_view_bill" icon="fa-file"
+                                    attrs="{'invisible': [('bill_ids', '=', [])]}">
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="bill_count" class="oe_clear"/>
+                                    </span>
+                                    <span class="o_stat_text">
+                                        Bills
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="is_cron_created" invisible='1'/>
+                                <field name="from_date" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                                <field name="partner_id"
+                                       attrs="{'readonly': [('state', '!=', 'draft')],'invisible': [('is_vendor_payout', '=', False)], 'required': [('is_vendor_payout', '=', True)]}"
+                                       options="{'no_create': True, 'no_edit': True}"/>
+                            </group>
+                            <group>
+                                <field name="to_date" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                                <field name="region_id" required="1"
+                                       attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                                <field name="description"
+                                       attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                                <field name="deduction_entry_id" readonly="1" force_save="1"
+                                       attrs="{'invisible':[('deduction_entry_id','=',False)]}"/>
+                                <field name="is_vendor_payout" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="bill_ids" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="payout" string="Drivers Payout">
+                                <field name="batch_payout_line_ids"
+                                       attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"
+                                       context="{'default_from_date': from_date, 'default_to_date': to_date}">
+                                    <tree>
+                                        <field name="transfer_id" readonly="1"/>
+                                        <field name="driver_uid"/>
+                                        <field name="employee_id" options="{'no_create':True}"
+                                               domain="[('region_id','=',parent.region_id)]"
+                                               context="{'employee_edit': True,'driver_employee': True,'form_view_ref':'hr.view_employee_form','driver_id_employee': True}"/>
+                                        <field name="no_of_orders" sum="Total" invisible="1"/>
+                                        <field name="order_qty" sum="Total" readonly="1"/>
+                                        <field name="daily_payout_amount" force_save="1" readonly="1" sum="Total"/>
+                                        <field name="incentive_amount" sum="Total"/>
+                                        <field name="deduction_amount" sum="Total"/>
+                                        <field name="tds_amount" sum="Total"/>
+                                        <field name="total_payout" sum="Total"/>
+                                        <field name="total_revenue" sum="Total"/>
+                                        <field name="avg_order_cost" readonly="1" force_save="1"/>
+                                        <field name="remarks"/>
+                                        <field name="payment_state" readonly="1" force_save="1"/>
+                                        <field name="is_reinitiated" readonly="1" force_save="1"
+                                               attrs="{'column_invisible': [('parent.state','!=', 'complete_with_fail')]}"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="transfer_id" readonly="1"/>
+                                                    <field name="from_date" invisible="1"/>
+                                                    <field name="to_date" invisible="1"/>
+                                                    <field name="driver_uid"/>
+                                                    <field name="employee_id"
+                                                           context="{'employee_edit': True,'driver_employee': True,'form_view_ref':'hr.view_employee_form'}"/>
+                                                    <field name="daily_payout_amount"/>
+                                                    <field name="incentive_amount"/>
+                                                    <field name="deduction_amount"/>
+                                                    <field name="tds_amount"/>
+                                                    <field name="total_payout"/>
+                                                    <field name="avg_order_cost"/>
+                                                </group>
+                                                <group>
+                                                    <field name="payment_vendor_acc"/>
+                                                    <field name="driver_partner_id"/>
+                                                    <field name="pan_no"/>
+                                                    <field name="tds_tax_id"/>
+                                                    <field name="payment_state" readonly="1" force_save="1"/>
+                                                    <field name="utr_ref" readonly="1" force_save="1"
+                                                           attrs="{'invisible':[('utr_ref','=',False)]}"/>
+                                                    <field name="status_description" readonly="1"/>
+                                                </group>
+                                            </group>
+                                            <field name="daily_payout_ids" nolabel="1" readonly="1" force_save="1"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="driver_batch_payout_vendor_tree" model="ir.ui.view">
+            <field name="name">driver.batch.payout.vendor.tree</field>
+            <field name="model">driver.batch.payout</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <tree decoration-danger="is_reject == True">
+                    <field name="name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="region_id"/>
+                    <field name="description"/>
+                    <field name="total_amount" sum="Total"/>
+                    <field name="line_count"/>
+                    <field name="state"/>
+                    <field name="create_date" string="Created On"/>
+                    <field name="transaction_date"/>
+                    <field name="is_reject" invisible="1"/>
+                    <field name="is_vendor_payout" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="driver_batch_vendor_payout_action" model="ir.actions.act_window">
+            <field name="name">Weekly/Monthly Vendor Payouts</field>
+            <field name="res_model">driver.batch.payout</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_vendor_payout', '=', True)]</field>
+            <field name="context">{'from_payout_form': True, 'default_is_vendor_payout':
+                True,'tree_view_ref':'driver_management.driver_batch_payout_vendor_tree', 'form_view_ref':
+                'driver_management.driver_batch_payout_vendor_form_view'}
+            </field>
+        </record>
+
+        <menuitem id="menu_driver_batch_vendor_payout" name="Weekly/Monthly Vendor Payouts"
+                  sequence="8" action="driver_batch_vendor_payout_action"
+                  parent="driver_management.menu_driver_payout_main_menu"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="avg_cost_per_customer_analysis_pivot" model="ir.ui.view">
+        <field name="name">customer.cost.analysis.pivot</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Average Cost per Customer Analysis Report">
+                <field name="region_id" type="row"/>
+                <field name="create_date" interval="month" type="col"/>
+                <field name="total_product_qty" type="measure"/>
+                <field name="order_cost" string="Avg Cost Per Customer" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="action_avg_cost_per_customer_analysis" model="ir.actions.act_window">
+        <field name="name">Average cost per customer Analysis</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="avg_cost_per_customer_analysis_pivot"/>
+        <field name="context">{'search_default_last3_month':1}
+        </field>
+    </record>
+
+    <menuitem
+            id="avg_cost_per_customer_analysis_menu"
+            name="Average Cost Per Customer Analysis"
+            action="action_avg_cost_per_customer_analysis"
+            parent="kpi_view_report_menu"
+            sequence="3"
+    />
+</odoo>

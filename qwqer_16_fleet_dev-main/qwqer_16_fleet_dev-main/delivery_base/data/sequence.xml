@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- sequence for program_number -->
+        <record id="invoice_consolidated_seq_number" model="ir.sequence">
+            <field name="name">Invoice Consolidated Sequence Number</field>
+            <field name="code">invoice.consolidated.sequence</field>
+            <field name="prefix">ISC</field>
+            <field name="padding">4</field>
+        </record>
+                <!-- sequence for delivery merchant payout -->
+        <record id="delivery_merchant_payout_seq" model="ir.sequence">
+            <field name="name">Delivery Merchant Payout</field>
+            <field name="code">delivery.merchant.payout.seq</field>
+            <field name="prefix">DMP-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+         <record id="delivery_merchant_payout_line_seq" model="ir.sequence">
+            <field name="name">Delivery Merchant Line Payout</field>
+            <field name="code">delivery.merchant.payout.line.seq</field>
+            <field name="prefix">DEV-MPY</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

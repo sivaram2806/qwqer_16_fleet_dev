@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="change_field_data_address" model="change.field">
+        <field name="name">Address</field>
+        <field name="code">1</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_payment_mode" model="change.field">
+        <field name="name">Payment Mode</field>
+        <field name="code">2</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_invoice_frequency" model="change.field">
+        <field name="name">Invoice Frequency</field>
+        <field name="code">3</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_vat" model="change.field">
+        <field name="name">GSTIN</field>
+        <field name="code">4</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_customer_type" model="change.field">
+        <field name="name">Customer Type</field>
+        <field name="code">5</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_tax" model="change.field">
+        <field name="name">PAN</field>
+        <field name="code">6</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_sms_alert" model="change.field">
+        <field name="name">Customer Sms Alert</field>
+        <field name="code">7</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_email_alert" model="change.field">
+        <field name="name">Customer Email Alert</field>
+        <field name="code">8</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_customer_segment" model="change.field">
+        <field name="name">Customer Segment</field>
+        <field name="code">9</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_source_type" model="change.field">
+        <field name="name">Source/Lead Type</field>
+        <field name="code">10</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_potential_orders" model="change.field">
+        <field name="name">Potential Orders</field>
+        <field name="code">11</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_industry_id" model="change.field">
+        <field name="name">Customer Industry</field>
+        <field name="code">12</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_type_of_delivery" model="change.field">
+        <field name="name">Type of Delivery</field>
+        <field name="code">13</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_pick_up_area" model="change.field">
+        <field name="name">Pick Up Area</field>
+        <field name="code">14</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_pricing_type" model="change.field">
+        <field name="name">Pricing Type</field>
+        <field name="code">15</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_item_category" model="change.field">
+        <field name="name">Item Category</field>
+        <field name="code">16</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_pricing_plan" model="change.field">
+        <field name="name">Pricing Plan</field>
+        <field name="code">17</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_data_order_sales_person" model="change.field">
+        <field name="name">Order Sales Person</field>
+        <field name="code">18</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_data_api_selection" model="change.field">
+        <field name="name">API</field>
+        <field name="code">19</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_distance_limitation" model="change.field">
+        <field name="name">Distance Limitation</field>
+        <field name="code">20</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_follow_up_status" model="change.field">
+        <field name="name">Follow-up Status</field>
+        <field name="code">21</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_fleet_hsn" model="change.field">
+        <field name="name">Fleet HSN</field>
+        <field name="code">22</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">0</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+
+    <record id="change_field_credit_period" model="change.field">
+        <field name="name">Credit Period</field>
+        <field name="code">23</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">0</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+
+    <record id="change_field_contract_number" model="change.field">
+        <field name="name">Contract Number</field>
+        <field name="code">24</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">0</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+
+    <record id="change_field_contact_designation" model="change.field">
+        <field name="name">Contact Designation</field>
+        <field name="code">25</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">0</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_fifo_flow" model="change.field">
+        <field name="name">FIFO Flow</field>
+        <field name="code">26</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_product_line" model="change.field">
+        <field name="name">Product Lines</field>
+        <field name="code">27</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_additional_charges" model="change.field">
+        <field name="name">Additional Charges</field>
+        <field name="code">28</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_source_type" model="change.field">
+        <field name="name">Order Placement</field>
+        <field name="code">29</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+    <record id="change_field_fleet_segment" model="change.field">
+        <field name="name">Customer Segment</field>
+        <field name="code">30</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">0</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_credit_limit" model="change.field">
+        <field name="name">Credit Limit</field>
+        <field name="code">31</field>
+        <field name="is_fleet_service_field">1</field>
+        <field name="is_delivery_service_field">0</field>
+        <field name="is_ftl_service_field">1</field>
+    </record>
+    <record id="change_field_merchant_collection" model="change.field">
+        <field name="name">Merchant Collection Limit</field>
+        <field name="code">32</field>
+        <field name="is_fleet_service_field">0</field>
+        <field name="is_delivery_service_field">1</field>
+        <field name="is_ftl_service_field">0</field>
+    </record>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="deduct_wallet_amount_wizard_form" model="ir.ui.view">
+        <field name="name">deduct.wallet.wizard.form</field>
+        <field name="model">wallet.deduct.amount</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+					<field name="order_transaction_no" readonly="1" force_save="1" />
+                    <field name="partner_id" options='{"no_create": True, "no_open": True}' required="1"/>
+                    <field name="journal_id" options='{"no_create": True, "no_open": True}' required="1" force_save="1"/>
+                    <field name="debit_account_id"  force_save="1"/>
+                    <field name="credit_account_id" options='{"no_create": True, "no_open": True}' required="1"/>
+                    <field name="amount" required="1"/>
+                    <field name="comments" required="1" />
+                    <field name="move_id" readonly="1" invisible="1" />
+                </group>
+
+                <footer>
+                    <button name="action_deduct_amount" string="Deduct amount" class="oe_right oe_highlight" type="object"/>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_deduct_amount_from_wallet" model="ir.actions.act_window">
+            <field name="name">Deduct Wallet Amount</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wallet.deduct.amount</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="deduct_wallet_amount_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+
+
+</odoo>

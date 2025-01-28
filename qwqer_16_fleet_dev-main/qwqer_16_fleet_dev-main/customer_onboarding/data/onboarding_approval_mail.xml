@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--        mail for sales person-->
+        <record id="new_customer_onboard_send_mail" model="mail.template">
+            <field name="name">Customer Onboard Mail</field>
+            <field name="model_id" ref="model_customer_onboard"/>
+            <field name="subject">{{object.customer_name}} Customer Onboard</field>
+            <field name="email_from">noreply@qwqer.in</field>
+            <field name="email_to">{{object.user_id.email}}</field>
+            <field name="body_html" type="html">
+                <div>
+                    Dear
+                    <t t-out="object.sales_person_id.name"/>
+                    <br/>
+                    A customer
+                    <b>
+                        <t t-out="object.customer_name"/>
+                    </b>
+                    has been assigned for your approval.
+                    <t t-out="object.id"/>
+                    <br/>
+                    <div style="margin: 16px 0px 16px 0px;">
+
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=customer.onboard&amp;view_type=form"
+                           style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                            View Customer
+                        </a>
+                    </div>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+        </record>
+        <!--send for mu approval mail-->
+        <record id="customer_onboard_mu_approve_send_mail" model="mail.template">
+            <field name="name">Customer Assigned For MU approval</field>
+            <field name="model_id" ref="model_customer_onboard"/>
+            <field name="subject">{{object.customer_name}} Assigned For Your Approval</field>
+            <field name="email_from">noreply@qwqer.in</field>
+            <field name="email_to">{{object.reporting_mu_id.work_email}}</field>
+            <field name="body_html" type="html">
+                <div>
+                    Dear
+                    <t t-out="object.reporting_mu_id.name"/>
+                    <br/>
+                    A customer
+                    <b>
+                        <t t-out="object.customer_name"/>
+                    </b>
+                    has been assigned for your approval.
+                    <br/>
+                    <div style="margin: 16px 0px 16px 0px;">
+
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=customer.onboard&amp;view_type=form"
+                           style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                            View Customer
+                        </a>
+                    </div>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+            <!--            mu rejected mail-->
+        </record>
+        <record id="customer_onboard_mu_rejected_send_mail" model="mail.template">
+            <field name="name">Customer Onboarding Mu Rejected Mail</field>
+            <field name="model_id" ref="model_customer_onboard"/>
+            <field name="subject">{{object.customer_name}} Rejected</field>
+            <field name="email_from"></field>
+            <field name="email_to">{{object.user_id.email}}</field>
+            <field name="body_html" type="html">
+                <div>
+                    Dear
+                    <t t-out="object.reporting_mu_id.name"/>
+                    <br/>
+                    Customer Onboarding of
+                    <b>
+                        <t t-out="object.customer_name"/>
+                    </b>
+                    has been rejected.
+                    <br/>
+                    <div style="margin: 16px 0px 16px 0px;">
+
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=customer.onboard&amp;view_type=form"
+                           style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                            View Customer
+                        </a>
+                    </div>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+        </record>
+
+        <!--send for finance approval mail-->
+        <record id="customer_onboard_finance_approve_send_mail" model="mail.template">
+            <field name="name">Customer Assigned For Finance approval</field>
+            <field name="model_id" ref="model_customer_onboard"/>
+            <field name="subject">{{object.customer_name}} Assigned For Your Approval</field>
+            <field name="email_from"></field>
+            <field name="email_to"></field>
+            <field name="body_html" type="html">
+                <div>
+
+                    <br/>
+                    A customer
+                    <b>
+                        <t t-out="object.customer_name"/>
+                    </b>
+                    has been assigned for your approval.
+                    <br/>
+                    <div style="margin: 16px 0px 16px 0px;">
+
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=customer.onboard&amp;view_type=form"
+                           style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                            View Customer
+                        </a>
+                    </div>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+        </record>
+        <!--        finance rejected mail-->
+        <record id="customer_onboard_finance_rejected_send_mail" model="mail.template">
+            <field name="name">Customer Onboarding Finance Rejected Mail</field>
+            <field name="model_id" ref="model_customer_onboard"/>
+            <field name="subject">{{object.customer_name}} Assigned For Your Approval</field>
+            <field name="email_from"></field>
+            <field name="email_to">{{object.reporting_mu_id.work_email}}</field>
+            <field name="body_html" type="html">
+                <div>
+
+                    <br/>
+                    Customer Onboarding of
+                    <b>
+                        <t t-out="object.customer_name"/>
+                    </b>
+                    has been rejected.
+                    <br/>
+                    <div style="margin: 16px 0px 16px 0px;">
+
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=customer.onboard&amp;view_type=form"
+                           style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                            View Customer
+                        </a>
+                    </div>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

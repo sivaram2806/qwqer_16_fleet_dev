@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  track history tree view  -->
+    <record id="ftl_track_history" model="ir.ui.view">
+        <field name="name">ftl.track.history</field>
+        <field name="model">ftl.track.history</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" default_order="location_sequence desc">
+                <field name="location_sequence" force_save="1" optional="show"/>
+                <field name="ftl_trip_id" force_save="1"/>
+                <field name="location" string="Location" force_save="1"/>
+                <field name="time_recorded" string="Timestamp" force_save="1"/>
+                <field name="latitude" string="Latitude" force_save="1"/>
+                <field name="longitude" string="Longitude" force_save="1"/>
+                <field name="user_id" string="Created By" optional="hide"/>
+                <field name="company_id" string="Company" optional="hide"/>
+                <field name="track_trip_status" readonly="1"
+                       decoration-danger="track_trip_status == 'STOPPED'"
+                       decoration-success="track_trip_status == 'RUNNING' or track_trip_status == 'COMPLETED'" force_save="1"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="ftl_track_history_search_view" model="ir.ui.view">
+        <field name="name">ftl.track.history</field>
+        <field name="model">ftl.track.history</field>
+        <field name="arch" type="xml">
+            <search string="FTL Track History">
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="status" domain="[]" context="{'group_by': 'track_trip_status'}"/>
+                </group>
+                <separator/>
+                <filter string="Status" name="trip_status"
+                        domain="[('track_trip_status', '=', 'RUNNING')]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--  inherit partner form. -->
+    <record id="view_partner_form_tds_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.tds</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='sales_purchases']" position="after">
+                <page name="partner_tds" string="TDS">
+                    <group id="partner_tds">
+                        <group id="partner_tds_subgroup">
+                            <span class="o_form_label o_td_label" name="tds_threshold_check">
+                                <b>Apply TDS / Withholding if the turnover crosses the threshold</b>
+                            </span>
+                            <div name="tds_threshold">
+                                <field name="tds_threshold_check"/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='internal_notes']" position="after">
+                <page name='bank_details' string="Bank Details">
+                    <group>
+                        <group string="Bank Details">
+                            <field name="account_no" string="Account No"/>
+                            <field name="ifsc_code" string="IFSC Code"/>
+                            <field name="bank_name" string="Bank Name"/>
+                        </group>
+                        <group string="Virtual Bank Details" invisible="1">
+                            <label for="virtual_bank_acc" readonly="1"/>
+                            <div class="o_row">
+                                <field name="virtual_bank_acc" readonly="1"/>
+                                <button string="Generate" class="btn btn-link" type="object"
+                                        name="generate_virtual_sequence"
+                                        attrs="{'invisible': [('virtual_bank_acc', '!=', False)]}"/>
+                            </div>
+
+
+                        </group>
+
+                    </group>
+                </page>
+            </xpath>
+            <field name="category_id" position="after">
+                <label for="virtual_bank_acc"/>
+                <div class="o_row">
+                    <field name="virtual_bank_acc" readonly="1"/>
+                    <button string="Generate" class="btn btn-link" type="object"
+                            name="generate_virtual_sequence"
+                            attrs="{'invisible': [('virtual_bank_acc', '!=', False)]}"/>
+                </div>
+            </field>
+        </field>
+    </record>
+    <!--inherited partner tree-->
+    <record id="view_partner_tree_qwqer_base_inherit_account_base" model="ir.ui.view">
+        <field name="name">res.partner.qwqer.base.account.base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="qwqer_base.res_partner_tree_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='region_id']" position="after">
+                <field name="virtual_bank_acc"/>
+                <field name="create_date"/>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+</odoo>

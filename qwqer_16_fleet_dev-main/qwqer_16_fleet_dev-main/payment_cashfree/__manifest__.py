@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Cashfree Payments',
+    'version': '16.0.1.0.0',
+    'summary': """""",
+    'description': """ To sync and create payment records for cashfree payments""",
+    'category': 'Accounting/Payment',
+    'author': 'QWY Software PVT Ltd',
+    'company': 'QWY Software PVT Ltd',
+    'maintainer': 'QWY Software PVT Ltd',
+    'depends': ['base', 'account_base','account_payment'],
+    'website': 'https://qwysoft.com/',
+    'data': [
+        'security/ir.model.access.csv',
+        'security/record_rules_multi_company.xml',
+        'data/cashfree_payment_line.xml',
+        'data/cash_free_settlement_scheduler.xml',
+        'data/cashfree_payment_status_update_scheduler.xml',
+        'data/mail_template_data.xml',
+        'report/account_invoice_service.xml',
+        'views/menu.xml',
+        'views/cash_free_configuration_view.xml',
+        'views/cash_free_credentials_view.xml',
+        'views/cash_free_settlement_view.xml',
+        'wizard/cashfree_api_settlement_wzard_view.xml',
+        'views/res_partner_view.xml',
+        'views/account_payment_inherit_cashfree.xml',
+        'views/account_move.xml',
+        'views/cashfree_payin.xml',
+        'views/res_config_settings_views.xml',
+        'views/hr_employee.xml',
+    ],
+    'license': 'LGPL-3',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'assets': {
+        'web.assets_backend': [
+            'payment_cashfree/static/src/css/custom_button_styles.css',
+        ],
+    },
+
+}

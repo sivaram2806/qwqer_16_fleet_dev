@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="driver_payout_accounting_config_form" model="ir.ui.view">
+            <field name="name">driver.payout.accounting.config.form</field>
+            <field name="model">driver.payout.accounting.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Expense">
+                            <group>
+                                <field name="expense_journal_id"/>
+                                <field name="expense_debit_account_id"/>
+                            </group>
+                            <group>
+                                <field name="expense_credit_account_id"/>
+                                <field name="expense_deduction_account_id"/>
+                            </group>
+                        </group>
+                        <group string="Transfer">
+                            <field name="transfer_debit_account_id"/>
+                            <field name="transfer_credit_account_id"/>
+                            <field name="transfer_journal_id"/>
+                        </group>
+                        <group string="TDS">
+                            <field name="tds_account_id"/>
+                            <field name="tds_tax_id"/>
+                        </group>
+                        <group string="Vendor Payout">
+                            <field name="vendor_payout_account_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="driver_payout_accounting_config_tree" model="ir.ui.view">
+            <field name="name">driver.payout.accounting.config.tree</field>
+            <field name="model">driver.payout.accounting.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="expense_journal_id" />
+                    <field name="transfer_journal_id" />
+                    <field name="tds_account_id" />
+                    <field name="vendor_payout_account_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="driver_payout_accounting_config_action" model="ir.actions.act_window">
+            <field name="name">Driver Payout Accounting Configuration</field>
+            <field name="res_model">driver.payout.accounting.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_driver_payout_accounting_config"
+                  name="Driver Payout Accounting Configuration"
+                  sequence="3" action="driver_payout_accounting_config_action" parent="menu_drivers_payout_configuration"/>
+    </data>
+</odoo>

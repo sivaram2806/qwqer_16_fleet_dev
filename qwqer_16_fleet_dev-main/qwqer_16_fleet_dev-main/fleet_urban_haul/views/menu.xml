@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_urban_haul" name="Urban Haul" action="fleet_urban_haul.action_batch_trip_uh"
+              parent="fleet.menu_root" sequence="10"/>
+    <!-- menuitem for Daily Trip-->
+	<menuitem id="menu_daily_trip" name="Daily Trip" action="fleet_urban_haul.action_batch_trip_uh"
+              parent="fleet_urban_haul.menu_urban_haul" sequence="10"/>
+    <!-- menuitem for Vendor Daily Trip-->
+    <menuitem id="menu_vendor_daily_trip" name="Vendor Daily Trip"
+              action="fleet_urban_haul.action_batch_trip_uh_vendor_daily_trip" parent="fleet_urban_haul.menu_urban_haul"
+              sequence="20"/>
+    <!-- menuitem for Consolidated Customer Trip-->
+    <menuitem id="menu_customer_trip_summary"
+              name="Consolidated Customer Trip"
+              action="fleet_urban_haul.action_uh_customer_trip_summary"
+              parent="fleet_urban_haul.menu_urban_haul"
+			  groups="fleet_urban_haul.group_create_edit_consolidate,fleet_urban_haul.group_view_consolidate,fleet.fleet_group_manager"
+              sequence="30"/>
+    <!-- menuitem for Consolidated Vendor Trip-->
+    <menuitem id="menu_vendor_trip_summary"
+              name="Consolidated Vendor Trip"
+              action="fleet_urban_haul.action_uh_vendor_trip_summary"
+              parent="fleet_urban_haul.menu_urban_haul"
+			  groups="fleet_urban_haul.group_create_edit_consolidate,fleet_urban_haul.group_view_consolidate,fleet.fleet_group_manager"
+              sequence="40"/>
+
+
+	<!-- report main menu for urban haul : Fleet > Reports-->
+	<menuitem id="menu_urban_haul_reports"
+		      name="Urban Haul"
+		      parent="fleet_extend.menu_fleet_reports"
+		      sequence="10"/>
+
+	<menuitem id="menu_uh_daily_trip_report"
+              name="Urban Haul Report"
+              action="fleet_urban_haul.action_pivot_batch_trip_uh"
+              parent="fleet_urban_haul.menu_urban_haul_reports"
+              sequence="12"/>
+
+</odoo>
+
+

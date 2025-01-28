@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Customer Credit Limit -->
+    <record id="partner_balance_tree" model="ir.ui.view">
+        <field name="name">partner.balance.summary.tree</field>
+        <field name="model">partner.balance</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Credit Limit" sample="1" multi_edit="1">
+                <field name="customer_id" optional="hide"/>
+                <field name="customer" optional="show"/>
+                <field name="order_sales_person" optional="show"/>
+                <field name="customer_rank" optional="hide"/>
+                <field name="region_id" optional="show"/>
+                <field name="service_type_id" optional="show"/>
+                <field name="segment_id" optional="show"/>
+                <field name="company_id" optional="hide"/>
+                <field name="credit" string="Invoice Receivable" optional="show"/>
+                <field name="debit" string="Invoice Payable" optional="hide"/>
+                <field name="due_amount" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--      Action for Customer Credit Limit  -->
+    <record id="action_customer_balance_summary" model="ir.actions.act_window">
+        <field name="name">Customer Credit Limit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.balance</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a new customer in your address book
+            </p>
+        </field>
+    </record>
+
+    <record id="action_customer_journal_items" model="ir.actions.act_window">
+        <field name="context">{'search_default_group_by_partner': True}</field>
+        <field name="name">Customer Journal Items</field>
+        <field name="res_model">account.move.line</field>
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')), ('move_id.state', '!=',
+            'cancel'), ('partner_id.customer_rank', '>', 0)]
+        </field>
+        <field name="view_id" ref="account.view_move_line_tree"/>
+        <field name="view_mode">tree,pivot,graph,form,kanban</field>
+    </record>
+
+    <!--menu for customer journal items-->
+    <menuitem id="menu_customer_journal_items"
+              name="Customer Journal Item"
+              parent="account.menu_finance_entries" sequence="5"/>
+
+    <!--menu for Customer Credit Limit-->
+    <menuitem action="action_customer_balance_summary" id="menu_customer_balance_summary"
+              name="Customer Credit Limit"
+              parent="menu_customer_journal_items" sequence="2"/>
+
+    <menuitem action="action_customer_journal_items"
+              id="menu_customer_journal_items_accounting"
+              parent="menu_customer_journal_items"
+              sequence="1"/>
+
+</odoo>

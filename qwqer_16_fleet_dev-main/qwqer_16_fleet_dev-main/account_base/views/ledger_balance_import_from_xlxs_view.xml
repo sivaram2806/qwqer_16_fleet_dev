@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_opening_balance_wizard_form" model="ir.ui.view">
+        <field name="name">opening.balance.wizard.form</field>
+        <field name="model">opening.balance.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Opening Balance Wizard">
+                <sheet>
+                    <group>
+                        <field name="file_data" widget="binary" string="Upload Template" />
+                        <field name="file_name" readonly="1" />
+                        <field name="counterpart_account_id" required="1" />
+                        <field name="accounting_date" required="1" />
+                    </group>
+                    <footer>
+                        <button string="Create Entries" type="object" name="action_process_template" class="btn-primary"/>
+<!--                        <button string="Cancel" type="object" name="action_cancel" class="btn-secondary"/>-->
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_opening_balance_wizard" model="ir.actions.act_window">
+        <field name="name">Opening Balance Wizard</field>
+        <field name="res_model">opening.balance.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+       <menuitem id="menu_opening_balance" name="Opening Balance" parent="account_base.menu_reconciliation" sequence="3"
+       action="action_opening_balance_wizard"/>
+
+</odoo>

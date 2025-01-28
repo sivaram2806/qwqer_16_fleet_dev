@@ -1,0 +1,12 @@
+<odoo>
+	<data>
+        <record id="partner_ledger_report_id" model="ir.actions.report">
+            <field name="name">Partner Ledger Report</field>
+            <field name="model">partner.ledger.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">partner_ledger_report_xlsx</field>
+            <field name="report_file">partner_ledger_report.xlsx</field>
+            <field name="attachment_use">False</field>
+        </record>
+     </data>
+</odoo>

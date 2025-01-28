@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+
+        <!--5% Tax configuration for different states in Taxes-->
+
+        <record id="account_tax_gst_kl_purchase_5%" model="account.tax">
+            <field name="name">GST-P-KL 5%</field>
+            <field name="description">GST-P-KL 5%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_purchase_2_5'),ref('l10n_in.1_cgst_purchase_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_kl_sale_5%" model="account.tax">
+            <field name="name">GST-S-KL 5%</field>
+            <field name="description">GST-S-KL 5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_2_5'),ref('l10n_in.1_cgst_sale_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_kk_purchase_5%" model="account.tax">
+            <field name="name">GST-P-KK 5%</field>
+            <field name="description">GST-P-KK 5%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_purchase_2_5'),ref('l10n_in.1_cgst_purchase_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_kk_sale_5%" model="account.tax">
+            <field name="name">GST-S-KK 5%</field>
+            <field name="description">GST-S-KK 5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_2_5'),ref('l10n_in.1_cgst_sale_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_tn_purchase_5%" model="account.tax">
+            <field name="name">GST-P-TN 5%</field>
+            <field name="description">GST-P-TN 5%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_purchase_2_5'),ref('l10n_in.1_cgst_purchase_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_tn_sale_5%" model="account.tax">
+            <field name="name">GST-S-TN 5%</field>
+            <field name="description">GST-S-TN 5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_2_5'),ref('l10n_in.1_cgst_sale_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ap_purchase_5%" model="account.tax">
+            <field name="name">GST-P-AP 5%</field>
+            <field name="description">GST-P-AP 5%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_purchase_2_5'),ref('l10n_in.1_cgst_purchase_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ap_sale_5%" model="account.tax">
+            <field name="name">GST-S-AP 5%</field>
+            <field name="description">GST-S-AP 5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_2_5'),ref('l10n_in.1_cgst_sale_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ts_purchase_5%" model="account.tax">
+            <field name="name">GST-P-TS 5%</field>
+            <field name="description">GST-P-TS 5%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_purchase_2_5'),ref('l10n_in.1_cgst_purchase_2_5'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ts_sale_5%" model="account.tax">
+            <field name="name">GST-S-TS 5%</field>
+            <field name="description">GST-S-TS 5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_2_5'),ref('l10n_in.1_cgst_sale_2_5'),])]"/>
+        </record>
+
+        <!--12% Tax configuration for different states in Taxes-->
+
+        <record id="account_tax_gst_kl_purchase_12%" model="account.tax">
+            <field name="name">GST-P-KL 12%</field>
+            <field name="description">GST-P-KL 12%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_kl_sale_12%" model="account.tax">
+            <field name="name">GST-S-KL 12%</field>
+            <field name="description">GST-S-KL 12%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_kk_purchase_12%" model="account.tax">
+            <field name="name">GST-P-KK 12%</field>
+            <field name="description">GST-P-KK 12%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_kk_sale_12%" model="account.tax">
+            <field name="name">GST-S-KK 12%</field>
+            <field name="description">GST-S-KK 12%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_tn_purchase_12%" model="account.tax">
+            <field name="name">GST-P-TN 12%</field>
+            <field name="description">GST-P-TN 12%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_tn_sale_12%" model="account.tax">
+            <field name="name">GST-S-TN 12%</field>
+            <field name="description">GST-S-TN 12%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ap_purchase_12%" model="account.tax">
+            <field name="name">GST-P-AP 12%</field>
+            <field name="description">GST-P-AP 12%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ap_sale_12%" model="account.tax">
+            <field name="name">GST-S-AP 12%</field>
+            <field name="description">GST-S-AP 12%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ts_purchase_12%" model="account.tax">
+            <field name="name">GST-P-TS 12%</field>
+            <field name="description">GST-P-TS 12%</field>
+            <field name="type_tax_use">purchase</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+        <record id="account_tax_gst_ts_sale_12%" model="account.tax">
+            <field name="name">GST-S-TS 12%</field>
+            <field name="description">GST-S-TS 12%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">group</field>
+            <field name="active">1</field>
+            <field name="children_tax_ids" eval="[(6, 0, [ref('l10n_in.1_sgst_sale_6'),ref('l10n_in.1_cgst_sale_6'),])]"/>
+        </record>
+
+    </data>
+</odoo>

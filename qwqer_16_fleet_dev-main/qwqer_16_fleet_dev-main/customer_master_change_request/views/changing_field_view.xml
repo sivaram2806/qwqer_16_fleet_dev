@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="customer_master_change_field_form" model="ir.ui.view">
+        <field name="name">customer.master.change.field.form</field>
+        <field name="model">change.field</field>
+        <field name="arch" type="xml">
+            <form string='Change Field '>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+<!--                            <field name="is_fleet_service_field"/>-->
+<!--                            <field name="is_delivery_service_field"/>-->
+                        </group>
+                        <group>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="customer_master_change_field_tree" model="ir.ui.view">
+        <field name="name">customer.master.change.field.tree</field>
+        <field name="model">change.field</field>
+        <field name="arch" type="xml">
+            <tree string="Change field" create="false">
+                <field name="name"/>
+<!--                    <field name="is_fleet_service_field"/>-->
+<!--                <field name="is_delivery_service_field"/>-->
+<!--                <field name="is_ftl_service_field"/>-->
+            </tree>
+        </field>
+    </record>
+    <record id="action_customer_field_change" model="ir.actions.act_window">
+        <field name="name">Field Change Form</field>
+        <field name="res_model">change.field</field>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+
+    <menuitem
+            id="menu_change_field"
+            name="Change Field"
+            parent="crm.crm_menu_sales"
+            action="action_customer_field_change"
+            sequence="1"
+            active="False"/>
+
+</odoo>

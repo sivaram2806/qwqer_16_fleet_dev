@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--		Outgoing api log tree view-->
+    <record id="outgoing_api_og_tree" model="ir.ui.view">
+        <field name="name">outgoing.api.log.tree</field>
+        <field name="model">outgoing.api.log</field>
+        <field name="arch" type="xml">
+            <tree string="Outgoing API Logs" create="false" delete="false">
+                <field name="access_date"/>
+                <field name="response_date"/>
+                <field name="name" />
+                <field name="key" />
+                <field name="status" />
+                <field name="data"/>
+                <field name="response"/>
+            </tree>
+        </field>
+    </record>
+
+
+<!--		Outgoing api log search view-->
+    <record id="outgoing_api_log_search_view" model="ir.ui.view">
+            <field name="name">outgoing.api.log.search.view</field>
+            <field name="model">outgoing.api.log</field>
+            <field name="arch" type="xml">
+                <search string="Outgoing API Log Search">
+                	<field name="name" string="API Name"/>
+                	<field name="key" string="Key"/>
+                	<field name="status" string="Status"/>
+                	<separator/>
+            	
+	            		<filter string="Today" name="today_created" domain="['&amp;', 
+		                	('create_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d')), 
+		                	('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%%Y-%%m-%%d'))]"/>
+	                		<filter string="Yesterday" name="yesterday_created" domain="['&amp;', 
+		                	('create_date', '&lt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d')), 
+		                	('create_date', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d'))]"/>
+	                		<filter string="Current Week" name="current_week"
+	           				domain="[('create_date', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+	         						('create_date', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"/> 
+	                		<filter string="Current Month" name="this_month" domain="[('create_date', '&gt;=', context_today().strftime('%%Y-%%m-01'))]"/>
+	                    	<filter string="Last Week"  name="week" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+	                		<filter string="Last Month"  name="month" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+	            	
+					<separator/>
+                	<group string="Group By">
+                		<filter string="Key" name="key" context="{'group_by':'key'}"/>
+                		<filter string="Status" name="status" context="{'group_by':'status'}"/>
+                		<filter string="Access Date" name="access_date" context="{'group_by':'access_date'}"/>
+                	</group>
+                </search>
+            </field>
+   	</record>
+
+<!--		Outgoing api log form view-->
+    <record id="outgoing_api_log_form" model="ir.ui.view">
+        <field name="name">outgoing.api.log.form</field>
+        <field name="model">outgoing.api.log</field>
+        <field name="arch" type="xml">
+            <form string="Outgoing API History">
+                <sheet>
+                    <group>
+                        <field name="access_date"/>
+                        <field name="data"/>
+                        <field name="response"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!--		Outgoing api log action-->
+    <record id="action_outgoing_api_log" model="ir.actions.act_window">
+        <field name="name">Outgoing API Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">outgoing.api.log</field>
+        <field name="context">{'search_default_today_created':1}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+<!--    Outgoing API Logs menu-->
+    <menuitem id="outgoing_api_log_sub_menu"
+              action="action_outgoing_api_log"
+              name="Outgoing API Logs"
+              parent="qwqer_base.api_log_menu"
+              sequence="1"/>
+
+    
+
+</odoo>

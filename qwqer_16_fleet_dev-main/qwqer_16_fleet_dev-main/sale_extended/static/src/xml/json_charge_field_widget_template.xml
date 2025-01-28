@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="JsonChargesWidget" owl="1">
+        <t t-if="props.value">
+            <div class="o_inner_group grid col-lg-6">
+                <t t-foreach="formatJson()" t-as="row" t-key="row.key">
+                    <div class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                        <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
+                            <label class="o_form_label o_form_label_readonly" for="order_amount">
+                                <t t-esc="row.key"/>
+                            </label>
+                        </div>
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 text-break" style="width: 100%;">
+                            <div name="order_amount" class="o_field_widget o_readonly_modifier o_field_monetary">
+                                <span>₹&nbsp;<t t-esc="row.value"/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </t>
+</templates>

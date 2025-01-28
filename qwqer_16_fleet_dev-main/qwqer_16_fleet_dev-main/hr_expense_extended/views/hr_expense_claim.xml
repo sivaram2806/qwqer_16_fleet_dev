@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    form view for expense claim-->
+    <record id="hr_expense_claim_view_form" model="ir.ui.view">
+        <field name="name">hr.expense.claim.form</field>
+        <field name="model">hr.expense.claim</field>
+        <field name="arch" type="xml">
+            <form string="Expenses Claim Form">
+                <header>
+                    <button type="object"
+                            name="action_claim_send_for_approval"
+                            class="btn btn-primary"
+                            string="Send For Approval"
+                            attrs="{'invisible': ['|',('state', '!=', 'new'),('have_submit_access','=',False)]}"/>
+
+                    <button type="object"
+                            name="action_mu_approval"
+                            class="btn btn-primary" string="Approve"
+                            attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+                            groups="hr_expense_extended.claim_expense_manager_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_finance_approval"
+                            class="btn btn-primary" string="Approve"
+                            attrs="{'invisible': [('state', '!=', 'mu_approved')]}"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_reject"
+                            class="btn btn-primary" string="Reject"
+                            attrs="{'invisible': [('state', 'not in', ['pending_approval'])]}"
+                            groups="hr_expense_extended.claim_expense_manager_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_cancel"
+                            class="btn btn-primary" string="Cancel"
+                            attrs="{'invisible': ['|',('state', 'not in', ['new']),('have_submit_access','=',False)]}"/>
+
+                    <button type="object"
+                            name="action_reject"
+                            class="btn btn-primary" string="Reject"
+                            attrs="{'invisible': [('state', 'not in', ['mu_approved'])]}"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_payment_wiz"
+                            class="btn btn-primary"
+                            string="Adv Payment"
+                            attrs="{'invisible': ['|','|',('state', 'not in', ['approved']),('is_advance_needed','=',False), ('is_advance_payed' ,'!=',False)]}"
+                            context="{'default_payment_type':'outbound','default_amount':advance_amount,'expense_advance':True}"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_submit_expenses"
+                            class="btn btn-primary" string="Submit Expense"
+                            attrs="{'invisible': ['|','|',('state', 'not in', ['approved_without_advance','approved']),('expense_approval_stage', '!=', 'draft'),('have_submit_access','=',False)]}"/>
+
+                    <button type="object"
+                            name="approve_and_post_expense_sheets"
+                            class="btn btn-primary" string="Approve"
+                            attrs="{'invisible': [('expense_approval_stage', '!=', 'reported')]}"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_payment_wiz"
+                            class="btn btn-primary"
+                            string="Register PayOut"
+                            attrs="{'invisible': ['|',('expense_approval_stage','!=', 'approved'),('amount_to_pay', '&lt;=', 0)]}"
+                            context="{'default_payment_type':'outbound','default_amount':amount_to_pay,'expense_payout':True}"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button type="object"
+                            name="action_payment_wiz"
+                            class="btn btn-primary"
+                            string="Collect Balance"
+                            attrs="{'invisible': ['|','|',('state', 'not in', ['approved']),('expense_approval_stage', 'not in', ['approved','done']),('amount_to_pay_in', '&lt;=', 0)]}"
+                            context="{'default_payment_type':'inbound','default_amount':amount_to_pay_in,'expense_pay_in':True}"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <button name="action_view_sheet" type="object" string="View Report" class="oe_highlight"
+                            attrs="{'invisible': [('sheet_id', '=', False)]}" data-hotkey="w"
+                            groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,pending_approval,mu_approved,approved,completed"
+                           required="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name='button_box'>
+                        <button class="oe_stat_button" type="object" name="action_view_payment" icon="fa-file"
+                                attrs="{'invisible': [('payment_count', '&lt;=', 0)]}">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="payment_count" class="oe_clear"/>
+                                </span>
+                                <span class="o_stat_text">
+                                    Payments
+                                </span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h4 class="d-flex">
+                            <span class="o_form_label">My Claim</span>
+                        </h4>
+                        <h1 class="d-flex">
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="amount_to_pay" invisible="1"/>
+                            <field name="amount_to_pay_in" invisible="1"/>
+                            <field name="is_advance_needed" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="is_sheet_editable" invisible="1"/>
+                            <field name="is_advance_payed" invisible="1"/>
+                            <field name="create_uid" invisible="1"/>
+                            <field name="have_submit_access" invisible="1"/>
+                            <field name="sheet_id" invisible="1"/>
+                            <field name="requested_by"/>
+                            <field name="requested_date" required="True"
+                                   attrs="{'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="department"/>
+                            <field name="reporting_manager"/>
+                            <field name="expense_manager"/>
+                            <field name="contact_number" widget="phone" required="True"
+                                   attrs="{'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="advance_payed_amount" string="Advance Payed Amount"
+                                   attrs="{'invisible': [('is_advance_payed', '=', False)]}" readonly="True"/>
+
+                        </group>
+                        <group>
+                            <field name="expense_date" required="True"
+                                   attrs="{'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="claim_type" required="True"
+                                   attrs="{'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="lodging" string="Lodging"
+                                   widget='radio' options="{'horizontal' : true}"
+                                   attrs="{'invisible': [('claim_type', '!=', 'travel')], 'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="claim_amount" required="True"
+                                   attrs="{'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="claim_reason" required="True"
+                                   attrs="{'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="is_advance_needed" attrs="{'readonly': [('is_sheet_editable', '=', False)]}"
+                                   groups="hr_expense_extended.expense_claim_adv_request,hr_expense_extended.expense_claim_admin,hr_expense_extended.claim_expense_manager_approver,hr_expense_extended.expense_claim_finance_approver"/>
+                            <field name="advance_amount"
+                                   attrs="{'invisible': [('is_advance_needed', '=', False)],'readonly': [('is_sheet_editable', '=', False)]}"/>
+                            <field name="total_amount" string="Total Expense Amount"
+                                   attrs="{'invisible': [('travel_exp_line_ids', '=', []),('lodging_exp_line_ids', '=', []),('boarding_exp_line_ids', '=', []),('other_exp_line_ids', '=', [])]}"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="expenses" string="Expense"
+                              attrs="{'invisible': ['|',('state', 'not in', ['approved_without_advance','approved','completed']),('is_advance_needed', '=', True),('is_advance_payed', '=', False),('state', 'not in', ['approved_without_advance','approved','completed'])]}">
+                            <div class="oe_inline" name="sub_status_bar" style="float: right;">
+                                <field name="expense_approval_stage" widget="statusbar"
+                                       statusbar_visible="draft,reported,approved,done"
+                                       attrs="{'invisible': [('travel_exp_line_ids', '=', []),('lodging_exp_line_ids', '=', []),('boarding_exp_line_ids', '=', []),('other_exp_line_ids', '=', [])]}"/>
+
+                            </div>
+                            <separator string="Travel Expense" name="travel_charge"
+                                       attrs="{'invisible': [('claim_type', '!=', 'travel')]}"/>
+                            <field name="travel_exp_line_ids"
+                                   nolabel="1"
+                                   widget="one2many"
+                                   mode="tree,kanban"
+                                   options="{'reload_on_button': True}"
+                                   context="{
+                                        'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header',
+                                        'default_company_id': company_id,
+                                        'default_employee_id': requested_by,
+                                        'default_name': 'Travel',
+                                    }"
+                                   force_save="1"
+                                   attrs="{'readonly': ['|',('expense_approval_stage', '!=', 'draft'),('have_submit_access','=',False)], 'invisible': [('claim_type', '!=', 'travel')]}">
+                                <tree decoration-danger="is_refused" editable="bottom" class="o_expense_line_list">
+                                    <field name="date_from" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                           required="1"/>
+                                    <field name="date_to" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                           required="1"/>
+                                    <field name="place_from" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                           required="1"/>
+                                    <field name="place_to" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                           required="1"/>
+                                    <field name="travel_mode" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                           required="1"/>
+                                    <field name="total_amount" string="Travel Amount"
+                                           attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name='attachment_ids' widget="many2many_binary"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="employee_id" invisible="1"
+                                           attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                    <field name="is_refused" invisible="True"/>
+                                </tree>
+                            </field>
+                            <separator string="Lodging Expense" name="lodging_charge"
+                                       attrs="{'invisible': ['|',('claim_type', '!=', 'travel'),('lodging', '!=', 'yes')]}"/>
+                            <field name="lodging_exp_line_ids"
+                                   nolabel="1"
+                                   widget="one2many"
+                                   mode="tree,kanban"
+                                   domain="[
+                                        ('state', '=', 'draft'),
+                                        ('employee_id', '=', requested_by),
+                                        ('company_id', '=', company_id),
+                                    ]"
+                                   options="{'reload_on_button': True}"
+                                   context="{
+                                        'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header',
+                                        'default_company_id': company_id,
+                                        'default_employee_id': requested_by,
+                                    }"
+                                   force_save="1"
+                                   attrs="{'readonly': ['|',('expense_approval_stage', '!=', 'draft'),('have_submit_access','=',False)], 'invisible': ['|',('claim_type', '!=', 'travel'),('lodging', '!=', 'yes')]}">
+                                <tree decoration-danger="is_refused" editable="bottom" class="o_expense_line_list">
+                                    <field name="date_from" string="From Date" required="1"/>
+                                    <field name="date_to" string="To Date" required="1"/>
+                                    <field name="lodging_place" string="Place" required="1"/>
+                                    <field name="lodging_hotel_name" string="Hotel Name" required="1"/>
+                                    <field name="reference" string="Bill Number"/>
+                                    <field name="total_amount" string="Bill Amount"
+                                           attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name='attachment_ids' widget="many2many_binary"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="employee_id" invisible="1"
+                                           attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                    <field name="is_refused" invisible="True"/>
+                                </tree>
+                            </field>
+
+                            <separator string="Boarding Expense" name="boarding_charge"
+                                       attrs="{'invisible': [('claim_type', '!=', 'travel')]}"/>
+                            <field name="boarding_exp_line_ids"
+                                   nolabel="1"
+                                   widget="one2many"
+                                   mode="tree,kanban"
+                                   domain="[
+                                        ('state', '=', 'draft'),
+                                        ('employee_id', '=', requested_by),
+                                        ('company_id', '=', company_id),
+                                    ]"
+                                   options="{'reload_on_button': True}"
+                                   context="{
+                                        'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header',
+                                        'default_company_id': company_id,
+                                        'default_employee_id': requested_by,
+                                    }"
+                                   force_save="1"
+                                   attrs="{'readonly': ['|',('expense_approval_stage', '!=', 'draft'),('have_submit_access','=',False)],'invisible': [('claim_type', '!=', 'travel')]}">
+                                <tree decoration-danger="is_refused" editable="bottom" class="o_expense_line_list">
+                                    <field name="boarding_date" required="1"/>
+                                    <field name="reference" string="Bill Ref Number"/>
+                                    <field name="dine" string="Dine" required="1"/>
+                                    <field name="total_amount" string="Boarding Amount" required="1"/>
+                                    <field name='attachment_ids' widget="many2many_binary"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="employee_id" invisible="1"
+                                           attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                    <field name="is_refused" invisible="True"/>
+                                </tree>
+                            </field>
+
+                            <separator string="Other Expense" name="other_charge"
+                                       attrs="{'invisible': [('claim_type', '!=', 'other')]}"/>
+                            <field name="other_exp_line_ids"
+                                   nolabel="1"
+                                   widget="one2many"
+                                   mode="tree,kanban"
+                                   domain="[
+                                        ('state', '=', 'draft'),
+                                        ('employee_id', '=', requested_by),
+                                        ('company_id', '=', company_id),
+                                    ]"
+                                   options="{'reload_on_button': True}"
+                                   context="{
+                                        'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header',
+                                        'default_company_id': company_id,
+                                        'default_employee_id': requested_by,
+                                    }"
+                                   force_save="1"
+                                   attrs="{'readonly': ['|',('expense_approval_stage', '!=', 'draft'),('have_submit_access','=',False)], 'invisible': [('claim_type', '!=', 'other')]}">
+                                <tree decoration-danger="is_refused" editable="bottom" class="o_expense_line_list">
+                                    <field name="boarding_date" string="Date" required="1"/>
+                                    <field name="name" string="Description" required="1"/>
+                                    <field name="reference" string="Bill Ref Number"/>
+                                    <field name="product_id"
+                                           string="Type Of Expense"
+                                           domain="[('category_type','=', 'other')]"
+                                           context="{'default_category_type':'other','default_detailed_type': 'service', 'default_can_be_expensed': 1, 'tree_view_ref': 'hr_expense.product_product_expense_tree_view', 'form_view_ref': 'hr_expense.product_product_expense_form_view'}"
+                                           required="1" options="{'no_create': True, 'no_edit': True}"/>
+                                    <field name="total_amount" string="Amount" required="1"/>
+                                    <field name='attachment_ids' widget="many2many_binary"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="employee_id" invisible="1"
+                                           attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                    <field name="is_refused" invisible="True"/>
+                                </tree>
+                            </field>
+
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="expense_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_amount"/>
+                                </div>
+                                <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page name="comments" string="User Activity History">
+                            <group>
+                                <group>
+                                    <field name="user_comment" readonly="1"/>
+                                    <field name="mu_comment" readonly="1"/>
+                                    <field name="finance_manager_comment" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="mu_approved_by"/>
+                                    <field name="finance_approved_by"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    expended form view for hr expense-->
+    <record id="hr_expense_view_extend_form" model="ir.ui.view">
+        <field name="name">hr.expense.view.extend.form</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reference']" position="before">
+                <field name="travel_claim_id"
+                       attrs="{'invisible': [('category_type', '!=', 'travel')],'required': [('category_type', '=', 'travel')]}"
+                       domain="[('claim_type', '=', 'travel'),('state', '=', 'approved'),('expense_approval_stage', '=', 'draft')]"/>
+                <field name="lodging_claim_id" attrs="{'invisible': [('category_type', '!=', 'lodging')]}"
+                       domain="[('claim_type', '=', 'travel'),('lodging', '!=', False),('state', '=', 'approved'),('expense_approval_stage', '=', 'draft')]"/>
+                <field name="boarding_claim_id" attrs="{'invisible': [('category_type', '!=', 'boarding')]}"
+                       domain="[('claim_type', '=', 'travel'),('state', '=', 'approved'),('expense_approval_stage', '=', 'draft')]"/>
+                <field name="other_claim_id" attrs="{'invisible': [('category_type', '!=', 'other')]}"
+                       domain="[('claim_type', '=', 'other'),('state', '=', 'approved'),('expense_approval_stage', '=', 'draft')]"/>
+                <field name="claim_id" invisible="1" />
+                <field name="claim_status"  attrs="{'invisible': [('claim_id', '=', False)]}" />
+                <field name="department" attrs="{'invisible': [('claim_id', '=', False)]}" />
+                <field name="expense_manager" attrs="{'invisible': [('claim_id', '=', False)]}" />
+            </xpath>
+            <xpath expr="//sheet/group" position="inside">
+                <group>
+                    <field name="date_from" string="Date From"
+                           attrs="{'invisible': [('category_type', 'not in', ['travel', 'lodging'])]}"/>
+                    <field name="place_from" string="Place From"
+                           attrs="{'invisible': [('category_type', 'not in', ['travel'])]}"/>
+                    <field name="boarding_date" string="Date"
+                           attrs="{'invisible': [('category_type', 'not in', ['boarding'])]}"/>
+                    <field name="lodging_place" string="Place"
+                           attrs="{'invisible': [('category_type', 'not in', ['lodging'])]}"/>
+                    <field name="travel_mode" string="Mode of Travel"
+                           attrs="{'invisible': [('category_type', 'not in', ['travel'])]}"/>
+                    <field name="category_type" string="Category Type"/>
+                </group>
+                <group>
+                    <field name="date_to" string="Date To"
+                           attrs="{'invisible': [('category_type', 'not in', ['travel', 'lodging'])]}"/>
+                    <field name="place_to" string="Place To"
+                           attrs="{'invisible': [('category_type', 'not in', ['travel'])]}"/>
+                    <field name="lodging_hotel_name" string="Hotel Name"
+                           attrs="{'invisible': [('category_type', 'not in', ['lodging'])]}"/>
+                    <field name="dine" string="Dine"
+                           attrs="{'invisible': [('category_type', 'not in', ['boarding'])]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+     <!--    expended form search view for hr expense-->
+    <record id="hr_expense_view_search_extended" model="ir.ui.view">
+        <field name="name">hr.expense.search.extended</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='expensesmonth']" position="after">
+                <filter string="Analytic Account" name="analytic_distribution" domain="[]"
+                        context="{'group_by': 'analytic_distribution'}"/>
+                <filter string="Department" name="department" domain="[]" context="{'group_by': 'department'}"/>
+                <filter string="Expense Manager" name="expense_manager" domain="[]"
+                        context="{'group_by': 'expense_manager'}"/>
+                <filter string="Paid By" name="payment_mode" domain="[]"
+                        context="{'group_by': 'payment_mode'}"/>
+                <filter string="Claim Status" name="claim_status" domain="[]" context="{'group_by': 'claim_status'}"/>
+                <filter string="Expense Status" name="analytic_distribution" domain="[]"
+                        context="{'group_by': 'state'}"/>
+                <filter string="Claim" name="claim_id" domain="[]" context="{'group_by': 'claim_id'}"/>
+                <filter string="Created By" name="create_uid" domain="[]" context="{'group_by': 'create_uid'}"/>
+                <filter string="Created On" name="create_date" domain="[]" context="{'group_by': 'create_date'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_claim_hr_expense_sheet_form" model="ir.ui.view">
+    <field name="name">claim.hr.expense.sheet.form</field>
+    <field name="model">hr.expense.sheet</field>
+    <field eval="25" name="priority"/>
+    <field name="arch" type="xml">
+        <form string="Expense Reports" class="o_expense_sheet">
+        <field name="can_reset" invisible="1"/>
+        <field name="can_approve" invisible="1"/>
+        <field name="company_id" invisible="1"/>
+         <header>
+                                <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,post,done" force_save="1"/>
+        </header>
+        <sheet>
+            <div class="oe_button_box" name="button_box">
+                <button name="action_open_account_move"
+                    class="oe_stat_button"
+                    icon="fa-file-text-o"
+                    type="object"
+                    attrs="{'invisible': ['|', ('state', 'not in', ['post', 'done']), ('account_move_id', '=', False)]}"
+                    groups="account.group_account_invoice">
+                    Journal Entry
+                </button>
+                <field name="account_move_id" invisible="1"/>
+                <button name="action_get_expense_view"
+                    class="oe_stat_button"
+                    icon="fa-file-text-o"
+                    type="object"
+                    attrs="{'invisible': [('expense_number', '=', 0)]}">
+                    <field name="expense_number" widget="statinfo" string="Expenses"/>
+                </button>
+            </div>
+            <field name="payment_state" invisible="True"/>
+            <!-- Paid by Company  -->
+            <widget name="web_ribbon" title="Paid" bg_color="bg-success" attrs="{'invisible': ['|', ('payment_mode', '=', 'own_account'), ('payment_state', 'not in', ['paid', 'in_payment', 'partial'])]}"/>
+            <!-- Paid by Employee -->
+            <widget name="web_ribbon" title="Paid" bg_color="bg-success" attrs="{'invisible': ['|', ('payment_mode', '=', 'company_account'), ('payment_state', '!=', 'paid')]}"/>
+            <widget name="web_ribbon" title="Partial" bg_color="bg-info" attrs="{'invisible': ['|', ('payment_mode', '=', 'company_account'), ('payment_state', '!=', 'partial')]}"/>
+            <widget name="web_ribbon" title="In Payment" attrs="{'invisible': ['|', ('payment_mode', '=', 'company_account'), ('payment_state', '!=', 'in_payment')]}"/>
+            <div class="oe_title">
+                <label for="name" class="oe_edit_only"/>
+                <h1>
+                    <field name="name" placeholder="e.g. Trip to NY" attrs="{'readonly': [('is_editable', '=', False)]}" force_save="1"/>
+                </h1>
+            </div>
+            <group>
+                <group name="employee_details">
+                    <field name="employee_id" context="{'default_company_id': company_id}" widget="many2one_avatar_employee"/>
+                    <field name="payment_mode"/>
+                    <field name="journal_id" groups="account.group_account_invoice,account.group_account_readonly" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': [('payment_mode', '!=', 'own_account')]}" context="{'default_company_id': company_id}"/>
+                    <field name="bank_journal_id" groups="account.group_account_invoice,account.group_account_readonly" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': [('payment_mode', '!=', 'company_account')]}" context="{'default_company_id': company_id}"/>
+                    <field name="address_id" invisible="1" context="{'default_company_id': company_id}"/>
+                    <field name="department_id" invisible="1" context="{'default_company_id': company_id}"/>
+                </group>
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="user_id" widget="many2one_avatar_user"/>
+                    <field name="accounting_date" groups="account.group_account_invoice,account.group_account_readonly" attrs="{'invisible': [('state', 'not in', ['approve', 'post', 'done'])], 'readonly': [('state', 'in', ['post', 'done'])]}"/>
+                </group>
+            </group>
+             <notebook>
+                <page name="expenses" string="Expense">
+                    <field name="is_editable" invisible="1"/>
+                    <field name="expense_line_ids"
+                            nolabel="1"
+                            widget="many2many"
+                            mode="tree,kanban"
+                            domain="[
+                                ('state', '=', 'draft'),
+                                ('employee_id', '=', employee_id),
+                                ('company_id', '=', company_id),
+                                ('payment_mode', '=?', payment_mode),
+                            ]"
+                            options="{'reload_on_button': True}"
+                            context="{
+                                'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header',
+                                'default_company_id': company_id,
+                                'default_employee_id': employee_id,
+                                'default_payment_mode': payment_mode or 'own_account',
+                            }"
+                            attrs="{'readonly': [('is_editable', '=', False)]}"
+                            force_save="1" readonly="1">
+                        <tree decoration-danger="is_refused" editable="bottom" class="o_expense_line_list">
+                            <field name="date" optional="show"/>
+                            <field name="product_id"/>
+                            <field name="name"/>
+                            <field name="description" optional="hide"/>
+                            <field name="employee_id" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="attachment_number" invisible="1"/>
+                            <button name="action_get_attachment_view" type="object" icon="fa-paperclip" aria-label="View Attachments" title="View Attachments" class="float-end pe-0" readonly="True" attrs="{'invisible': [('attachment_number', '=', 0)]}"/>
+                            <field name="reference" optional="hide" readonly="True"/>
+                            <field name="analytic_distribution" widget="analytic_distribution"
+                                   groups="analytic.group_analytic_accounting"
+                                   optional="show"
+                                   options="{'product_field': 'product_id', 'account_field': 'account_id', 'business_domain': 'expense'}"/>
+                            <field name="account_id" optional="hide" groups="account.group_account_readonly"/>
+                            <field name="product_has_cost" invisible="True"/>
+                            <field name="unit_amount" optional="hide" widget="monetary" attrs="{'readonly': [('product_has_cost', '=', False)]}" options="{'currency_field': 'company_currency_id', 'field_digits': True}"/>
+                            <field name="currency_id" optional="hide" readonly="True"/>
+                            <field name="quantity" optional="hide" attrs="{'readonly': [('product_has_cost', '=', False)]}"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="tax_ids" string="Taxes" optional="show" widget="many2many_tags" context="{'default_company_id': company_id}"/>
+                            <field name="amount_tax" optional="hide" context="{'default_company_id': company_id}" readonly="True" groups="base.group_multi_currency"/>
+                            <field name="total_amount" optional="show" attrs="{'readonly': [('product_has_cost', '=', True)]}"/>
+                            <field name="amount_tax_company" optional="hide" readonly="True"/>
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="total_amount_company" optional="show" groups="base.group_multi_currency" readonly="True"/>
+                            <field name="is_refused" invisible="True"/>
+                        </tree>
+                    </field>
+                    <field name="currency_id" invisible="1"/>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="expense_total">
+                        <field name="untaxed_amount"/>
+                        <div class="oe_inline o_td_label">
+                            <label for="total_amount_taxes"/>
+                        </div>
+                        <field name="total_amount_taxes" nolabel="1"/>
+                        <div class="oe_inline o_td_label">
+                            <label for="total_amount"/>
+                        </div>
+                        <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator"/>
+                        <field name="amount_residual"
+                            class="oe_subtotal_footer_separator"
+                            attrs="{'invisible': [('state', 'not in', ('post', 'done'))]}"/>
+                    </group>
+                </page>
+             </notebook>
+        </sheet>
+        <div class="o_attachment_preview"/>
+        <div class="oe_chatter">
+            <field name="message_follower_ids"/>
+            <field name="activity_ids"/>
+            <field name="message_ids"/>
+        </div>
+        </form>
+    </field>
+    </record>
+
+
+    <!--    tree view for expense claim-->
+    <record id="hr_expense_claim_view_tree" model="ir.ui.view">
+        <field name="name">hr.expense.claim.tree</field>
+        <field name="model">hr.expense.claim</field>
+        <field name="arch" type="xml">
+            <tree string="Expenses Claim Tree">
+                <field name="company_id" invisible="1"/>
+                <field name="name"/>
+                <field name="requested_by"/>
+                <field name="claim_type"/>
+                <field name="requested_date"/>
+                <field name="expense_date"/>
+                <field name="claim_amount" string="Requested Amount"/>
+                <field name="advance_payed_amount" string="Advance Payed Amount"/>
+                <field name="total_amount" string="Total Expense Amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- expense claim search view -->
+    <record id="hr_expense_claim_search" model="ir.ui.view">
+        <field name="name">hr.expense.claim.search</field>
+        <field name="model">hr.expense.claim</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Claim"/>
+                <field name="requested_by" string="Requested By"/>
+                <filter name="filter_new" string="New" domain="[('state', '=', 'new')]"/>
+                <filter name="filter_pending_approval" string="Pending Approval"
+                        domain="[('state', '=', 'pending_approval')]"/>
+                <filter name="filter_mu_approved" string="Mu Approved" domain="[('state', '=', 'mu_approved')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="filter_cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="filter_requested_date" date="requested_date" default_period="this_month"/>
+                <separator/>
+                <filter name="filter_submit" string="To Submit"
+                        domain="[('expense_approval_stage', '=', 'draft'),('state', 'in', ['approved_without_advance','approved'])]"/>
+                <filter name="filter_submited" string="Submited"
+                        domain="[('expense_approval_stage', '=', 'reported')]"/>
+                <filter name="filter_done" string="Done"
+                        domain="[('expense_approval_stage', '=', 'done')]"/>
+                <filter string="Claim Status" name="state" context="{'group_by': 'state'}"/>
+                <filter string="Expense Status" name="expense_approval_stage"
+                        context="{'group_by': 'expense_approval_stage'}"/>
+                <filter string="Expense Date" name="expense_date" context="{'group_by': 'expense_date'}"/>
+                <group expand="1" string="Group By">
+                    <filter string="Claim" name="Claim" context="{'group_by':'name'}"/>
+                    <filter string="Requested By" name="Requested By" context="{'group_by':'requested_by'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--    action for all expense claim record-->
+    <record id="action_hr_expense_claim" model="ir.actions.act_window">
+        <field name="name">Claim</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Claim
+            </p>
+            <p>
+                Once you have created your Claim, submit it to your manager who will validate it.
+            </p>
+        </field>
+    </record>
+
+    <!--    action for pending expense claim records-->
+    <record id="action_hr_expense_claim_pending" model="ir.actions.act_window">
+        <field name="name">Claims Pending Approval</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ['pending_approval'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for pending finance expense claim records-->
+    <record id="action_hr_expense_claim_fin_pending" model="ir.actions.act_window">
+        <field name="name">Claims Pending Finance Approval</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ['mu_approved'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for approved expense claim records-->
+    <record id="action_hr_expense_claim_approved" model="ir.actions.act_window">
+        <field name="name">Claims Approved</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ['approved'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for  completed claim records-->
+    <record id="action_hr_expense_claim_completed" model="ir.actions.act_window">
+        <field name="name">Claims Completed</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ['completed'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for cancelled expense claim records-->
+    <record id="action_hr_expense_claim_cancelled" model="ir.actions.act_window">
+        <field name="name">Claims Cancelled</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ['cancelled'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for  submitted claim records-->
+    <record id="action_hr_expense_claim_submitted" model="ir.actions.act_window">
+        <field name="name">Claims Expense Submitted</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('expense_approval_stage', 'in', ['reported'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for claim expense Approved claim records-->
+    <record id="action_hr_claim_expense_approved" model="ir.actions.act_window">
+        <field name="name">Claims Expense Approved</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('expense_approval_stage', 'in', ['approved'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    action for claim expense done claim records-->
+    <record id="action_hr_claim_expense_done" model="ir.actions.act_window">
+        <field name="name">Claims Expense Done</field>
+        <field name="res_model">hr.expense.claim</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('expense_approval_stage', 'in', ['done'])]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <!--    overriding the expense analysis action to hide tree and form view -->
+    <record id="hr_expense_actions_all_for_claim" model="ir.actions.act_window">
+        <field name="name">Expenses Analysis</field>
+        <field name="res_model">hr.expense</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="search_view_id" ref="hr_expense.hr_expense_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No data yet!
+            </p>
+            <p>
+                Create new expenses to get statistics.
+            </p>
+        </field>
+    </record>
+
+    <record id="hr_expense.action_hr_expense_sheet_all" model="ir.actions.act_window">
+        <field name="view_ids"
+               eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('hr_expense.view_hr_expense_sheet_tree')}),(0, 0, {'view_mode': 'form', 'view_id': ref('hr_expense.view_hr_expense_sheet_form')})]"/>
+    </record>
+
+
+    <!--     Inherit and update the existing 'My Expenses' menu item -->
+    <record id="hr_expense.menu_hr_expense_my_expenses" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('hr_expense_extended.expense_claim_admin')])]"/>
+        <field name="sequence">2</field>
+    </record>
+    <!--     Inherit and update the existing 'Expense Reports' menu item -->
+    <record id="hr_expense.menu_hr_expense_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('hr_expense_extended.expense_claim_admin')])]"/>
+        <field name="sequence">3</field>
+    </record>
+    <!--     Inherit and update the existing 'Expense Reports' menu item -->
+    <record id="hr_expense.hr_expense_menu_config_activity_type" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('hr_expense_extended.expense_claim_admin')])]"/>
+    </record>
+
+    <menuitem id="hr_expense.menu_hr_expense_reports" name="Reporting" sequence="4"
+              parent="hr_expense.menu_hr_expense_root"
+              groups="expense_claim_admin,claim_expense_manager_approver,expense_claim_finance_approver"/>
+
+    <menuitem id="hr_expense.menu_hr_expense_configuration" name="Configuration"
+              parent="hr_expense.menu_hr_expense_root"
+              sequence="10"
+              groups='hr_expense_extended.expense_claim_admin'/>
+
+    <menuitem id="hr_expense.menu_hr_expense_root" name="Claim Management" sequence="230"
+              web_icon="hr_expense,static/description/icon.svg"/>
+
+
+    <menuitem id="menu_hr_expense_my_claims" name="Claims" sequence="1" parent="hr_expense.menu_hr_expense_root"
+              groups="base.group_user"/>
+    <menuitem id="menu_my_claim_all_claims" sequence="1" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              action="action_hr_expense_claim" name="All Claims"/>
+    <menuitem id="menu_my_claim_pending_approval" sequence="2" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              action="action_hr_expense_claim_pending" name="Pending Approval"
+              groups="hr_expense_extended.claim_expense_manager_approver,hr_expense_extended.expense_claim_admin"/>
+    <menuitem id="menu_my_claim_pending_fin_approval" sequence="3" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              action="action_hr_expense_claim_fin_pending" name="Pending Finance Approval"
+              groups="hr_expense_extended.expense_claim_finance_approver,hr_expense_extended.expense_claim_admin"/>
+    <menuitem id="menu_my_claim_approved" sequence="4" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              action="action_hr_expense_claim_approved" name="Approved"/>
+    <menuitem id="menu_my_claim_completed" sequence="5" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              action="action_hr_expense_claim_completed" name="Completed"/>
+    <menuitem id="menu_my_claim_cancelled" sequence="6" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              action="action_hr_expense_claim_cancelled" name="Cancelled"/>
+
+    <menuitem id="menu_my_claim_expense" name="Expense" parent="hr_expense_extended.menu_hr_expense_my_claims"
+              sequence="10"/>
+    <menuitem id="menu_my_claim_submitted" sequence="4" parent="hr_expense_extended.menu_my_claim_expense"
+              action="action_hr_expense_claim_submitted" name="Submitted"/>
+    <menuitem id="menu_my_claim_expense_approved" sequence="4" parent="hr_expense_extended.menu_my_claim_expense"
+              action="action_hr_claim_expense_approved" name="Approved"/>
+    <menuitem id="menu_my_claim_expense_done" sequence="4" parent="hr_expense_extended.menu_my_claim_expense"
+              action="action_hr_claim_expense_done" name="Done"/>
+
+</odoo>

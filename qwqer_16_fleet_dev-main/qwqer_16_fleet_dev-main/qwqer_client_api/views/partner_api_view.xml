@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="partner_api_client_view_form" model="ir.ui.view">
+            <field name="name">partner_api_client_view_form</field>
+            <field name="model">partner.sync.api</field>
+            <field name="arch" type="xml">
+                <form string="partner_api_client_form">
+                    <header>
+                        <button name="get_customer_data" string="Sync" class="oe_highlight" type="object" />
+                        <button name="get_offset_value" string="GeT Offset Value" class="oe_highlight" type="object" attrs="{'invisible': [('offset_no','>',0)]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_service_type"/>
+                                <field name="partner_type"/>
+                                <field name="b_type"/>
+                            </group>
+                            <group>
+                                <field name="fetch_limit"/>
+                                <field name="offset_no"/>
+                                <field name="partner_id"/>
+                            </group>
+                        </group>
+
+
+                        <notebook>
+                            <page string="Api Detail">
+                                <field name="api_details_ids" string="Api Details">
+                                    <tree create="0" delete="0">
+                                        <field name="api_name" readonly="1" width='300px'/>
+                                        <field name="data" attrs="{'readonly': [('status', '=', 'success')]}"
+                                               width='300px'/>
+                                        <field name="status" readonly="1" width='300px'/>
+                                        <field name="response" readonly="1" width='300px'/>
+                                        <field name="partner_id" readonly="1" width='300px'/>
+                                        <button name="resync_customer"
+                                                string="Resync"
+                                                type="object"
+                                                class="btn-secondary"
+                                                icon="fa-refresh"
+                                                attrs="{'invisible': [('status', '=', 'success')]}"/>
+
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="partner_api_client_view_tree" model="ir.ui.view">
+            <field name="name">partner_api_client_view_tree</field>
+            <field name="model">partner.sync.api</field>
+            <field name="arch" type="xml">
+                <tree string="partner_api_client_tree">
+                    <field name="partner_service_type"/>
+                    <field name="partner_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_partner_sync_api" model="ir.actions.act_window">
+            <field name="name">Partner Sync Api</field>
+            <field name="res_model">partner.sync.api</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        manu for customer onboard-->
+        <menuitem id="menu_api_sync" web_icon="qwqer_client_api,static/description/icon.png"
+                  name="API Sync"
+                  groups="base.group_system"/>
+        <menuitem id="menu_api_synca_api_action" action="action_partner_sync_api"
+                  parent="qwqer_client_api.menu_api_sync" name="Partner Sync" sequence="1"/>
+
+    </data>
+
+    <record id="view_partner_form_sync_extend" model="ir.ui.view">
+        <field name="name">res.partner.sync.extend.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div" position="inside">
+
+                    <button name="sync_partner_master"
+                            string="sync Partner"
+                            type="object"
+                            class="btn-secondary"
+                            groups="base.group_system"
+                            icon="fa-refresh"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="partner_bulk_sync" model="ir.actions.server">
+        <field name="name">Partner Bulk Sync</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.bulk_sync_partner_master()</field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--  Modification in hr.employee for QWQER base features -->
+    <record id="employee_form_inherit_qwqer_base" model="ir.ui.view">
+        <field name="name">inherit.employee.form.qwqer.base.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!--Add region field in the Employee Form-->
+            <xpath expr="//field[@name='work_email']" position="after">
+                <field name="region_id" required="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

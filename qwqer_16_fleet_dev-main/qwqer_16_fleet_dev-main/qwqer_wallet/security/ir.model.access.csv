@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+customer_wallet_config_access_group_user,customer_wallet_config_access_group_user,model_customer_wallet_config,base.group_user,1,1,1,0
+wallet_add_amount_access_group_user,wallet_add_amount_access_group_user,model_wallet_add_amount,base.group_user,1,1,1,0
+wallet_deduct_amount_access_group_user,wallet_deduct_amount_access_group_user,model_wallet_deduct_amount,base.group_user,1,1,1,0
+access_customer_wallet_report,access_customer_wallet_report,model_customer_wallet_report,base.group_user,1,1,1,1
+access_customer_wallet_detailed_report,access_customer_wallet_detailed_report,model_customer_wallet_detailed_report,base.group_user,1,1,1,1
+access_wallet_offset_wizard,access_wallet_offset_wizard,model_wallet_offset_wizard,base.group_user,1,1,1,1
+
+
+

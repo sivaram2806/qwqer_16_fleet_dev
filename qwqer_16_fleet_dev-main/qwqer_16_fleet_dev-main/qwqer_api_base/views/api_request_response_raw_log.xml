@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="api_request_response_raw_log_tree" model="ir.ui.view">
+        <field name="name">api.request.response.raw.log.tree</field>
+        <field name="model">api.request.response.raw.log</field>
+        <field name="arch" type="xml">
+            <tree string="API Logs" create="false" delete="false">
+                <field name="access_date"/>
+                <field name="response_date"/>
+                <field name="request_url" />
+                <field name="remote_addr" />
+                <field name="name" />
+                <field name="key" />
+                <field name="status" />
+                <field name="data"/>
+                <field name="response"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="api_request_response_raw_log_search_view" model="ir.ui.view">
+            <field name="name">api.request.response.raw.log.search.view</field>
+            <field name="model">api.request.response.raw.log</field>
+            <field name="arch" type="xml">
+                <search string="API Log Search">
+                	<field name="name" string="API Name"/>
+                	<field name="key" string="Key"/>
+                	<field name="status" string="Status"/>
+                	<separator/>
+            	
+	            		<filter string="Today" name="today_created" domain="['&amp;', 
+		                	('create_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d')), 
+		                	('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%%Y-%%m-%%d'))]"/>
+	                		<filter string="Yesterday" name="yesterday_created" domain="['&amp;', 
+		                	('create_date', '&lt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d')), 
+		                	('create_date', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d'))]"/>
+	                		<filter string="Current Week" name="current_week"
+	           				domain="[('create_date', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+	         						('create_date', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"/> 
+	                		<filter string="Current Month" name="this_month" domain="[('create_date', '&gt;=', context_today().strftime('%%Y-%%m-01'))]"/>
+	                    	<filter string="Last Week"  name="week" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+	                		<filter string="Last Month"  name="month" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+	            	
+					<separator/>
+                	<group string="Group By">
+                		<filter string="Key" name="key" context="{'group_by':'key'}"/>
+                		<filter string="Status" name="status" context="{'group_by':'status'}"/>
+                		<filter string="Access Date" name="access_date" context="{'group_by':'access_date'}"/>
+                		<filter string="Request URL" name="request_url" context="{'group_by':'request_url'}"/>
+                	</group>
+                </search>
+            </field>
+   	</record>
+
+    <record id="api_request_response_raw_log_form" model="ir.ui.view">
+        <field name="name">api.request.response.raw.log.form</field>
+        <field name="model">api.request.response.raw.log</field>
+        <field name="arch" type="xml">
+            <form string="API History">
+                <sheet>
+                    <group>
+                        <field name="access_date"/>
+                        <field name="data"/>
+                        <field name="response"/>
+                        <field name="request_url" />
+                        <field name="remote_addr" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_api_request_response_raw_log" model="ir.actions.act_window">
+        <field name="name">API Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">api.request.response.raw.log</field>
+        <field name="context">{'search_default_today_created':1}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="api_request_response_raw_log_sub_menu"
+              action="action_api_request_response_raw_log"
+              name="API Logs"
+              parent="qwqer_base.api_log_menu"
+              sequence="1"/>
+
+            <record id="action_update_failed_records_log" model="ir.actions.server">
+            <field name="name">Update Failed Records</field>
+            <field name="model_id" ref="model_api_request_response_raw_log"/>
+            <field name="binding_model_id" ref="model_api_request_response_raw_log"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                    if records:
+                        records.sync_data(base_url="", api_key="")
+            </field>
+        </record>
+
+        <record id="ir_cron_update_failed_records" model="ir.cron">
+            <field name="name">Failed API re trigger cron</field>
+            <field name="model_id" ref="model_api_request_response_raw_log"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.update_failed_records_cron(domain=[('request_url', 'like', '/internal/service/request'), ('status', 'like', 'REJECTED')])</field>
+            <field name="interval_number">1</field>
+            <field name="active">0</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+</odoo>

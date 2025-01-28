@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--       Group Category for Target Settings -->
+        <record id="module_category_sales_person_target" model="ir.module.category">
+            <field name="name">Fleet Target Settings</field>
+        </record>
+        <!--        Target Manager Access-->
+        <record id="target_manager_own_records_access" model="res.groups">
+            <field name="name">Target User: Own Documents Only</field>
+            <field name="category_id" ref="sales_person_target.module_category_sales_person_target"/>
+        </record>
+        <!--        Target Manager Access-->
+        <record id="target_manager_all_allowed_region_access" model="res.groups">
+            <field name="name">Target Manager: Allowed Region Only</field>
+            <field name="category_id" ref="sales_person_target.module_category_sales_person_target"/>
+            <field name="implied_ids" eval="[(4, ref('sales_person_target.target_manager_own_records_access'))]"/>
+        </record>
+        <!--        Target Manager Access-->
+        <record id="target_manager_all_access" model="res.groups">
+            <field name="name">Target Manager: All Documents</field>
+            <field name="category_id" ref="sales_person_target.module_category_sales_person_target"/>
+            <field name="implied_ids"
+                   eval="[(4, ref('sales_person_target.target_manager_all_allowed_region_access'))]"/>
+        </record>
+
+        <!--        Record rules For Target Manager / User -->
+        <record id="access_user_targets_only" model="ir.rule">
+            <field name="name">Target : User Records Only</field>
+            <field ref="model_target_configuration" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('sales_person_target.target_manager_own_records_access'))]"/>
+        </record>
+        <record id="access_user_targets_list_only" model="ir.rule">
+            <field name="name">Target List: User Records Only</field>
+            <field ref="model_salesperson_target_list" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('sales_person_target.target_manager_own_records_access'))]"/>
+        </record>
+
+        <record id="access_user_allowed_regions_targets_only" model="ir.rule">
+            <field name="name">Target Manager: All Allowed Region</field>
+            <field ref="model_target_configuration" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('user_id.displayed_regions_ids', 'in', user.displayed_regions_ids.ids)]</field>
+            <field name="groups" eval="[(4, ref('sales_person_target.target_manager_all_allowed_region_access'))]"/>
+        </record>
+        <record id="access_user_allowed_regions_targets_list_only" model="ir.rule">
+            <field name="name">Target Manager: All Allowed Region List</field>
+            <field ref="model_salesperson_target_list" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('user_id.displayed_regions_ids', 'in', user.displayed_regions_ids.ids)]</field>
+            <field name="groups" eval="[(4, ref('sales_person_target.target_manager_all_allowed_region_access'))]"/>
+        </record>
+
+        <record id="access_all_targets" model="ir.rule">
+            <field name="name">Target : All Records</field>
+            <field ref="model_target_configuration" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('sales_person_target.target_manager_all_access'))]"/>
+        </record>
+        <record id="access_all_targets_list" model="ir.rule">
+            <field name="name">Target List: All Records</field>
+            <field ref="model_salesperson_target_list" name="model_id"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('sales_person_target.target_manager_all_access'))]"/>
+        </record>
+
+
+        <!--        Multi Company Rule For Target Configuration-->
+
+        <record id="target_config_comp_rule" model="ir.rule">
+            <field name="name">Target Config multi company rule</field>
+            <field name="model_id" ref="model_target_configuration"/>
+            <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+        </record>
+        <!--        Multi Company Rule For Target Analysis -->
+        <record id="sales_person_target_config_comp_rule" model="ir.rule">
+            <field name="name">Target Analysis multi company rule</field>
+            <field name="model_id" ref="model_salesperson_target_list"/>
+            <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+        </record>
+    </data>
+</odoo>

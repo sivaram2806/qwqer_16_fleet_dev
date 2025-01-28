@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--ir_rule for ftl trip summary-->
+    <record id="trip_summary_ftl_comp_rule" model="ir.rule">
+        <field name="name">Company Rule FTL Trip Summary</field>
+        <field name="model_id" ref="model_trip_summary_ftl"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for ftl trip summary line-->
+    <record id="trip_summary_ftl_line_comp_rule" model="ir.rule">
+        <field name="name">Company Rule FTL Trip Summary Line</field>
+        <field name="model_id" ref="model_trip_summary_ftl_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for batch trip ftl-->
+    <record id="batch_trip_ftl_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Batch Trip FTL</field>
+        <field name="model_id" ref="model_batch_trip_ftl"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for batch trip ftl line-->
+    <record id="batch_trip_ftl_line_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Batch Trip FTL Line</field>
+        <field name="model_id" ref="model_batch_trip_ftl_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for work order-->
+    <record id="work_order_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Work Order</field>
+        <field name="model_id" ref="model_work_order"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for work order line-->
+    <record id="work_order_line_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Work Order Line</field>
+        <field name="model_id" ref="model_work_order_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for work order type-->
+    <record id="work_order_type_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Work Order type</field>
+        <field name="model_id" ref="model_work_order_type"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Group category for fleet management-->
+    <record id="module_fleet_management_category" model="ir.module.category">
+        <field name="name">Fleet Management</field>
+    </record>
+
+    <record id="module_fleet_mail_notification_category" model="ir.module.category">
+        <field name="name">Fleet Mail Notification</field>
+    </record>
+
+    <!--ir_rule for trip summary line-->
+    <record id="vehicle_pricing_comp_rule" model="ir.rule">
+        <field name="name"> Company Rule Vehicle Pricing</field>
+        <field name="model_id" ref="model_vehicle_pricing"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for trip summary line-->
+    <record id="vehicle_vehicle_comp_rule" model="ir.rule">
+        <field name="name"> Company Rule Vehicle</field>
+        <field name="model_id" ref="model_vehicle_vehicle"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

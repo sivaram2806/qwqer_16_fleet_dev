@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="merchant_configuration_tree" model="ir.ui.view">
+		<field name="name">merchant.journal.data.configuration.tree</field>
+		<field name="model">merchant.journal.data.configuration</field>
+		<field name="arch" type="xml">
+			<tree string="Merchant Amount Configuration">
+			         <field name="journal_id" required="True"/>	
+					 <field name="partner_id" />
+			         		         
+			</tree>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="merchant_configuration_form">
+            <field name="name">merchant.journal.data.configuration.form</field>
+            <field name="model">merchant.journal.data.configuration</field>
+            <field name="arch" type="xml">
+                <form string="Merchant Amount Configuration">
+                    <sheet>
+                    <group>
+                        <group>
+			         <field name="journal_id" required="True"/>	
+                     <field name="partner_id" />
+                        </group>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+	<record id="action_merchant_configuration" model="ir.actions.act_window">
+		<field name="name">Merchant Journal Data Configuration</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">merchant.journal.data.configuration</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <menuitem id="menu_merchant_Journal_data_configuration" name="Merchant Journal Data Configuration"
+              parent="account_base.menu_reconciliation" action="action_merchant_configuration" sequence="5"/>
+</odoo>

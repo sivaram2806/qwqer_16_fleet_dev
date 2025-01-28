@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_res_partner_form_view_only" model="ir.ui.view">
+            <field name="name">res.partner.view.form.inherit.read_only_view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account_base.view_partner_form_tds_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ifsc_code']" position="after">
+                    <field name="beneficiary" readonly="1"/>
+                </xpath>
+                <xpath expr="//page[@name='bank_details']" position="inside">
+                    <group>
+                        <group col="2">
+                            <button string="Get Cashfree Beneficiary " name="get_partner_beneficiary" type="object"
+                                    class="oe_highlight large_button single_line_button"/>
+                            <button string="Add Cashfree Beneficiary " name="add_partner_beneficiary" type="object"
+                                    class="oe_highlight large_button single_line_button"/>
+
+                        </group>
+                        <group col="2">
+                            <button string="Remove Cashfree Beneficiary " name="remove_partner_beneficiary"
+                                    type="object" class="oe_highlight large_button single_line_button"/>
+                        </group>
+
+                        <group col="2">
+                        </group>
+                    </group>
+                </xpath>
+
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

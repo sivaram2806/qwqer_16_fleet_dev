@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Record to create Trip Summary Report-->
+    <record id="ftl_cost_analysis_report_xlsx" model="ir.actions.report">
+        <field name="name">Cost Analysis Report</field>
+        <field name="model">ftl.cost.analysis.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_ftl.report_ftl_cost_analysis_xlsx</field>
+        <field name="report_file">fleet_ftl.report_ftl_cost_analysis_xlsx</field>
+        <field name="print_report_name">'%s ATrip Summary' % (object.action_type.title())</field>
+        <field name="binding_model_id" ref="model_ftl_cost_analysis_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Record to create Trip Summary Report-->
+    <record id="ftl_batch_trip_xlsx" model="ir.actions.report">
+        <field name="name">FTL Batch Trip</field>
+        <field name="model">batch.trip.ftl</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_ftl.report_ftl_batch_trip_xlsx</field>
+        <field name="report_file">fleet_ftl.report_ftl_batch_trip_xlsx</field>
+        <field name="print_report_name">"Ftl_Trip_%s" % (object.trip_date or '')</field>
+        <field name="binding_model_id" ref="model_batch_trip_ftl"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+    <!-- Record to create Consolidated Trip Summary Report-->
+    <record id="ftl_consolidated_trip_xlsx" model="ir.actions.report">
+        <field name="name">FTL Consolidated Trip</field>
+        <field name="model">trip.summary.ftl</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_ftl.report_ftl_consolidated_trip_xlsx</field>
+        <field name="report_file">fleet_ftl.report_ftl_consolidated_trip_xlsx</field>
+        <field name="print_report_name">"Ftl_Consolidated_Trip_%s" % (object.trip_date or '')</field>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

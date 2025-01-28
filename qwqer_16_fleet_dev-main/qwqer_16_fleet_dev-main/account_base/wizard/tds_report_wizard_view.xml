@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<odoo>
+	<record id="tds_report_wizard_form_view" model="ir.ui.view">
+		<field name="name">tds.report.wizard.form.view</field>
+	    <field name="model">tds.report.wizard</field>
+	    <field name="arch" type="xml">
+	    	<form>
+	        	<sheet>
+		        	<group>
+		            	<group>
+		            		<field name="from_date" required="1" string="From Date"/>
+		            		<field name="type" string="Type"/>
+		            		<field name="company_id" string="Company"/>
+						</group>
+						<group>
+		            		<field name="to_date" required="1" string="To Date"/>
+		            		<field name="company_id" options="{'no_create_edit': True, 'no_create': True}" readonly="1" force_save="1" invisible="1"/>
+							<field name="account_tax_ids" widget="many2many_tags" string="Section" domain="[('is_tds','=',True)]"/>
+							<field name="sections" string="Sections" invisible="1"/>
+						</group>
+					</group> 
+				</sheet>
+				<footer>
+                     <button name="action_print" string="Print" type="object" class="btn-primary"/>
+                     <button string="Cancel" class="btn-secondary" special="cancel" />
+                 </footer>
+			</form>
+		</field>
+	</record>
+	
+	<record id="tds_report_wizard_action" model="ir.actions.act_window">
+	    <field name="name">TDS Report</field>
+	    <field name="res_model">tds.report.wizard</field>
+	    <field name="type">ir.actions.act_window</field>
+	    <field name="view_mode">form</field>
+	    <field name="view_id" ref="tds_report_wizard_form_view"/>
+	    <field name="target">new</field>
+	</record>
+	
+	<menuitem id="tds_report_wizard_menu" name="TDS Report - Export"
+  	parent="account_base.menu_account_tds" action="tds_report_wizard_action"
+  	sequence="30"/>
+              
+</odoo>

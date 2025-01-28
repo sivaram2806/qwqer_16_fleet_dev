@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Project Extended',
+    'version': '16.0.1.0.0',
+    'summary': """Project Module Extension""",
+    'description': """ This module extends the Project module for ONDC IGM related ticket creation and updation.""",
+    'category': 'Services/Project',
+    'author': 'QWY Software PVT Ltd',
+    'company': 'QWY Software PVT Ltd',
+    'maintainer': 'QWY Software PVT Ltd',
+    'depends': ['base','project','qwqer_base','sale_project'],
+    'website': 'https://qwysoft.com/',
+    'data': [
+            'security/security.xml',
+            'security/ir.model.access.csv',
+            'data/project_sequence.xml',
+            'views/ondc_project_config_settings.xml',
+            'views/project_config.xml',
+            'views/project_views.xml',
+            'views/project_tasks_views.xml',
+    ],
+    'images': [],
+    'license': 'LGPL-3',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

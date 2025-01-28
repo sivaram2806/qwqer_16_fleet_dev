@@ -1,0 +1,210 @@
+<?xml version="1.0" ?>
+<odoo>
+
+<!--https://www.cybrosys.com/blog/what-is-qweb-template-in-odoo-16-->
+
+    <data noupdate="0">
+
+    	 <!--Mail template for generating mails if Send for approval button action is called-->
+		<record id="send_for_approval_ftl_contract_email_template" model="mail.template">
+            <field name="name">FTL Contract: Send for Approval</field>
+            <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{object.contract_num}} Send for Approval</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         <t t-out="user.partner_id.name"/> has submitted contract <t t-out="object.contract_num"/> and awaiting your approval.<br/>
+
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=vehicle.contract&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                        Regards<br/>
+						QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+
+        <!--Mail template for generating mails if RM approve button action is called-->
+        <record id="rm_approve_ftl_contract_email_template" model="mail.template">
+            <field name="name">FTL Contract: RM Approved</field>
+            <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{object.contract_num}} Approved</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Contract <t t-out="object.contract_num"/> has been approved by reporting manager <t t-out="user.partner_id.name"/> and sent to finance manager.<br/>
+
+                        <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                        	<a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=vehicle.contract&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                        Regards<br/>
+						QWQER
+                     </p>
+                 </div>
+            </field>
+        </record>
+
+        <!--Mail template for generating mails if Finance approve button action is called-->
+		<record id="finance_approve_ftl_contract_email_template" model="mail.template">
+	     	<field name="name">FTL Contract: Finance Approved</field>
+           <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{object.contract_num}} Approved</field>
+           <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                        Hi<br/><br/>
+
+                        Contract <t t-out="object.contract_num"/> has been approved by finance manager <t t-out="user.partner_id.name"/>.<br/>
+
+                        <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                        	<a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=vehicle.contract&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+
+                        Regards<br/>
+						QWQER
+                    </p>
+                </div>
+           </field>
+       	</record>
+
+        <!--Mail template for generating mails if Return button action is called-->
+        <record id="return_ftl_contract_email_template" model="mail.template">
+            <field name="name">FTL Contract: Return</field>
+            <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{object.contract_num}} Returned</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Contract <t t-out="object.contract_num"/> has been returned to you by
+                         <t t-if="object.approval_stage=='send_for_approval'"> reporting </t>
+                         <t t-else=""> finance </t>
+                         manager <t t-out="user.partner_id.name"/>.<br/>
+
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+                         Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+        </record>
+
+
+		<!--Mail template for generating mails if Close button action is called-->
+		<record id="close_ftl_contract_email_template" model="mail.template">
+            <field name="name">FTL Contract: Closed</field>
+            <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{object.contract_num}} Closed</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Contract <t t-out="object.contract_num"/> has been closed by <t t-out="user.partner_id.name"/>.<br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+
+                         Regards<br/>
+						 QWQER
+                     </p>
+                 </div>
+            </field>
+        </record>
+
+        <!--Mail template for generating mails if Renew button action is called-->
+        <record id="renew_ftl_contract_email_template" model="mail.template">
+            <field name="name">FTL Contract: Renewed</field>
+            <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{ctx.get('child_contract')}} Renewed</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Contract <t t-out="ctx.get('child_contract')"/> has been renewed by <t t-out="user.partner_id.name"/>.<br/><br/>
+
+                         Regards<br/>
+						 QWQER
+                     </p>
+                 </div>
+            </field>
+		</record>
+
+		<!--Mail template for generating mails if moving contract to running-->
+		<record id="running_ftl_contract_email_template" model="mail.template">
+        	<field name="name">FTL Contract: Running</field>
+        	<field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Contract {{ctx.get('child_contract')}} moved to Running</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         <t t-out="ctx.get('body_content')"/> and Contract <t t-out="ctx.get('child_contract')"/> moved to Running.<br/>
+
+                         <t t-if="ctx.get('reason')">
+                        		Reason:<t t-out="ctx.get('reason')"/>.
+                         </t>
+                         <br/><br/>
+
+                         Regards<br/>
+						 QWQER
+
+                     </p>
+                 </div>
+            </field>
+  		</record>
+
+  		<!--Mail template for generating mails if expiring the contract-->
+  		<record id="expiring_ftl_contract_email_template" model="mail.template">
+            <field name="name">FTL Contract: Expiring Soon</field>
+            <field name="model_id" ref="fleet_extend.model_vehicle_contract"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">{{ctx.get('subject')}}</field>
+            <field name="body_html" type="html">
+                 <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+
+                         Hi<br/><br/>
+
+                         Contract <t t-out="object.contract_num"/> has <t t-out="ctx.get('body_content')"/>.<br/><br/>
+
+                         Regards<br/>
+						 QWQER
+                     </p>
+                 </div>
+            </field>
+        </record>
+
+
+	</data>
+</odoo>

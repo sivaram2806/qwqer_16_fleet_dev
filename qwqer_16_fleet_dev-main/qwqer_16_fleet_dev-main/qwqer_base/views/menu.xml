@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="api_log_menu"
+              name="API - Raw Logs"
+              parent="base.menu_custom"
+              sequence="203"/>
+</odoo>

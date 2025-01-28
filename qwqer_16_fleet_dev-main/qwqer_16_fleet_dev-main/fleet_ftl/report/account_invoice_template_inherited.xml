@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id="report_account_invoice_uh_customization" inherit_id="account_base.accountinvoice_layout_document">
+
+		<xpath expr="//div[hasclass('page')]" position='inside'>
+            <t t-if="o.vehicle_ftl_customer_consolidate_id and o.move_type == 'out_invoice'">
+                    <p style="page-break-before:always;"></p>
+                    <div style="padding-top: 50px;">
+                        <center>
+                            <strong>Consolidated FTL Trip Details</strong>
+                        </center>
+                        <br/>
+                        <br/>
+                        <table style="width:100%;table-layout:fixed;border-color:
+								#fff !important;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; " width="10%">
+                                        Trip Date
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; " width="10%">
+                                        LR No
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; " width="12%">
+                                        Vehicle Number
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; " width="16%">
+                                        Vehicle Type
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; " width="10%">
+                                        Source
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; " width="10%">
+                                        Destination
+                                    </th>
+                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;" width="14%">
+                                        Shipping Address
+                                    </th>
+                                    <th style="text-align : right;border: 1px solid black;margin: 0 auto;font-size:12px;padding:4px; padding-right:10px !important " width="8%">
+                                        Tonnage
+                                    </th>
+<!--                                    <th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">-->
+<!--                                        Total Odo-->
+<!--                                    </th>-->
+                                    <th style="text-align : right;border: 1px solid black;margin: 0 auto;font-size:12px;padding:4px; padding-right:10px !important" width="10%">
+                                        Amount
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.vehicle_ftl_customer_consolidate_id">
+                                    <t t-foreach="o.vehicle_ftl_customer_consolidate_id.trip_summary_ftl_line_ids" t-as="trip">
+											<tr>
+												<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.trip_date"/>
+												</td>
+                                                <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.lorry_receipt_no"/>
+												</td>
+												<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.vehicle_id"/>
+												</td>
+												<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.vehicle_type_id"/>
+												</td>
+												<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.source_id"/>
+												</td>
+												<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.destination_id"/>
+												</td>
+                                                <td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+													<span t-field="trip.ftl_batch_trip_id.work_order_shipping_address"/>
+												</td>
+												<td style="text-align : right;border: 1px solid black;margin: 0 auto;font-size:12px;padding:4px; padding-right:10px !important">
+<!--													<span t-field="lines.ftl_batch_trip_id.work_order.work_order_line_ids.quantity"/>-->
+                                                    <span t-field="trip.ftl_batch_trip_id.tonnage"/>
+												</td>
+												<td style="text-align : right;border: 1px solid black;margin: 0 auto;font-size:12px;padding:4px;padding-right:10px !important">
+													<span t-field="trip.ftl_batch_trip_id.total_amount"/>
+												</td>
+											</tr>
+
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+        </xpath>
+		
+
+		
+	</template>
+</odoo>

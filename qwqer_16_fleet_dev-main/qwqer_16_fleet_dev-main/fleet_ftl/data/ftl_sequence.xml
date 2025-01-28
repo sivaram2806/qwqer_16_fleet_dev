@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- sequence for fleet ftl work order -->
+        <record id="sequence_fleet_ftl_wo" model="ir.sequence">
+            <field name="name">Fleet FTL Sequence</field>
+            <field name="code">fleet.ftl.wo.seq</field>
+            <field name="prefix">WO</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <!-- sequence for fleet ftl daily trip -->
+        <record id="sequence_fleet_ftl_daily_trip" model="ir.sequence">
+            <field name="name">Fleet FTL Daily trip Sequence</field>
+            <field name="code">fleet.ftl.dt.seq</field>
+            <field name="prefix">FTVRN</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <!-- sequence for fleet ftl daily trip line -->
+        <record id="sequence_fleet_ftl_daily_trip_line" model="ir.sequence">
+            <field name="name">Fleet FTL Daily trip line sequence</field>
+            <field name="code">fleet.ftl.dt.line.seq</field>
+            <field name="prefix">FTTRP</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+         <!-- sequence for fleet ftl Trip Summary/consolidated customer trip -->
+        <record id="sequence_trip_summary_ftl" model="ir.sequence">
+            <field name="name">Trip Summary FTl</field>
+            <field name="code">trip.summary.ftl</field>
+            <field name="prefix">FC</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <!-- sequence for fleet ftl Trip Summary Line -->
+        <record id="sequence_trip_summary_ftl_line" model="ir.sequence">
+            <field name="name">Trip Summary FTL Line</field>
+            <field name="code">trip.summary.ftl.line</field>
+            <field name="prefix">FCL</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+    </data>
+</odoo>

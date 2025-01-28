@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!--	FTL cost analysis report generation wizard form view -->
+	<record id = "ftl_cost_analysis_report_wizard_view" model = "ir.ui.view">
+		<field name = "name">ftl.cost.analysis.report.wizard.view</field>
+		<field name = "model">ftl.cost.analysis.report.wizard</field>
+		<field name = "arch" type = "xml">
+			<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="customer_id" options="{'no_create': True, 'no_edit': True}" domain="[('customer_rank','>', 0), ('service_type_id.is_fleet_service','=',True)]" required="1"/>
+							<field name="vendor_id" options="{'no_create': True, 'no_edit': True}" domain="[('supplier_rank','>', 0), ('service_type_id.is_fleet_service','=',True)]"/>
+						</group>
+						<group>
+							<field name="work_order_id" options="{'no_create': True, 'no_edit': True}" domain="[('customer_id','=', customer_id),('state','=', 'finance_approve')]"/>
+						</group>
+					</group>
+				</sheet>
+				<footer>
+					<button string = "Print" name="action_ftl_cost_analysis" type = "object" class="oe_highlight"/>
+					<button string = "Cancel" special = "cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+		
+	<!--	FTL Cost Analysis Report Wizard Action	-->
+	<record id="ftl_action_cost_analysis_report_wizard" model="ir.actions.act_window">
+		<field name="name">FTL Cost Analysis Report</field>
+		<field name="res_model">ftl.cost.analysis.report.wizard</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="ftl_cost_analysis_report_wizard_view" />
+		<field name="target">new</field>
+	</record>
+
+	<!-- FTL report main menu :  Fleet > Reports -->
+	<menuitem id="menu_ftl_reports"
+		name="FTL"
+		parent="fleet_extend.menu_fleet_reports"
+		sequence="10"/>
+
+	<!-- FTL cost analysis report wizard menu Fleet > Reports> FTL -->
+	<menuitem id="menu_ftl_cost_analysis_report"
+		name="Cost Analysis Report"
+		action="ftl_action_cost_analysis_report_wizard"
+		parent="menu_ftl_reports"
+		sequence="3"/>
+
+</odoo>

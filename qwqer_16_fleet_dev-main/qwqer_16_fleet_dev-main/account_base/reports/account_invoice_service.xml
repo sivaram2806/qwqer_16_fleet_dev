@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<!--    invoice Template update base changes-->
+    <template id="accountinvoice_layout_document">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+        <div class="page">
+            <div class="header">
+                <div align="left">
+                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                         style="max-height: 70px;"/>
+                </div>
+            </div>
+
+            <div align="center">
+                <span style="font-size:19px;" t-if="o.journal_gstin_partner_id.name">
+                    <b><t  t-esc="o.journal_gstin_partner_id.name"/></b>
+                </span>
+                <br/>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.street">
+                    <t t-esc="o.journal_gstin_partner_id.street"/>
+                </span>
+                <span t-if="o.journal_gstin_partner_id.street">,</span>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.street2">
+                    <t t-esc="o.journal_gstin_partner_id.street2"/>
+                </span>
+                <br/>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.city">
+                    <t t-esc="o.journal_gstin_partner_id.city"/>
+                </span>
+                <span t-if="o.journal_gstin_partner_id.state_id">,</span>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.state_id.name">
+                    <t t-esc="o.journal_gstin_partner_id.state_id.name"/>
+                </span>
+                <span t-if="o.journal_gstin_partner_id.country_id">,</span>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.country_id.name">
+                    <t t-esc="o.journal_gstin_partner_id.country_id.name"/>
+                </span>
+                <span t-if="o.journal_gstin_partner_id.zip">,</span>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.zip">
+                    PIN: <t t-esc="o.journal_gstin_partner_id.zip"/>
+                </span>
+                <br/>
+                <span>GSTIN : </span>
+                <span style="font-size:16px;" t-if="o.journal_gstin_partner_id.vat">
+                    <t t-esc="o.journal_gstin_partner_id.vat"/>
+                </span>
+            </div>
+            <hr color="black"/>
+
+            <div align="center" style="margin-top:7px;font-size:15px;">
+                <b>
+                    <span t-if="o.move_type == 'out_refund'">
+	                    <span t-if="o.state == 'draft'">DRAFT: CREDIT NOTE</span>
+	                    <span t-if="o.state == 'posted'">CREDIT NOTE</span>
+	                </span>
+	                <span t-if="o.move_type == 'out_invoice'">
+	                    <span t-if="o.state == 'draft'">DRAFT: TAX INVOICE</span>
+	                    <span t-if="o.state == 'posted'">TAX INVOICE</span>
+	                </span>
+	                <span t-if="o.move_type == 'in_invoice'">
+	                    <span t-if="o.state == 'draft'">DRAFT: VENDOR BILL</span>
+	                    <span t-if="o.state == 'posted'">VENDOR BILL</span>
+	                </span>
+	                <span t-if="o.move_type == 'in_refund'">
+	                    <span t-if="o.state == 'draft'">DRAFT: DEBIT NOTE</span>
+	                    <span t-if="o.state == 'posted'">DEBIT NOTE</span>
+	                </span>
+                </b>
+            </div>
+
+
+            <div id="billing_details">
+                <table style="border:none;width:100%;margin-top:3px;">
+                    <tbody style="border:none;">
+                        <tr style="border:none;">
+                            <td style="border:none;width:50%;font-size:12px;padding-left:16px;" name="billing_address">
+                                <b>BILLING ADDRESS</b>
+                                <br/>
+                                <t>
+	                                <span t-field="o.partner_id.name"/><br/>
+	                                <span t-if="o.partner_id.street">
+	                                    <t t-esc="o.partner_id.street" style="font-size:12px;"/>
+	                                </span><br/>
+	                                <span t-if="o.partner_id.street2">
+	                                    <t t-esc="o.partner_id.street2" style="font-size:12px;"/>
+	                                </span><br/>
+	                                <span t-if="o.partner_id.city">
+	                                    <t t-esc="o.partner_id.city" style="font-size:12px;"/>
+	                                </span>
+	                                <span t-if="o.partner_id.city">,</span>
+	                                <span t-if="o.partner_id.state_id.name">
+	                                    <t t-esc="o.partner_id.state_id.name" style="font-size:12px;"/>
+	                                </span>
+	                                <span t-if="o.partner_id.country_id">,</span>
+	                                <span t-if="o.partner_id.country_id.name">
+	                                    <t t-esc="o.partner_id.country_id.name" style="font-size:12px;"/>
+	                                </span>
+	                                <span t-if="o.partner_id.zip">,</span>
+	                                <span t-if="o.partner_id.zip">
+	                                    <t t-esc="o.partner_id.zip" style="font-size:12px;"/>
+	                                </span> <br/>
+	                                <span t-if="o.partner_id.email">
+	                                    <t t-esc="o.partner_id.email" style="font-size:12px;"/>
+	                                </span>
+	                                <span t-if="o.partner_id.email">,</span>
+	                                <span t-if="o.partner_id.phone">
+	                                    <t t-esc="o.partner_id.phone" style="font-size:12px;"/>
+	                                </span>
+	                                <span t-if="o.partner_id.phone">,</span>
+	                                <span t-if="o.partner_id.mobile">
+	                                    <t t-esc="o.partner_id.mobile" style="font-size:12px;"/>
+	                                </span>
+	                                <span t-if="o.partner_id.website">,</span>
+	                                <span t-if="o.partner_id.website">
+	                                    <t t-esc="o.partner_id.website" style="font-size:12px;"/>
+	                                </span> <br/>
+	
+	                                <span>GSTIN : </span><span t-field="o.partner_id.vat"/>
+                                </t>
+                            </td>
+                            <td style="border:none;width:50%;font-size:12px;padding-left:140px;">
+                                <span><b>INVOICE NO : </b></span><t t-if="o.state == 'posted'"><span t-field="o.name"/></t><br/>
+                                <span><b>INVOICE DATE : </b></span><t t-if="o.state == 'posted'"><span t-field="o.invoice_date"/></t><br/>
+                                <span><b>PAYMENT TERMS : </b></span><span t-field="o.invoice_payment_term_id"/><br/>
+                                <t t-if="o.partner_id.customer_type == 'b2b'"><span><b>REGION : </b></span><span t-field="o.partner_id.region_id"/></t><br/>
+                                <t t-if="o.partner_id.customer_type == 'b2b'"><span><b>STATE : </b></span><span t-field="o.partner_id.region_id.state_id"/></t><br/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr color="black"/>
+            <div class="row">
+                <div>
+                    <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                    <table style="width:100%;table-layout:fixed;border-color:
+							#fff !important;margin-top:10px;" >
+                        <thead>
+                            <tr >
+                                <th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+										!important;font-size:12px;width:6%;
+										text-align : center">
+                                    <b>SL NO</b>
+                                </th>
+                                <th style="border: 1px !important; border-style: solid !important;border-color: #fff
+										!important;font-size:12px;width:8%;
+										text-align : center">
+                                    <b>HSN/SAC</b>
+                                </th>
+                                <th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+										!important;font-size:12px;width:50%;padding-left:0px; text-align : center">
+                                    <b>DESCRIPTION</b>
+                                </th>
+                                <th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+										!important;font-size:12px;width:10%;
+										text-align : center">
+                                    <b>QTY</b>
+                                </th>
+                                <th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+										!important;font-size:12px;width:15%;
+										text-align : center">
+                                    <b>RATE</b>
+                                </th>
+                                <th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+										!important;font-size:12px;width:15%;
+										text-align : center">
+                                    <b>AMOUNT</b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:12px;">
+                            <t t-foreach="o.invoice_line_ids" t-as="l">
+                                <tr>
+                                    <td style="border: 1px !important;border-color: #fff !important;
+                                        padding-left:13px;padding-top:10px;
+										text-align : center">
+                                        <span t-esc="l_index+1" />
+                                    </td>
+                                    <td style="border: 1px !important;border-color: #fff !important;
+                                        padding-left:19px;padding-top:10px;
+										text-align : center">
+                                        <span t-field="l.product_id.l10n_in_hsn_code"/>
+                                    </td>
+                                    <td style="border: 1px !important;border-color: #fff !important;
+                                        padding-left:19px;padding-top:10px;">
+                                        <span t-field="l.name"/>
+                                    </td>
+                                    <td style="border: 1px !important;border-color: #fff !important;
+                                        padding-left:17px;padding-top:10px;
+										text-align : center">
+                                        <span t-field="l.quantity"/>
+                                        <span t-field="l.product_uom_id"  groups="product.group_uom"/>
+                                    </td>
+                                    <td style="border: 1px !important;border-color: #fff !important;
+                                        padding-left:20px;padding-top:10px;
+										text-align : center">
+                                        <span t-field="l.price_unit"/>
+                                    </td>
+                                    <td style="border: 1px !important;border-color: #fff !important;                                                                                                                                                                            der: 1px !important;border-color: #fff !important;
+                                        padding-left:20px;padding-top:10px;
+										text-align : center">
+                                        <span t-field="l.price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <br/>
+<div style="padding-left: 420px;">
+    <t t-set="tax_totals" t-value="o.tax_totals"/>
+<table class="table table-sm"  style="font-size:12px;">
+    <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+        <tr style="padding-bottom:2px">
+            <td style="border-bottom: 1px solid #ddd4d4 !important; border-top:hidden; border-right:hidden; border-left:hidden;">
+                <strong t-esc="subtotal['name']"/>
+            </td>
+            <td class="text-end" style="border-bottom: 1px solid #ddd4d4 !important; border-top:hidden; border-right:hidden; border-left:hidden;">
+                <span t-esc="subtotal['formatted_amount']"/>
+            </td>
+        </tr>
+
+        <t t-set="subtotal_to_show" t-value="subtotal['name']"/>
+        <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
+            <tr style="border-top: 1px solid #ddd4d4 !important;border-top:1px #7a777700 !important">
+                <t t-if="tax_totals['display_tax_base']">
+                    <td style="border-bottom: 1px solid #ddd4d4 !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;">
+                        <span t-esc="amount_by_group['tax_group_name']"/>
+                        <span class="text-nowrap"> on
+                            <t t-esc="amount_by_group['formatted_tax_group_base_amount']"/>
+                        </span>
+                    </td>
+                    <td class="text-end o_price_total" style="border-bottom: 1px solid #ddd4d4 !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;">
+                        <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
+                    </td>
+                </t>
+                <t t-else="">
+                    <td style="border-bottom: 1px solid #ddd4d4 !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;">
+                        <span class="text-nowrap" t-esc="amount_by_group['tax_group_name']"/>
+                    </td>
+                    <td class="text-end o_price_total" style="border-bottom: 1px solid #ddd4d4 !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;">
+                        <span class="text-nowrap" t-esc="amount_by_group['formatted_tax_group_amount']"/>
+                    </td>
+                </t>
+            </tr>
+        </t>
+    </t>
+
+    <t t-if="o.invoice_cash_rounding_id">
+        <tr style="border-bottom: 1px solid #ddd4d4 !important;">
+            <td style="border-bottom: 1px solid #ddd4d4 !important; border-top:hidden; border-right:hidden; border-left:hidden;">
+                ROUNDOFF
+            </td>
+            <td class="text-end" style="border-bottom: 1px solid #ddd4d4 !important; border-top:hidden; border-right:hidden; border-left:hidden;">
+                <b>
+                    <span t-field="o.currency_id.symbol"/><span t-esc="tax_totals['rounding_amount']"/>
+                </b>
+            </td>
+        </tr>
+    </t>
+
+    <tr style="border-bottom: 1px solid black !important;">
+        <td style="border-bottom: 1px solid black !important; border-top:1px solid #ddd4d4 !important; border-right:hidden; border-left:hidden;">
+            <b>TOTAL</b>
+        </td>
+        <td class="text-end" style="border-bottom: 1px solid black !important; border-top:1px solid #ddd4d4 !important; border-right:hidden; border-left:hidden;">
+            <b>
+                <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+            </b>
+        </td>
+    </tr>
+
+    <t t-if="(o.amount_total - o.amount_residual) > 0">
+        <tr >
+            <td style="border-bottom: 1px solid black !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;"><b>AMOUNT PAID</b></td>
+            <td class="text-end" style="border-bottom: 1px solid black !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;">
+                <b>
+                    <span t-field="o.currency_id.symbol"/><span t-esc="'%.2f' % (o.amount_total - o.amount_residual)"/>
+                </b>
+            </td>
+        </tr>
+
+        <tr >
+            <td style="border-bottom: 1px solid black !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;"><b>BALANCE</b></td>
+            <td class="text-end" style="border-bottom: 1px solid black !important; border-top:1px #7a777700 !important; border-right:hidden; border-left:hidden;">
+                <b>
+                    <span t-field="o.amount_residual" t-field-options='{"widget": "monetary", "display_currency":"o.currency_id"}'/>
+                </b>
+            </td>
+        </tr>
+    </t>
+</table>
+</div>
+
+            <br/>
+            <div style="font-size:12px;">
+                <t t-if="(o.amount_total - o.amount_residual) > 0">
+                    <b>Amount (In Words): </b><span t-esc="o.currency_id.amount_to_text(o.amount_residual)"/>
+                </t>
+                <t t-else="">
+                    <b>Amount (In Words):</b> <span t-field="o.amount_total_words"/>
+                </t>
+            </div>
+
+            <div width="100%">
+	            <div style = "width: 50%; float: left;" width="50%">
+		            <t t-if="o.partner_id.customer_type == 'b2b'">
+		            	<t t-if="o.move_type == 'out_invoice'">
+		            		<t t-if="not o.payment_mode_id or o.payment_mode_id.code == '5'">
+					            <div style="margin-top:20px;align:left;font-size:12px;">
+					                <strong>OUR BANK DETAILS</strong>
+					                <table style="width:100%;border: 1px solid black;">
+					                    <t t-foreach="o.company_id.partner_id.bank_ids[0]" t-as="bank">
+					                        <tr>
+					                            <td style="border: 1px solid black;width:10%;padding-left:4px;">
+					                                <b>Beneficiary:</b>
+					                            </td>
+					                            <td style="border: 1px solid black;width:40%;padding-left:4px;">
+					                                <span t-field="bank.partner_id.name"/>
+					                            </td>
+					                        </tr>
+					                        <tr>
+					                            <td style="border: 1px solid black;width:10%;padding-left:4px;">
+					                                <b>Bank Name:</b>
+					                            </td>
+					                            <td style="border: 1px solid black;width:40%;padding-left:4px;">
+					                            	<t t-if="o.partner_id.virtual_bank_acc">
+					                            		<span t-field="virtual_bank_details.name"/>
+					                            	</t>
+					                            	<t t-else="bank.acc_number">
+						                                <span t-field="bank.bank_id.name"/>
+					                            	</t>
+					                            </td>
+					                        </tr>
+					                        <tr>
+					                            <td style="border: 1px solid black;width:10%;padding-left:4px;">
+					                                <b>Address:</b>
+					                            </td>
+					                            <td style="border: 1px solid black;width:40%;padding-left:4px;">
+					                            	<t t-if="o.partner_id.virtual_bank_acc">
+					                            		<span t-if="virtual_bank_details.street">
+						                                    <t t-esc="virtual_bank_details.street"/>
+						                                </span>
+						                                <span t-if="virtual_bank_details.street2 or virtual_bank_details.street">
+						                                    ,</span>
+						                                <span t-if="virtual_bank_details.street2">
+						                                    <t t-esc="virtual_bank_details.street2"/>
+						                                </span>
+						                                <span t-if="virtual_bank_details.city">
+						                                    ,</span>
+						                                <span t-if="virtual_bank_details.city">
+						                                    <t t-esc="virtual_bank_details.city"/>
+						                                </span>
+						                                <span t-if="virtual_bank_details.state">
+						                                    ,</span>
+						                                <span t-if="virtual_bank_details.state">
+						                                    <t t-esc="virtual_bank_details.state.name"/>
+						                                </span>
+						                                <span t-if="virtual_bank_details.zip">,</span>
+						                                <span t-if="virtual_bank_details.zip">
+						                                    PIN: <t t-esc="virtual_bank_details.zip"/>
+						                                </span>
+					                            	</t>
+
+					                            	<t t-else="bank.acc_number">
+						                                <span t-if="bank.bank_id.street">
+						                                    <t t-esc="bank.bank_id.street"/>
+						                                </span>
+						                                <span t-if="bank.bank_id.street2 or bank.bank_id.street">
+						                                    ,</span>
+						                                <span t-if="bank.bank_id.street2">
+						                                    <t t-esc="bank.bank_id.street2"/>
+						                                </span>
+						                                <span t-if="bank.bank_id.city">
+						                                    ,</span>
+						                                <span t-if="bank.bank_id.city">
+						                                    <t t-esc="bank.bank_id.city"/>
+						                                </span>
+						                                <span t-if="bank.bank_id.state">
+						                                    ,</span>
+						                                <span t-if="bank.bank_id.state">
+						                                    <t t-esc="bank.bank_id.state.name"/>
+						                                </span>
+						                                <span t-if="bank.bank_id.zip">,</span>
+						                                <span t-if="bank.bank_id.zip">
+						                                    PIN: <t t-esc="bank.bank_id.zip"/>
+						                                </span>
+					                            	</t>
+					                            </td>
+					                        </tr>
+					                        <tr>
+					                            <td style="border: 1px solid black;width:10%;padding-left:4px;">
+					                                <b>A/C No. :</b>
+					                            </td>
+					                            <td style="border: 1px solid black;width:40%;padding-left:4px;">
+					                           	 <t t-if="o.partner_id.virtual_bank_acc">
+					                                <span t-field="o.partner_id.virtual_bank_acc"/>
+					                             </t>
+					                             <t t-else="bank.acc_number">
+					                             	<span t-field="bank.acc_number"/>
+					                             </t>
+					                            </td>
+					                        </tr>
+					                        <tr>
+					                            <td style="border: 1px solid black;width:10%;padding-left:4px;">
+					                                <b>IFSC Code :</b>
+					                            </td>
+					                            <td style="border: 1px solid black;width:40%;padding-left:4px;">
+					                            	<t t-if="o.partner_id.virtual_bank_acc">
+					                            		<span t-field="virtual_bank_details.bic"/>
+					                            	</t>
+					                            	<t t-else="bank.acc_number">
+						                                <span t-field="bank.bank_id.bic"/>
+					                            	</t>
+					                            </td>
+					                        </tr>
+					                    </t>
+
+					                </table>
+					            </div>
+		            		</t>
+		            	</t>
+		            </t>
+                    <br/>
+				</div>
+                <br/>
+				<div style = "width: 50%; float: right; min-height: 150px;">
+	                <br/>
+                    <t t-set="payment_method"  t-value="o.get_payment_method()"/>
+                    <t t-if="payment_method">
+                        <div align= "right"  style="padding-right: 65px;">
+			            <img t-if="o.company_id.image_signature"
+							t-att-src="image_data_uri(o.company_id.image_signature)"
+							style="max-height: 65px;"/>
+						</div>
+						<div align= "right"  style="padding-right: 30px;">
+							<strong>Authorized Authority </strong>
+						</div>
+						<div align= "right"  style="padding-right: 65px;
+		    				padding-bottom: 22px;">
+							<img t-if="o.company_id.image_seal"
+								t-att-src="image_data_uri(o.company_id.image_seal)"
+								style="max-height: 65px;"/>
+						</div>
+                    </t>
+					</div>
+				</div>
+				<br/>
+	            <div id="terms_and_conditions"  width="100%">
+					<t t-if="o.move_type == 'out_invoice'">
+						<div align= "left" style = "width : 100%;">
+<!--                            TODO: commented payment link in invoice till when its available-->
+<!--							<t t-if="o.partner_id.customer_type == 'b2b' and o.move_type == 'out_invoice' and o.state=='posted' and o.invoice_payment_state=='not_paid' and o.payment_link">-->
+<!--								<b>Payment Link: </b>-->
+<!--								<a t-attf-href="#{o.payment_link}" style="padding: 5px 10px; color: blue;">-->
+<!--						            <span t-field="o.payment_link"/>-->
+<!--						          </a>-->
+<!--							</t>-->
+							<p style="font-size : 14px; padding-top: 75px;"> TERMS &amp; CONDITIONS </p>
+							<p style="font-size : 12px;
+								font-style: italic;">Invoices must be paid within seven days of receipt/presentment
+							 for payment or as per the specific agreement entered with the
+							 customer. Payment beyond applicable due date shall attract interest
+							 at the rate of 1.5% per month. The interest shall accrue daily and
+							 it shall run from the due date until the amount is paid in full.</p>
+						</div>
+	                </t>
+               </div>
+
+			<t t-if="not payment_method">
+				<p><br/></p>
+				This is a computer generated invoice and requires no signature.
+            </t>
+            <br/>
+        </div>
+
+        <div class="footer">
+            <hr color="black"/>
+            <div align="center" style="font-size:12px;">
+                <span>Registered Office: </span>
+
+                <span t-if="o.company_id.street">
+                    <t t-esc="o.company_id.street"/>
+                </span>
+                <span t-if="o.company_id.street">,</span>
+                <span t-if="o.company_id.street2">
+                    <t t-esc="o.company_id.street2"/>
+                </span>
+                <span t-if="o.company_id.street2">,</span>
+                <span t-if="o.company_id.city">
+                    <t t-esc="o.company_id.city"/>
+                </span>
+                <span t-if="o.company_id.city">,</span>
+                <span t-if="o.company_id.state_id.name">
+                    <t t-esc="o.company_id.state_id.name"/>
+                </span>
+                <span t-if="o.company_id.state_id">,</span>
+                <span t-if="o.company_id.country_id.name">
+                    <t t-esc="o.company_id.country_id.name"/>
+                </span>
+                <span t-if="o.company_id.zip">,</span>
+                <span t-if="o.company_id.zip">
+                    PIN: <t t-esc="o.company_id.zip"/>
+                </span> <br/>
+
+                <span>Email: </span>
+
+                <span t-if="o.company_id.email">
+                    <t t-esc="o.company_id.email"/>
+                </span>
+                <span t-if="o.company_id.email">,</span>
+                <span>Website: </span>
+                <span t-if="o.company_id.website">
+                    <t t-esc="o.company_id.website"/>
+                </span>
+                <span t-if="o.company_id.website">,</span>
+                <span>Phone: </span>
+                <span t-if="o.company_id.phone">
+                    <t t-esc="o.company_id.phone"/>
+                </span>
+                <br/>
+                <span>CIN: </span>
+                <span t-if="o.company_id.company_registry">
+                    <t t-esc="o.company_id.company_registry"/>
+                </span>
+            </div>
+        </div>
+    </template>
+
+<!--replace existing invoice template-->
+    <template id="qwqer_invoice_report" inherit_id="account.report_invoice_with_payments">
+        <xpath expr="//t[@t-call='web.html_container']" position="replace">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id">
+                        <t t-call="account_base.accountinvoice_layout_document" t-lang="o.partner_id.lang"/>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+<!--    Paper format for Invoice-->
+    <record id="paperformat_invoice_report" model="report.paperformat">
+        <field name="name">A4</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">22</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">22</field>
+        <field name="dpi">96</field>
+    </record>
+
+<!--    Invoice with payment report-->
+    <record id="account.account_invoices" model="ir.actions.report">
+        <field name="name">Invoices</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account.report_invoice_with_payments</field>
+        <field name="report_file">account.report_invoice_with_payments</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_invoice_report"/>
+    </record>
+
+</odoo>

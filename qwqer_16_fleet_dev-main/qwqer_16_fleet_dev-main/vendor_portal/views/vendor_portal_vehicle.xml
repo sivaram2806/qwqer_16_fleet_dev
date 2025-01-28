@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    vehicle menu template for portal -->
+    <template id="portal_menu_vendor_vehicle" name="Vendor Portal Menu"
+              inherit_id="vendor_portal.portal_menu_vendor_portal"
+              customize_show="True" priority="31">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Vehicle</t>
+                <t t-set="url" t-value="'/my/vehicles'"/>
+                <t t-set="placeholder_count" t-value="'vehicle_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+<!--    breadcrumb template for vehicle listing-->
+    <template id="portal_my_vendor_vehicle" name="Portal layout : Vendor Vehicles"
+              inherit_id="portal.portal_breadcrumbs" priority="30">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'vendor_vehicle'"
+                t-attf-class="breadcrumb-item #{'active ' if not vehicles else ''}">
+                <a t-if="vehicles" t-attf-href="/my/vehicles?{{ keep_query() }}">Vehicle</a>
+                <t t-else="">Vehicle</t>
+            </li>
+        </xpath>
+    </template>
+
+<!--    template form vehicles list view-->
+    <template id="portal_vendor_vehicles" name="Vendor Vehicle">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_footer" t-value="True"/>
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Vehicle</t>
+            </t>
+            <t t-if="not vehicles">
+                <p>There are currently no Vehicle.</p>
+            </t>
+            <t t-if="vehicles" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Vehicle Number</th>
+                        <th>Vehicle Model</th>
+                        <th >Vehicle pricing</th>
+                        <th>Vehicle Description</th>
+                        <th>Vendor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="vehicles" t-as="vehicle">
+                        <tr>
+                            <td>
+                                <span t-field="vehicle.display_name"/>
+                            </td>
+                            <td class='d-none d-md-table-cell'>
+                                <span t-field="vehicle.vehicle_model_id.name"/>
+                            </td>
+                            <td class='d-none d-md-table-cell'>
+                                <span t-field="vehicle.vehicle_pricing_id.name"/>
+                            </td>
+                            <td class='d-none d-md-table-cell'>
+                                <span t-field="vehicle.vehicle_description"/>
+                            </td>
+                             <td class='d-none d-md-table-cell'>
+                                <span t-field="vehicle.vendor_id.name"/>
+                             </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+</odoo>

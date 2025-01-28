@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--	Invoice Template update for Urban Haul-->
+	<template id="report_account_invoice_uh_customization" inherit_id="account_base.accountinvoice_layout_document">
+
+		<xpath expr="//div[hasclass('page')]" position='inside'>
+		
+			<t t-if="o.vehicle_customer_consolidate_id and o.move_type == 'out_invoice'">
+				<t >
+					<p style="page-break-before:always;"/>
+					<div style="padding-top: 50px;">
+						<center>
+							<strong>Consolidated Trip Details</strong>
+						</center>
+						<br />
+						<br />
+						<table style="width:100%;table-layout:fixed;border-color:
+								#fff !important;">
+							<thead>
+								<tr>
+									<th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+	                                    Ref No.
+	                                </th>
+									<th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+	                                    Vehicle Number
+	                                </th>
+									<th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+	                                    Calculation Method
+	                                </th>
+									<th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+	                                    Total Time
+	                                </th>
+									<th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px; ">
+	                                    Total Odo
+	                                </th>
+									<th style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+	                                    Amount
+	                                </th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-if="o.vehicle_customer_consolidate_id">
+									<t t-foreach="o.vehicle_customer_consolidate_id.trip_summary_line_ids" t-as="lines">
+										<tr>
+											<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+												<span t-field="lines.name" />
+											</td>
+											<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+												<span t-field="lines.vehicle_pricing_line_id.vehicle_no.vehicle_no" />
+											</td>
+											<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+												<span t-field="lines.calculation_frequency" />
+											</td>
+											<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+												<span t-field="lines.total_time" />
+											</td>
+											<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+												<span t-field="lines.total_km" />
+											</td>
+											<td style="border: 1px solid black;margin: 0 auto;font-size:12px;padding-left:4px;">
+												<span t-field="lines.customer_amount" />
+											</td>
+										</tr>
+									</t>
+								</t>
+							</tbody>
+						</table>
+					</div>
+				</t>
+			</t>
+			
+		</xpath>
+		
+		<xpath expr="//div/br[2]" position="replace">
+		</xpath>
+		
+		<xpath expr="//div/div[9]/t/div" position="attributes">
+			<attribute name='style'>width : 100%;padding-top: 150px;</attribute>
+		</xpath>
+
+		
+		<xpath expr="//div/div[5]/div" position="attributes">
+			<attribute name='t-if'>o.service_type_id.is_fleet_service != 1</attribute>
+		</xpath>
+		
+		
+		<xpath expr="//div/div[5]/div" position="after">
+			<div t-if="o.service_type_id.is_fleet_service == 1">
+				<table style="width:100%;table-layout:fixed;border-color:
+								#fff !important;margin-top:10px;">
+					<thead>
+						<tr>
+							<th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+											!important;font-size:12px;width:6%;
+											text-align : center">
+								<b>SL NO</b>
+							</th>
+							<th style="border: 1px !important; border-style: solid !important;border-color: #fff
+											!important;font-size:12px;width:8%;
+											text-align : center">
+								<b>HSN/SAC</b>
+							</th>
+							<th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+											!important;font-size:12px;width:22%;padding-left:0px; text-align : center">
+								<b>DESCRIPTION</b>
+							</th>
+							<th style=" border: 1px !important; border-style: solid !important;border-color: #fff
+											!important;font-size:12px;width:16%;
+											text-align : right">
+								<b>AMOUNT</b>
+							</th>
+						</tr>
+					</thead>
+					<tbody style="font-size:12px;">
+						<t t-foreach="o.invoice_line_ids" t-as="l">
+							<tr>
+								<td style="border: 1px !important;border-color: #fff !important;
+	                                        padding-left:13px;padding-top:10px;
+											text-align : center">
+									<span t-esc="l_index+1" />
+
+								</td>
+								<td style="border: 1px !important;border-color: #fff !important;
+	                                        padding-left:19px;padding-top:10px;
+											text-align : center">
+									<span t-field="l.product_id.l10n_in_hsn_code" />
+								</td>
+								<td style="border: 1px !important;border-color: #fff !important;
+	                                        padding-left:19px;padding-top:10px;">
+									<t >
+										<span t-field="l.name" />
+									</t>
+									
+								</td>
+								<td style="border: 1px !important;border-color: #fff !important;                                                                                                                                                                            der: 1px !important;border-color: #fff !important;
+	                                        padding-left:19px;padding-top:10px;
+											text-align : right">
+									<span t-field="l.price_subtotal" />
+								</td>
+							</tr>
+						</t>
+					</tbody>
+				</table>
+			</div>
+		</xpath>
+		
+		
+	</template>
+</odoo>

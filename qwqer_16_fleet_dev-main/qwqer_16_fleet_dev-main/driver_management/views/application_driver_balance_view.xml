@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="application_driver_balance_form" model="ir.ui.view">
+        <field name="name">application.driver.balance.form</field>
+        <field name="model">application.driver.balance</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="driver_uid"/>
+                            <field name="time_balance_update"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="application_driver_balance_tree" model="ir.ui.view">
+        <field name="name">application.driver.balance.tree</field>
+        <field name="model">application.driver.balance</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="driver_uid"/>
+                <field name="time_balance_update"/>
+                <field name="company_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="application_driver_balance_action" model="ir.actions.act_window">
+        <field name="name">Driver Balance</field>
+        <field name="res_model">application.driver.balance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_update_driver_balance_api" model="ir.actions.server">
+        <field name="name">Update Driver Balance</field>
+        <field name="model_id" ref="model_application_driver_balance"/>
+        <field name="binding_model_id" ref="model_application_driver_balance"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            records.action_for_update_driver_balance()
+        </field>
+    </record>
+
+
+    <menuitem id="menu_application_driver_balance"
+              name="Driver Balance"
+              sequence="7"
+              action="driver_management.application_driver_balance_action"
+              parent="driver_management.menu_drivers_payout_configuration"
+    />
+</odoo>

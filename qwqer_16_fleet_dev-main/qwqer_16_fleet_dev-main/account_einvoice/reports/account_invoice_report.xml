@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<template id="invoice_layout_document_einvoice_inherit" inherit_id="account_base.accountinvoice_layout_document">
+		<xpath expr="//div[@id='billing_details']" position="after">
+			<t t-if="o.einvoice_generated">
+				<hr color="black"/>
+				<t t-if="o.irn">
+					<div name="einvoice_irn">
+		                <table style="border:none;width:100%;">
+		                    <tbody style="border:none;">
+								<tr height="40px;" style="border:none;">
+									<td style="vertical-align:top; border:none;padding-right:90px;padding-top:0px;" ><h5>E-Invoice Details</h5></td>
+									<td rowspan="2">
+						                    <img t-if="o.qr_code" t-att-src="image_data_uri(o.qr_code)"
+						                         style="max-height: 200px;height:150px;"/>
+
+									</td>
+								</tr>
+		                        <tr style="border:none;">
+		                            <td style="border:none;width:70%;font-size:12px;padding-left:16px;text-align:left;vertical-align:top;" >
+										<span><b>IRN : </b></span><t t-if="o.irn"><span t-field="o.irn"/></t><br/>
+										<span><b>Ack No : </b></span><t t-if="o.ack_no"><span t-field="o.ack_no"/></t><br/>
+										<span><b>Ack Date : </b></span><t t-if="o.ack_date"><span t-field="o.ack_date"/></t><br/>
+									</td>
+
+		             			</tr>
+		                    </tbody>
+		                </table>
+					</div>
+				</t>
+				<t t-if="o.einvocie_details_ids">
+					<div name="einvoice_details_irn">
+		                <table style="border:none;width:100%;">
+		                    <tbody style="border:none;">
+								<tr height="40px;" style="border:none;">
+									<td align="right" style="border:none;padding-right:90px;padding-top:0px;" ><h5>E-Invoice Details</h5></td>
+									<td style="border:none;" rowspan="2">
+						                    <img t-if="o.einvocie_details_ids.qr_code"
+												 t-att-src="image_data_uri(o.einvocie_details_ids.qr_code)"
+						                         style="max-height: 200px;height:150px;"/>
+
+									</td>
+								</tr>
+		                        <tr style="border:none;">
+		                            <td style="border:none;width:70%;font-size:12px;padding-left:16px;text-align:left;vertical-align:top;" >
+										<span><b>IRN : </b></span><t t-if="o.einvocie_details_ids.irn"><span t-field="o.einvocie_details_ids.irn"/></t><br/>
+										<span><b>Ack No : </b></span><t t-if="o.einvocie_details_ids.ack_no"><span t-field="o.einvocie_details_ids.ack_no"/></t><br/>
+										<span><b>Ack Date : </b></span><t t-if="o.einvocie_details_ids.ack_date"><span t-field="o.einvocie_details_ids.ack_date"/></t><br/>
+									</td>
+
+		             			</tr>
+		                    </tbody>
+		                </table>
+					</div>
+				</t>
+			</t>
+
+		</xpath>
+	</template>
+
+</odoo>

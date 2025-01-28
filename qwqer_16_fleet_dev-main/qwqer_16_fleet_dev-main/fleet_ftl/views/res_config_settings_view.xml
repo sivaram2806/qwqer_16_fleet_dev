@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Added Ftl Back Days in the settings -->
+    <record id="res_config_settings_fleet_view_form_fleet_ftl" model="ir.ui.view">
+        <field name="name">res.config.settings.fleet.view.form.fleet.ftl</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="fleet.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='fleet']/div/div/div[2]" position="after">
+                <div class="col-12 o_setting_box mt24 mb10">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Work Order online payment methods</span>
+                        <div class="text-muted mt10">
+                            Set of FTL Work Order online payment methods
+                        </div>
+                        <div class="content-group">
+                            <field name="ftl_online_payment_method_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 o_setting_box mt24 mb10">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Work Order bank payment methods</span>
+                        <div class="text-muted mt10">
+                            Set of FTL Work Order bank payment methods
+                        </div>
+                        <div class="content-group mt10">
+                            <field name="ftl_bank_payment_method_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 o_setting_box mt24 mb10">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Ftl Back Days </span>
+                        <div class="text-muted content-group mt10">
+                            <span>FTL daily trips are not allowed to be created after</span>
+                            <field name="ftl_back_days" class="text-center" style="width: 10%; min-width: 4rem;"/>
+                            <span>days</span>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

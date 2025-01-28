@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--    ir rule for tracking details page -->
+    <record id="ftl_track_company_rule" model="ir.rule">
+        <field name="name">FTL Track History Company Rule </field>
+        <field name="model_id" ref="model_ftl_track_history"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+			<!-- Bulk approve wizard form view-->
+		<record id = "bulk_trip_approve_wizard_view_uh" model = "ir.ui.view">
+			<field name = "name">bulk.trip.approve.wizard.view.uh</field>
+			<field name = "model">bulk.trip.approve.wizard</field>
+			<field name = "arch" type = "xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name = "mail_approval_received" widget="radio"/>
+							</group>
+							<group>
+								<field name="attachment_name" invisible="1"/>
+								<field name = "attachment" attrs="{'required': [('mail_approval_received', '=', 'yes')]}"
+								widget="binary" filename="attachment_name"/>
+							</group>
+						</group>
+							<field name = "comments" nolabel='1' placeholder="Add comments..." attrs="{'required': [('mail_approval_received', '=', 'yes')]}" />
+					</sheet>
+					<footer>
+						<button string = "Approve" name="bulk_approve_daily_trip" type = "object" class="oe_highlight"/>
+						<button string = "Cancel" special = "cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

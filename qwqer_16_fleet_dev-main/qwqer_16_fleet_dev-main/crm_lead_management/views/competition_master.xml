@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<odoo>
+	<data>
+		<record id="view_competition_master_form" model="ir.ui.view">
+            <field name="name">view.competition.master.form</field>
+            <field name="model">competition.master</field>
+            <field name="arch" type="xml">
+            	<form string="Competition Master">
+            		<sheet>
+	                    <group>
+	                    	<group>
+								<field name="name" string="Name" required="1"/>
+							</group>
+						</group>
+					</sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_competition_master_tree" model="ir.ui.view">
+            <field name="name">view.competition.master.tree</field>
+            <field name="model">competition.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                	<field name="name" string="Name"/>
+                </tree>
+            </field>
+        </record>
+        
+         <record id="action_competition_master" model="ir.actions.act_window">
+            <field name="name">Competition Master</field>
+            <field name="res_model">competition.master</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+            <menuitem
+            id="menu_competition_master"
+            name="Competition Master"
+            action="action_competition_master"
+            parent="crm.crm_menu_config"
+            groups="crm_lead_management.crm_lead_group"
+            sequence="14"/>
+	</data>
+</odoo>

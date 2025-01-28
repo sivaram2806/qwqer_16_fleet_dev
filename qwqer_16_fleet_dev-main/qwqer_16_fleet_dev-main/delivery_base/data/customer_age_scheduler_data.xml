@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="ir_cron_customer_age_schedule" model="ir.cron">
+        <field name="name">Customer Age Calculater</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.customer_age_calculator()</field>
+        <field name="interval_number">1</field>
+        <field name="active">0</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+    <record id="ir_cron_customer_new_or_not" model="ir.cron">
+        <field name="name">New Customer Or Not</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.new_partner_or_not()</field>
+        <field name="interval_number">1</field>
+        <field name="active">0</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+    <record id="ir_cron_customer_set_partner" model="ir.cron">
+        <field name="name">Set partner create date</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.set_age_updated_date()</field>
+        <field name="interval_number">1</field>
+        <field name="active">0</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payment_mode_tree_inherit" model="ir.ui.view">
+        <field name="name">view_payment_mode_tree_inherited.tree</field>
+        <field name="model">payment.mode</field>
+        <field name="inherit_id" ref="account_base.view_payment_mode_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_credit_payment']" position="after">
+                <field name="is_wallet_payment"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_payment_mode_form_inherit" model="ir.ui.view">
+        <field name="name">view_payment_mode_form_inherited.form</field>
+        <field name="model">payment.mode</field>
+        <field name="inherit_id" ref="account_base.view_payment_mode_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_credit_payment']" position="after">
+                <field name="is_wallet_payment"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

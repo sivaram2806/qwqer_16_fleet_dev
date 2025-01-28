@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="ir_cron_sale_manual_import_scheduler" model="ir.cron">
+        <field name="name">Sale Order Import</field>
+        <field name="model_id" ref="model_sale_order_manual_import"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.import_so_file(limit=1)</field>
+        <field name="interval_number">10</field>
+        <field name="active">0</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+
+    <record id="ir_cron_sale_credit_journal_scheduler" model="ir.cron">
+        <field name="name">Bulk Sale Order Credit Journal Creation</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.bulk_credit_sale_order_creation()</field>
+        <field name="interval_number">10</field>
+        <field name="active">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+    </record>
+    <record id="ir_cron_partner_age_schedule" model="ir.cron">
+        <field name="name">Partner/Sale Order Age Calculator</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.compute_customer_sale_order_age()</field>
+        <field name="interval_number">1</field>
+        <field name="active">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+<!--CSV Report Generating Schedule-->
+    <record id="ir_cron_so_csv_report" model="ir.cron">
+        <field name="name">Sale Order Csv Report Scheduler</field>
+        <field name="active" eval="True"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">2</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall">0</field>
+        <field name="model_id" ref="model_so_csv_report"/>
+        <field name="code">model.prepare_csv_sale_orders()</field>
+        <field name="priority" eval="5"/>
+    </record>
+
+<!--CSV Report Deleting Scheduler-->
+    <record id="ir_cron_so_csv_report_delete" model="ir.cron">
+        <field name="name">Sale Order Csv Report Delete Scheduler</field>
+        <field name="active" eval="True"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">3</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall">0</field>
+        <field name="model_id" ref="model_so_csv_report"/>
+        <field name="code">model.delete_so_csv_reports()</field>
+        <field name="priority" eval="5"/>
+    </record>
+
+
+</odoo>

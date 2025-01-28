@@ -1,0 +1,42 @@
+<odoo>
+
+<record id="account_payment_form_view_inherit_cashfree_payment" model="ir.ui.view">
+		<field name="name">account.payment.form.view.inherit.cashfree</field>
+		<field name="model">account.payment</field>
+		<field name="inherit_id" ref="account.view_account_payment_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='journal_id']" position="after">
+				<field name='is_cashfree' invisible='1'/>
+			</xpath>
+			<xpath expr="//button[@name='action_cancel']" position="before">
+				<button type="object"
+						name="update_cashfree_payment_status"
+						class="btn btn-primary"
+						string="Update Status"
+						attrs="{'invisible': ['|',('is_cashfree', '=',False),('state', '!=', 'posted')]}"
+						/>
+
+			</xpath>
+
+			<xpath expr="//form/sheet/group" position="after">
+				<notebook attrs="{'invisible': [('is_cashfree', '=',False)]}">
+					<page string='Cashfree Payments'>
+						<field name='cashfree_payment_line_ids' readonly='1' force_save='1'>
+							<tree>
+								<field name="payment_id" invisible='1'/>
+								<field name='transfer'/>
+								<field name='transaction_date'/>
+								<field name="processed_on"/>
+								<field name="payment_reference"/>
+								<field name="utr"/>
+								<field name="payment_state"/>
+								<field name="amount" invisible='1'/>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

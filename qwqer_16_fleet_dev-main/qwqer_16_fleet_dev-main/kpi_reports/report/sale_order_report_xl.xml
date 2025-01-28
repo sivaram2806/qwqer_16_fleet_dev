@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <report
+            id="sale_order_report_xl"
+            model="sale.order"
+            string="Sale orders"
+            report_type="xlsx"
+            name="kpi_reports.sale_orders_report_xlsx"
+            file="Sale orders"
+
+    />
+</odoo>

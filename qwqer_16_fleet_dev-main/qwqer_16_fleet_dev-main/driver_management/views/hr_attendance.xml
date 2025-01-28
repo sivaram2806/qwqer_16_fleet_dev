@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_attendance_view_list_hr_custom" model="ir.ui.view">
+        <field name="name">hr.attendance.view.list.hr_custom</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="edit">0</attribute>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="options">{"no_create": True, "no_open": True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='worked_hours']" position="attributes">
+                <attribute name="invisible">context.get('driver_attendance', False)</attribute>
+            </xpath>
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="app_working_hours" sum="Total" widget="float_time" readonly="0" force_save="1"
+                       invisible="not context.get('driver_attendance', False)"/>
+                <field name="app_total_distance" sum="Total" readonly="0" force_save="1"
+                       invisible="not context.get('driver_attendance', False)"/>
+                <field name="attendance_uid" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="company_id" invisible="1"/>
+                <field name="employee_code" invisible="not context.get('driver_attendance', False)" readonly="1"/>
+                <field name="region_id" invisible="0" readonly="1"/>
+                <field name="date" invisible="not context.get('driver_attendance', False)" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.attendance.view.form.hr_custom</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="date" invisible="not context.get('driver_attendance', False)"/>
+                <field name="daily_payout_id" invisible="not context.get('driver_attendance', False)"/>
+                <field name="employee_code" invisible="not context.get('driver_attendance', False)"/>
+                <field name="region_id" invisible="0" force_save="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="domain">[('driver_uid','!=', False),('employee_status','=','active')]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherited_hr_attendance_view_filter" model="ir.ui.view">
+        <field name="name">inherited_hr_attendance_view_filter</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <search string="Hr Attendance Search">
+                <field name="employee_code"/>
+                <filter string="Today" name="today_created" domain="['&amp;',
+	                	('create_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <group expand="0" string="Group By">
+                    <separator/>
+                    <filter name="date" string="Date" context="{'group_by':'date:day'}"/>
+                    <filter name="region_id_gp" string="Region" context="{'group_by':'region_id'}"/>
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_driver_attendance_action_employee" model="ir.actions.act_window">
+        <field name="name">Attendances</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'driver_attendance': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No attendance records to display
+            </p>
+            <p>
+                The attendance records of Drivers will be displayed here.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_driver_mgmt_attendance"
+              name="Attendance" sequence="8"
+              action="hr_driver_attendance_action_employee" parent="driver_management.menu_driver_management_root"/>
+
+</odoo>

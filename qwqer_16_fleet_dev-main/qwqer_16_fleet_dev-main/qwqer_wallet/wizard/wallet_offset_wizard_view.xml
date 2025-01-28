@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wallet_offset_wizard_form_view" model="ir.ui.view">
+        <field name="name">wallet.offset.wizard.form</field>
+        <field name="model">wallet.offset.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Wallet Offset">
+				<group>
+					<group>
+						<field name="balance_amount" readonly='1' force_save='1'/>
+					</group>
+					<group>
+						<field name="deduction_amount"/>
+					</group>
+				</group>
+                <footer>
+					<button string='Payment' name="action_create_journal" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+    
+    <record id="action_wallet_offset_wizard" model="ir.actions.act_window">
+        <field name="name">Wallet Offset</field>
+        <field name="res_model">wallet.offset.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wallet_offset_wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+    
+</odoo>

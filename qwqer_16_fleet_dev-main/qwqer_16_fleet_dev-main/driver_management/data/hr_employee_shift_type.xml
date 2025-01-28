@@ -1,0 +1,16 @@
+<odoo>
+    <data noupdate="1">
+        <record id="work_type_part_time" model="hr.employee.shift.type">
+            <field name="name">Part Time</field>
+            <field name="code">1</field>
+        </record>
+        <record id="work_type_full_time" model="hr.employee.shift.type">
+            <field name="name">Full Time</field>
+            <field name="code">2</field>
+        </record>
+        <record id="work_type_weekend_only" model="hr.employee.shift.type">
+            <field name="name">Week End Only</field>
+            <field name="code">3</field>
+        </record>
+    </data>
+</odoo>

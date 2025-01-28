@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="payment_template" xml:space="preserve">
+<!--    <t t-inherit="account.ShowPaymentInfo" t-inherit-mode="extension">-->
+<!--        <xpath expr="//t[@t-foreach='lines']/tr/td[last()]" position="before">-->
+<!--            <td style="text-align:right;">-->
+<!--                <t t-if="line.tds_amount" >-->
+<!--                TDS :  <t t-esc="line.tds_amount"/>-->
+<!--                </t>-->
+<!--            </td>-->
+<!--         </xpath>-->
+<!--    </t>-->
+
+    <t t-inherit="account.AccountPaymentField" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-foreach='lines']/tr/td[last()]" position="before">
+            <td style="text-align:left;padding-right: 30px;">
+                <t t-if="line.tds_amount" >
+                TDS :  <t t-esc="line.tds_amount"/>
+                </t>
+            </td>
+        </xpath>
+    </t>
+
+    <t t-inherit="account.AccountPaymentPopOver" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div/table/tr[1]" position="after">
+            <tr>
+                <td><strong>TDS: </strong></td>
+                <td>
+                    <t t-if="props.tds_amount">
+                         <t t-esc="props.tds_amount"/>
+                    </t>
+                </td>
+            </tr>
+        </xpath>
+    </t>
+
+</templates>

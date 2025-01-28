@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="invoice_post_scheduler_info_view" model="ir.ui.view">
+        <field name="name">Invoice Scheduler Log Info</field>
+        <field name="model">invoice.post.scheduler.info</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="scheduler_start_time"/>
+                <field name="scheduler_end_time"/>
+                <field name="picked_records"/>
+                <field name="processed_records"/>
+                <field name="exception_count"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_invoice_post_scheduler_info_view" model="ir.actions.act_window">
+        <field name="name">Invoice Post Scheduler Log View</field>
+        <field name="res_model">invoice.post.scheduler.info</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False,'edit': False}</field>
+    </record>
+
+    <menuitem id="invoice_post_scheduler_info_menu"
+              name="Invoice Post Scheduler Log"
+              action="action_invoice_post_scheduler_info_view"
+              parent="base.menu_custom"
+              sequence="201"/>
+</odoo>

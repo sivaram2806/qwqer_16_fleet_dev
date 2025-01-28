@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="visible_wallet_listing_group" model="res.groups">
+        <field name="name">Visible Wallet Listing</field>
+    </record>
+
+    <!--    company aware rule for wallet configuration config-->
+    <record id="wallet_configuration_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Wallet Configuration</field>
+        <field name="model_id" ref="model_customer_wallet_config"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+</odoo>

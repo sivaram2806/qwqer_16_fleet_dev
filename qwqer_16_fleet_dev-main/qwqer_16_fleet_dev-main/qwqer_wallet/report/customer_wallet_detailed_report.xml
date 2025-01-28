@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_wallet_detailed_report_pivot" model="ir.ui.view">
+            <field name="name">customer.wallet.detailed.report.pivot</field>
+            <field name="model">customer.wallet.detailed.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Customer Wallet Report" disable_linking="True">
+                    <field name="partner_id" type="row"/>
+                    <field name="debit_amt" type="measure" string="Debit"/>
+                    <field name="credit_amt" type="measure" string="Credit"/>
+                    <field name="wallet_balance" type="measure" string="Wallet Balance"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_customer_wallet_detailed_report_tree" model="ir.ui.view">
+            <field name="name">customer.wallet.detailed.report.list</field>
+            <field name="model">customer.wallet.detailed.report</field>
+            <field name="arch" type="xml">
+                <tree delete="0" create="0" edit="0" string="Customer Wallet Report">
+                    <field name="create_dt"/>
+                    <field name="partner_id"/>
+                    <field name="phone_number"/>
+                    <field name="label"/>
+                    <field name="debit_amt"/>
+                    <field name="credit_amt"/>
+                    <field name="wallet_balance"/>
+                    <field name="reference"/>
+                    <field name="wallet_order_id"/>
+                    <field name="move_name"/>
+                    <field name="wallet_transaction_ref_id"/>
+                    <field name="order_transaction_no" optional="hide"/>
+                    <field name="comments"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="wallet_report_details_search_view" model="ir.ui.view">
+            <field name="name">wallet_report.detailed.search.view</field>
+            <field name="model">customer.wallet.detailed.report</field>
+            <field name="arch" type="xml">
+                <search string="Customer Wallet Report Search">
+                    <field name="partner_id" string="Customer"/>
+                    <field name="phone_number" string="Phone No."/>
+                    <field name="wallet_transaction_ref_id" string="Wallet Transaction No."/>
+                    <field name="wallet_order_id" string="Wallet Order ID"/>
+                    <group string="Group By">
+                        <filter string="Wallet Order ID" name="wallet_order_id"
+                                context="{'group_by':'wallet_order_id'}"/>
+                        <filter string="Wallet Transaction No." name="wallet_transaction_ref_id"
+                                context="{'group_by':'wallet_transaction_ref_id'}"/>
+                    </group>
+                    
+                    <separator/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_customer_wallet_detailed_report" model="ir.actions.act_window">
+            <field name="name">Customer wallet Detailed Report</field>
+            <field name="res_model">customer.wallet.detailed.report</field>
+            <field name="view_mode">tree,pivot</field>
+        </record>
+    </data>
+</odoo>

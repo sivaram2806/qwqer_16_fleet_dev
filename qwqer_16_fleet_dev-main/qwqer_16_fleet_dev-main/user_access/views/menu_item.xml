@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('accounting_visibility_group'))]"/>
+    </record>
+
+    <record id="fleet.menu_root" model="ir.ui.menu">
+        <field name="name">Fleet Management</field>
+        <field name="groups_id" eval="[(5,0),(4, ref('fleet_menu_access_group'))]"/>
+    </record>
+
+    <record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('employees_visibility_group'))]"/>
+    </record>
+
+    <record id="sale.sale_menu_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('sales_visibility_group'))]"/>
+    </record>
+
+    <record id="base.menu_management" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('apps_menu_access_group'))]"/>
+    </record>
+
+    <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('link_tracker_menu_access_group'))]"/>
+    </record>
+
+    <record id="mail.menu_root_discuss" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('discuss_menu_access_group'))]"/>
+    </record>
+
+    <record id="contacts.menu_contacts" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('contacts_menu_access_group'))]"/>
+    </record>
+
+    <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('dashboard_menu_access_group'))]"/>
+    </record>
+
+    <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('inventory_menu_access_group'))]"/>
+    </record>
+    <record id="crm.crm_menu_root" model="ir.ui.menu">
+        <field name="name">Lead Management</field>
+        <field name="groups_id" eval="[(5,0),(4, ref('crm_visibility_group'))]"/>
+    </record>
+
+    <record id="qwqer_ticket_management.helpdesk_dashboard_menu_root" model="ir.ui.menu">
+        <field name="name">Fleet Enquiry</field>
+        <field name="groups_id" eval="[(5,0),(4, ref('ticket_management_visibility_group'))]"/>
+    </record>
+
+    <record id="driver_management.menu_driver_management_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('driver_management_visibility_group'))]"/>
+    </record>
+
+    <record id="hr_attendance.menu_hr_attendance_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('hr_attendance_visibility_group'))]"/>
+    </record>
+
+    <record id="customer_onboarding.menu_customer_onboard" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('customer_onboarding_visibility_group'))]"/>
+    </record>
+
+    <record id="vendor_onboarding.vendor_onboarding_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(5,0),(4, ref('onboard_vendor_visibility_group'))]"/>
+    </record>
+</odoo>
+

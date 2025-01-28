@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gst_report_wizard_xl" model="ir.ui.view">
+        <field name="name">GST</field>
+        <field name="model">gst.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="GST">
+                <group>
+                    <group>
+                        <field name="from_date" />
+                        <field name="to_date" />
+                        <!-- <field name="state_id" options="{'no_create': True,'no_create_edit':True}" />  -->
+                        <field name="state_ids" options="{'no_create': True,'no_create_edit':True}" widget="many2many_tags"/>
+                        <field name="service_type" required="1" options="{'no_create': True, 'no_edit': True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_gstr1_xl_report" string="GSTR1 Report" type="object"
+                            class="btn-primary"/>
+                    <button name="print_gstr2_xl_report" string="GSTR2 Report" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gst_report_wzd" model="ir.actions.act_window">
+        <field name="name">GST</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gst.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name='GST Report' action="account_gst_report.action_gst_report_wzd" id="menu_action_gst_report_wzd"
+              parent="account.menu_finance_reports"
+              groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"
+              sequence="3"/>
+
+
+</odoo>

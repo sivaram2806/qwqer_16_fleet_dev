@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="cash_configuration_tree" model="ir.ui.view">
+		<field name="name">cash.configuration.tree</field>
+		<field name="model">cash.free.configuration</field>
+		<field name="arch" type="xml">
+			<tree string="Cash Free Configuration">
+				 <field name="name"/>
+				 <field name="partner_id"/>
+				 <field name="partner_type"/>
+				 <field name="journal_id" required="True"/>
+				 <field name="payment_method_id"/>
+				 <field name="payment_type"/>
+				 <field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="cash_configuration_form">
+		<field name="name">cash.configuration.form</field>
+		<field name="model">cash.free.configuration</field>
+		<field name="arch" type="xml">
+			<form string="Cash Free Configuration">
+				<sheet>
+					<div class="oe_title">
+						<label for="name"/>
+						<h1><field name="name" placeholder="e.g. Payin Configuration" required="1"/></h1>
+					</div>
+					<group>
+						<group>
+							<field name="partner_id" attrs="{'required': [('payment_type', '!=', 'inbound')]}"/>
+							<field name="partner_type" required="True"/>
+							<field name="journal_id" required="True"/>
+							<field name="payment_type" widget="radio" options="{'horizontal': True}" required="True"/>
+						</group>
+						<group>
+							<field name="payment_method_id" domain="[('payment_type', '=', payment_type)]" required="True"/>
+							<field name="is_validated" required="True"/>
+							<field name="company_id"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_cash_free_configuration" model="ir.actions.act_window">
+		<field name="name">Cash Free Configuration</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">cash.free.configuration</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+  	<menuitem id="menu_action_cash_free_configuration"
+			  action="action_cash_free_configuration"
+			  parent="menu_cash_free"
+			  sequence="2"
+	/>
+</odoo>

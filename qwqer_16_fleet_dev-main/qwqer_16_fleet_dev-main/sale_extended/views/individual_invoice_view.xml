@@ -1,0 +1,57 @@
+<odoo>
+
+    <record model="ir.ui.view" id="invoice_individual_view_form">
+        <field name="name">invoice.individual.form</field>
+        <field name="model">invoice.individual</field>
+        <field name="arch" type="xml">
+            <form string="Invoice">
+                <header>
+                    <button name="generate_invoice" string="Proceed" type="object" class="oe_highlight"
+                            confirm="Proceed with generating consolidated invoice."
+                            attrs="{'invisible':[('is_invoice_created','=',True)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="customer_id" domain="[('customer_type','!=', 'b2b')]"/>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="is_invoice_created" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="sales" string="Sale orders">
+                            <field name="order_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="date_order"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_individual_invoice" model="ir.actions.act_window">
+        <field name="name">Individual Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">invoice.individual</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="menu_generate_invoice_individual"
+              name="Invoice - B2C Individual"
+              parent="menu_generate_sale_invoice"
+              action="action_individual_invoice"
+              sequence="1"/>
+
+
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!--    City master tree view-->
+    <record id="res_state_city_view_tree" model="ir.ui.view">
+        <field name="name">res_state_city_view_tree</field>
+        <field name="model">res.state.city</field>
+        <field name="arch" type="xml">
+            <tree string="City" editable="bottom">
+                <field name="name"/>
+                <field name="state_id"/>
+                <field name="country_id" optional="hide" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+<!--    City master form view-->
+    <record id="res_state_city_view_form" model="ir.ui.view">
+        <field name="name">res_state_city_view_form</field>
+        <field name="model">res.state.city</field>
+        <field name="arch" type="xml">
+            <form string="City">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="state_id"/>
+                        <field name="country_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!--    City master action -->
+    <record id="res_state_city_view_action" model="ir.actions.act_window">
+        <field name="name">City</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.state.city</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- City master configuration menu -->
+    <menuitem id="res_state_city_menu" name="City"
+              parent="contacts.menu_localisation" action="res_state_city_view_action" sequence="35"/>
+</odoo>

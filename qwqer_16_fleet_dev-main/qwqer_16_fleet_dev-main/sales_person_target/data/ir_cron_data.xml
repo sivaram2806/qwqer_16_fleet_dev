@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_set_target_for_next_month" model="ir.cron">
+            <field name="name">Reminder For Set Target For Next Month</field>
+            <field name="model_id" ref="sales_person_target.model_target_configuration"/>
+            <field name="state">code</field>
+            <field name="code">model.reminder_for_set_target_next_month()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + relativedelta(day=25))"/>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record id="ir_cron_create_previous_target_for_this_month" model="ir.cron">
+            <field name="name">Set Previous Month Target For Current Month</field>
+            <field name="model_id" ref="sales_person_target.model_target_configuration"/>
+            <field name="state">code</field>
+            <field name="code">model.check_and_create_next_month_target()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + relativedelta(months=1, day=1))"/>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+</odoo>

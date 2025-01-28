@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="balance_sheet_xlsx1" model="ir.actions.report">
+    <field name="name">Financial Report</field>
+    <field name="model">accounting.report</field>
+    <field name="report_type">xlsx</field>
+    <field name="report_name">account_financial_pl_bs.balance.sheet.xlsx</field>
+    <field name="print_report_name">"Financial Report"</field>
+    <field name="binding_model_id" ref="model_accounting_report"/>
+</record>
+
+        
+<record id="action_report_financial_html" model="ir.actions.report">
+    <field name="name">Financial Report</field>
+    <field name="model">account.financial.report</field>
+    <field name="report_type">qweb-html</field>
+    <field name="report_name">base_accounting_kit.report_financial</field>
+    <field name="binding_model_id" ref="model_account_financial_report"/>
+    <field name="binding_type">report</field>
+</record>
+            
+<!--<record id="action_report_financial_html" model="ir.actions.report">-->
+<!--    <field name="name">Financial Report</field>-->
+<!--    <field name="model">account.financial.report</field>-->
+<!--    <field name="report_type">qweb-html</field>-->
+<!--    <field name="report_name">base_accounting_kit.report_financial</field>-->
+<!--    <field name="binding_model_id" ref="model_account_financial_report"/>-->
+<!--    <field name="binding_type">report</field>-->
+<!--</record>-->
+    </data>
+</odoo>

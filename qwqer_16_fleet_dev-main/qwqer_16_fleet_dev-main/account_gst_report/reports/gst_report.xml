@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Record to create GSTR1 Report-->
+    <record id="gstr1_report_xl" model="ir.actions.report">
+        <field name="name">GSTR1 Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">account_gst_report.gstr1_report_xlsx</field>
+        <field name="report_file">GSTR1 Report</field>
+    </record>
+
+
+    <!-- Record to create GSTR2 Report-->
+    <record id="gstr2_report_xl" model="ir.actions.report">
+        <field name="name">GSTR2 Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">account_gst_report.gstr2_report_xlsx</field>
+        <field name="report_file">GSTR2 Report</field>
+    </record>
+
+</odoo>

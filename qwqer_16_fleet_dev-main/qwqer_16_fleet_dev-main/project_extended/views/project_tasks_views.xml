@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="project_task_view_inherit" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.project.temp</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form/sheet/div[@class='oe_title pe-0']/h1/div/field[@name='name']" position="before">
+                <field name="ticket_no" readonly="1" class="oe_inline"/>
+                <label for="ticket_no" string="   " class="oe_inline"/>
+            </xpath>
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="region_id" options="{'no_create': True}"/>
+                <field name="state_id"/>
+                <field name="source_id" required="1" string="Source *"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'invisible': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="attrs">{'invisible': True}</attribute>
+            </xpath>
+            <xpath expr="//page[@name='extra_info']//field[@name='company_id']" position="attributes">
+                <attribute name="attrs">{'invisible': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='task_properties']" position="attributes">
+                <attribute name="attrs">{'invisible': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="order_no" />
+                <field name="customer_name" />
+                <field name="customer_phone"/>
+                <field name="category_id" required="1" string="Issue Category *"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"
+                       domain="[('project_id','=',project_id)]"/>
+                <field name="cause_id"/>
+            </xpath>
+            <xpath expr="//field[@name='date_last_stage_update']" position="after">
+                <field name="create_date" readonly="1"/>
+                <field name="write_date" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_task_tree_view_inherit" model="ir.ui.view">
+        <field name="name">project.task.tree.inherit.project.temp</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="ticket_no"/>
+                <field name="region_id"/>
+                <field name="state_id"/>
+                <field name="source_id" required="1" string="Source *"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                <field name="category_id" required="1" string="Issue Category *"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                <field name="order_no"/>
+                <field name="customer_name"/>
+                <field name="customer_phone"/>
+                <field name="create_date"/>
+                <field name="write_date"/>
+                <field name="cause_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--project.task search view  -->
+    <record id="project_task_search_view_inherit" model="ir.ui.view">
+        <field name="name">project.task.search.inherit.project.temp</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/field[@name='stage_id']" position="after">
+                <field name="ticket_no"/>
+                <field name="region_id"/>
+                <field name="state_id"/>
+                <field name="source_id" required="1" string="Source *"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                <field name="category_id" required="1" string="Issue Category *"
+                       options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                <field name="order_no"/>
+                <field name="customer_name"/>
+                <field name="customer_phone"/>
+                <field name="create_date"/>
+                <field name="write_date"/>
+            </xpath>
+            <xpath expr="//search/group/filter[@name='stage']" position="after">
+                <filter string="Ticket No" name="ticket_no" context="{'group_by': 'ticket_no'}"/>
+                <filter string="Region" name="region_id" context="{'group_by': 'region_id'}"/>
+                <filter string="State" name="state_id" context="{'group_by': 'state_id'}"/>
+                <filter string="Source" name="source_id" context="{'group_by': 'source_id'}"/>
+                <filter string="Issue Category" name="category_id" context="{'group_by': 'category_id'}"/>
+                <filter string="Order ID" name="order_no" context="{'group_by': 'order_no'}"/>
+                <filter string="Customer Name" name="customer_name" context="{'group_by': 'customer_name'}"/>
+                <filter string="Created Date/Time" name="create_date" context="{'group_by': 'create_date'}"/>
+                <filter string="Modified Date/Time" name="write_date" context="{'group_by': 'write_date'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!--project.task kanabn view  -->
+    <record id="project_task_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">project.task.kanban.inherit.project.temp</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_record_top']/div[@class='o_kanban_record_headings']/strong[@class='o_kanban_record_title']"
+                   position="replace">
+                <div class="d-flex flex-row justify-content-between">
+                    <div t-if="record.ticket_no.value">
+                        <field name="ticket_no"/>
+                        <field name="name"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@class='o_kanban_record_bottom']/div[@class='oe_kanban_bottom_right']"
+                   position="replace">
+                <div class="oe_kanban_bottom_right">
+
+                    <div t-if="record.user_ids.value">
+                        <field name="user_ids" class="oe_kanban_avatar"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+    <record id="ir_rule_expense_claim_view_only" model="ir.rule">
+        <field name="name">Claim ReadOnly</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('hr_expense_extended.expense_claim_view_only'))]"/>
+    </record>
+
+    <record id="ir_rule_hr_expense_claim_finance_approver" model="ir.rule">
+        <field name="name">Claim Finance Approver</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('hr_expense_extended.expense_claim_finance_approver'))]"/>
+    </record>
+    <record id="ir_rule_hr_expense_claim_admin" model="ir.rule">
+        <field name="name">Claim admin</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('hr_expense_extended.expense_claim_admin'))]"/>
+    </record>
+
+    <record id="ir_rule_claim_expense_manager_approver" model="ir.rule">
+        <field name="name">Claim Mu Approver</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field name="domain_force">[('requested_by.expense_manager_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('hr_expense_extended.claim_expense_manager_approver'))]"/>
+    </record>
+
+    <record id="ir_rule_hr_expense_claim_employee" model="ir.rule">
+        <field name="name">Employee: Own Expense Records</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field name="domain_force">[('requested_by.user_id', '=', user.id)]
+        </field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="rule_claim_employee_manager_readonly" model="ir.rule">
+        <field name="name">Manager: Read-only Subordinate Expense Records</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field name="domain_force">['|', '|',
+            ('requested_by.department_id.manager_id.user_id', '=', user.id),
+            ('requested_by.parent_id.user_id', '=', user.id),
+            ('sheet_id.user_id', '=', user.id)]
+        </field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="hr_expense_claim_comp_rule" model="ir.rule">
+        <field name="name">Expense Claim multi company rule</field>
+        <field name="model_id" ref="model_hr_expense_claim"/>
+        <field eval="True" name="global"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

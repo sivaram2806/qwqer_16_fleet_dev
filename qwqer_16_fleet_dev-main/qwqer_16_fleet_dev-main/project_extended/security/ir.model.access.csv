@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sys_source_user,access.sys.source.user,model_sys_source,base.group_user,1,1,1,1
+access_sys_category_user,access.sys.category.user,model_sys_category,base.group_user,1,1,1,1
+access_cause_config_settings_user,access.cause.config.settings.user,model_cause_config_settings,base.group_user,1,1,1,1
+access_ondc_subcategory_config_settings_user,access.ondc.subcategory.config.settings.user,model_ondc_subcategory_config_settings,base.group_user,1,1,1,1
+access_ondc_project_config_settings_user,access.ondc.project.config.settings.user,model_ondc_project_config_settings,base.group_user,1,1,1,1

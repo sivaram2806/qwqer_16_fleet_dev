@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="email_compose_message_wizard_form_inherit_payment_req">
+            <field name="name">mail.compose.message.form.inherit.payment.req</field>
+            <field name="model">mail.compose.message</field>
+             <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+<!--            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>-->
+            <field name="arch" type="xml">
+        	<xpath expr="//form/group/div" position="after">
+            		<field name="email_cc" widget="email"/>
+            	</xpath>
+        	
+            </field>
+        </record>
+
+    </data>
+</odoo>

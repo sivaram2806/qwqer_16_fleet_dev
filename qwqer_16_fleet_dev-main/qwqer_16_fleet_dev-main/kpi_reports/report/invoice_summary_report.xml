@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <report
+            id="invoice_summary_xl_report"
+            model="account.move"
+            string="Invoice Summary Report"
+            report_type="xlsx"
+            name="kpi_reports.invoice_summary_xl_report"
+            file="Invoice Summary Report"
+    />
+</odoo>

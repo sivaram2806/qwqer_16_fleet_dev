@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--		E-Invoice Bulk generation wizard form view-->
+		<record id="einvoice_bulk_invoice_wizard_view_form" model="ir.ui.view">
+	        <field name="name">einvoice.bulk.invoice.wizard.form</field>
+	        <field name="model">einvoice.bulk.invoice.wizard</field>
+	        <field name="arch" type="xml">
+		        <form string="E-Invoice Configuration">
+			        <sheet >
+				        <group>
+					        <group>
+					        	<field name="next_run_date" readonly="0" required="1" />
+					        	<field name="state_gst" required="1" />
+					        	<field name="record_limit" readonly="1" />
+					        </group>
+				        </group>
+			        </sheet>
+			        <footer>
+						<button name="action_einvoice_create" string="Generate E-Invoice" type="object" groups="account.group_account_invoice"/>
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+		      	</form>
+			</field>
+		</record>
+
+<!--		E-Invoice Bulk generation wizard Action-->
+      <record id="action_einvoice_bulk_invoice_wizard" model="ir.actions.act_window">
+            <field name="name">E-Invoice Bulk create</field>
+            <field name="res_model">einvoice.bulk.invoice.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+      </record>
+
+<!--		E-Invoice Bulk generation wizard Menu : Accounting -> Customers -->
+      <menuitem id="einvoice_date_config_menu" 
+    	    name="Generate Bulk E-Invoice"
+			action="action_einvoice_bulk_invoice_wizard"
+            parent="account.menu_finance_receivables"
+            sequence="200" /> 
+                    
+    </data>
+</odoo>

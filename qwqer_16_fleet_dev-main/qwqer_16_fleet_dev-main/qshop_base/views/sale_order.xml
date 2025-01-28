@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+         <record id="sale_order_groupby_inherit_qshop" model="ir.ui.view">
+             <field name="name">sale.order.groupby.inherit</field>
+             <field name="model">sale.order</field>
+             <field name="inherit_id" ref="sale_extended.sale_order_groupby_inherit"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//filter[@name='order_sales_person']" position="after">
+                     <filter name="promo_code" string="Promo Code" domain="[]" context="{'group_by' : 'promo_code'}"/>
+                 </xpath>
+                 <xpath expr="//filter[@name='order_month']" position="after">
+                     <separator/>
+                     <filter string="Having Promocode" name="filter_have_promocode"
+                             domain="[('promo_code','!=',False)]"/>
+                     <separator/>
+                     <filter name="is_new_customer_order" string="New Customer Order"
+                             domain="[('is_new_customer','=',True)]"/>
+                 </xpath>
+                 <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                     <separator/>
+                     <filter string="Delivery Service" name="delivery"
+                             domain="[('service_type_id.is_delivery_service', '=', True)]"/>
+                     <filter string="Qwqer Shop Service" name="qwqershop"
+                             domain="[('service_type_id.is_qshop_service', '=', True)]"/>
+                 </xpath>
+                  <xpath expr="//field[@name='payment_mode_id']" position="after">
+                     <field name="promo_code"/>
+                 </xpath>
+
+             </field>
+         </record>
+
+
+    <record id="sale_order_sale_extended_view_form" model="ir.ui.view">
+        <field name="name">sale_order_extended_qwqer_shop_view_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_extended.sale_order_sale_extended_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='service_type_id']" position="attributes">
+                <attribute name="domain">['|', ('is_delivery_service', '=', True), ('is_qshop_service', '=', True)]
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='service_type_id']" position="before">
+                <field name="billing_partner_id" readonly="1" force_save="1"
+                       attrs="{'invisible':[('is_qshop_service','=',False)]}"/>
+                <field name="to_name" string='Customer' attrs="{'invisible':[('is_qshop_service','=',False)]}"/>
+                <field name="to_phone_no" string='Customer number'
+                       attrs="{'invisible':[('is_qshop_service','=',False)]}"/>
+                <field name="is_qshop_service" invisible="1"/>
+
+            </xpath>
+            <xpath expr="//field[@name='cancellation_comments']" position="after">
+                <field name="promo_code" readonly="0"
+                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])],'invisible':[('is_qshop_service','=',False)]}"/>
+                <field name="promo_desc"
+                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])],'invisible':[('is_qshop_service','=',False)]}"/>
+                <field name="payment_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='merchant_order_id']" position="after">
+                <field name="merchant_discount_amount"
+                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])],'invisible':[('is_qshop_service','=',False)]}"/>
+                <field name="is_having_promocode" readonly="1" invisible="1"/>
+                <field name="merchant_total_amount"
+                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])],'invisible':[('is_qshop_service','=',False)]}"/>
+            </xpath>
+
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page string="Products" attrs="{'invisible':[('is_qshop_service','=',False)]}">
+                    <field name="qshop_product_line" readonly="1" nolabel="1">
+                        <tree>
+                            <field name="name"/>
+                            <field name="item_name"/>
+                            <field name="weight"/>
+                            <field name="units"/>
+                            <field name="sell_price"/>
+                            <field name="mark_price"/>
+                            <field name="total_price"/>
+                        </tree>
+                    </field>
+
+                </page>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<odoo noupdate="1">
+
+        <record id="ir_cron_payout_status_update_schedule" model="ir.cron">
+            <field name="name">Cashfree Payout Status Update</field>
+            <field name="model_id" ref="model_driver_batch_payout"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.daily_payout_status()</field>
+            <field name="interval_number">2</field>
+            <field name="active">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="ir_cron_pending_payout_status_update_scheduler" model="ir.cron">
+            <field name="name">Cashfree Pending Payout Status Update</field>
+            <field name="model_id" ref="model_driver_batch_payout"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.pending_payout_status()</field>
+            <field name="interval_number">2</field>
+            <field name="active">0</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="ir_cron_create_complete_payout_scheduler" model="ir.cron">
+            <field name="name">Create Completed Payout List</field>
+            <field name="model_id" ref="model_driver_batch_payout"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.action_create_complete_payout()</field>
+            <field name="interval_number">1</field>
+            <field name="active">0</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    <record id="ir_cron_payout_total_week_schedule" model="ir.cron">
+        <field name="name">Weekly Payout</field>
+        <field name="model_id" ref="model_driver_batch_payout"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.total_weekly_pay()</field>
+        <field name="interval_number">7</field>
+        <field name="active">0</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+</odoo>

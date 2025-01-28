@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<!-- wizard to update employee region, department, employee type -->
+	<record id="daily_driver_payout_deduction_incentive_update_wizard_form_view" model="ir.ui.view">
+		<field name="name">dail.driver.payout.deduction.incentive.update.wizard.form.view</field>
+	    <field name="model">daily.driver.payout.update.wizard</field>
+	    <field name="arch" type="xml">
+	    	<form>
+				<sheet>
+					<group>
+						<group>
+							<field name="updated_file" filename="filename"/>
+							<field name="filename" invisible="1"/>
+						</group>
+						<group>
+							<button type="object" name="action_export_files" class="oe_highlight"
+									string="Download Sample Format"/>
+						</group>
+					</group>
+				</sheet>
+	            <footer>
+	            	<button string="Update"  name="action_update_payout_variables" type="object"
+							class="btn-primary"/>
+	                <button string="Cancel" class="btn-secondary" special="cancel"/>
+	            </footer>
+			</form>
+		</field>
+	</record>
+
+    <!-- action to update driver deduction incentive -->
+	<record id="daily_driver_payout_update_wizard_action" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+	    <field name="name">Update Deduction and Incentive</field>
+	    <field name="target">new</field>
+	    <field name="view_mode">form</field>
+	    <field name="res_model">daily.driver.payout.update.wizard</field>
+	    <field name="view_id" ref="daily_driver_payout_deduction_incentive_update_wizard_form_view"/>
+	</record>
+
+</odoo>

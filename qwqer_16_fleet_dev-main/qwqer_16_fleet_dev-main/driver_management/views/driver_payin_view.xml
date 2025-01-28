@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="driver_payin_tree" model="ir.ui.view">
+        <field name="name">driver.payin.tree</field>
+        <field name="model">driver.payin</field>
+        <field name="arch" type="xml">
+            <tree string="Driver Settlements" default_order="remit_date desc">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="region_id"/>
+                <field name="remit_amount"/>
+                <field name="remit_date"/>
+                <field name="remit_remarks"/>
+                <field name="qwqer_ref_no"/>
+                <field name="pg_ref_no"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="driver_payin_view_form" model="ir.ui.view">
+        <field name="name">driver_payin_view_form</field>
+        <field name="model">driver.payin</field>
+        <field name="arch" type="xml">
+            <form string="Driver Settlements">
+                <header>
+                    <button name="create_driver_payin_entry" string="Payment Validate" type="object"
+                            class="oe_highlight" states="draft"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="1" domain="[('driver_uid', '!=', '')]"/>
+                            <field name="name" required="1"/>
+                            <field name="remit_amount"/>
+                            <field name="remit_date" required="1"/>
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="journal_id" required="1"/>
+                            <field name="region_id" readonly="1" force_save="1"/>
+                            <field name="entry_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="remit_remarks"/>
+                            <field name="qwqer_ref_no" readonly="0"/>
+                            <field name="pg_ref_no" readonly="0"/>
+                            <field name="operation" readonly="0"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_payin_search_view" model="ir.ui.view">
+        <field name="name">driver.payin.search.view</field>
+        <field name="model">driver.payin</field>
+        <field name="arch" type="xml">
+            <search string="Driver Payin Search">
+                <field name="name" string="Driver ID"/>
+                <field name="pg_ref_no" string="PG Ref No"/>
+                <field name="partner_id" string="Partner"/>
+                <field name="region_id" string="Region"/>
+                <field name="journal_id" string="Journal"/>
+                <field name="employee_id" string="Driver Name"/>
+                <group string="Group By">
+                    <filter string="Driver ID" name="driver_id" context="{'group_by':'name'}"/>
+                    <filter string="Driver Name" name="driver_name" context="{'group_by':'employee_id'}"/>
+                    <filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Region" name="region" context="{'group_by':'region_id'}"/>
+                    <filter string="Journal" name="journal" context="{'group_by':'journal_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_driver_settlement" model="ir.actions.act_window">
+        <field name="name">Driver Payins</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">driver.payin</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'payin_form':True}</field>
+    </record>
+    <menuitem id="driver_settlement_main_menu" name="Driver Settlement"
+              groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"
+              sequence="13"
+              parent="account.menu_finance"/>
+
+    <menuitem id="menu_driver_account_payins" name="Driver Payins"
+              sequence="0" action="action_driver_settlement"
+              parent="driver_management.driver_settlement_main_menu"/>
+
+    <menuitem id="menu_driver_payins"
+              name="Driver Payins"
+              sequence="37"
+              action="action_driver_settlement"
+              parent="driver_management.menu_driver_reports_main_menu"/>
+
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="driver_payout_fail_check_template" model="mail.template">
+            <field name="name">Driver Payouts: Failed Mail</field>
+            <field name="model_id" ref="driver_management.model_driver_payout"/>
+            <field name="email_to">{{object.get_email_groups()}}</field>
+            <field name="subject">Daily Driver Transaction Failed</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,<br/>
+                        <t t-out="ctx.get('reason')"/> has failed on <t t-out="ctx.get('date')"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+        <record id="batch_payout_send_for_verify_template" model="mail.template">
+            <field name="name">Send for verify: Send by email</field>
+            <field name="model_id" ref="driver_management.model_driver_batch_payout"/>
+            <field name="email_to">{{object.get_payout_group_users()}}</field>
+            <field name="subject">Batch Transfer Verify</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Dear Sir,<br/>
+                            New Batch Transfer <t t-out="object.name"/> for <t t-out="object.region_id.name"/> region has been submitted for your verification.<br/><br/>
+                        </p>
+                        <div style="text-align: center; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web#id={{ object.id }}&amp;model=driver.batch.payout&amp;view_type=form"
+                               style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+                                Click Here
+                            </a>
+                        </div>
+                    </div>
+            </field>
+        </record>
+        <record id="driver_payouts_send_mail_template" model="mail.template">
+            <field name="name">Driver Payouts: Send by email</field>
+            <field name="model_id" ref="driver_management.model_driver_batch_payout"/>
+            <field name="email_to">{{object.get_payout_group_users()}}</field>
+            <field name="subject"> Batch Transfer Approve</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                                            % set colors = {'needsAction': 'grey', 'accepted': 'green', 'tentative': '#FFFF00',  'declined': 'red'}
+                            Dear Sir,<br/>
+                            Batch Transfer <t t-out="object.name"/> for <t t-out="object.region_id.name"/> region has been submitted for your approval.<br/><br/>
+
+                        </p>
+                        <div style="text-align: center; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web#id={{ object.id }}&amp;model=driver.batch.payout&amp;view_type=form"
+                               style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+                                Click Here
+                            </a>
+                        </div>
+                    </div>
+            </field>
+        </record>
+
+        <record id="rejection_email_template_driver_payouts" model="mail.template">
+            <field name="name">Driver Payouts Rejection: Send by email</field>
+            <field name="model_id" ref="driver_management.model_driver_batch_payout"/>
+            <field name="email_to">{{object.payout_verified_user.email}}</field>
+            <field name="subject">Batch Transfer Reject</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir,
+                        <br/>
+                        Batch Transfer {{object.name}} has been rejected.Please check and verify again.
+                        <br/>
+                    </p>
+                    <div style="text-align: center; margin: 16px 0px 16px 0px;">
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=driver.batch.payout&amp;view_type=form"
+                           style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+                            Click Here
+                        </a>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

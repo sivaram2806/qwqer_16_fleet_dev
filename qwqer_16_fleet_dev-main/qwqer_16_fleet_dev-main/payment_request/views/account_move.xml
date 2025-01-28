@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <record id="inherit_account_invoice_paymentreq_search_view" model="ir.ui.view">
+    	<field name="name">inherit.account.invoice.paymentreq.search</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                  <field name="payment_req_id"/>
+                  <field name="bank_transfer_id"/>
+            </xpath>
+
+      		<group expand="0" string="Group By">
+                       <filter string="Payment Request" name="payment_req_id" domain="[]" context="{'group_by': 'payment_req_id'}"/>
+            </group>
+        </field>
+    </record>
+    <record id="view_account_move_inherit_paymentreq" model="ir.ui.view">
+        <field name="name">account.move.view.inherit.paymentreq</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='ref']" position="after">
+               <field name="payment_req_id" force_save="1" readonly="1" attrs="{'invisible':[('payment_req_id','=', False)]}"/>
+               <field name="bank_transfer_id" force_save="1" readonly="1" attrs="{'invisible':[('bank_transfer_id','=', False)]}"/>
+           </xpath>
+        </field>
+    </record>
+</odoo>

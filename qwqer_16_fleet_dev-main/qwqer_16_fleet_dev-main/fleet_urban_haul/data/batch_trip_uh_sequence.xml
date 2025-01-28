@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--Sequences for Urban Haul - Daily Trip -->
+        <record id="sequence_batch_trip" model="ir.sequence">
+            <field name="name">Batch Trip UH</field>
+            <field name="code">batch.trip.uh</field>
+            <field name="prefix">VRN</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!--Sequences for Urban Haul - Daily Trip lines-->
+        <record id="sequence_batch_trip_line" model="ir.sequence">
+            <field name="name">Batch Trip UH Line</field>
+            <field name="code">batch.trip.uh.line</field>
+            <field name="prefix">TRP</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!--Sequences for Consolidated Customer Trip -->
+        <record id="sequence_trip_summary" model="ir.sequence">
+            <field name="name">Customer Trip Summary</field>
+            <field name="code">customer.trip.summary.uh</field>
+            <field name="prefix">CC</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!--Sequences for Consolidated Customer Trip lines-->
+        <record id="sequence_trip_summary_line" model="ir.sequence">
+            <field name="name">Customer Trip Summary Line</field>
+            <field name="code">customer.trip.summary.line.uh</field>
+            <field name="prefix">CCL</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!--Sequences for Consolidated Vendor Trip -->
+        <record id="sequence_vendor_trip_summary" model="ir.sequence">
+            <field name="name">Vendor Trip Summary</field>
+            <field name="code">vendor.trip.summary.uh</field>
+            <field name="prefix">VC</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!--Sequences for Consolidated Vendor Trip lines-->
+        <record id="sequence_vendor_trip_summary_line" model="ir.sequence">
+            <field name="name">Vendor Trip Summary Line</field>
+            <field name="code">vendor.trip.summary.line.uh</field>
+            <field name="prefix">VCL</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+    </data>
+</odoo>

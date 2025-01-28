@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  hr.expense.claim.comment view  -->
+    <record id="hr_expense_claim_comment_form" model="ir.ui.view">
+        <field name="name">hr.expense.claim.comment.form</field>
+        <field name="model">hr.expense.claim.comment</field>
+        <field name="arch" type="xml">
+            <form string="Comments">
+                <group>
+                    <field name="description" required='1'/>
+                </group>
+                <footer>
+                    <button string='Submit' name="action_post_user_comment" type="object" class="oe_highlight"
+                            invisible="context.get('function') == 'action_hr_expense_claim_finance_approve_advance'"/>
+                    <button string='With Advance' name="action_post_user_comment" type="object" class="oe_highlight"
+                            context="{'function':'action_hr_expense_claim_finance_approve'}"
+                            invisible="context.get('function') != 'action_hr_expense_claim_finance_approve_advance'"/>
+                    <button string='WithOut Advance' name="action_post_user_comment" type="object"
+                            class="oe_highlight"
+                            context="{'function':'action_hr_expense_claim_finance_approve_advance'}"
+                            invisible="context.get('function') != 'action_hr_expense_claim_finance_approve_advance'"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--  hr.expense.claim.comment action record  -->
+    <record id="action_hr_expense_claim_comment" model="ir.actions.act_window">
+        <field name="name">Expense Claim Comments</field>
+        <field name="res_model">hr.expense.claim.comment</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_expense_claim_comment_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

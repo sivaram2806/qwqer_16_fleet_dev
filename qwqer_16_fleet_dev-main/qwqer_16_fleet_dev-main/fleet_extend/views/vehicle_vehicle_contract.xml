@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  vehicle.contract model form view  -->
+    <record id="vehicle_contract_form_views" model="ir.ui.view">
+        <field name="name">vehicle.contract.form</field>
+        <field name="model">vehicle.contract</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object"
+						    name="action_sent_for_approval"
+                            class="btn btn-primary"
+                            string="Send For Approval"
+                            attrs="{'invisible': ['|','|', ('approval_stage', '!=', 'new'), ('state', '!=', 'new'),('is_editable', '!=', True)]}"/>
+
+					<button type="object"
+                            name="action_mu_approve"
+                            class="btn btn-primary"
+                            string="Approve"
+                            attrs="{'invisible': ['|', ('approval_stage', '!=', 'send_for_approval'), ('state', '!=', 'new')]}"
+                            groups="fleet_extend.fleet_group_vehicle_contract_mu_manager,fleet_extend.fleet_group_vehicle_contract_user_admin_user"/>
+
+					<button type="object"
+                            name="action_finance_approve"
+                            class="btn btn-primary"
+                            string="Finance Approve"
+                            attrs="{'invisible': ['|', ('approval_stage', '!=', 'mu_head_approved'), ('state', '!=', 'new')]}"
+						    groups="fleet_extend.fleet_group_vehicle_contract_finance_manager,fleet_extend.fleet_group_vehicle_contract_user_admin_user"/>
+
+                    <button type="object"
+                            name="action_return"
+                            class="btn btn-primary"
+                            string="Return"
+                            attrs="{'invisible': ['|','|', ('approval_stage', '!=', 'send_for_approval'), ('state', '!=', 'new'),('is_editable', '=', False)]}"
+                            context="{'button_mu_user': True}"/>
+
+                    <button type="object"
+                            name="action_return"
+                            class="btn btn-primary"
+                            string="Return"
+                            attrs="{'invisible': ['|','|', ('approval_stage', '!=', 'mu_head_approved'), ('state', '!=', 'new'),('is_editable', '=', False)]}"
+                            context="{'button_finance_user': True}"/>
+
+					<button type="object"
+						name="action_renew_contract"
+						class="btn btn-primary" string="Renew"
+						attrs="{'invisible': ['|',('state', 'in', ('new','closed')),('child_ids','!=',[])]}"/>
+
+					<button type="object"
+						name="action_run_contract"
+						class="btn btn-primary" string="Run Manually"
+						attrs="{'invisible': ['|', ('approval_stage', '!=', 'finance_approved'), ('state', '!=', 'new')]}"
+						groups="fleet_extend.fleet_group_vehicle_contract_finance_manager,fleet_extend.fleet_group_vehicle_contract_user_admin_user"/>
+
+					<button type="object"
+						name="action_close_contract"
+						class="btn btn-primary" string="Close"
+						attrs="{'invisible': [('state', 'in', ('new','closed'))]}"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="new,running,expired,closed" required="1"/>
+				</header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="button_show_child_contracts" class="oe_stat_button"
+                                    icon="fa-book" type="object">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="child_count"/>
+                                </span>
+                                <span class="o_stat_text">
+                                    Child Contracts
+                                </span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_inline" name="sub_status_bar">
+                        <field name="approval_stage" widget="statusbar"
+                               statusbar_visible="new,send_for_approval,mu_head_approved,finance_approved"
+                               required="1"/>
+
+                        <div class="badge badge-pill text-bg-danger float-right" style="float: right; font-size: 2.em; font-weight: 500;"
+                             attrs="{'invisible': [('to_renew', '=', False)]}">
+                            Expiring Soon
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="oe_title">
+                        <span class="o_form_label">Contract Number</span>
+                        <h1 class="d-flex">
+                            <field name="contract_num" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="contract_details_details">
+                        <group>
+                            <field name="is_editable" invisible="1"/>
+                            <field name="child_ids" invisible="1"/>
+                            <field name="is_document_editable" invisible="1"/>
+                            <field name="to_renew" invisible="1"/>
+                            <field name="contract_cat_id" required="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                   domain="[('contract_classification','=','ftl')]"
+                                   attrs="{'readonly': [('approval_stage', '!=', 'new')]}"/>
+                            <field name="customer_id" required="1"
+                                   options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('customer_rank','>', 0), ('service_type_id.is_fleet_service','=',True)]"
+                                   attrs="{'readonly': ['|',('is_editable', '=', False),('parent_id', '!=', False)]}"/>
+                            <field name="contract_type_id"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}" required="1"
+                                   attrs="{'readonly': ['|',('is_editable', '=', False),('parent_id', '!=', False)]}"/>
+                            <field name="region_id" options="{'no_create': True, 'no_edit': True}"
+                                   required="1"
+                                   attrs="{'readonly': ['|',('is_editable', '=', False),('parent_id', '!=', False)]}"/>
+                            <field name="type" required="1"
+                                   options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                   attrs="{'readonly': ['|',('is_editable', '=', False),('parent_id', '!=', False)]}"/>
+                            <field name="start_date" required="1"
+                                   attrs="{'readonly': ['|', '&amp;', ('is_editable', '=', False), ('is_document_editable', '=', False), ('state', '!=', 'new'), ]}"/>
+                            <field name="end_date" required="1"
+                                   attrs="{'readonly': ['|', '&amp;', ('is_editable', '=', False), ('is_document_editable', '=', False), ('state', '!=', 'new'), ]}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="cost" required="1" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="quantity" required="1" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="payment_term_id" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="note" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="comments" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                            <field name="agreement_name" invisible="1"/>
+                            <field name="agreement" filename="agreement_name" widget="binary"
+                                   attrs="{'readonly': [('is_editable', '=', False), ('is_document_editable', '=', False)]}"/>
+                            <field name="create_uid" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                            <field name="contract_classification" invisible="1"/>
+                            <field name="parent_id" readonly="1"/>
+                            <field name="company_id" options="{'no_open': True}"/>
+                        </group>
+                    </group>
+					<notebook>
+						<page string="Documents">
+							<field name="attachment_ids"  attrs="{'readonly': [('is_editable', '=', False), ('is_document_editable', '=', False)]}">
+								<tree editable="bottom">
+									<field name="contract_agreement" invisible="1"/>
+									<field name="attachment" filename="contract_agreement"
+                                           widget='binary' required='1'/>
+									<field name="note" string="Comment" required='1'/>
+									<field name="create_uid" string="User"/>
+								</tree>
+							</field>
+						</page>
+						<page string="User Action History">
+							<field name="user_action_history_ids" options="{'no_create_edit': True}" readonly="1">
+								<tree editable="bottom">
+									<field name="user_id" string="User" />
+									<field name="last_updated_on" string="Time of Action" />
+									<field name="action" string="Action Performed" />
+									<field name="description" string="Comments" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--  vehicle.contract.type model tree view  -->
+    <record id="vehicle_contract_type_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.contract.type.tree</field>
+        <field name="model">vehicle.contract.type</field>
+        <field name="arch" type="xml">
+             <tree string="Vehicle Contract Type" editable="bottom" sample="1">
+                 <field name="name"/>
+                 <field name="code"/>
+                 <field name="company_id" invisible="0"/>
+            </tree>
+        </field>
+    </record>
+    <!--  vehicle.contract.category model tree view  -->
+    <record id="vehicle_contract_category_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.contract.category.tree</field>
+        <field name="model">vehicle.contract.category</field>
+        <field name="arch" type="xml">
+             <tree string="Vehicle Contract category" editable="bottom" sample="1">
+                <field name="name" required="1"/>
+                <field name="code" required="1"/>
+                <field name="short_code" required="1"/>
+                <field name="contract_classification" required="1"/>
+                 <field name="company_id" invisible="0"/>
+            </tree>
+        </field>
+    </record>
+    <!--  vehicle.contract model tree view  -->
+    <record id="vehicle_contract_tree_view" model="ir.ui.view">
+        <field name="name">vehicle.contract.tree</field>
+        <field name="model">vehicle.contract</field>
+        <field name="arch" type="xml">
+             <tree>
+                <field name="contract_num"/>
+                <field name="create_date"/>
+                <field name="create_uid"/>
+                <field name="contract_cat_id"/>
+                <field name="type"/>
+                 <field name="region_id"/>
+                 <field name="cost"/>
+                 <field name="state"/>
+                 <field name="company_id" optional="show"/>
+             </tree>
+        </field>
+    </record>
+    <!--  vehicle.contract model kanban view  -->
+    <record id="vehicle_contract_kanban" model="ir.ui.view">
+        <field name="name">vehicle.contract.kanban</field>
+        <field name="model">vehicle.contract</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_mobile"
+                    records_draggable='0' sample="1" quick_create="false">
+            	<field name="state"/>
+                <field name="to_renew"/>
+            	<field name="contract_num"/>
+                <field name="contract_cat_id"/>
+                <field name="type"/>
+                <progressbar field="activity_state" sum_field="cost"
+                             colors='{"planned": "success", "today": "warning", "overdue": "danger"}'
+                             help="This bar allows to filter the contracts based on scheduled activities."/>
+                <templates>
+                	<t t-name="kanban-box">
+                		<div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_title">
+                                    <field name="contract_num"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o kanban_tags_section"/>
+                                    <ul>
+                                        <li><field name="contract_cat_id"/></li>
+                                        <li><field name="type"/></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_footer">
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="activity_ids" widget="kanban_activity"/>
+                                        </div>
+                                        <div class="badge badge-pill text-bg-danger mt4 mr16"
+                                             attrs="{'invisible': [('to_renew', '=', False)]}">
+                                            Expiring Soon
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="create_uid" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"/>
+	                	</div>
+                	</t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!--  Action for vehicle.contract.type model  -->
+    <record id="vehicle_contract_type_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Contracts Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vehicle.contract.type</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Contract type.
+            </p>
+        </field>
+    </record>
+    <!--  Action for vehicle.contract.category model  -->
+    <record id="vehicle_contract_category_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Contract Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vehicle.contract.category</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Contract category.
+            </p>
+        </field>
+    </record>
+    <!--  Action for vehicle.contract model  -->
+    <record id="vehicle_contract_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Contracts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vehicle.contract</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Contract.
+            </p>
+        </field>
+    </record>
+
+    <!--  Menu added for contracts: Fleet > Contracts  -->
+    <menuitem id="fleet_vehicle_contract_menu"
+              name="Contracts"
+              parent="fleet.menu_root"
+              groups="fleet_extend.fleet_group_vehicle_contract_user,fleet_extend.fleet_group_vehicle_contract_finance_manager,fleet.fleet_group_manager"
+              sequence="30"/>
+    <!--  Menu added for vehicle.vehicle: Fleet > Configuration > Contract Configuration  -->
+    <menuitem id="fleet_config_contract_conf_menu"
+              name="Contract Config"
+              parent="fleet.fleet_configuration"
+              sequence="70"/>
+    <!--  Menu added for vehicle contract: Fleet > Contract  -->
+    <menuitem id="fleet_config_vehicle_contract_type_menu"
+              name="Contract Type"
+              parent="fleet_config_contract_conf_menu"
+              action="vehicle_contract_type_action"
+              groups="fleet.fleet_group_manager"
+              sequence="90"/>
+    <!--  Menu added for vehicle.contract.type: Fleet > Contracts > Vehicle Pricing  -->
+    <menuitem id="fleet_config_vehicle_contract_catg_menu"
+              name="Contract Category"
+              parent="fleet_config_contract_conf_menu"
+              action="vehicle_contract_category_action"
+              groups="fleet.fleet_group_manager"
+              sequence="110"/>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="state_journal_delivery_base_view_form" model="ir.ui.view">
+        <field name="name">state_journal_delivery_base_view_form</field>
+        <field name="model">state.journal</field>
+        <field name="inherit_id" ref="qwqer_base.view_state_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state_id']" position="after">
+                <field name="tax_b2c_invoice" widget="many2many_tags"/>
+                <field name="tax_b2c_sale_order" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

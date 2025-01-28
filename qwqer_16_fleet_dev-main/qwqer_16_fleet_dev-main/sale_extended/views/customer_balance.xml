@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View for Customer Balance -->
+    <record id="customer_balance_tree" model="ir.ui.view">
+        <field name="name">customer.balance.tree</field>
+        <field name="model">customer.balance</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="partner_id"/>
+                <field name="cus_id" string="Customer ID"/>
+                <field name="region_id"/>
+                <field name="customer_type"/>
+                <field name="service_type_id"/>
+                <field name="rev_balance"/>
+                <field name="pay_balance"/>
+                <field name="to_inv_so_total"/>
+                <field name="wallet_balance"/>
+                <field name="balance"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View for Customer Balance -->
+    <record id="view_customer_balance_search" model="ir.ui.view">
+        <field name="name">customer.balance.search</field>
+        <field name="model">customer.balance</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="cus_id" string="Customer Ref Key"/>
+                <field name="partner_id" string="Partner"/>
+                <field name="customer_type" string="Customer Type"/>
+                <field name="service_type_id" string="Customer Service Type"/>
+                <field name="region_id" string="Region"/>
+                <separator/>
+                <filter string="B2B" name="customertype_b2b" domain="[('customer_type', '=', 'b2b')]"/>
+                <filter string="B2C" name="customertype_b2c" domain="[('customer_type', '=', 'b2c')]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Partner" name="group_by_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Customer Type" name="group_by_customer_type" context="{'group_by': 'customer_type'}"/>
+                    <filter string="Region" name="group_by_region" context="{'group_by': 'region_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action for Customer Balance -->
+    <record id="customer_balance_action" model="ir.actions.act_window">
+        <field name="name">Customer Balance Summary</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">customer.balance</field>
+        <field name="view_mode">tree,search</field>
+    </record>
+
+    <menuitem id="menu_customer_balance"
+              name="Customer Balance Summary"
+              parent="account_base.menu_customer_journal_items"
+              action="customer_balance_action"
+              sequence="6"/>
+
+    <menuitem id="menu_reporting_customer_balance"
+              name="Customer Balance Summary"
+              parent="account.menu_finance_reports"
+              action="sale_extended.customer_balance_action"
+              groups="account_base.account_read_receivables_accounting_group,account_base.auditor_menu_access_group"
+              sequence="6"/>
+</odoo>

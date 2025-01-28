@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--	this form is inherited to modify account.move form view to add work order and trip summary related fields-->
+    <record id="account_move_form_view_fleet_ftl" model="ir.ui.view">
+        <field name="name">account.move.form.view.fleet.ftl</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='journal_div']" position="after">
+                <field name='work_order_shipping_address' attrs="{'invisible': [('is_ftl', '=',False)]}"
+                       readonly='1' force_save='1'/>
+            </xpath>
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name='is_ftl' invisible='1'/>
+                <field name='work_order_id' attrs="{'invisible': ['|',('is_ftl', '=', False),('move_type', 'not in', ('in_invoice'))],
+                           'required': [('is_ftl', '=', True), ('move_type', 'in', ('in_invoice'))], 'readonly': [('state', '!=', 'draft')]}"
+                       domain="['&amp;', ('state', '=', 'finance_approve'), '|', ('vendor_id', '=', partner_id), ('customer_id', '=', partner_id)]"
+                       options="{'no_create': True, 'no_edit': True}"/>
+                <field name='work_order_ids' widget="many2many_tags" attrs="{'invisible': ['|',('is_ftl', '=', False),('move_type', 'not in', ('out_invoice'))],
+                           'required': [('is_ftl', '=', True), ('move_type', 'in', ('out_invoice'))], 'readonly': [('state', '!=', 'draft')]}"
+                       domain="['&amp;', ('state', '=', 'finance_approve'), '|', ('vendor_id', '=', partner_id), ('customer_id', '=', partner_id)]"
+                       options="{'no_create': True, 'no_edit': True}"/>
+                <field name='work_order_amount' attrs="{'invisible': [('is_ftl', '=',False)]}" readonly='1'
+                       force_save='1'/>
+                <field name='utr_ref'
+                       attrs="{'invisible': ['|',('vehicle_ftl_customer_consolidate_id', '=',False),('move_type', 'not in',('in_invoice','in_refund'))], 'readonly': [('state', '!=', 'draft')]}"/>
+                <field name='vehicle_ftl_customer_consolidate_id' attrs="{'invisible': [('is_ftl', '=', False)]}"
+                       readonly='1' force_save='1'/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_edit': True, 'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

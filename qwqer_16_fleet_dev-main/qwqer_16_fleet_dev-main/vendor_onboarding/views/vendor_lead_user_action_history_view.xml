@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--Form view for user action history -->
+    <record id="vendor_lead_user_action_history_view_form" model="ir.ui.view">
+        <field name="name">vendor.lead.user.action.history.form</field>
+        <field name="model">vendor.lead.user.action.history</field>
+        <field name="arch" type="xml">
+            <form string="Comments">
+            	<group>
+                	<field name="description" required = '1'/>
+                </group>
+                <footer>
+					<button string='Send for Approval' name="action_user_comment" type="object" class="oe_highlight" invisible="not context.get('from_send_for_approve', False)"/>
+					<button string='Approve' name="action_user_comment" type="object" class="oe_highlight" invisible="not context.get('from_manager_approve', False)"/>
+					<button string='Approve' name="action_user_comment" type="object" class="oe_highlight" invisible="not context.get('from_finance_approve', False)"/>
+					<button string='Return' name="action_user_comment" type="object" class="oe_highlight" invisible="not context.get('from_return', False)"/>
+					<button string='Reject' name="action_user_comment" type="object" class="oe_highlight" invisible="not context.get('from_reject', False)"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+           </form>
+        </field>
+    </record>
+
+</odoo>

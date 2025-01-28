@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_cash_free_tree_view" model="ir.ui.view">
+		<field name="name">view.cash.free.tree.view</field>
+		<field name="model">cash.free.settlement</field>
+		<field name="arch" type="xml">
+			<tree string="Cash Free" default_order="settlement_date desc">
+				<field name="name"/>
+				<field name="partner_id"/>
+                <field name="total_transaction_amount"/>
+                <field name="service_charge" />
+                <field name="service_tax" />
+                <field name="settlement_amount" />
+                <field name="adjustment"/>
+                <field name="net_settlement_amount" />
+                <field name="from_date" />
+                <field name="till_date" />      
+                <field name="utr" />
+                <field name="settlement_date" />         
+			</tree>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="view_cash_free_form_view">
+		<field name="name">view.cash.free.form.view</field>
+		<field name="model">cash.free.settlement</field>
+		<field name="arch" type="xml">
+			<form string="Cash Free">
+				<header>
+					<button name="create_validate_payments" string="Payment Validate" type="object"  class="oe_highlight" />
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="partner_id"/>
+							<field name="partner_type"/>
+							<field name="total_transaction_amount"/>
+							<field name="service_charge" />
+							<field name="service_tax" />
+							<field name="settlement_amount" />
+							<field name="adjustment"/>
+							<field name="net_settlement_amount" />
+							<field name="validated" readonly="1"/>
+							<field name="company_id" invisible="1"/>
+						</group>
+						<group>
+							<field name="from_date" />
+							<field name="till_date" />
+							<field name="utr" />
+							<field name="settlement_date" />
+							<field name="journal_id" />
+							<field name="payment_id" />
+							<field name="payment_type" widget="radio" options="{'horizontal': True}"/>
+							<field name="payment_method_id" domain="[('payment_type', '=', payment_type)]" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="cash_settlement_search" model="ir.ui.view">
+		<field name="name">cash.settlement.search</field>
+		<field name="model">cash.free.settlement</field>
+		<field name="arch" type="xml">
+			<search string="Search Cash Free Statements">
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="partner_type"/>
+				<field name="from_date" />
+				<field name="till_date" />
+				<field name="settlement_date" />
+				<separator/>
+				<group expand="0" string="Group By">
+					<filter string="Partner" name="partner_id" context="{'group_by':'partner_id'}"/>
+					<filter string="From Date" name="from_date" context="{'group_by':'from_date'}"/>
+					<filter string="Till Date" name="till_date" context="{'group_by':'till_date'}"/>
+					<filter string="settlement_date" name="Settlement Date" context="{'group_by':'settlement_date'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+<!--    <record id="model_account_payment" model="ir.actions.server">-->
+<!--        <field name="name">Payment Validate Bulk</field>-->
+<!--        <field name="model_id" ref="payment_cashfree.model_cash_free_settlement"/>-->
+<!--        <field name="binding_model_id" ref="payment_cashfree.model_cash_free_settlement"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">action = records.create_validate_payments()</field>-->
+<!--    </record>-->
+
+	<record id="action_cash_free" model="ir.actions.act_window">
+		<field name="name">Cash Free Statement</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">cash.free.settlement</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_action_cash_free"
+			  action="action_cash_free"
+			  parent="menu_cash_free"
+			  sequence="1"
+	/>
+
+</odoo>

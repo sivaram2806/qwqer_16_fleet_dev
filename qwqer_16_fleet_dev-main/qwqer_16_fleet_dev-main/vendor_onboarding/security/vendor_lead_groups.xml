@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--Group category for vendor onboarding-->
+    <record id="module_category_vendor_lead_users" model="ir.module.category">
+        <field name="name">Vendor Onboarding</field>
+    </record>
+
+    <!--Groups for Vendor Onboarding create/send for approval-->
+    <record id="group_vendor_onboarding_create_access" model="res.groups">
+        <field name="name">Create/Send for Approval</field>
+        <field name="category_id" ref="vendor_onboarding.module_category_vendor_lead_users"/>
+    </record>
+
+    <!--Groups for Vendor Onboarding edit-->
+    <record id="group_vendor_onboarding_edit" model="res.groups">
+        <field name="name">Edit</field>
+        <field name="category_id" ref="vendor_onboarding.module_category_vendor_lead_users"/>
+    </record>
+
+    <!--Groups for Vendor Onboarding Manager Approver-->
+    <record id="group_vendor_onboarding_rm_approver" model="res.groups">
+        <field name="name">Manager Approver</field>
+        <field name="category_id" ref="vendor_onboarding.module_category_vendor_lead_users"/>
+    </record>
+
+    <!--Groups for Vendor Onboarding Finance Approver-->
+    <record id="group_vendor_onboarding_finance_approver" model="res.groups">
+        <field name="name">Finance Approver</field>
+        <field name="category_id" ref="vendor_onboarding.module_category_vendor_lead_users"/>
+    </record>
+</odoo>

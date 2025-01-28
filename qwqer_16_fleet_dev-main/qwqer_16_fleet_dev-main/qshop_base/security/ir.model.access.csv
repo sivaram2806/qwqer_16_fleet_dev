@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_qshop_merchant_payout,access_qshop_merchant_payout,model_qshop_merchant_payout,base.group_user,1,1,1,1
+access_qshop_merchant_payout_lines,access_qshop_merchant_payout_lines,model_qshop_merchant_payout_lines,base.group_user,1,1,1,1
+access_re_init_qshop_payout_wiz,access_re_init_qshop_payout_wiz,model_re_init_qshop_payout_wiz,base.group_user,1,1,1,1
+qshop_base.access_qshop_product,access_qshop_product,qshop_base.model_qshop_product_lines,base.group_user,1,1,1,1
+

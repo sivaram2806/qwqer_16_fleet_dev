@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--    customer consolidate trip summary tree view-->
+    <record id="trip_summary_uh_customer_tree_view" model="ir.ui.view">
+        <field name="name">consolidate.trip.summary.customer.tree.view</field>
+        <field name="model">trip.summary.uh</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string='Trip Con. Number'/>
+                <field name="from_date" string="From Date"/>
+                <field name="to_date" string="To Date"/>
+                <field name="customer_id"/>
+                <field name="region_id" string="Region"/>
+                <field name="grand_total"/>
+                <field name="state" string='Status'/>
+                <field name="create_date"/>
+                <field name="company_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <!--    vendor consolidate trip summary tree view-->
+    <record id="trip_summary_uh_vendor_tree_view" model="ir.ui.view">
+        <field name="name">consolidate.trip.summary.vendor.tree.view</field>
+        <field name="model">trip.summary.uh</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string='Trip Con. Number'/>
+                <field name="from_date" string="From Date"/>
+                <field name="to_date" string="To Date"/>
+                <field name="vendor_id"/>
+                <field name="region_id" string="Region"/>
+                <field name="grand_total"/>
+                <field name="state" string='Status'/>
+                <field name="create_date"/>
+                <field name="company_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    consolidate trip summary form view-->
+    <record id="trip_summary_uh_form_view" model="ir.ui.view">
+        <field name="name">consolidate.trip.summary.view.form</field>
+        <field name="model">trip.summary.uh</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object"
+                            name="action_create_invoice"
+                            class="btn btn-primary"
+                            attrs="{'invisible': ['|','|','|', ('partner_type', '!=', 'customer'),('id', '=', False),('invoice_id', '!=', False), ('state', '!=', 'new')]}"
+                            string="Create Invoice"
+                            groups="fleet_urban_haul.group_create_edit_consolidate,fleet.fleet_group_manager"/>
+                    <button type="object"
+                            name="action_create_bill"
+                            class="btn btn-primary"
+                            attrs="{'invisible': ['|','|', '|', ('partner_type', '!=', 'vendor'), ('id', '=', False), ('invoice_id', '!=', False), ('state', '!=', 'new')]}"
+                            string="Create Bill"
+                            groups="fleet_urban_haul.group_create_edit_consolidate,fleet.fleet_group_manager"
+                    />
+
+                    <button type="object"
+                            name="action_mail_send_to_partner"
+                            class="btn btn-primary"
+                            attrs="{'invisible': ['|','|', ('partner_type', '!=', 'customer'), ('id', '=', False),  ('state', '=', 'cancelled')]}"
+                            string="Send to Customer"
+                            groups="fleet_urban_haul.group_create_edit_consolidate,fleet.fleet_group_manager"
+                    />
+                    <button type="object"
+                            name="action_mail_send_to_partner"
+                            class="btn btn-primary"
+                            attrs="{'invisible': ['|',('partner_type', '!=', 'vendor'), ('id', '=', False)]}"
+                            string="Send to Vendor"
+                            groups="fleet_urban_haul.group_create_edit_consolidate,fleet.fleet_group_manager"
+                    />
+                    <button type="object"
+                            name="cancel_consolidate"
+                            attrs="{'invisible': ['|',('state', '!=', 'new'), ('id', '=', False)]}"
+                            string="Cancel"
+                    />
+                    <button type="object"
+                            name="print_xlsx"
+                            attrs="{'invisible': [('id', '=', False)]}"
+                            string="Download"
+                    />
+
+                    <field name="state" widget="statusbar" statusbar_visible="new,draft,paid,posted" required="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name='button_box'>
+                        <button class="oe_stat_button" type="object" name="action_view_invoice" icon="fa-money">
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="invoice_count" class="oe_clear"/>
+                                </span>
+                                <span class="o_stat_text" attrs="{'invisible': [('partner_type', '!=', 'customer')]}">
+                                    Invoice
+                                </span>
+                                <span class="o_stat_text" attrs="{'invisible': [('partner_type', '!=', 'vendor')]}">
+                                    Bill
+                                </span>
+                            </div>
+                        </button>
+
+                    </div>
+                    <h1>
+                        <field name="name" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="customer_id" options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('customer_rank','>', 0),('company_id','in', (company_id,False)) ,('service_type_id.is_fleet_service','=',True),('is_ftl_customer','=',False)]"
+                                   attrs="{'invisible': [('partner_type', '!=', 'customer')], 'required': [('partner_type', '=', 'customer')],'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="vendor_id" options="{'no_create': True, 'no_edit': True}"
+                                   domain="[('supplier_rank','>', 0),('company_id','in', (company_id,False)),('service_type_id.is_fleet_service','=',True)]"
+                                   attrs="{'invisible': [('partner_type', '!=', 'vendor')], 'required': [('partner_type', '=', 'vendor')],'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="from_date" required='1' attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="invoice_frequency" readonly='1' force_save='1'/>
+                            <field name="sales_person_id" readonly="1" force_save='1'
+                                   attrs="{'invisible': [('partner_type', '!=', 'customer')]}"
+                                   options="{'no_open': True}"/>
+                            <field name="invoice_id" attrs="{'invisible': [('invoice_id', '=', False)]}" readonly='1' force_save='1'/>
+                        </group>
+                        <group>
+                            <field name="region_id" options="{'no_create': True, 'no_edit': True}" required='1'
+                                   attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="to_date" required='1' attrs="{'readonly': [('state', '!=', 'new')]}"/>
+                            <field name="partner_type" invisible='1'/>
+                            <field name="invoice_id" invisible='1'/>
+                            <field name="invoice_ids" invisible='1'/>
+                            <field name="total_amount" invisible='1'/>
+                            <field name="company_id" options="{'no_open': True}"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string='Trip Details'>
+                            <field name='trip_summary_line_ids'>
+                                <form create='0'>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="name" readonly='1' force_save='1'/>
+                                                <field name="from_date" readonly='1' force_save='1'/>
+                                                <field name="vehicle_pricing_line_id"  readonly='1' force_save='1'/>
+                                                <field name="vehicle_model_id" options="{'no_open': True}" readonly='1' force_save='1'/>
+                                                <field name="price_config_id" options="{'no_open': True}" readonly='1' force_save='1'/>
+                                                <field name="invoice_frequency" invisible='1' readonly='1'
+                                                       force_save='1'/>
+                                            </group>
+                                            <group>
+                                                <field name="calculation_frequency" invisible='0' readonly='1'
+                                                       force_save='1'/>
+                                                <field name="to_date" readonly='1' force_save='1'/>
+                                                <field name="total_time" string="Total Time" readonly='1'
+                                                       force_save='1'/>
+                                                <field name="total_km" string="Total Odo" readonly='1' force_save='1'/>
+                                                <field name="customer_amount" sum='Total' readonly='1' force_save='1'/>
+                                            </group>
+                                        </group>
+                                        <field name="batch_trip_uh_line_ids" nolabel="1" readonly='1' force_save='1'>
+                                            <form>
+                                                <sheet>
+                                                    <group>
+                                                        <group>
+                                                            <field name="trip_no" string='Trip Number'/>
+                                                            <field name="vehicle_model_id" options="{'no_open': True}"/>
+                                                            <field name="vendor_id" />
+                                                            <field name="driver_name"/>
+                                                            <field name="batch_trip_uh_id" options="{'no_open': True}"/>
+                                                        </group>
+                                                        <group>
+                                                            <field name="start_time" widget="float_time"/>
+                                                            <field name="end_time" widget="float_time"/>
+                                                            <field name="start_km"/>
+                                                            <field name="end_km"/>
+                                                            <field name="total_km"/>
+                                                            <field name="customer_amount"
+                                                                   invisible="context.get('default_partner_type', 'vendor') == 'vendor'"/>
+                                                            <field name="vendor_amount"
+                                                                   invisible="context.get('default_partner_type', 'customer') == 'customer'"/>
+                                                        </group>
+                                                    </group>
+                                                </sheet>
+                                            </form>
+                                            <tree>
+                                                <field name="trip_no" string='Trip Number'/>
+                                                <!--<field name="vehicle_model_id"/>
+                                                <field name="vendor_id"/>-->
+                                                <field name="driver_name"/>
+                                                <field name="start_time" widget="float_time"/>
+                                                <field name="end_time" widget="float_time"/>
+                                                <field name="start_km"/>
+                                                <field name="end_km"/>
+                                                <field name="total_km" sum='Total'/>
+                                                <field name="customer_amount"
+                                                       invisible="context.get('default_partner_type', 'vendor') == 'vendor'"
+                                                       sum='Total'/>
+                                                <field name="vendor_amount"
+                                                       invisible="context.get('default_partner_type', 'customer') == 'customer'"
+                                                       sum='Total'/>
+                                                <field name="trip_summary_customer_id" invisible='1'/>
+                                                <field name="trip_summary_vendor_id" invisible='1'/>
+                                            </tree>
+                                        </field>
+
+                                    </sheet>
+                                </form>
+                                <tree create='0' edit='0' delete='1'>
+                                    <field name="name" width="60px"/>
+                                    <field name="vehicle_pricing_line_id" width="60px"/>
+                                    <field name="calculation_frequency" width="30px"/>
+                                    <field name="start_time" string="Start Time" widget="float_time" invisible='1'/>
+                                    <field name="end_time" string="End Time" widget="float_time" invisible='1'/>
+                                    <field name="total_time" string="Total Time" width="30px"/>
+                                    <field name="start_km" string="Start Odo" invisible='1'/>
+                                    <field name="end_km" string="End Odo" invisible='1'/>
+                                    <field name="total_km" string="Total Odo" width="70px"/>
+                                    <field name="customer_amount" width="70px"/>
+                                    <field name="price_config_id" width="70px"/>
+                                </tree>
+                            </field>
+                            <group name="note_group" col="6">
+                                <group class="oe_left" colspan="4">
+
+                                    <div class="oe_inline o_td_label">
+                                        <label for="total_amount" string='Total'/>
+                                    </div>
+                                    <field name="total_amount" nolabel="1" widget='monetary'/>
+
+                                    <div class="oe_inline o_td_label">
+                                        <label for="additional_charge" string='Additional Charge'/>
+                                    </div>
+                                    <field name="additional_charge" nolabel="1" widget='monetary'
+                                           attrs="{'readonly': [('state', '!=', 'new')]}"/>
+
+                                    <div class="oe_inline o_td_label">
+                                        <label for="additional_charge_comments" string='Additional Charge Comments'/>
+                                    </div>
+                                    <field name="additional_charge_comments" nolabel="1"
+                                           attrs="{'readonly': [('state', '!=', 'new')]}"/>
+
+                                    <div class="oe_inline o_td_label">
+                                        <label for="deduction" string='Deduction'/>
+                                    </div>
+                                    <field name="deduction" nolabel="1" widget='monetary'
+                                           attrs="{'readonly': [('state', '!=', 'new')]}"/>
+
+                                    <div class="oe_inline o_td_label">
+                                        <label for="deduction_comments" string='Deduction Comments'/>
+                                    </div>
+                                    <field name="deduction_comments" nolabel="1"
+                                           attrs="{'readonly': [('state', '!=', 'new')]}"/>
+
+                                    <div class="o_td_label">
+                                        <label for="grand_total" string='Total Amount'/>
+                                    </div>
+                                    <field name="grand_total" nolabel="1" widget='monetary'/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+
+                </sheet>
+            </form>
+        </field>
+
+    </record>
+
+<!--Filter-->
+    <record id="view_uh_trip_consolidated_trip_search" model="ir.ui.view">
+        <field name="name">view.uh.consolidated.trip.search</field>
+        <field name="model">trip.summary.uh</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Trip Consoldated Number"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="vendor_id" string="Vendor"/>
+                <field name="region_id" string="Region"/>
+                <field name="trip_summary_line_ids" string="Trip Number"
+                       filter_domain="[('trip_summary_line_ids.batch_trip_uh_line_ids.trip_no', 'ilike', self)]"/>
+                <field name="trip_summary_line_ids" string="Vehicle No"
+                       filter_domain="[('trip_summary_line_ids.vehicle_pricing_line_id', 'ilike', self)]"/>
+                <field name="trip_summary_line_ids" string="Vehicle Model"
+                       filter_domain="['|', ('trip_summary_line_ids.vehicle_model_id.brand_id', 'ilike', self), ('trip_summary_line_ids.vehicle_model_id.name', 'ilike', self)]"/>
+                <field name="trip_summary_line_ids" string="Vehicle Pricing"
+                       filter_domain="[('trip_summary_line_ids.price_config_id', 'ilike', self)]"/>
+                <filter name="filter_new" string="New" domain="[('state', '=', 'new')]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+                <filter name="filter_cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter string="Customer" name="customer_id" context="{'group_by': 'customer_id'}"/>
+                <filter string="Vendor" name="vendor_id" context="{'group_by': 'vendor_id'}"/>
+                <filter string="Region" name="region_id" context="{'group_by': 'region_id'}"/>
+                <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!--	actions for customer conso trip-->
+    <record id="action_uh_customer_trip_summary" model="ir.actions.act_window">
+        <field name="name">Urban Haul - Consolidated Customer Trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">trip.summary.uh</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="trip_summary_uh_customer_tree_view"/>
+        <field name="domain">[('partner_type', '=', 'customer')]
+        </field>
+        <field name="context">{'default_partner_type':
+            'customer'}
+        </field>
+    </record>
+    <!--	actions for vendor conso trip-->
+    <record id="action_uh_vendor_trip_summary" model="ir.actions.act_window">
+        <field name="name">Urban Haul - Consolidated Vendor Trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">trip.summary.uh</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="trip_summary_uh_vendor_tree_view"/>
+        <field name="domain">[('partner_type', '=', 'vendor')]</field>
+        <field name="context">{'default_partner_type': 'vendor'}</field>
+    </record>
+
+
+</odoo>

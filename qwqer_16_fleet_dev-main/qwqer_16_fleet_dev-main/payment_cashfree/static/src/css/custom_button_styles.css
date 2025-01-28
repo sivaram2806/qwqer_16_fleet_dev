@@ -1,0 +1,13 @@
+.large_button {
+    font-size: 12px; /* Increase font size */
+    padding: 10px 20px; /* Adjust padding for larger button */
+}
+
+.single_line_button {
+    white-space: nowrap; /* Prevent text from wrapping */
+    width: auto; /* Adjust width automatically to fit content */
+}
+.slightly_right_aligned_buttons {
+    display: flex;
+    gap: 200px; /* Adjust gap to move the buttons slightly to the right */
+}

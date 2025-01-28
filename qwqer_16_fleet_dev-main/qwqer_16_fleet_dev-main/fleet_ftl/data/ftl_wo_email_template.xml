@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+    
+    	<!--Mail template for generating mails if Send for approval button action is called-->
+        <record id="work_order_send_for_approval_email_template" model="mail.template">
+            <field name="name">Work Order: Send for Approval</field>
+            <field name="model_id" ref="fleet_ftl.model_work_order"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Work Order {{object.name}} Send for Approval</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         <t t-out="user.partner_id.name"/> has submitted work order <t t-out="object.name"/> and awaiting your approval..<br/>
+                         
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=work.order&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+                         
+                    	 Regards<br/>
+						 QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if MU Approve button action is called-->
+        <record id="work_order_mu_approved_email_template" model="mail.template">
+            <field name="name">Work Order: MU Approved</field>
+            <field name="model_id" ref="fleet_ftl.model_work_order"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Work Order {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Work Order <t t-out="object.name"/> has been approved by MU <t t-out="user.partner_id.name"/> and sent to finance manager.<br/>
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=work.order&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+                        
+                        Regards<br/>
+						QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Finance Approve button action is called-->
+        <record id="work_order_finance_approved_email_template" model="mail.template">
+            <field name="name">Work Order: Finance Approved</field>
+            <field name="model_id" ref="fleet_ftl.model_work_order"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Work Order {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Work Order <t t-out="object.name"/> has been approved by finance manager <t t-out="user.partner_id.name"/>.<br/>
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=work.order&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+                        
+                        Regards<br/>
+						QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+		
+		<!--Mail template for generating mails if return button action is called-->
+        <record id="work_order_return_email_template" model="mail.template">
+            <field name="name">Work Order: Returned</field>
+            <field name="model_id" ref="fleet_ftl.model_work_order"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Work Order {{object.name}} Returned</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Work Order <t t-out="object.name"/> has been returned to you by
+                         <t t-if="object.state=='pending_approval'"> MU <t t-out="user.partner_id.name"/>.</t>
+                         <t t-else=""> finance manager <t t-out="user.partner_id.name"/>.</t>
+                         <br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+                         
+                    	 Regards<br/>
+						 QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if reject button action is called-->
+        <record id="work_order_reject_email_template" model="mail.template">
+            <field name="name">Work Order: Rejected</field>
+            <field name="model_id" ref="fleet_ftl.model_work_order"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Work Order {{object.name}} Rejected</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                        Hi<br/><br/>
+                         
+                         Work Order <t t-out="object.name"/> has been rejected by
+                         <t t-if="object.state=='pending_approval'"> MU <t t-out="user.partner_id.name"/>.</t>
+                         <t t-else=""> finance manager <t t-out="user.partner_id.name"/>.</t>
+                         <br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+                         
+                    	 Regards<br/>
+						 QWQER
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

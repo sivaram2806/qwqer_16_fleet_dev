@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_hr_employee_form_view_only_driver_mgmt" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.driver.mgmt</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="account_base.view_employee_form_inherit_account_base"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pan_no']" position="replace">
+                <field name="pan_no"
+                       attrs="{'required': [('apply_tds', '=', True), ('driver_uid', '!=', False), ('is_under_vendor', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='account_no']" position="replace">
+                <field name="account_no"
+                       attrs="{'readonly': [('is_under_vendor', '!=',  False)],
+                       'required': [('driver_uid', '!=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='ifsc_code']" position="replace">
+                <field name="ifsc_code" attrs="{'readonly': [('is_under_vendor', '!=',  False)],
+                       'required': [('driver_uid', '!=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='upi_id']" position="replace">
+                <field name="upi_id" attrs="{'readonly': [('is_under_vendor', '!=',  False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='apply_tds']" position="after">
+                <field name="is_under_vendor"/>
+            </xpath>
+            <xpath expr="//group[@name='account_details']" position="after">
+                <group string="Related Vendor Info" name="related_vendor_info">
+                    <field name="is_driver" invisible="1"/>
+                    <field name="driver_uid" invisible="1"/>
+                    <field name="driver_partner_id"
+                           attrs="{'invisible': [('is_under_vendor', '=',  False)],'required': [('is_under_vendor', '=',  True)]}"
+                           domain="[('supplier_rank','>', 0)]" options="{'no_create_edit':True}"
+                           context="{'res_partner_search_mode': 'supplier'}"/>
+                    <field name="vendor_beneficiary" attrs="{'invisible': [('is_under_vendor', '=',  False)]}"
+                           readonly="1" force_save="1"/>
+                    <field name="vendor_account_no" attrs="{'invisible': [('is_under_vendor', '=',  False)]}"
+                           readonly="1" force_save="1"/>
+                    <field name="vendor_ifsc_code" attrs="{'invisible': [('is_under_vendor', '=',  False)]}"
+                           readonly="1" force_save="1"/>
+                    <field name="vendor_pan_no" attrs="{'invisible': [('is_under_vendor', '=',  False)]}"
+                           readonly="1" force_save="1"/>
+                    <field name="vendor_tds_tax_id" attrs="{'invisible': [('is_under_vendor', '=',  False)]}"
+                           readonly="1" force_save="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='expense_manager_id']" position="replace">
+				<field name="expense_manager_emp_id"/>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="options">{"no_create": True, "no_open": True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="attributes">
+                <attribute name="options">{"no_create": True, "no_open": True}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="domain">[('driver_uid','=',False),('employee_status','=','active'),('active','=',True)]
+                </attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='coach_id']" position="attributes">
+                <attribute name="domain">[('driver_uid','=',False),('employee_status','=','active'),('active','=',True)]
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_inherit_driver_mgmt" model="ir.ui.view">
+        <field name="name">hr.employee.driver.mgmt</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="driver_uid"/>
+                <field name="region_id"/>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="replace">
+                <field name="activity_ids" widget="list_activity" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='activity_date_deadline']" position="replace">
+                <field name="activity_date_deadline" widget="remaining_days" options="{'allow_order': '1'}"
+                       optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="driver_management.view_employee_form_inherit_driver_mgmt" model="ir.ui.view">
+        <field name="name">view.employee.form.inherit.driver.mgmt</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='region_id']" position="replace">
+                <field name="region_id" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='mobile_phone']" position="replace">
+                <field name="mobile_phone" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='work_phone']" position="replace">
+                <field name="work_phone" attrs="{'required': [('driver_uid', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='work_email']" position="replace">
+                <field name="work_email" attrs="{'required': [('driver_uid', '=',  False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='work_email']" position="after">
+                <field name="is_driver" invisible="1"/>
+                <field name="driver_uid"/>
+                <field name="employee_uid"/>
+                <field name="employee_status"/>
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="replace">
+                <field name="job_id" required="1"/>
+                <field name="join_date" attrs="{'required': [('driver_uid', '=',  False)]}"/>
+                <field name="relive_date"/>
+                <field name="journal_id"/>
+                <field name="related_partner_id" readonly="1" force_save="1"/>
+                <field name="claim_limit"/>
+                <field name="driver_category"/>
+                <field name="is_dedicated_orders"/>
+            </xpath>
+            <xpath expr="//field[@name='work_location_id']" position="replace">
+                <field name="work_location_id" attrs="{'required': [('driver_uid', '=',  False)]}"/>
+                <field name="employee_reporting_location"/>
+                <field name="employee_reporting_pin_code"/>
+                <field name="employee_referred_by"/>
+                <field name="employee_vendor_name"/>
+                <field name="shift_type_id"/>
+                <field name="blocked_reason"/>
+            </xpath>
+            <xpath expr="//field[@name='address_home_id']" position="before">
+                <field name="emp_address"/>
+            </xpath>
+            <xpath expr="//field[@name='birthday']" position="after">
+                <field name="blood_group"/>
+            </xpath>
+            <xpath expr="//field[@name='lang']" position="after">
+                <field name="aadhar_number"/>
+                <field name="uan"/>
+                <field name="epf_no"/>
+                <field name="esi_no"/>
+            </xpath>
+            <xpath expr="//field[@name='children']" position="after">
+                <field name="nominee"/>
+                <field name="nominee_relation"/>
+                <field name="employee_nominee_dob"/>
+            </xpath>
+            <xpath expr="//field[@name='study_school']" position="after">
+                <field name="educational_certificate"/>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']" position="after">
+                <page name="driver_details" string="Driver Details" attrs="{'invisible': [('driver_uid','=',False)]}">
+                    <group>
+                        <group string="Payout Details" name="payout_details">
+                            <field name="plan_detail_id" domain="[('region_id','=',region_id)]"/>
+                            <field name="payout_type"/>
+                        </group>
+                        <group string="Vehicle Details" name="vehicle_details">
+                            <field name="vehicle_no"/>
+                            <field name="vehicle_type"/>
+                            <field name="vehicle_category_id"/>
+                        </group>
+                        <field name='vehicle_attachment_ids'>
+                            <tree name="vehicle_attachment" editable="bottom">
+                                <field name="doc_type_id"/>
+                                <field name='document_type'/>
+                                <field name='document_number'/>
+                                <field name="exp_date"/>
+                                <field name="doc_file" widget="url"/>
+                                <field name="docs"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+                <page name="employee_details" string="Employee Documents" attrs="{'invisible': [('driver_uid','!=',False)]}">
+                    <group/>
+                    <field name='emp_docs_ids'>
+                        <tree name="employee_attachments" editable="bottom">
+                            <field name="doc_type_id" required="1"/>
+                            <field name='document_type'/>
+                            <field name='description'/>
+                            <field name="doc_file"/>
+                            <field name="exp_date"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="employee_assets" string="Employee Assets" attrs="{'invisible': [('driver_uid','!=',False)]}">
+                    <group/>
+                    <field name='emp_asset_ids'>
+                        <tree name="employee_assets" editable="bottom">
+                            <field name="asset_type_id" required="1"/>
+                            <field name='asset_details'/>
+                            <field name='description'/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="employee_insurance" string="Employee Insurance" attrs="{'invisible': [('driver_uid','!=',False)]}">
+                    <group/>
+                    <field name='emp_insurance_ids'>
+                        <tree name="employee_insurance" editable="bottom">
+                            <field name="name" required="1"/>
+                            <field name='dob'/>
+                            <field name='policy_num'/>
+                            <field name='nominee_type'/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Dedicated Customers" name="de_category"
+                      attrs="{'invisible': [('driver_category', '!=', 'dedicated')]}">
+                    <separator string="Dedicated Customers"/>
+                    <field name="dedicated_customer_ids" readonly="1">
+                        <tree>
+                            <field name="name"/>
+                            <field name="customer_type"/>
+                            <field name="region_id"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="update_driver_plan_tree_view" model="ir.ui.view">
+        <field name="name">driver.plan.list.view</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="employee_status == 'inactive'">
+                <field name="name"/>
+                <field name="driver_uid" optional="show"/>
+                <field name="is_driver" optional="hide"/>
+                <field name="region_id" optional="show"/>
+                <field name="work_phone" optional="show"/>
+                <field name="work_email" optional="show"/>
+                <field name="department_id" optional="show"/>
+                <field name="job_id" optional="show"/>
+                <field name="parent_id" optional="show"/>
+                <field name="plan_detail_id" optional="show"/>
+                <field name="payout_type" optional="show"/>
+                <field name="employee_status" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="inherit_hr_employee_search_view_employee_driver_mgmt" model="ir.ui.view">
+        <field name="name">inherit.hr.employee.search.view.employee.driver.mgmt</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='car_ids']" position="replace">
+                <field name="driver_uid"/>
+                <field name="work_phone"/>
+                <field name="mobile_phone"/>
+            </xpath>
+            <xpath expr="//search" position="inside">
+                <filter string="Employee" name="employee_type_emp" domain="[('employee_type', '=', 'employee')]"/>
+                <filter string="Contractor" name="employee_type_contr" domain="[('employee_type', '=', 'contract')]"/>
+            </xpath>
+            <xpath expr="//filter[@name='group_manager']" position="after">
+                <filter string="Region" name="region_id" context="{'group_by':'region_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,kanban,form,activity</field>
+        <field name="domain">[('driver_uid','=',False)]</field>
+        <field name="context">{'chat_icon': True}</field>
+        <field name="view_id" ref="hr.view_employee_tree"/>
+        <field name="search_view_id" ref="hr.view_employee_filter"/>
+        <field name="help" type="html">
+         <p class="o_view_nocontent_smiling_face">
+           Add a new employee
+         </p><p>
+           With just a quick glance on the Odoo employee screen, you
+           can easily find all the information you need for each person;
+           contact data, job position, availability, etc.
+         </p>
+        </field>
+    </record>
+
+    <record id="drivers_view_action" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form,kanban,activity</field>
+        <field name="view_id" ref="driver_management.update_driver_plan_tree_view"/>
+        <field name="domain">[('driver_uid','!=',False)]</field>
+        <field name="context">{'default_is_driver': True, 'employee_edit': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new driver
+            </p>
+            <p>
+                With just a quick glance on the Odoo employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_driver_management_root"
+              name="Driver Management" sequence="76"
+              web_icon="driver_management,static/description/icon.png"/>
+    <menuitem id="menu_driver_mgmt_drivers"
+              name="Drivers" sequence="5"
+              action="drivers_view_action" parent="driver_management.menu_driver_management_root"/>
+    <menuitem id="menu_driver_mgmt_config"
+              name="Configuration" sequence="50"
+              parent="driver_management.menu_driver_management_root"/>
+    <menuitem id="menu_drivers_payout_configuration"
+              name="Payout Configuration" sequence="20"
+              parent="driver_management.menu_driver_mgmt_config"/>
+    <!-- driver management reporting main menu -->
+    <menuitem id="menu_driver_reports_main_menu" name="Reports"
+              sequence="30"
+              parent="driver_management.menu_driver_management_root"/>
+    <!--    Update Manually Submenu-->
+    <menuitem id="menu_manual_payout_update_submenu"
+              name="Update Manually" sequence="2"
+              parent="driver_management.menu_driver_mgmt_config"
+              groups="base.group_system"/>
+    <menuitem id="menu_update_driver_payout"
+              name="Attendance Driver Transaction"
+              sequence="1"
+              parent="driver_management.menu_manual_payout_update_submenu"
+              action="daily_scheduled_action_update_action"
+              groups="base.group_system"/>
+    <menuitem id="menu_update_so_driver_payout"
+              name="Sales Driver Transaction"
+              sequence="1"
+              parent="driver_management.menu_manual_payout_update_submenu"
+              action="so_daily_scheduled_action_update_action"
+              groups="base.group_system"/>
+    <menuitem id="menu_update_total_payout"
+              name="Weekly/Monthly Payouts"
+              action="week_month_scheduled_action_update_action"
+              parent="driver_management.menu_manual_payout_update_submenu"
+              sequence="3"
+              groups="base.group_system"/>
+</odoo>

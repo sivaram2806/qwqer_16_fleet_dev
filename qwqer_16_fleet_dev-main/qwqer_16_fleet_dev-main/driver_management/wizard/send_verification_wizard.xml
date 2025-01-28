@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="view_send_verification_wizard_form" model="ir.ui.view">
+            <field name="name">send.verification.wizard.form</field>
+            <field name="model">send.verification.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                  <footer>
+                  			<button string="Yes"  class="oe_highlight"  special="cancel" />
+                  			<button string="No" name="send_for_verify_action" type="object" />
+                	</footer>
+                  <sheet>
+                  		<div class="text-center">
+                			<field name="message"  readonly='1' style="font-size:17px;"/>
+            			</div>
+				  </sheet>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_send_verification_wizard" model="ir.actions.act_window">
+            <field name="name">Verification Message</field>
+            <field name="res_model">send.verification.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_send_verification_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
+

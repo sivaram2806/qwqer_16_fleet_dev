@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!--Sequences for Batch Payout-->
+        <record id="sequence_driver_batch_payout" model="ir.sequence">
+            <field name="name">Batch Payout</field>
+            <field name="code">payout.sequence</field>
+            <field name="prefix">BPY-</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record id="sequence_driver_batch_payout_lines" model="ir.sequence">
+            <field name="name">Batch Payout Lines</field>
+            <field name="code">payout.sequence.lines</field>
+            <field name="prefix">DPB-</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+        </record>
+    </data>
+</odoo>

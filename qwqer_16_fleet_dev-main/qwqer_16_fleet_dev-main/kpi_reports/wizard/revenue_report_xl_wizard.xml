@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+              
+    <!-- Define the form view for the revenue report wizard -->
+    <record id="revenue_report_wizard_xl" model="ir.ui.view">
+        <field name="name">Revenue Report</field>
+        <field name="model">revenue.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Revenue Report">
+                <group>
+                    <group>
+                        <field name="from_date" />
+                        <field name="to_date" />
+                        <field name="partner_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_revenue_xl_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Define the action for the revenue report wizard -->
+    <record id="action_revenue_report_xl" model="ir.actions.act_window">
+        <field name="name">Revenue Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">revenue.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

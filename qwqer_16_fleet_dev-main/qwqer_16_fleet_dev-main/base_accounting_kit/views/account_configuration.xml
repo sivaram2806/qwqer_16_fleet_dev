@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_cash_flow_view" model="ir.ui.view">
+        <field name="name">Cash Flow</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='deprecated']" position="after">
+                    <field name="cash_flow_type" widget="selection"/>
+                    <field name="is_pl_account" invisible="1" />
+                    <field name="is_bs_account" invisible="1"/>
+                    <field name="profit_loss_hierarchy_id" context="{'name_groupby': True}"  attrs="{'required': [('is_pl_account', '=', True)],'invisible': [('is_pl_account', '!=', True)]}" />
+                    <field name="balance_sheet_hierarchy_id" context="{'name_groupby': True}"  attrs="{'required': [('is_bs_account', '=', True)],'invisible': [('is_bs_account', '!=', True)]}" />
+                    <field name="bs_detailed_hierarchy_id" context="{'name_groupby': True}"  attrs="{'required': [('is_bs_account', '=', True)],'invisible': [('is_bs_account', '!=', True)]}" />
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+
+
+</odoo>
+

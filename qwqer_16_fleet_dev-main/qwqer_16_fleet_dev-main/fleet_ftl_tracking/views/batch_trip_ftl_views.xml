@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- FTL batch trip form view -->
+    <record id="batch_trip_ftl_form_inherit" model="ir.ui.view">
+        <field name="name">batch.trip.ftl.form</field>
+        <field name="inherit_id" ref="fleet_ftl.batch_trip_ftl_form"/>
+        <field name="model">batch.trip.ftl</field>
+        <field name="arch" type="xml">
+            <field name="end_date" position="after">
+                <field name="eta_hrs"/>
+            </field>
+            <xpath expr="//notebook/page[last()]" position="after">
+                <page string="Track Details"
+                      attrs="{'invisible': [('state', 'not in',('finance_approved','completed'))]}">
+                    <br/>
+                    <div width="100%">
+                        <button type="object"
+                                class="btn btn-primary btn-custom-green"
+                                name="track_trip_creation"
+                                string="Start Track"
+                                attrs="{'invisible': [('track_trip_uid', '!=', False)]}"
+                        />
+                        <span style="display: inline-block; width: 5px;"/>
+                        <button type="object"
+                                class="btn btn-primary btn-custom-blue"
+                                name="fetch_trip_tracking_details"
+                                string="Fetch Track"
+                                attrs="{'invisible': ['|', '|',('track_trip_status', '=', 'STOPPED'),('track_trip_status', '=', 'COMPLETED'),
+                                            ('track_trip_uid', '=', False)]}"
+                        />
+                        <span style="display: inline-block; width: 5px;"/>
+                        <button type="object"
+                                class="btn btn-primary btn-custom-red"
+                                name="action_end_trip"
+                                string="Stop Track"
+                                attrs="{'invisible': ['|', '|',('track_trip_status', '=', 'STOPPED'),('track_trip_status', '=', 'COMPLETED'),
+                                            ('track_trip_uid', '=', False)]}"
+                        />
+                        <button class="header-button-right" type="object"
+                                name="action_view_tracking_details"
+                                icon="/fleet_ftl_tracking/static/src/images/track_icon.svg"
+                                attrs="{'invisible': [('track_trip_id','=',False)]}">
+                        </button>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <group>
+                        <group>
+                            <field name="from_city" widget="geo_locator_widget"
+                                   options="{'latFieldName': 'from_city_lat', 'longFieldName': 'from_city_long'}"
+                                   force_save="1" attrs="{'readonly': [('track_trip_uid','!=',False)]}"/>
+                            <field name="from_city_lat" invisible="1" force_save="1"/>
+                            <field name="from_city_long" invisible="1" force_save="1"/>
+                            <field name="to_city" widget="geo_locator_widget"
+                                   options="{'latFieldName': 'to_city_lat', 'longFieldName': 'to_city_long'}"
+                                   attrs="{'readonly': [('track_trip_uid','!=',False)]}"/>
+                            <field name="to_city_lat" invisible="1"/>
+                            <field name="to_city_long" invisible="1"/>
+                            <field name="driver_phone" attrs="{'readonly': [('track_trip_uid','!=',False)]}"/>
+                            <field name="track_invoice_no" force_save="1"
+                                   attrs="{'readonly': [('track_trip_uid','!=',False)]}"/>
+                            <field name="track_trip_uid" readonly="1" force_save="1"/>
+                            <field name="total_distance" readonly="1" force_save="1"/>
+                            <field name="distance_traveled" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="track_trip_id" readonly="1" force_save="1"/>
+                            <field name="track_url" readonly="1" force_save="1" widget="url" class="underline-url"/>
+                            <field name="track_trip_status" readonly="1" force_save="1" widget="badge"
+                                   decoration-danger="track_trip_status == 'STOPPED'"
+                                   decoration-success="track_trip_status == 'RUNNING' or track_trip_status == 'COMPLETED' or track_trip_status == 'success'"/>
+                            <label for="consent_status"/>
+                            <div class="inline-group">
+                                <field name="consent_status" readonly="1" force_save="1"
+                                       decoration-info="consent_status == 'PENDING'"
+                                       decoration-success="consent_status == 'ALLOWED'" string="Consent Status"
+                                />
+                                <div style="margin-left:-90%;">
+                                    <button name="check_consent_status"
+                                            type="object"
+                                            icon="fa-refresh"
+                                            class="btn btn-sm btn-secondary"
+                                    />
+                                </div>
+                            </div>
+                            <br/>
+                            <p style="border: 1px solid;margin-left:-116px;width:616px;">
+                                <p style="text-align:left;margin-left:5px;font-size:14px;margin-top: 8px;" class="heading-red">Instructions :
+                                </p>
+                                <p style="text-align:left;margin-left:10px;" class="heading-red">If the driver has not
+                                    received a consent message, following steps should be taken to proceed:
+                                </p>
+                                <p style="text-align:left;margin-left:20px;">
+                                    <li>For Airtel Dial 7428498648 and Press 1 or Send SMS 'Y' to 5114040</li>
+                                    <li>For Vodafone Dial 7428498648 and Press 1 or Send SMS 'Y' to 9167500066</li>
+                                    <li>For Idea Dial 7428498648 and Press 1 or Send SMS 'Y' to 55502</li>
+                                    <li>For Jio Miss call on 9982256700 or Send SMS 'Y' to 51712069</li>
+                                </p>
+                            </p>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+
+
+

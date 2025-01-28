@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_vendor_lead,access.vendor.lead,model_vendor_lead,base.group_user,1,1,1,1
+access_vendor_lead_user_action_history,access.vendor.lead.user.action.history,model_vendor_lead_user_action_history,base.group_user,1,1,1,1
+access_vendor_lead_document_line,access.vendor.lead.document.line,model_vendor_lead_document_line,base.group_user,1,1,1,1
+
+access_res_partner_lead_finance_manager,res.partner.lead.finance.manager,base.model_res_partner,vendor_onboarding.group_vendor_onboarding_finance_approver,1,1,1,0

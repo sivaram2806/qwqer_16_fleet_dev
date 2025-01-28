@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_report_summary_wizard_xl" model="ir.ui.view">
+        <field name="name">Invoice Report</field>
+        <field name="model">invoice.summary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Invoice">
+                <group>
+                    <group>
+                        <field name="from_date" />
+                        <field name="to_date" />
+                        <field name="partner_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_invoice_summary_xl_report" string="Print" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_invoice_summary_wizard_xl" model="ir.actions.act_window">
+        <field name="name">Invoice Summary Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">invoice.summary.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

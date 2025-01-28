@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!--Cron job for sending daily revenue report-->
+    <record id="ir_cron_uh_daily_revenue_report" model="ir.cron">
+        <field name="name">Urban Haul Daily Revenue Report</field>
+        <field name="model_id" ref="fleet_urban_haul.model_batch_trip_uh"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.action_send_revenue_report(False)</field>
+        <field name="interval_number">1</field>
+        <field name="active">0</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+    
+    <!--Cron job for sending monthly revenue report-->
+    <record id="ir_cron_uh_monthly_revenue_report" model="ir.cron">
+        <field name="name">Urban Haul Monthly Revenue Report</field>
+        <field name="model_id" ref="fleet_urban_haul.model_batch_trip_uh"/>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">model.action_send_revenue_report(True)</field>
+        <field name="interval_number">1</field>
+        <field name="active">0</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

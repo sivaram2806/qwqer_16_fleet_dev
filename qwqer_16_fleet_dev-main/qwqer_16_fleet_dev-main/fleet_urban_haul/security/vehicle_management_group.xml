@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+           <!--Group category for fleet FTL management-->
+    <record id="module_category_fleet_ubh" model="ir.module.category">
+        <field name="name">Fleet Urban Haul</field>
+        <field name="parent_id" ref="fleet_extend.module_fleet_management_category"/>
+    </record>
+
+    <!--Groups for urban haul edit trip-->
+    <record id="group_vehicle_management_enable_edit" model="res.groups">
+        <field name="name">Urban Haul Edit Trip</field>
+        <field name="category_id" ref="module_category_fleet_ubh"/>
+    </record>
+
+    <!--Groups for urban haul create/send for approval trip-->
+    <record id="group_vehicle_management_user" model="res.groups">
+        <field name="name">Urban Haul Create/Send for Approval Trip</field>
+        <field name="category_id" ref="module_category_fleet_ubh"/>
+    </record>
+
+    <!--Groups for urban haul trip approver-->
+    <record id="group_vehicle_management_approver" model="res.groups">
+        <field name="name">Urban Haul Trip Approver</field>
+        <field name="category_id" ref="module_category_fleet_ubh"/>
+    </record>
+
+    <record id="group_notify_urban_haul_trip_approver" model="res.groups">
+        <field name="name">Notify UH Trip Approver Group</field>
+        <field name="category_id" ref="fleet_extend.module_fleet_mail_notification_category"/>
+    </record>
+
+    <!--Groups for urban haul create/edit consolidate-->
+    <record id="group_create_edit_consolidate" model="res.groups">
+        <field name="name">Urban Haul Create/Edit Consolidate</field>
+        <field name="category_id" ref="module_category_fleet_ubh"/>
+    </record>
+
+    <!--Groups for urban haul view consolidate-->
+    <record id="group_view_consolidate" model="res.groups">
+        <field name="name">Urban Haul View Consolidate</field>
+        <field name="category_id" ref="module_category_fleet_ubh"/>
+    </record>
+    
+    <!--Groups for send urban haul revenue report-->
+    <record id="group_send_uh_revenue_report" model="res.groups">
+    	<field name="name">Send Urban Haul Revenue Report</field>
+    </record>
+
+    <!--company rule for urban haul trips-->
+    <record id="batch_trip_uh_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Batch Trip UH</field>
+        <field name="model_id" ref="model_batch_trip_uh"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--company rule for urban haul trips-->
+    <record id="batch_trip_uh_line_comp_rule" model="ir.rule">
+        <field name="name">Company RuleBatch Trip UH Line</field>
+        <field name="model_id" ref="model_batch_trip_uh_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--ir_rule for trip summary-->
+    <record id="trip_summary_uh_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Trip Summary</field>
+        <field name="model_id" ref="model_trip_summary_uh"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--ir_rule for trip summary line-->
+    <record id="trip_summary_line_uh_comp_rule" model="ir.rule">
+        <field name="name"> Company Rule Trip Summary Line</field>
+        <field name="model_id" ref="model_trip_summary_line_uh"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+
+</odoo>

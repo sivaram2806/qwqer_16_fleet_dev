@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_finance_legal_statement"
+                  name="Management Reports"
+                  active="1"
+                  sequence="10"
+                  parent="account.menu_finance_reports"/>
+
+        <menuitem id="menu_finance_partner_reports"
+                  name="Partner Reports"
+                  sequence="20"
+                  parent="account.menu_finance_reports"/>
+
+        <menuitem id="menu_finance_audit_reports"
+                  name="Audit Reports"
+                  sequence="30"
+                  parent="account.menu_finance_reports"/>
+
+        <record id="account.account_reports_management_menu" model="ir.ui.menu">
+            <field name="active" eval="0"/>
+          <field name="sequence" eval="40"/>
+        </record>
+
+    </data>
+</odoo>
+

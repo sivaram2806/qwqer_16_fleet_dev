@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="fin_report_form_inherit">
+            <field name="name">fin.report.form</field>
+            <field name="model">account.financial.report</field>
+            <field name="inherit_id" ref="base_accounting_kit.view_account_financial_report_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="after">
+                    <field name="trial_balance"/>
+                    <field name="trial_bal_retained_ear"/>
+                    <field name="hide_head" />
+                    <field name="hide_report_total" />
+                </xpath>
+
+                <xpath expr="//field[@name='account_ids']" position="attributes">
+                	<attribute name="attrs">{'invisible': [('type', 'not in', ['accounts','opening_balance','closing_balance'])]}</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='display_detail']" position="attributes">
+                	<attribute name="attrs">{'invisible': [('type', 'not in', ['accounts','account_type','opening_balance','closing_balance'])]}</attribute>
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</odoo>

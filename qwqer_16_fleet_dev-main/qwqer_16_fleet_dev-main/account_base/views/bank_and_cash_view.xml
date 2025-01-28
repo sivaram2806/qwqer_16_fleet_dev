@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Bank and Cash main menu: accounting -> accounting -->
+        <menuitem
+                id="menu_accounting_bank_and_cash"
+                name="Bank and Cash"
+                parent="account.menu_finance_entries"
+                sequence="15"
+        />
+
+        <!-- Bank Statement: accounting -> accounting -> Bank and Cash  -->
+        <menuitem
+                id="menu_accounting_statement_bank"
+                action="account.action_bank_statement_tree"
+                parent="menu_accounting_bank_and_cash"
+                sequence="10"
+        />
+
+        <!-- Cash Register: accounting -> accounting -> Bank and Cash   -->
+        <menuitem
+                id="menu_accounting_statement_cash"
+                action="account.action_view_bank_statement_tree"
+                parent="menu_accounting_bank_and_cash"
+                sequence="20"
+        />
+
+        <!-- Internal Transfer: accounting -> accounting -> Bank and Cash  -->
+        <menuitem
+                id="menu_accounting_internal_transfer"
+                action="account.action_account_payments_transfer"
+                parent="menu_accounting_bank_and_cash"
+                groups="account.group_account_user"
+                sequence="30"
+        />
+
+    </data>
+</odoo>

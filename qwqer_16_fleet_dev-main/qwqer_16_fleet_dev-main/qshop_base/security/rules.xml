@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="qshop_merchant_payout_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Qwqer Shop Merchant Payout</field>
+        <field name="model_id" ref="model_qshop_merchant_payout"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

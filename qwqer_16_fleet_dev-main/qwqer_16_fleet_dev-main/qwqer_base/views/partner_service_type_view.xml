@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--  service.type model tree view  -->
+    <record id="partner_service_type_tree_view" model="ir.ui.view">
+        <field name="name">partner.service.type.tree.view</field>
+        <field name="model">partner.service.type</field>
+        <field name="arch" type="xml">
+            <tree string="Zone" editable="bottom" sample="1">
+                <field name="name" required="1"/>
+                <field name="code" required="1"/>
+                <field name="company_id" required="1"/>
+                <field name="is_customer"/>
+                <field name="is_vendor"/>
+            </tree>
+        </field>
+    </record>
+    <!--  Action for service.type model  -->
+    <record id="partner_service_type_action" model="ir.actions.act_window">
+        <field name="name">Partner Service Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.service.type</field>
+        <field name="view_id" ref="partner_service_type_tree_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a Customer Service Type.
+            </p>
+        </field>
+    </record>
+    <!--  Menu item added for service.type  -->
+    <menuitem id="menu_customer_service_type"
+              action="partner_service_type_action"
+              parent="contacts.menu_localisation"
+              name="Service Type"
+              sequence="36"/>
+</odoo>

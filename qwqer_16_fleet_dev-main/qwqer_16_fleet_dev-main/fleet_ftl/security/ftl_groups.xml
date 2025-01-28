@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+           <!--Group category for fleet FTL management-->
+    <record id="module_category_fleet_ftl" model="ir.module.category">
+        <field name="name">Fleet FTL</field>
+        <field name="parent_id" ref="fleet_extend.module_fleet_management_category"/>
+    </record>
+        <!-- Added FTL Trip Finance Approver group for ftl trips-->
+        <record id="ftl_finance_manger" model="res.groups">
+            <field name="name">FTL Trip Finance Approver</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- Added FTL Edit Trip group for ftl trips-->
+        <record id="group_ftl_enable_edit" model="res.groups">
+            <field name="name">FTL Edit Trip</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- Added FTL Create/Send for Approval Trip group for ftl trips-->
+        <record id="group_ftl_user" model="res.groups">
+            <field name="name">FTL Create/Send for Approval Trip</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- Added FTL Trip Approver group for ftl trips-->
+        <record id="group_ftl_approver" model="res.groups">
+            <field name="name">FTL Trip Approver</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- Added FTL Create/Edit Consolidate group for ftl consolidate/trip summary-->
+        <record id="group_ftl_create_edit_consolidate" model="res.groups">
+            <field name="name">FTL Create/Edit Consolidate</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- Added FTL View Consolidate group for ftl consolidate/trip summary view only-->
+        <record id="group_ftl_view_consolidate" model="res.groups">
+            <field name="name">FTL View Consolidate</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- Added FTL Complete Trip group for ftl trips-->
+        <record id="group_ftl_trip_complete" model="res.groups">
+            <field name="name">FTL Complete Trip</field>
+            <field name="category_id" ref="fleet_ftl.module_category_fleet_ftl"/>
+        </record>
+        <!-- FTL group for Create/Send for Approval ftl trips-->
+		<record id="group_ftl_work_order_send_for_approval" model="res.groups">
+			<field name="name">FTL Work Order Create/Send for Approval</field>
+			<field name="category_id" ref="fleet_ftl.module_category_fleet_ftl" />
+		</record>
+
+        <record id="group_notify_ftl_trip_finance_approve" model="res.groups">
+            <field name="name">Notify FTL Trip Finance Approve</field>
+            <field name="category_id" ref="fleet_extend.module_fleet_mail_notification_category"/>
+        </record>
+
+        <record id="group_notify_ftl_trip_ops_approve" model="res.groups">
+            <field name="name">Notify FTL Trip Ops Approve</field>
+            <field name="category_id" ref="fleet_extend.module_fleet_mail_notification_category"/>
+        </record>
+
+        <record id="group_notify_ftl_trip_complete" model="res.groups">
+            <field name="name">Notify FTL Trip Complete</field>
+            <field name="category_id" ref="fleet_extend.module_fleet_mail_notification_category"/>
+        </record>
+
+		<!--Groups for send ftl revenue report-->
+	    <record id="group_send_ftl_revenue_report" model="res.groups">
+	    	<field name="name">Send FTL Revenue Report</field>
+	    </record>
+
+        <!-- FTL group for Work Order MU Approve-->
+		<record id="group_ftl_work_order_mu_approve" model="res.groups">
+			<field name="name">FTL Work Order MU Approve</field>
+			<field name="category_id" ref="fleet_ftl.module_category_fleet_ftl" />
+		</record>
+        <!-- FTL group for Work Order Finance Approve-->
+		<record id="group_ftl_work_order_finance_approve" model="res.groups">
+			<field name="name">FTL Work Order Finance Approve</field>
+			<field name="category_id" ref="fleet_ftl.module_category_fleet_ftl" />
+		</record>
+
+        <!--  FTL contract access group  -->
+        <record id="fleet_group_vehicle_contract_ftl_menu_access" model="res.groups">
+            <field name="name">Contracts: FTL Contract Access</field>
+            <field name="implied_ids"
+                   eval="[ (4, ref('fleet_extend.fleet_group_vehicle_contract_user'))]"/>
+            <field name="category_id" ref="fleet.module_fleet_category"/>
+        </record>
+
+        <record id="group_notify_ftl_wo_mu_approve" model="res.groups">
+			<field name="name">Notify FTL WO MU Approve</field>
+			<field name="category_id" ref="fleet_extend.module_fleet_mail_notification_category" />
+		</record>
+
+        <record id="group_notify_ftl_wo_finance_approve" model="res.groups">
+			<field name="name">Notify FTL WO Finance Approve</field>
+			<field name="category_id" ref="fleet_extend.module_fleet_mail_notification_category" />
+		</record>
+    </data>
+</odoo>

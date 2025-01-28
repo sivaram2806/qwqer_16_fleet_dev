@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="fin_report_wiz_form_inherit">
+            <field name="name">fin.report.wiz.form</field>
+            <field name="model">accounting.report</field>
+            <field name="inherit_id" ref="accounting_pdf_reports.accounting_report_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_to']" position="after">
+                    <field name="trail_bal" attrs="{'invisible':[('is_cash_flow','=',True)]}" />
+                </xpath>
+                <xpath expr="//field[@name='date_to']" position="after">
+                    <field name="include_opening" attrs="{'invisible':[('is_cash_flow','=',True)]}"/>
+                    <field name="show_zero_bal" attrs="{'invisible':[('is_cash_flow','=',True)]}" />
+                    <field name="display_analytic_acc" attrs="{'invisible': ['|','|',('trail_bal', '=', True),('enable_filter', '=', True),('is_cash_flow','=',True)]}"/>
+                    <field name="group_by_condition" attrs="{'invisible': [('display_analytic_acc', '=', False)]}"/>
+                    <field name="state_ids" widget="many2many_tags" attrs="{'invisible': [('display_analytic_acc', '=', False)]}"/>
+                    <field name="region_ids" widget="many2many_tags" attrs="{'invisible': ['|',('display_analytic_acc', '=', False),('group_by_condition', '=', 'state')]}" />
+                    <field name="report_format" invisible="1"/>
+                	<field name="is_cash_flow" invisible="1"/>
+                    
+                </xpath>
+                <xpath expr="//field[@name='enable_filter']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|',('trail_bal', '=', True),('is_cash_flow','=',True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='debit_credit']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', '|', ('display_analytic_acc', '=', True), ('trail_bal', '=', True), ('enable_filter', '=', True),('is_cash_flow','=',True)]}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='comparison']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('enable_filter','=',False), ('trail_bal', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_from']" position="attributes">
+                    <attribute name="attrs">{'required': [('trail_bal', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_to']" position="attributes">
+                    <attribute name="attrs">{'required': [('trail_bal', '=', True)]}</attribute> 
+                </xpath>
+                
+                  <xpath expr="//button[@name='check_report']" position="attributes">
+                 	<attribute name="string">PDF</attribute>
+                 	<attribute name="context">{'report_type':'pdf'}</attribute>
+                 	<attribute name="groups">account_financial_pl_bs.group_access_view_pdf_reports</attribute>
+                 </xpath>
+                 <xpath expr="//button[@name='check_report']" position="after">
+                 	<button name="check_report" string="XLS" type="object"
+                            class="oe_highlight" context="{'report_type':'xls'}"/>
+                       <button name="check_report" string="HTML" type="object"
+                       class="oe_highlight" context="{'report_type':'html'}" groups="account_financial_pl_bs.group_access_view_html_reports"/>
+                       
+                 </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="qshop_fin_report_wiz_form_inherit">
+            <field name="name">Qshop.fin.report.wiz.form</field>
+            <field name="model">accounting.report</field>
+            <field name="inherit_id" ref="accounting_pdf_reports.accounting_report_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='account_report_id']" position="after">
+                	<field name="access_view" invisible='1'/>
+                    <field name="service_type_id" attrs="{'invisible': [('access_view', '=', False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+       
+       <record id="accounting_pdf_reports.action_account_report_pl" model="ir.actions.act_window">
+       		<field name="context" eval="{'default_account_report_id':ref('base_accounting_kit.account_financial_report_profitandloss0'),'is_pl_report':True}"/>
+       </record>
+       
+            <menuitem
+        parent="accounting_pdf_reports.menu_finance_legal_statement"
+        action="account_financial_report.action_trial_balance_wizard"
+        active="1"
+        id="menu_trial_balance_wizard"
+        groups="account.group_account_manager,account.group_account_user"
+        sequence="20"
+    />
+
+    </data>
+</odoo>

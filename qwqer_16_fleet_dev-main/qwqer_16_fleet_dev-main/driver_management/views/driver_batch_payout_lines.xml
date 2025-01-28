@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="driver_batch_payout_lines_form_view" model="ir.ui.view">
+        <field name="name">driver.batch.payout.lines.form</field>
+        <field name="model">driver.batch.payout.lines</field>
+        <field name="arch" type="xml">
+            <form string="Driver Batch Payout Lines" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="transfer_id" readonly="1"/>
+                            <field name="from_date" invisible="1"/>
+                            <field name="to_date" invisible="1"/>
+                            <field name="driver_uid" readonly="1"/>
+                            <field name="employee_id" readonly="1"/>
+                            <field name="daily_payout_amount" readonly="1"/>
+                            <field name="incentive_amount" readonly="1"/>
+                            <field name="deduction_amount" readonly="1"/>
+                            <field name="tds_amount" readonly="1"/>
+                            <field name="total_payout" readonly="1"/>
+                            <field name="avg_order_cost" readonly="1"/>
+                            <field name="payment_journal_id" readonly="1" force_save="1"/>
+                            <field name="payable_journal_id" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="remarks" readonly="1"/>
+                            <field name="payment_vendor_acc" readonly="1"/>
+                            <field name="driver_partner_id" readonly="1"/>
+                            <field name="pan_no" readonly="1"/>
+                            <field name="tds_tax_id" readonly="1"/>
+                            <field name="transaction_date" readonly="1" force_save="1"/>
+                            <field name="processed_date" readonly="1" force_save="1"/>
+                            <field name="payment_state" readonly="1" force_save="1"/>
+                            <field name="cashfree_ref" readonly="1"/>
+                            <field name="utr_ref" readonly="1" force_save="1"
+                                   attrs="{'invisible':[('utr_ref','=',False)]}"/>
+                            <field name="status_description" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="daily_payout_ids" nolabel="1" readonly="1" force_save="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_batch_payout_lines_action" model="ir.actions.act_window">
+        <field name="name">Weekly/Monthly Driver Payouts LInes</field>
+        <field name="res_model">driver.batch.payout.lines</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

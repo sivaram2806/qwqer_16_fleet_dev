@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    Sequence for bulk import Leads-->
+    <record id="sequence_virtual_account_statment" model="ir.sequence">
+        <field name="name">Virtual Account Sequence</field>
+        <field name="code">virtual.acc.statement.seq</field>
+        <field name="prefix">QWYTECT</field>
+        <field name="padding">7</field>
+        <field name="number_increment">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+<!--    Sequence for Customer Ref Key-->
+    <record id="sequence_customer_ref_key" model="ir.sequence">
+        <field name="name">Customer Ref Key Sequence</field>
+        <field name="code">customer.ref.key.seq</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>
+

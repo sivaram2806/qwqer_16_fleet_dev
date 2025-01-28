@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  sales.zone model tree view  -->
+    <record id="sales_zone_tree_view" model="ir.ui.view">
+        <field name="name">sales.zone.tree</field>
+        <field name="model">sales.zone</field>
+        <field name="arch" type="xml">
+             <tree string="Zone" editable="bottom" sample="1">
+                <field name="name"/>
+                <field name="country_id" required="1"/>
+                <field name="state_id" required="1"/>
+                <field name="company_id" required="1"/>
+            </tree>
+        </field>
+    </record>
+    <!--  Action for sales.zone model  -->
+    <record id="sales_zone_action" model="ir.actions.act_window">
+        <field name="name">Sales Zone</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sales.zone</field>
+        <field name="view_id" ref="sales_zone_tree_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new zone.
+            </p>
+        </field>
+    </record>
+    <!--  Adding new menu sales.Zone under Accounting > Configuration > Sales > Sales Zone  -->
+    <menuitem id="menu_sale_config_sales_zone"
+              name="Sales Zone"
+              parent="menu_account_config_sales_config"
+              action="sales_zone_action"
+              sequence="23"/>
+</odoo>

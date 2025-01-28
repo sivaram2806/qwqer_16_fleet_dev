@@ -1,0 +1,7 @@
+
+.o_form_view .o_form_uri > span:first-child:hover, .o_form_view .o_form_uri > span:first-child:focus, .o_form_view .o_form_uri > span.focus:first-child {
+  color: #00A09D;
+}
+.o_form_view .o_form_uri > span:first-child {
+  color: #00A09D;
+}

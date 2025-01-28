@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+            <field name="create_date" position="attributes">
+                <attribute name="widget">datetime</attribute>
+            </field>
+            <field name="activity_ids" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="company_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="invoice_status" position="after">
+                <field name="company_id"/>
+            </field>
+            <field name="invoice_status" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+
+            <field name="commitment_date" position="replace">
+                <field name="commitment_date" invisible="1"/>
+            </field>
+            <field name="name" position="replace">
+                <field name="name" invisible="1"/>
+            </field>
+            <field name="expected_date" position="replace">
+                <field name="expected_date" invisible="1"/>
+            </field>
+            <field name="user_id" position="replace">
+                <field name="user_id" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='partner_id']" position="after">
+
+                <field name="customer_type"/>
+                <field name="order_id"/>
+                <field name="region_id"/>
+                <field name="payment_mode_id"/>
+                <field name="driver_name"/>
+                <field name="driver_phone"/>
+                <field name="driver_uid"/>
+                <field name="order_sales_person"/>
+                <field name="industry_id" string="Customer Industry"/>
+                <field name="customer_phone"/>
+                <field name="from_address" optional="show"/>
+                <field name="to_address" optional="show"/>
+                <field name="total_product_qty"/>
+                <field name="is_new_customer" string="Is New Customer Order" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">date_order desc</attribute>
+            </xpath>
+            <field name="activity_ids" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="company_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="invoice_status" position="after">
+                <field name="company_id"/>
+            </field>
+            <field name="date_order" position="attributes">
+                <attribute name="widget">datetime</attribute>
+            </field>
+            <field name="commitment_date" position="replace">
+                <field name="commitment_date" invisible="1"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">date_order desc</attribute>
+            </xpath>
+            <field name="name" position="replace">
+                <field name="name" invisible="1"/>
+            </field>
+            <field name="expected_date" position="replace">
+                <field name="expected_date" invisible="1"/>
+            </field>
+            <field name="user_id" position="replace">
+                <field name="user_id" invisible="1"/>
+            </field>
+            <field name="amount_total" position="before">
+                <field name="total_product_qty"/>
+            </field>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_type" optional="hide"/>
+                <field name="order_id"/>
+                <field name="region_id"/>
+                <field name="payment_mode_id"/>
+                <field name="customer_phone"/>
+                <field name="driver_name"/>
+                <field name="driver_phone"/>
+                <field name="driver_uid"/>
+                <field name="order_sales_person"/>
+                <field name="from_address" optional="show"/>
+                <field name="to_address" optional="show"/>
+                <field name="industry_id" string="Customer Industry"/>
+                <field name="is_new_customer" string="Is New Customer Order"/>
+            </xpath>
+        </field>
+    </record>
+    <!--     <record id="view_order_tree_inherit_quotation" model="ir.ui.view"> -->
+    <!--         <field name="name">sale.order.tree.inherit</field> -->
+    <!--         <field name="model">sale.order</field> -->
+    <!--         <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/> -->
+    <!--         <field name="arch" type="xml"> -->
+    <!--        		<xpath expr="//tree" position="attributes"> -->
+    <!--                	<attribute name="default_order">create_date desc</attribute> -->
+    <!--       		</xpath> -->
+    <!--       		 <xpath expr="//field[@name='user_id']" position="after"> -->
+    <!--                 <field name="driver_name"/> -->
+    <!--                 <field name="driver_phone"/> -->
+    <!--                 <field name="order_sales_person"/> -->
+    <!--                 <field name="industry_id"/> -->
+    <!--             </xpath> -->
+
+    <!--         </field> -->
+    <!--     </record> -->
+
+    <record id="sale_order_groupby_inherit" model="ir.ui.view">
+        <field name="name">sale.order.groupby.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//filter[@name='salesperson']" position="replace">
+            	<filter name="order_sales_person" string="Order Salesperson" domain="[]" context="{'group_by' : 'order_sales_person'}" />
+
+                <filter name="customer_industry" string="Customer Industry" domain="[]" context="{'group_by': 'industry_id'}"/>
+<!--             	<filter name="promo_code" string="Promo Code" domain="[]" context="{'group_by' : 'promo_code'}" /> -->
+			</xpath>
+
+                            <search string="Search Sales Order">
+                            <field name="order_sales_person" />
+                    <group expand="0" string="Group By">
+                        <filter string="Order Source" name="display_order_source" domain="[]" context="{'group_by': 'display_order_source'}"/>
+                        <filter string="Driver ID" name="driver_uid" domain="[]" context="{'group_by': 'driver_uid'}"/>
+                        <filter name="driver_name" string="Driver Name" domain="[]" context="{'group_by': 'driver_name'}"/>
+                   		<filter name="region_id" string="Region" domain="[]" context="{'group_by': 'region_id'}"/>
+                   		<filter string="Pick-up Location" name="pickup_ocation" context="{'group_by': 'sender_locality'}" />
+                   		<filter string="Pincode" name="pincode" context="{'group_by': 'from_postal_code'}" />
+                    </group>
+
+            </search>
+            <xpath expr="//search" position="inside">
+                <field name="service_type_id"/>
+                <separator/>
+                <filter name="group_service_type" string="Service Type" context="{'group_by':'service_type_id'}"/>
+            </xpath>
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="No Merchant Journal" name="no_merchant_journal"
+                        domain="[('is_merchant_journal', '=', False),('merchant_order_amount','&gt;', 0),('order_status_id.code','=','4')]"/>
+                <filter string="Merchant Journal" name="is_merchant_journal"
+                        domain="[('is_merchant_journal', '=', True),('merchant_order_amount','&gt;', 0)]"/>
+                <separator/>
+                <filter string="No Credit Journal" name="no_is_credit_journal_created"
+                        domain="[('is_credit_journal_created', '=', False),('payment_mode_id.code','=', '5'),('order_status_id.code','!=','5'),('state','!=','cancel')]"/>
+                <filter string="Credit Journal" name="is_credit_journal"
+                        domain="[('is_credit_journal_created', '=', True),('payment_mode_id.code','=', '5')]"/>
+                <separator/>
+                <filter string="Current Year" name="current_year"
+                        domain="['|', ('create_date', '=', False), '&amp;',('create_date','&lt;=', time.strftime('%%Y-12-31')),('create_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <filter string="Last 3 Month" name="last3_month"
+                        domain="[('create_date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                <filter string="Last 6 Month" name="last6_month"
+                        domain="[('create_date','&gt;=',(datetime.datetime.now() - relativedelta(months=5)).strftime('%Y-%m-01'))]"/>
+            </xpath>
+            <field name="name" position="after">
+                <field name="order_id"/>
+                <field name="driver_uid"/>
+                <field name="driver_name"/>
+                <field name="driver_phone"/>
+                <field name="payment_mode_id"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="sale_order_sale_extended_view_form" model="ir.ui.view">
+        <field name="name">sale_order_sale_extended_view_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+                <field name="industry_id" string="Customer Industry"
+                       options='{"no_create_edit":True,"no_create": True}'/>
+            </field>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button name="action_cancel_sale_order" states="draft,sent,sale" type="object" string="Cancel"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_edit': True, 'no_create': True}</attribute>
+                <attribute name="string">Merchant</attribute>
+                <attribute name="domain">[('customer_type','=','b2b'),('customer_rank','>', 0)]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='l10n_in_gst_treatment']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="readonly">0</attribute>
+                <attribute name="force_save">1</attribute>
+                <attribute name="attrs">{'readonly': [('is_manual_sale_order', '=', True)]}</attribute>
+            </xpath>
+
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="service_type_id" string="Service Type" options="{'no_edit': True, 'no_create': True}"
+                       attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+            </xpath>
+            <xpath expr="//header/button[@id='action_confirm']"
+                   position="after">
+                <button name="create_credit_order_journal" type="object" string="Create Sale order" invisible="1"/>
+
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='other_information']" position="after">
+                <page name="service_details" string="Service Details" autofocus="autofocus">
+                    <group name="order_details" string="Order Details" col="2">
+                        <group>
+                            <field name="order_id" readonly="1"/>
+                            <field name="region_id" readonly="0"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="order_status_id" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="order_status_id" domain="[('code','not in',['1','2','3'])]"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="Order Status *"/>
+                            <field name="order_source_sel" force_save="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="Order Source *"/>
+                            <field name="order_source" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '=', True)]}" force_save="1"/>
+                            <field name="display_order_source" invisible="1"/>
+                            <field name="order_date" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="order_date"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="Service Order Date *"/>
+                            <field name="order_qty" readonly="0"
+                                   attrs="{'invisible': [('is_manual_sale_order', '=', False)]}" force_save="1"/>
+                            <field name="payment_mode_id" readonly="1"/>
+                            <field readonly="1" name="customer_segment_id"/>
+                            <field name="pricing_plan"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="estimated_distance"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="estimated_time" widget="float_time"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="pickup_distance"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="deliver_distance"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                        </group>
+                        <group>
+                            <field name="weight" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="weight"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="Weight *"/>
+                            <field name="item_category_id" string="Item Type"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                            <field name="item_type" attrs="{'invisible': [('is_manual_sale_order', '=', True)]}"/>
+                            <field name="description"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="special_instruction" readonly="1"/>
+                            <field name="cancellation_comments" readonly="1"/>
+                            <field name="payment_status" force_save="1" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="payment_status" force_save="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="Payment Status *"/>
+                            <field name="stop_count" readonly="1"/>
+                            <field name="stop_details" readonly="1"/>
+                            <field name="scheduled" readonly="1"/>
+                            <field name="is_manual_sale_order" invisible="1"/>
+                        </group>
+                    </group>
+                    <group name="driver_details" string="Driver Details" col="2">
+                        <group>
+                            <field name="driver_id"
+                                   domain="[('driver_uid','!=', False),('employee_status','=','active')]" options="{'no_create': True, 'no_edit': True}"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])],'invisible': [('is_manual_sale_order', '=', False)],'required': [('is_manual_sale_order', '=', True)]}"
+                                   string="Driver ID *"/>
+                            <field name="driver_uid" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '=', True)]}"/>
+                            <field name="driver_name" readonly="1" force_save="1"/>
+                            <field name="driver_phone" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="driver_rating" readonly="1"/>
+                            <field name="driver_comment" readonly="1"/>
+                        </group>
+                    </group>
+                    <group col="2">
+                        <group name="delivery_amount_details" string="Delivery Amount Details">
+                            <group>
+                                <field name="order_amount" readonly="1"
+                                       attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                                <field name="order_amount"
+                                       attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                       string="Order Amount *"/>
+                                <field name="discount_amount"
+                                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]} "/>
+                                <field name="total_amount" readonly="1" force_save="1"/>
+                            </group>
+                                <field name="charges" widget="json_charges" nolabel="1"
+                                   options="{'mode': 'view','always_reload': true,'editable': false}"
+                            />
+
+                        </group>
+                        <group name="merchant_amount_details" string="Merchant Amount Details">
+                            <group>
+                                <field name="merchant_payment_mode_id"
+                                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"
+                                />
+                                <field name="merchant_order_id"
+                                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                                <field name="is_merchant_journal" invisible="1"/>
+                                <field name="merchant_order_amount" readonly="0" force_save="1"
+                                       attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            </group>
+                        </group>
+                    </group>
+                    <group name="address_details" col="2">
+                        <group string="From Address Details">
+                            <field name="from_name" force_save="1" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="from_name" force_save="1"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="From Name *"/>
+                            <field name="from_phone_no" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="from_phone_no"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="From Phone No *"/>
+                            <field name="from_address"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="sender_locality"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="from_postal_code"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                        </group>
+                        <group string="To Address Details">
+                            <field name="to_name" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field name="to_name"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="To Name *"/>
+                            <field name="to_phone_no" force_save="1" readonly="1"
+                                   attrs="{'invisible': [('is_manual_sale_order', '!=', False)]}"/>
+                            <field force_save="1" name="to_phone_no"
+                                   attrs="{'readonly': [('state', 'not in', ['draft'])],'required': [('is_manual_sale_order', '=', True)],'invisible': [('is_manual_sale_order', '=', False)]}"
+                                   string="To Phone No *"/>
+                            <field name="to_address"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                            <field name="receiver_locality"
+                                   attrs="{'readonly': ['|',('state', 'not in', ['draft']),('is_manual_sale_order', '=', False)]}"/>
+                            <field name="to_postal_code"
+                                   attrs="{'readonly': ['|',('is_manual_sale_order', '=', False),('state', 'not in', ['draft'])]}"/>
+                        </group>
+                    </group>
+                    <group name="sla_details" string="SLA Details" col="2">
+                        <group>
+                            <field name="time_to_accept" widget="float_time" readonly="1"/>
+                            <field name="time_to_pickup" widget="float_time" readonly="1"/>
+                            <field name="time_to_deliver" widget="float_time" readonly="1"/>
+                            <field name="order_accepted_date" readonly="1"/>
+                            <field name="order_picked_up_date" readonly="1"/>
+                            <field name="order_delivered_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="overall_order_time" widget="float_time" readonly="1"/>
+                            <field name="accept_sla" readonly="1"/>
+                            <field name="pickup_sla" readonly="1"/>
+                            <field name="delivery_sla" readonly="1"/>
+                        </group>
+                    </group>
+                    <group name="feedbacks" string="Feedbacks">
+                        <group>
+                            <field name="customer_rating" readonly="1"/>
+                            <field name="customer_feedback" readonly="1"/>
+                            <field name="customer_comment" readonly="1"/>
+                            <field name="customer_phone" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="merchant_journal" string="Merchant Journal">
+                    <field name="merchant_journal_ids" readonly="1" nolabel="1">
+                        <tree decoration-muted="parent_state == 'cancel'">
+                            <field name="account_id"/>
+                            <field name="journal_id"/>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                            <field name="debit"/>
+                            <field name="credit"/>
+                            <field name="move_id" invisible="1"/>
+                            <field name="parent_state" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/field[@name='user_id']"
+                   position="after">
+                <!--                <field name="total_customer_under_salesperson" readonly="1" force_save="1"/>-->
+                <field name="product_line_id" readonly="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/field[@name='user_id']"
+                   position="before">
+                <field name="credit_journal_entry_id" readonly="1"/>
+                <field name="order_sales_person" domain="[('driver_uid','=', False)]" options="{'no_create': True, 'no_edit': True}"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/field[@name='user_id']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/field[@name='tag_ids']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/field[@name='team_id']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/label[@for='require_signature']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/div"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='other_information']/group/group[@name='sales_person']/field[@name='company_id']"
+                   position="after">
+                <field name="require_signature" class="oe_inline"/>
+                <field name="require_payment" class="oe_inline"/>
+            </xpath>
+            <xpath expr="//group[@name='note_group']/group[@name='sale_total']/field[@name='tax_totals']"
+                   position="before">
+                <field name="total_product_qty" readonly="1"/>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_view_form_sale_extend" model="ir.ui.view">
+        <field name="name">sale.order.view.form.extend</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='optional_products']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    context added for the manual sale order creation-->
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="context">{'search_default_my_quotation': 0,'search_default_last3_month':
+            1,'default_is_manual_sale_order':1}
+        </field>
+    </record>
+
+    <!--server action for cancel the sale order-->
+    <record id="model_sale_order_action_cancel_new" model="ir.actions.server">
+        <field name="name">Cancel Sales Order</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_cancel_sale_order()</field>
+    </record>
+
+    <!--server action for confirm the sale order-->
+    <record id="model_sale_order_action_confirm" model="ir.actions.server">
+        <field name="name">Confirm Quotations</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_confirm_quotation()</field>
+    </record>
+
+
+    <!--server action for updating the analytic account of  sale order-->
+    <record id="model_sale_order_analytic_account" model="ir.actions.server">
+        <field name="name">Update Analytic Account</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_update_analytic_account()</field>
+    </record>
+
+    <!--server action for updating the customer industry-->
+    <record id="action_update_customer_industry" model="ir.actions.server">
+        <field name="name">Update Customer Industry</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = records.update_customer_industry()</field>
+    </record>
+
+
+    <record id="action_update_state" model="ir.actions.server">
+        <field name="name">Update State</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = records.update_state()</field>
+    </record>
+    <record id="sale_order_stock_sale_extended_view_form" model="ir.ui.view">
+        <field name="name">sale_order_stock_sale_extended_view_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='commitment_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--HDFC wo xlsx import tree view-->
+    <record id="hdfc_wo_xlsx_import_view_form" model="ir.ui.view">
+        <field name="name">hdfc.wo.xlsx.import.view.form</field>
+        <field name="model">hdfc.wo_adv.xlsx.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import HDFC Payment XLSX">
+                <group>
+                    <field name="file_name" invisible="1"/>
+                    <field name="xlxs_file" filename="file_name"/>
+                </group>
+                <footer>
+                    <button type="object" name="import_file" class="oe_highlight" string="Import"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--view action for HDFC wo xlsx import bank data-->
+    <record id="hdfc_wo_xlsx_import_action" model="ir.actions.act_window">
+        <field name="name">HDFC Excel Import</field>
+        <field name="res_model">hdfc.wo_adv.xlsx.import.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="payment_hdfc.hdfc_wo_xlsx_import_view_form"/>
+    </record>
+
+    <!--  menu item of FTL adv payment import configuration Fleet > FTL > HDFC > HDFC Payment	-->
+    <menuitem id="payment_hdfc_config"
+              name="HDFC Payment"
+              parent="fleet_ftl.fleet_vehicle_ftl_menu"
+              sequence="40"
+              groups="fleet_ftl.group_ftl_work_order_finance_approve,fleet_ftl.ftl_finance_manger,account.group_account_invoice"/>
+
+    <!--  menu item of FTL adv payment import configuration Fleet > FTL > HDFC > Payment Excel Import	-->
+    <menuitem id="payment_hdfc_payment_excel_import"
+              name="Payment Excel Import"
+              parent="payment_hdfc.payment_hdfc_config"
+              action="payment_hdfc.hdfc_wo_xlsx_import_action"
+              sequence="1"
+              groups="fleet_ftl.group_ftl_work_order_finance_approve,fleet_ftl.ftl_finance_manger,account.group_account_invoice"/>
+</odoo>

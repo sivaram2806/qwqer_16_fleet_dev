@@ -1,0 +1,369 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Send for Approval button form view -->
+    <record id="customer_onboard_send_for_approval_form_view" model="ir.ui.view">
+        <field name="name">customer.onboard.send.for.approval.form.view</field>
+        <field name="model">customer.onboard</field>
+        <field name="arch" type="xml">
+            <form string="Send for Approval">
+                <sheet>
+                    <!--draft approval stage form view-->
+                    <field name="state" invisible="1"/>
+                    <group name="main_group" attrs="{'invisible': [('state', '!=', 'draft')]}">
+                        <group name="email_and_other_details_info_group">
+                            <field name="customer_email" required="1"/>
+                            <field name="pick_up_area"  attrs="{'invisible':[('is_fleet_service_customer','=',True)],'required':[('is_fleet_service_customer','=',False)]}"/>
+                            <field name="distance_limitation"
+                                   attrs="{'invisible':[('is_fleet_service_customer','=',True)],'required':[('is_fleet_service_customer','=',False)]}"/>
+                            <field name="delivery_type_id"  attrs="{'invisible':[('is_fleet_service_customer','=',True)],'required':[('is_fleet_service_customer','=',False)]}"/>
+
+                        </group>
+                        <group name="address_group">
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" required="1"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" class="o_address_state" placeholder="State"
+                                       options="{&quot;no_open&quot;: True}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" required="1"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country"
+                                       options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('state', '!=', 'draft')]}">
+                        <group attrs="{'invisible':[('is_fleet_service_customer','=',True)]}">
+                            <field name="product_storage"/>
+                            <field name="product_sorting"/>
+                            <field name="api_selection"/>
+                        </group>
+                        <group attrs="{'invisible':[('is_fleet_service_customer','=',True)]}">
+                            <field name="payment_mode_ids" widget="many2many_checkboxes"/>
+                            <field name="merchant_amount_collection" widget="radio"
+                                   options="{'horizontal': true}" readonly="0" force_save="1"
+                                   string="Merchant Amount Collection"
+                                   />
+
+                            <field name="gstin_number" string="GSTIN"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}" force_save="1"/>
+                            <field name="invoice_frequency_id" readonly="0" force_save="1"
+                                   string="Invoice Frequency"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+
+                            <label for="amount_collection_sign" string="Amount Collection Limit"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                            <div class="o_row" style="width:90% !important;"
+                                 attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}">
+                                <div>
+                                    <field name="amount_collection_sign" readonly="1"
+                                           attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                </div>
+                                <div style="width:80% !important;">
+                                    <field name="amount_collection_limit" string="Amount Collection Limit"
+                                           placeholder="Limit set till 7000.."
+                                           attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                </div>
+                            </div>
+
+                            <field name="settlement_time_id" string="Settlement Time"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                            <label for="collection_charges" string="Collection Charges"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                            <div class="o_row" style="width:90% !important;"
+                                 attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}">
+                                <div>
+                                    <field name="collection_charges" string="Collection Charges"
+                                           attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                </div>
+                                <div style="width:60% !important;">
+                                    <field name="collection_charges_sign" readonly="1"
+                                           attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+
+                    <!--mu approval stage form view-->
+                    <group name='mu_approval'
+                           attrs="{'invisible': ['|',('state', '!=', 'mu_approvals'),('is_fleet_service_customer','=',True)]}">
+                        <group>
+                            <field name="mu_pricing_plan_status"/>
+                            <field name="mu_agreement_status"/>
+                        </group>
+                        <group>
+                            <field name="mu_payment_option_status"/>
+                            <field name="customer_type" readonly="1"/>
+                        </group>
+                    </group>
+                    <!--finance approval stage form view-->
+                    <group name='fianance_approval' attrs="{'invisible': [('state', '!=', 'finance_approvals')]}">
+                        <group>
+                            <field name="customer_name"/>
+                            <field name="customer_email"/>
+                            <field name="gstin_number"/>
+                            <field name="tax_id"/>
+                            <field name="b2b_invoice_tax_ids" widget="many2many_tags"
+                                   attrs="{'invisible': ['|',('is_delivery_service_customer','!=',True),('customer_type', '=', 'b2c')]}" domain="[('price_include','=', False)]"/>
+                            <field name="b2b_sale_order_tax_ids" widget="many2many_tags"
+                                   attrs="{'invisible': ['|',('is_delivery_service_customer','!=',True),('customer_type', '=', 'b2c')]}" domain="[('price_include','=', True)]"/>
+                            <field name="qshop_invoice_tax_ids" widget="many2many_tags" readonly="0" force_save="1"
+                                   attrs="{'invisible': ['|',('is_qshop_service_customer', '!=', True),('customer_type', '=', 'b2c')]}" domain="[('price_include','=', False)]" />
+                            <field name="qshop_sale_order_tax_ids" widget="many2many_tags" readonly="0" force_save="1"
+                                   attrs="{'invisible': ['|',('is_qshop_service_customer', '!=', True),('customer_type', '=', 'b2c')]}" domain="[('price_include','=', True)]"/>
+                            <field name="vehicle_invoice_tax_ids" widget="many2many_tags"  domain="[('price_include','=', False)]"
+                                   attrs="{'invisible': [('is_fleet_service_customer','=',False)]}"/>
+                            <field name="fleet_hsn_id"
+                                   attrs="{'invisible': [('is_fleet_service_customer','=',False)]}"/>
+                        </group>
+                        <group>
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" required="1"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" class="o_address_state" placeholder="State"
+                                       options="{&quot;no_open&quot;: True}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country"
+                                       options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                            </div>
+                            <field name="item_category_id"/>
+                        </group>
+
+                    </group>
+                    <group name="pricing_plan_info_group"
+                           attrs="{'invisible': ['|',('state', 'not in', ['draft','finance_approvals']),('is_fleet_service_customer','=',True)]}">
+                        <group>
+                            <field name="pricing_model" widget="radio" options="{'horizontal': true}"
+                                   force_save="1"/>
+                        </group>
+                        <div style="width:100%">
+                            <field name="km_pricing_plan_ids" string="Select Plan"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': [('pricing_model','not in',('KM',True))]}">
+                                <tree string="KM Pricing Plan" editable="bottom" class="select_plan_kilometer_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','KM')]}">
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="100px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="100px"/>
+                                    <field name="select_plan_type" string="Select Plan" force_save="1"
+                                           invisible="1"/>
+                                    <field name="min_distance" string="Minimum Distance(Km)" required="1"
+                                           width="100px"/>
+                                    <field name="min_cost" string="Minimum Cost(Rs)" required="1" width="100px"/>
+                                    <field name="per_km_charge" string="Per Kilometre Charge(Rs)" required="1"
+                                           width="100px"/>
+                                </tree>
+                            </field>
+                            <field name="slab_pricing_plan_ids" string="Select Plan"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': [('pricing_model','not in',('slab',True))]}">
+                                <tree string="Slab Pricing Plan" editable="bottom" class="select_plan_slab_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','slab')]}">
+                                    <field name="from_distance" string="From Distance(Km)" required="1"
+                                           width="100px"/>
+                                    <field name="to_distance" string="To Distance(Km)" required="1" width="100px"/>
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="100px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="100px"/>
+                                    <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                    <field name="price" string="Price(Rs)" required="1" width="100px"/>
+                                </tree>
+                            </field>
+                            <field name="flat_pricing_plan_ids" string="Select Plan"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': [('pricing_model','not in',('flat',True))]}">
+                                <tree string="Flat Pricing Plan" editable="bottom" class="select_plan_flat_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','flat')]}">
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="100px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="100px"/>
+                                    <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                    <field name="price" string="Price(Rs)"
+                                           attrs="{'invisible': [('select_plan_type','=','KM')]}" width="100px"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <separator string="Additional Charges"/>
+                        <field name="additional_charges_ids" string="Additional Charges">
+                            <tree string="Customer Stop Charges" editable="bottom">
+                                <field name="charge_type_id" required="1" context="{'crm_lead_form': True}"/>
+                                <field name="amount_type" required="1"/>
+                                <field name="amount" required="1"/>
+                            </tree>
+                            <form string="Additional Charges">
+                                <sheet>
+                                    <group>
+                                        <field name="charge_type_id" required="1"/>
+                                        <field name="amount_type" required="1"/>
+                                        <field name="amount" required="1"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('state', 'not in', ['draft','finance_approvals']),('is_fleet_service_customer','=',True)]}">
+                        <label for="kyc_upload_document_ids"/>
+                        <div class="o_row">
+                            <field name="kyc_upload_document_ids">
+                                <tree editable="bottom">
+                                    <field name="document_name" required="1"/>
+                                    <field name="file_name" invisible="1"/>
+                                    <field name="file" widget="binary" filename="file_name" required="1"/>
+                                </tree>
+                            </field>
+
+                        </div>
+                        <label for="pricing_plan_document_ids"/>
+                        <div class="o_row">
+                            <field name="pricing_plan_document_ids" force_save="1">
+                                <tree editable="bottom">
+                                    <field name="document_name" required="1"/>
+                                    <field name="file_name" invisible="1"/>
+                                    <field name="file" widget="binary" filename="file_name" required="1"/>
+                                </tree>
+
+                            </field>
+                        </div>
+                    </group>
+                    <group attrs="{'invisible': ['|',('state', 'not in', ['draft','finance_approvals']),('is_fleet_service_customer','=',False)]}">
+                        <label for="kyc_upload_document_ids"/>
+                        <div class="o_row">
+                            <field name="kyc_upload_document_ids">
+                                <tree editable="bottom">
+                                    <field name="document_name" required="1"/>
+                                    <field name="file_name" invisible="1"/>
+                                    <field name="file" widget="binary" filename="file_name" required="1"/>
+                                </tree>
+
+                            </field>
+                        </div>
+                    </group>
+
+                    <!--pricing configuration-->
+                    <group attrs="{'invisible': [('state', '!=', 'under_pricing_config')]}">
+                        <group>
+                            <field name="pricing_configuration"/>
+                            <field name="b2b_merchant_creation"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+
+                    <!--common comment section-->
+                    <br/>
+
+                    <group colspan="6">
+                        <field name="comments" required="1"/>
+                        <field name="is_fleet_service_customer" invisible="1"/>
+                        <field name="is_qshop_service_customer" invisible="1"/>
+                        <field name="is_delivery_service_customer" invisible="1"/>
+                    </group>
+                    <!--footer for send for approval wizard-->
+                    <footer attrs="{'invisible': [('state', '!=', 'draft')]}">
+                        <button name="action_approved" string="Submit" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                    <!--mu approval footer for delivery and qshop-->
+                    <footer attrs="{'invisible': ['|',('state', '!=', 'mu_approvals'),('is_fleet_service_customer','=',True)]}">
+                        <button name="action_mu_approved" string="Approve" type="object" class="btn-primary"
+                                attrs="{'invisible': ['|','|',('mu_pricing_plan_status', 'in', ['rejected',False]),
+                                ('mu_agreement_status','in', ['rejected',False]),('mu_payment_option_status','in', ['rejected',False])]}"/>
+                        <button name="action_mu_rejected" string="Not Approved" type="object" class="btn-primary" attrs="{'invisible': [('mu_pricing_plan_status', 'not in', ['rejected']),
+                                ('mu_agreement_status','not in', ['rejected']),('mu_payment_option_status','not in', ['rejected'])]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                    <!--mu approval footer for fleet customer-->
+                    <footer attrs="{'invisible': ['|',('state', '!=', 'mu_approvals'),('is_fleet_service_customer','=',False)]}">
+                        <button name="action_mu_approved" string="Approve" type="object" class="btn-primary"/>
+                        <button name="action_mu_rejected" string="Not Approved" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                    <!--footer for finance approval-->
+                    <footer attrs="{'invisible': [('state', '!=', 'finance_approvals')]}">
+                        <button name="action_finance_approved" string="Approve" type="object" class="btn-primary"/>
+                        <button name="action_finance_rejected" string="Not Approved" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                    <footer attrs="{'invisible': [('state', '!=', 'under_pricing_config')]}">
+                        <button name="action_approve_pricing" string="Approve" type="object" class="btn-primary"
+                                attrs="{'invisible': ['|',('pricing_configuration', 'in', ['no',False]),
+                                ('b2b_merchant_creation','in', ['no',False])]}"/>
+                        <button name="action_reject_pricing" string="Not Approved" type="object" class="btn-primary" attrs="{'invisible': [('pricing_configuration', 'not in', ['no']),
+                                ('b2b_merchant_creation','not in', ['no'])]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- lost form view -->
+    <record id="customer_onboard_lost_form_view" model="ir.ui.view">
+        <field name="name">customer.onboard.send.for.lost.form.view</field>
+        <field name="model">customer.onboard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <group>
+                        <field name="comments" required="1"/>
+                        <field name="state" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_reject_confirm" string="Reject" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="customer_onboard_reset_to_draft_form_view" model="ir.ui.view">
+        <field name="name">customer.onboard.send.for.send.to.draft.form.view</field>
+        <field name="model">customer.onboard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <group>
+                        <field name="comments" required="1"/>
+
+                    </group>
+                    <footer>
+                        <button name="confirm_reset_to_draft" string="Reset To Draft" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="assign_sale_person_view_form" model="ir.ui.view">
+        <field name="name">assign_sale_peson_view_form</field>
+        <field name="model">customer.onboard</field>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <form string="assign_sale_person_form">
+                <sheet>
+                    <group>
+                        <field name="sales_person_id"/>
+                        <field name="comments"/>
+                    </group>
+                    <footer>
+                        <button name="action_assign_sale_executive" string="Approve" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

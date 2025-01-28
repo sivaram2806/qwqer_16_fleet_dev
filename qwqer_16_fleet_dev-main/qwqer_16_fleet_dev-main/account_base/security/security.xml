@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--company rule for partner summary-->
+    <record id="partner_summary_comp_rule" model="ir.rule">
+        <field name="name">Company Rule : Partner Summary Configuration</field>
+        <field name="model_id" ref="model_partner_balance"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--company rule for virtual account configuration-->
+    <record id="virtual_account_configuration_comp_rule" model="ir.rule">
+        <field name="name">Company Rule : Virtual Account Configuration</field>
+        <field name="model_id" ref="model_virtual_account_configuration"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--company rule for virtual account Settlement-->
+    <record id="virtual_account_settlement_comp_rule" model="ir.rule">
+        <field name="name">Company Rule : Virtual Account Settlement</field>
+        <field name="model_id" ref="model_virtual_account_settlement"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="auditor_menu_access_group" model="res.groups">
+        <field name="name">Accounting View Only</field>
+    </record>
+
+    <!--Receivable accounting permissions-->
+    <record id="account_read_receivables_accounting_group" model="res.groups">
+        <field name="name">Receivables Accounting</field>
+    </record>
+
+    <record id="account.group_account_invoice" model="res.groups">
+        <field name="name">Billing</field>
+        <field name="category_id" ref="base.module_category_accounting_accounting"/>
+    </record>
+</odoo>

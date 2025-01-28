@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--		E-Invoice config form view-->
+    	<record id="einvoice_config_view_form" model="ir.ui.view">
+            <field name="name">einvoice.config.form</field>
+            <field name="model">einvoice.config</field>
+            <field name="arch" type="xml">
+                <form string="E-Invoice Configuration">
+                <sheet >
+                	<group>
+                		<group>
+                			<field name="api_username" required="1"/>
+                            <field name="api_password" required="1"/>
+                			<field name="asp_id" required="1"/>
+                			<field name="asp_password" required="1"/>
+                			<field name="api_gstin" required="1"/>
+                			<field name="api_auth_url" required="1"/>
+                			<field name="api_einvoice_url" required="1"/>
+                			<field name="api_cancel_url" required="0" invisible="0"/>
+                            <field name="api_client_id" invisible="1"/>
+                			<field name="api_client_secret" invisible="1" />
+                			<!--<field name="ip_address" />-->
+                			<field name="auth_token" readonly="1" />
+                			<field name="auth_generated_date" readonly="0" />
+                			<field name="is_scheduler_run" />
+                			<field name="next_run_date" readonly="0" attrs="{'invisible':[('is_scheduler_run', '=', False)],'required':[('is_scheduler_run', '=', True)]}" />
+                			<field name="record_limit" required="1" />
+                			<field name="payment_mode_ids" widget="many2many_tags" attrs="{'required':[('is_scheduler_run', '=', True)]}"/>
+                			<field name="exec_start_time" />
+                            <field name="exec_end_time"/>
+                		</group>
+                	</group>
+
+                </sheet>
+             </form>
+          </field>
+      </record>
+
+<!--		E-Invoice config tree view-->
+      <record id="einvoice_config_tree" model="ir.ui.view">
+            <field name="name">einvoice.config.tree</field>
+            <field name="model">einvoice.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                	<field name="api_username"/>
+                    <field name="api_password" />
+                    <field name="api_gstin" />
+                </tree>
+            </field>
+      </record>
+
+<!--		E-Invoice config menu action-->
+      <record id="action_einvoice_config" model="ir.actions.act_window">
+            <field name="name">E-Invoice Configuration</field>
+            <field name="res_model">einvoice.config</field>
+            <field name="view_mode">tree,form</field>
+      </record>
+
+<!--		E-Invoice config Menu Setting -> Technical-->
+      <menuitem id="einvoice_config_menu" 
+    	    name="E-Invoice Configuration"
+			action="action_einvoice_config"
+            parent="base.menu_custom"
+            sequence="200" /> 
+                    
+    </data>
+</odoo>

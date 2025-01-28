@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="nominee_type_tree" model="ir.ui.view">
+            <field name="name">nominee.type.tree</field>
+            <field name="model">nominee.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="nominee_type_action" model="ir.actions.act_window">
+            <field name="name">Nominee Type</field>
+            <field name="res_model">nominee.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_employee_nominee_type" name="Nominee Relation" sequence="4" action="nominee_type_action"
+                  parent="hr.menu_config_employee"/>
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Customer Credit Limit -->
+    <record id="partner_balance_tree_wo_inherit" model="ir.ui.view">
+        <field name="name">partner.balance.summary.tree.wo.inherit</field>
+        <field name="model">partner.balance</field>
+        <field name="inherit_id" ref="account_base.partner_balance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='debit']" position='after'>
+                    <field name="to_invoice_wo"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

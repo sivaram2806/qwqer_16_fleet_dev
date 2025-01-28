@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="spreadsheet_dashboard_group_trips" model="spreadsheet.dashboard.group">
+        <field name="name">Fleet</field>
+        <field name="sequence">300</field>
+    </record>
+    <record id="spreadsheet_dashboard_trips" model="spreadsheet.dashboard">
+        <field name="name">FTL</field>
+        <field name="data" type="base64" file="spreadsheet_dashboard_fleet/data/files/ftl_fleet_dashboard.json"/>
+        <field name="dashboard_group_id" ref="spreadsheet_dashboard_fleet.spreadsheet_dashboard_group_trips"/>
+        <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        <field name="sequence">200</field>
+    </record>
+    <record id="spreadsheet_dashboard_trips_uh" model="spreadsheet.dashboard">
+        <field name="name">Urban Haul</field>
+        <field name="data" type="base64" file="spreadsheet_dashboard_fleet/data/files/uh_fleet_dashboard.json"/>
+        <field name="dashboard_group_id" ref="spreadsheet_dashboard_fleet.spreadsheet_dashboard_group_trips"/>
+        <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        <field name="sequence">201</field>
+    </record>
+
+
+</odoo>

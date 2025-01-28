@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="partner_segment_qwqer_express_vendor" model="partner.segment">
+            <field name="name">Qwqer Express - Vendor</field>
+            <field name="is_customer" eval="False"/>
+            <field name="is_vendor" eval="True"/>
+        </record>
+    </data>
+</odoo>

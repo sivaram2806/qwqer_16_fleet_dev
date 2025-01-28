@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="view_invoice_frequency_form" model="ir.ui.view">
+            <field name="name">invoice.frequency.form</field>
+            <field name="model">invoice.frequency</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Frequency">
+                    <sheet>
+                        <group col="2">
+                            <field name="name"/>
+                            <field name="days"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_invoice_frequency_tree" model="ir.ui.view">
+            <field name="name">invoice.frequency.tree</field>
+            <field name="model">invoice.frequency</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="days"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_invoice_frequency" model="ir.actions.act_window">
+            <field name="name">Invoice Frequency</field>
+            <field name="res_model">invoice.frequency</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_invoice_frequency"
+                  name="Invoice Frequency"
+                  action="action_invoice_frequency"
+                  parent="customer_onboarding.menu_config_customer_onboard"
+                  sequence="5"/>
+
+
+    </data>
+</odoo>

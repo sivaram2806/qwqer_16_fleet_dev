@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pricing_plan,access_pricing_plan,model_pricing_plan,base.group_user,1,1,1,1
+access_charge_type,access_charge_type,model_charge_type,sales_team.group_sale_manager,1,1,1,1
+access_charge_type_user,access_charge_type,model_charge_type,base.group_user,1,0,0,0
+access_customer_additional_charges,access_customer_additional_charges,model_customer_additional_charges,base.group_user,1,1,1,1
+access_qwqer_age_configurations,access_qwqer_age_configurations,model_qwqer_age_configurations,base.group_user,1,1,1,1
+access_delivery_merchant_payout,access_delivery_merchant_payout,model_delivery_merchant_payout,base.group_user,1,1,1,1
+access_delivery_merchant_payout_lines,access_delivery_merchant_payout_lines,model_delivery_merchant_payout_lines,base.group_user,1,1,1,1
+access_re_init_payout_wiz,access_re_init_payout_wiz,model_re_init_payout_wiz,base.group_user,1,1,1,1

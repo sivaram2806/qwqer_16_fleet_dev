@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--		E-Invoice details form view-->
+    	<record id="einvoice_details_view_form" model="ir.ui.view">
+            <field name="name">einvoice.details.form</field>
+            <field name="model">einvoice.details</field>
+            <field name="arch" type="xml">
+                <form string="E-Invoice Details">
+                <sheet >
+                	<group>
+                		<group>
+                			<field name="ack_no" readonly="1" force_save="1"/>
+							<field name="irn" readonly="1" force_save="1"/>
+							<field name="ack_date" readonly="1" force_save="1"/>
+							<field name="scanned_qr_code" invisible="1"/>
+							<field name="qr_code" widget='image' options='{"size": [150, 150]}' readonly="1" force_save="1"/>
+							<field name="einvoice_generated" readonly="1" force_save="1" />
+                		</group>
+                	</group>
+
+                </sheet>
+             </form>
+          </field>
+      </record>
+
+<!--		E-Invoice details tree view-->
+      <record id="einvoice_details_tree" model="ir.ui.view">
+            <field name="name">einvoice.details.tree</field>
+            <field name="model">einvoice.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                	<field name="ack_no"/>
+					<field name="irn" />
+					<field name="ack_date" />
+					<field name="scanned_qr_code" invisible="1"/>
+					<field name="qr_code" widget='image' options='{"size": [150, 150]}'/>
+                </tree>
+            </field>
+      </record>
+
+<!--		E-Invoice details action view-->
+      <record id="action_einvoice_details" model="ir.actions.act_window">
+            <field name="name">E-Invoice Details</field>
+            <field name="res_model">einvoice.details</field>
+            <field name="view_mode">tree,form</field>
+
+      </record>
+
+    </data>
+</odoo>

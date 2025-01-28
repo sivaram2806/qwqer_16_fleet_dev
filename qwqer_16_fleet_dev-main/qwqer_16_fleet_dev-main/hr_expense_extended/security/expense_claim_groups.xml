@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Group category for expense claim management-->
+        <record id="module_category_expense_claim" model="ir.module.category">
+            <field name="name">Expense Claim</field>
+        </record>
+        <!-- Added Expense Claim admin group-->
+        <record id="expense_claim_admin" model="res.groups">
+            <field name="name">Expense Claim Admin</field>
+            <field name="category_id" ref="hr_expense_extended.module_category_expense_claim"/>
+        </record>
+        <!-- Added Expense Claim Finance Approver-->
+        <record id="expense_claim_finance_approver" model="res.groups">
+            <field name="name">Expense Claim Finance Approver</field>
+            <field name="category_id" ref="hr_expense_extended.module_category_expense_claim"/>
+        </record>
+        <!-- Added Expense Claim Mu Approver group-->
+        <record id="claim_expense_manager_approver" model="res.groups">
+            <field name="name">Expense Claim Manager Approver</field>
+            <field name="category_id" ref="hr_expense_extended.module_category_expense_claim"/>
+        </record>
+        <!--Added Expense Claim Adv request group -->
+        <record id="expense_claim_adv_request" model="res.groups">
+            <field name="name">Expense Adv Request</field>
+            <field name="category_id" ref="hr_expense_extended.module_category_expense_claim"/>
+        </record>
+
+        <record id="expense_claim_user" model="res.groups">
+            <field name="name">Expense Claim User</field>
+            <field name="category_id" ref="hr_expense_extended.module_category_expense_claim"/>
+        </record>
+
+        <record id="expense_claim_view_only" model="res.groups">
+            <field name="name">Expense Claim ViewOnly</field>
+            <field name="category_id" ref="hr_expense_extended.module_category_expense_claim"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+
+        <record id="view_qshop_merchant_analysis_report_pivot" model="ir.ui.view">
+            <field name="name">view.qshop.merchant.analysis.report.pivot</field>
+            <field name="model">qshop.merchant.payout.lines</field>
+            <field name="arch" type="xml">
+                <pivot string="Shop Merchant Analysis Report">
+                    <field name="region_id" type="row" string="Region"/>
+                    <field name="transfer_date" interval="month" type="col"/>
+                    <field name="total_pay" type="measure" string="Total Amount"/>
+                    <field name="service_charge" type="measure" string="Service Charge"/>
+                    <field name="final_pay" type="measure" string="Total PayOut"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_qshop_merchant_analysis_report_tree" model="ir.ui.view">
+            <field name="name">view.qshop.merchant.analysis.report.tree</field>
+            <field name="model">qshop.merchant.payout.lines</field>
+            <field name="priority" eval="15"/>
+            <field name="arch" type="xml">
+                <tree string="Qshop Merchant Analysis Report Tree">
+					<field name="customer_id" />
+                    <field name="region_id" string="Region" />
+                    <field name="from_date" />
+                    <field name="to_date" />
+                    <field name="total_pay" string="Total Amount"/>
+                    <field name="service_charge" string="Service Charge"/>
+                    <field name="final_pay" string="Total PayOut"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="qshop_merchant_analysis_report_pivot_filter" model="ir.ui.view">
+            <field name="name">view.qshop.merchant.analysis.report.pivot.search</field>
+            <field name="model">qshop.merchant.payout.lines</field>
+            <field name="priority" eval="15"/>
+            <field name="arch" type="xml">
+                <search string="Search Shop Merchant Analysis">
+                    <field name="customer_id"/>
+                    <field name="region_id" string="Region"/>
+
+                    <filter string="Current Month" name="current_month"
+                            domain="[('transfer_date','&lt;',
+                		(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')),
+                		('transfer_date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                    <filter string="Last 3 Months" name="last_3_months"
+                            domain="[('transfer_date','&lt;',
+                		(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')),
+                		('transfer_date','&gt;=',
+                		(context_today()+relativedelta(months=-2)).strftime('%%Y-%%m-01'))]"/>
+                    <filter string="Last 6 Months" name="last_6_months"
+                            domain="[('transfer_date','&lt;',
+                		(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')),
+                		('transfer_date','&gt;=',
+                		(context_today()+relativedelta(months=-6)).strftime('%%Y-%%m-01'))]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_region" context="{'group_by' : 'region_id'}" string="Region"/>
+                    </group>
+
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_customer" context="{'group_by' : 'customer_id'}" string="Customer"/>
+                    </group>
+
+
+                </search>
+            </field>
+        </record>
+
+        <record id="action_qshop_merchant_analysis_report_pivot" model="ir.actions.act_window">
+            <field name="name">Shop Merchant Amount Collection Analysis</field>
+            <field name="res_model">qshop.merchant.payout.lines</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="view_id" ref="view_qshop_merchant_analysis_report_pivot"/>
+            <field name="context">{'search_default_last_3_months':1,'create':0,'edit':0,'delete':0}</field>
+        </record>
+
+        <menuitem
+                id="qshop_merchant_analysis_report_pivot_menu"
+                name="Shop Merchant Amount Collection Analysis"
+                action="action_qshop_merchant_analysis_report_pivot"
+                parent="kpi_view_report_menu"
+                sequence="4"
+        />
+
+    </data>
+</odoo>

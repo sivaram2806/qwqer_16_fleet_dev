@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.module.category" id="module_category_crm_salesperson">
+        <field name="name">CRM Sales</field>
+        <field name="description">CRM Sales Access Groups</field>
+        <field name="sequence">20</field>
+    </record>
+<!--    CRM Salesperson user access-->
+    <record id="crm_salesperson_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="qwy_scheduled_activity_report.module_category_crm_salesperson"/>
+    </record>
+<!--    CRM Sales Manager access-->
+    <record id="crm_salesperson_manager" model="res.groups">
+        <field name="name">Sales Manager</field>
+        <field name="category_id" ref="qwy_scheduled_activity_report.module_category_crm_salesperson"/>
+
+    </record>
+    <!--Record Rule for CRM Salesperson Manager-->
+    <record id="mail_activity_crm_salesperson_manager"
+            model="ir.rule">
+        <field name="name">Record Rule for Manager</field>
+        <field ref="model_mail_activity" name="model_id"/>
+        <field name="groups"
+               eval="[(4, ref('qwy_scheduled_activity_report.crm_salesperson_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+    <!--Record Rule for CRM Salesperson User-->
+    <record id="mail_activity_crm_salesperson_user"
+            model="ir.rule">
+        <field name="name">Record Rule for User</field>
+        <field ref="model_mail_activity" name="model_id"/>
+        <field name="groups"
+               eval="[(4, ref('qwy_scheduled_activity_report.crm_salesperson_user'))]"/>
+        <field name="domain_force">[('salesperson_id.id','=',user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

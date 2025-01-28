@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<!-- wizard to update employee region, department, employee type -->
+	<record id="hr_employee_update_wizard_form_view" model="ir.ui.view">
+		<field name="name">hr.employee.update.wizard.form.view</field>
+	    <field name="model">hr.employee.update.wizard</field>
+	    <field name="arch" type="xml">
+	    	<form>
+	    		<sheet>
+	        		<group>
+		        		<group>
+		        			<field name="department_id"  options="{'no_create_edit':True}"
+								   attrs="{'required': [('action_type', '=','dept')],'invisible': [('action_type', '!=','dept')]}"/>
+		        			<field name="region_id" options="{'no_create_edit':True}"
+								   attrs="{'required': [('action_type', '=','region')],'invisible': [('action_type', '!=','region')]}"/>
+		        			<field name="employee_type"
+								   attrs="{'required': [('action_type', '=','emp_type')],'invisible': [('action_type', '!=','emp_type')]}"/>
+		        			<field name="manager_id"
+								   attrs="{'required': [('action_type', '=','emp_manager')],'invisible': [('action_type', '!=','emp_manager')]}"/>
+		        			<field name="action_type" invisible="1"/>
+		        		</group>
+	        		</group>
+        		</sheet>
+	            <footer>
+	            	<button string="Update"  name="action_update_region" type="object"
+							class="btn-primary" attrs="{'invisible': [('action_type', '!=','region')]}" />
+	                <button string="Update"  name="action_update_dept" type="object"
+							class="btn-primary" attrs="{'invisible': [('action_type', '!=','dept')]}" />
+	                <button string="Update"  name="action_update_emp_type" type="object"
+							class="btn-primary" attrs="{'invisible': [('action_type', '!=','emp_type')]}" />
+	                <button string="Update"  name="action_update_manager" type="object"
+							class="btn-primary" attrs="{'invisible': [('action_type', '!=','emp_manager')]}" />
+	                <button string="Cancel" class="btn-secondary" special="cancel"/> 
+	            </footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- server action to update employee region -->
+	<record id="update_region_wizard_action" model="ir.actions.act_window">
+	    <field name="name">Update Region</field>
+	    <field name="res_model">hr.employee.update.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+	    <field name="view_mode">form</field>
+		<field name="view_id" ref="hr_employee_update_wizard_form_view"/>
+		<field name="target">new</field>
+		<field name="context">{'default_action_type': 'region'}</field>
+		<field name="binding_model_id" ref="model_hr_employee"/>
+	</record>
+	
+	<!-- server action to update employee department -->
+	<record id="update_dept_wizard_action" model="ir.actions.act_window">
+	    <field name="name">Update Department</field>
+	    <field name="res_model">hr.employee.update.wizard</field>
+	    <field name="view_mode">form</field>
+	    <field name="view_id" ref="hr_employee_update_wizard_form_view"/>
+	    <field name="context">{'default_action_type': 'dept'}</field>
+	    <field name="target">new</field>
+	    <field name="binding_model_id" ref="model_hr_employee"/>
+	</record>
+	
+	<!-- server action to update employee type -->
+	<record id="update_emp_type_wizard_action" model="ir.actions.act_window">
+	    <field name="name">Update Employee Type</field>
+	    <field name="res_model">hr.employee.update.wizard</field>
+	    <field name="view_mode">form</field>
+	    <field name="view_id" ref="hr_employee_update_wizard_form_view"/>
+	    <field name="context">{'default_action_type': 'emp_type'}</field>
+	    <field name="target">new</field>
+	    <field name="binding_model_id" ref="model_hr_employee"/>
+	</record>
+
+	<!-- server action to update employee manager -->
+	<record id="update_emp_manager_wizard_action" model="ir.actions.act_window">
+	    <field name="name">Update Manager</field>
+	    <field name="res_model">hr.employee.update.wizard</field>
+	    <field name="view_mode">form</field>
+	    <field name="view_id" ref="hr_employee_update_wizard_form_view"/>
+	    <field name="context">{'default_action_type': 'emp_manager'}</field>
+	    <field name="target">new</field>
+	    <field name="binding_model_id" ref="model_hr_employee"/>
+	</record>
+
+	<!-- server action to create subordinate user -->
+	<record id="action_update_subordinates_to_user" model="ir.actions.server">
+		<field name="name">Update Subordinates to User</field>
+		<field name="model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_model_id" ref="hr.model_hr_employee"/>
+		<field name="binding_view_types">list,form</field>
+		<field name="state">code</field>
+		<field name="code">action = records.update_subordinates_to_user()</field>
+	</record>
+              
+</odoo>

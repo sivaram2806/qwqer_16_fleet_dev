@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="sales_person_target_configuration"
+              parent="fleet.fleet_configuration"
+              name="Target Config"
+              sequence="40"
+    />
+    <menuitem id="sales_person_set_target_menu_id"
+              parent="sales_person_target.sales_person_target_configuration"
+              name="Set Target"
+              groups="sales_person_target.target_manager_own_records_access,sales_person_target.target_manager_all_allowed_region_access,sales_person_target.target_manager_all_access"
+              action="action_target_configuration"
+              sequence="1"/>
+    <menuitem id="sales_person_target_analysis_menu_id"
+              parent="fleet_extend.menu_fleet_reports"
+              groups="sales_person_target.target_manager_own_records_access,sales_person_target.target_manager_all_allowed_region_access,sales_person_target.target_manager_all_access"
+              name="Sales Person Target"
+              sequence="30"
+    />
+
+    <menuitem id="target_analysis_menu_id"
+              parent="sales_person_target.sales_person_target_analysis_menu_id"
+              name="Target Analysis"
+              groups="sales_person_target.target_manager_own_records_access,sales_person_target.target_manager_all_allowed_region_access,sales_person_target.target_manager_all_access"
+              action="action_sales_person_target_list_view"
+              sequence="2"/>
+
+</odoo>

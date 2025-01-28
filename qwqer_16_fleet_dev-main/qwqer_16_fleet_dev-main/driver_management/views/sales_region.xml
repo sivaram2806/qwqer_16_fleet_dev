@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_region_form_inherit" model="ir.ui.view">
+            <field name="name">driver.payout.plan.region.form</field>
+            <field name="model">sales.region</field>
+            <field name="inherit_id" ref="qwqer_base.sales_region_form_views"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analytic_account_id']" position="after">
+                    <field name="default_driver_payout_plan" domain="[('region_id','=',id)]" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

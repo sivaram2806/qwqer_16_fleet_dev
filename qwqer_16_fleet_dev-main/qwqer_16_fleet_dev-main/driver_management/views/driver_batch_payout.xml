@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="driver_batch_payout_form_view" model="ir.ui.view">
+        <field name="name">driver.batch.payout.form</field>
+        <field name="model">driver.batch.payout</field>
+        <field name="arch" type="xml">
+            <form string="Weekly/Monthly Driver Payouts">
+                <header>
+                    <field name="is_vendor_payout" invisible="1"/>
+                    <field name="bill_ids"  invisible="1"/>
+                    <button name="set_to_draft" string="Set to Draft" type="object" class="oe_highlight" states="ready_verify,verify" groups="driver_management.group_verify_payout,driver_management.group_edit_create_payout"/>
+                    <button name="action_ready_to_verify" string="Send For Verify"  class="oe_highlight" type="object" states="draft" groups="driver_management.group_edit_create_payout"/>
+                    <button name="action_recompute_lines" string="Recompute Lines" type="object" states="draft,ready_verify,verify" class="oe_highlight"
+                            context="{'parent_id': id, 'parent_model': 'driver.batch.payout',
+                                   'from_date': from_date, 'to_date': to_date}"
+
+                            groups="driver_management.group_approve_payout,driver_management.group_verify_payout,driver_management.group_edit_create_payout"
+                            confirm="Are you sure you want to recompute? This action will override all previously entered data in the columns Incentive (B) and Deduction (C).Do you want to proceed?"/>
+                    <button name="action_compute_deduction" string="Compute Deduction" type="object" groups="driver_management.group_edit_create_payout" attrs="{'invisible': ['|',('is_cron_created', '=', False), ('state', '!=', 'draft')]}"
+                            confirm="Are you sure you want to compute the deduction? This action will override all previously entered data in the column Deduction(C). Do you want to proceed?"/>
+                    <button name="action_verify" string="Verify" type="object" class="oe_highlight" states="ready_verify" groups="driver_management.group_verify_payout"/>
+                    <button name="%(reject_reason_action)d" string="Reject"  type="action" states="verify,approve" groups="zb_qwqer_hr_customization.group_for_approve_payout"/>
+                    <button name="%(reinitiate_payment_wiz_action)d" string="Reinitiate Payment" class="oe_highlight"  type="action" states="complete_with_fail" groups="driver_management.group_approve_payout"/>
+                    <button name="action_approve" string="Approve" type="object" class="oe_highlight" states="verify" groups="driver_management.group_approve_payout"/>
+
+                    <button name="action_batch_payment" string="Batch Payment" class="oe_highlight" type="object" states="approve" confirm="Are you sure to Perform Batch Payment?" groups="driver_management.group_payout_batch_payment"/>
+                    <button name="action_check_status" string="Update Status" type="object" states="pending,complete_with_fail,complete" groups="driver_management.group_approve_payout,driver_management.group_payout_batch_payment"/>
+                    <button name="create_exp_journal_entry" string="Generate Payable Entry" type="object" groups="driver_management.group_create_manual_journal"/>
+                    <button name="create_trns_journal_entry" string="Generate Payment Entry" type="object" groups="driver_management.group_create_manual_journal"/>
+                    <button name="action_cost_per_order" string="Compute Cost Per Order" type="object" class="oe_highlight" states="approve,pending,complete_with_fail,complete"/>
+                    <button name="print_xlsx" string="Download" type="object" />
+                    <button name="%(daily_driver_payout_update_wizard_action)d" string="Upload" type="action" attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived"  bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="is_cron_created" invisible='1'/>
+                            <field name="from_date" required="1" attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                            <field name="cashfree_ref" readonly="1" force_save="1" attrs="{'invisible':[('cashfree_ref','=',False)]}"/>
+                            <field name="transaction_date" readonly="1" force_save="1" attrs="{'invisible':[('transaction_date','=',False)]}"/>
+                            <field name="processed_date" readonly="1" force_save="1" attrs="{'invisible':[('processed_date','=',False)]}"/>
+                        </group>
+                        <group>
+                            <field name="to_date" required="1" attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                            <field name="region_id" required="1" attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                            <field name="description"  attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="payout" string="Drivers Payout">
+                            <field name="batch_payout_line_ids"
+                                   context="{'parent_id': id, 'parent_model': 'driver.batch.payout',
+                                   'default_from_date': from_date, 'default_to_date': to_date}"
+                                   attrs="{'readonly': [('state', 'not in', ('draft','ready_verify','verify'))]}">
+                                <tree editable="bottom">
+                                    <button class="oe_stat_button" type="object" name="action_get_batch_payout_line"
+                                            icon="fa-arrow-right"/>
+                                    <field name="transfer_id" readonly="1"/>
+                                    <field name="from_date" invisible="1"/>
+                                    <field name="to_date" invisible="1"/>
+                                    <field name="driver_uid"/>
+                                    <field name="employee_id" options="{'no_create':True}" domain="[('region_id','=',parent.region_id)]" context="{'employee_edit': True,'driver_employee': True,'form_view_ref':'hr.view_employee_form','driver_id_employee': True}"/>
+                                    <field name="no_of_orders" sum="Total" invisible="1"/>
+                                    <field name="order_qty" sum="Total" readonly="1"/>
+                                    <field name="daily_payout_amount" force_save="1" readonly="1" sum="Total"/>
+                                    <field name="incentive_amount" sum="Total"/>
+                                    <field name="deduction_amount" sum="Total"/>
+                                    <field name="tds_amount" sum="Total"  readonly="1"/>
+                                    <field name="total_payout" sum="Total"  readonly="1"/>
+                                    <field name="total_revenue" sum="Total" readonly="1"/>
+                                    <field name="avg_order_cost" readonly="1" force_save="1"/>
+                                    <field name="remarks"/>
+                                    <field name="transaction_date" readonly="1" force_save="1"/>
+                                    <field name="processed_date" readonly="1" force_save="1"/>
+                                    <field name="cashfree_ref" readonly="1"/>
+                                    <field name="payment_state" readonly="1" force_save="1"/>
+                                    <field name="is_reinitiated" readonly="1" force_save="1" attrs="{'column_invisible': [('parent.state','!=', 'complete_with_fail')]}"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="transfer_id" readonly="1"/>
+                                                <field name="from_date" invisible="1"/>
+                                                <field name="to_date" invisible="1"/>
+                                                <field name="driver_uid" readonly="1"/>
+                                                <field name="employee_id"
+                                                       context="{'employee_edit': True,'driver_employee': True,'form_view_ref':'hr.view_employee_form'}"/>
+                                                <field name="daily_payout_amount" readonly="1" />
+                                                <field name="incentive_amount"/>
+                                                <field name="deduction_amount"/>
+                                                <field name="tds_amount" readonly="1"/>
+                                                <field name="total_payout" readonly="1"/>
+                                                <field name="avg_order_cost" readonly="1"/>
+                                                <field name="payment_journal_id" readonly="1" force_save="1"/>
+                                                <field name="payable_journal_id" readonly="1" force_save="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="remarks"/>
+                                                <field name="payment_vendor_acc" readonly="1"/>
+                                                <field name="driver_partner_id" readonly="1"/>
+                                                <field name="pan_no" readonly="1"/>
+                                                <field name="tds_tax_id" readonly="1"/>
+                                                <field name="transaction_date" readonly="1" force_save="1"/>
+                                                <field name="processed_date" readonly="1" force_save="1"/>
+                                                <field name="payment_state" readonly="1" force_save="1"/>
+                                                <field name="cashfree_ref" readonly="1"/>
+                                                <field name="utr_ref" readonly="1" force_save="1"
+                                                       attrs="{'invisible':[('utr_ref','=',False)]}"/>
+                                                <field name="status_description" readonly="1"/>
+                                            </group>
+                                        </group>
+                                        <field name="daily_payout_ids" nolabel="1" readonly="1" force_save="1"/>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_batch_payout_tree" model="ir.ui.view">
+        <field name="name">driver.batch.payout.tree</field>
+        <field name="model">driver.batch.payout</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="is_reject == True">
+                <field name="name" />
+                <field name="from_date"/>
+                <field name="to_date"/>
+                <field name="region_id" />
+                <field name="description" />
+                <field name="total_amount" sum="Total"/>
+                <field name="line_count"/>
+                <field name="state" />
+                <field name="create_date" string="Created On"/>
+                <field name="transaction_date"/>
+                <field name="is_reject" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="driver_batch_payout_search_view" model="ir.ui.view">
+        <field name="name">driver.batch.payout.search</field>
+        <field name="model">driver.batch.payout</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <field name="region_id"/>
+                <field name="batch_payout_line_ids" string="Driver ID" filter_domain="[('batch_payout_line_ids.driver_uid', 'ilike', self)]"/>
+                <field name="batch_payout_line_ids" string="Driver Name" filter_domain="[('batch_payout_line_ids.employee_id', 'ilike', self)]"/>
+                <field name="batch_payout_line_ids" string="Transfer ID" filter_domain="[('batch_payout_line_ids.transfer_id', 'ilike', self)]"/>
+                <separator/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Today" name="today_created" domain="['&amp;',
+	                	('create_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <filter string="Yesterday" name="yesterday_created" domain="['&amp;',
+	                	('create_date', '&lt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('create_date', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <filter string="Current Week" name="current_week"
+                        domain="[('create_date', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+        						('create_date', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"/>
+                <filter string="Current Month" name="this_month" domain="[('create_date', '&gt;=', context_today().strftime('%%Y-%%m-01 00:00:00'))]"/>
+                <filter string="Last Week"  name="week" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last Month"  name="month" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+                <separator/>
+                <filter string="Draft" name="state_draft" domain="[('state', '=', 'draft')]" />
+                <filter string="Ready For Verify" name="state_ready_verify" domain="[('state', '=', 'ready_verify')]" />
+                <filter string="Verified" name="state_verify" domain="[('state', '=', 'verify')]" />
+                <filter string="Approved" name="state_approve" domain="[('state', '=', 'approve')]" />
+                <filter string="Pending" name="state_pending" domain="[('state', '=', 'pending')]" />
+                <filter string="Completed With Failures" name="state_fail_complete" domain="[('state', '=', 'complete_with_fail')]" />
+                <filter string="Completed" name="state_complete" domain="[('state', '=', 'complete')]" />
+                <separator/>
+                <filter string="Region" name="region_id_gp" context="{'group_by':'region_id'}" />
+            </search>
+        </field>
+    </record>
+
+    <record id="driver_batch_payout_action" model="ir.actions.act_window">
+        <field name="name">Weekly/Monthly Driver Payouts</field>
+        <field name="res_model">driver.batch.payout</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_vendor_payout', '=', False)]</field>
+        <field name="context">{'from_payout_form': True}</field>
+    </record>
+
+    <record id="action_multi_recompute_cost_per_order" model="ir.actions.server">
+        <field name="name">Recompute Cost Per Order</field>
+        <field name="model_id" ref="driver_management.model_driver_batch_payout"/>
+        <field name="binding_model_id" ref="driver_management.model_driver_batch_payout"/>
+        <field name="state">code</field>
+        <field name="code">records.action_cost_per_order()</field>
+    </record>
+
+    <menuitem id="menu_driver_batch_payout" name="Weekly/Monthly Driver Payouts"
+              sequence="6" action="driver_batch_payout_action"
+              parent="driver_management.menu_driver_payout_main_menu"/>
+
+</odoo>

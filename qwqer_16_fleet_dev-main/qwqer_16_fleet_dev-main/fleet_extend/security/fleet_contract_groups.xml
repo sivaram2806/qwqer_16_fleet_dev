@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Modified Fleet category name to Fleet Contracts  -->
+    <record id="fleet.module_fleet_category" model="ir.module.category">
+        <field name="name">Fleet Contracts</field>
+        <field name="sequence">17</field>
+    </record>
+
+    <!--  New user group for vehicle config create and edit permission  -->
+    <record id="fleet_group_config_manager" model="res.groups">
+        <field name="name">Fleet: Configuration manager</field>
+        <field name="category_id" ref="fleet_extend.module_fleet_management_category"/>
+    </record>
+
+    <!--  Inherited and modified fleet_group_user name  -->
+    <record id="fleet.fleet_group_user" model="res.groups">
+        <field name="name">Fleet: User</field>
+    </record>
+
+    <!--  Inherited and modified fleet_group_manager name  -->
+    <record id="fleet.fleet_group_manager" model="res.groups">
+        <field name="name">Fleet: Administrator</field>
+    </record>
+
+    <!--  Contracts normal users access group  -->
+    <record id="fleet_group_vehicle_contract_user" model="res.groups">
+        <field name="name">Contracts: User</field>
+        <field name="category_id" ref="fleet.module_fleet_category"/>
+    </record>
+
+    <!--  Other contract access group  -->
+    <record id="fleet_group_vehicle_contract_other_menu_access" model="res.groups">
+        <field name="name">Contracts: Other Contract Access</field>
+        <field name="implied_ids"
+               eval="[ (4, ref('fleet_group_vehicle_contract_user'))]"/>
+        <field name="category_id" ref="fleet.module_fleet_category"/>
+    </record>
+
+    <!--  Contracts reporting manager access group  -->
+    <record id="fleet_group_vehicle_contract_mu_manager" model="res.groups">
+        <field name="name">Contracts: Reporting Manager</field>
+        <field name="implied_ids" eval="[(4, ref('fleet_group_vehicle_contract_user'))]"/>
+        <field name="category_id" ref="fleet.module_fleet_category"/>
+    </record>
+
+    <!--  Contracts finance manager access group  -->
+    <record id="fleet_group_vehicle_contract_finance_manager" model="res.groups">
+        <field name="name">Contracts: Finance Manager</field>
+        <field name="category_id" ref="fleet.module_fleet_category"/>
+    </record>
+
+    <!--  Contract administrator access group  -->
+    <record id="fleet_group_vehicle_contract_user_admin_user" model="res.groups">
+        <field name="name">Contracts: Administrator</field>
+        <field name="category_id" ref="fleet.module_fleet_category" />
+        <field name="implied_ids" eval="[ (4, ref('fleet_group_vehicle_contract_mu_manager')),
+        (4, ref('fleet_group_vehicle_contract_finance_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

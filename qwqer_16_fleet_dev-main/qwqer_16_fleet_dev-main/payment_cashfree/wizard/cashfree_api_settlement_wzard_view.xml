@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="cashfree_api_settlement_view_form" model="ir.ui.view">
+            <field name="name">cash.free.api.settlement.form</field>
+            <field name="model">cash.free.api.settlement</field>
+            <field name="arch" type="xml">
+                <form string="Cashfree Settlement">
+                	<group>
+                		<field name="date_from" />
+                	</group>
+                    <footer>
+                        <button name="action_cashfree_settlement" string="Submit" type="object" class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_cashfree_api_settlement" model="ir.actions.act_window">
+            <field name="name">Cashfree API Settlement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cash.free.api.settlement</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="cashfree_api_settlement_view_form"/>
+            <field name="target">new</field>
+        </record>
+            <menuitem id="cashfree_api_settlement_menu"
+            action="action_cashfree_api_settlement"
+            parent="menu_cash_free"
+            sequence="3"
+             />
+</odoo>

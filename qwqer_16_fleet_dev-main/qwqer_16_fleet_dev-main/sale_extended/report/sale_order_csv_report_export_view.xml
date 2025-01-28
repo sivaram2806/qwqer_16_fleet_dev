@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="so_csv_report_view" model="ir.ui.view">
+        <field name="name">Sale Order Export</field>
+        <field name="model">so.csv.report</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="create_date" options="{'date_format':'dd-MM-yyyy'}"/>
+                <field name="create_uid" groups="base.group_system"/>
+                <field name="from_date"/>
+                <field name="to_date"/>
+                <field name="state_ids" widget="many2many_tags"/>
+                <field name="region_ids" widget="many2many_tags"/>
+                <field name="fields_to_export" widget="many2many_tags"/>
+                <field name="report_status"/>
+                <field name="file" widget='url' attrs="{'invisible': [('report_status', '!=', 'completed')]}"
+                       text="Click Here"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="so_csv_report_view_form" model="ir.ui.view">
+        <field name="name">Sale Order Csv Report View Form</field>
+        <field name="model">so.csv.report</field>
+        <field name="arch" type="xml">
+            <form string="Csv Report Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="state_ids" options="{'no_create': True,'no_create_edit':True}"
+                                   widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="to_date"/>
+                            <field name="region_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="report_status"/>
+                            <field name="batch_start"/>
+                            <field name="process_start_date"/>
+                        </group>
+                        <group>
+                            <field name="file" widget="url" text='Click Here'/>
+                            <field name="batch_end"/>
+                            <field name="process_end_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="report_file_path"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_so_csv_report_view" model="ir.actions.act_window">
+        <field name="name">Sale Order CSV Report View</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">so.csv.report</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False,'edit': False}</field>
+    </record>
+
+    <menuitem id="menu_so_csv_report_view"
+              name="Sale Order Csv Report"
+              parent="sale.menu_sale_report"
+              action="action_so_csv_report_view"
+              sequence="3"
+
+    />
+
+
+</odoo>

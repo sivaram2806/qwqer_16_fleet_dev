@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--     Record to create Trip Summary Report-->
+    <record id="trip_summary_report_xlsx" model="ir.actions.report">
+        <field name="name">Trip Summary</field>
+        <field name="model">trip.summary.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_urban_haul.trip_summary_report_xlsx</field>
+        <field name="report_file">fleet_urban_haul.trip_summary_report_xlsx</field>
+        <field name="print_report_name">'%s ATrip Summary' % (object.action_type.title())</field>
+        <field name="binding_model_id" ref="model_trip_summary_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Record to create Cost Analysis Report-->
+    <record id="cost_analysis_report_xlsx" model="ir.actions.report">
+        <field name="name">Cost Analysis Report</field>
+        <field name="model">cost.analysis.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_urban_haul.cost_analysis_report_xlsx</field>
+        <field name="report_file">fleet_urban_haul.cost_analysis_report_xlsx</field>
+        <field name="print_report_name">'%s Cost Analysis' % (object.action_type.title())</field>
+        <field name="binding_model_id" ref="model_trip_summary_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Record to create Consolidated Trip Summary Report-->
+    <record id="consolidated_trip_report_xlsx" model="ir.actions.report">
+        <field name="name">Consolidated Trip Summer Report</field>
+        <field name="model">trip.summary.uh</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_urban_haul.report_consolidated_trip_xlsx</field>
+        <field name="report_file">fleet_urban_haul.report_consolidated_trip_xlsx</field>
+        <field name="binding_type">report</field>
+    </record>
+    <!-- Record to create Batch Trip  Report-->
+    <record id="batch_trip_report_xlsx" model="ir.actions.report">
+        <field name="name">Consolidated Trip Summer Report</field>
+        <field name="model">batch.trip.uh</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">fleet_urban_haul.report_batch_trip_xlsx</field>
+        <field name="report_file">fleet_urban_haul.report_batch_trip_xlsx</field>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

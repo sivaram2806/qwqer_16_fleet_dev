@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="vehicle_pricing_line_view_form" model="ir.ui.view">
+        <field name="name">vehicle_pricing_line_view_form</field>
+        <field name="model">vehicle.pricing.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_no"/>
+                        <group>
+                            <field name="vehicle_model_id"/>
+                            <field name="customer_id"/>
+                            <field name="vendor_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="driver_name"/>
+                            <field name="vehicle_description"/>
+                            <field name="vehicle_pricing_id"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vehicle_pricing_line__view_tree" model="ir.ui.view">
+        <field name="name">vehicle_pricing_line_view_tree</field>
+        <field name="model">vehicle.pricing.line</field>
+        <field name="arch" type="xml">
+            <tree string="vehicle_pricing_line_tree" >
+                <field name="vehicle_no"/>
+                <field name="vehicle_model_id"/>
+                <field name="customer_id"/>
+                <field name="vendor_id"/>
+                <field name="driver_name"/>
+                <field name="vehicle_description"/>
+                <field name="vehicle_pricing_id"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

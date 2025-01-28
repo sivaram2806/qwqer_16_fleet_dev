@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="crm.stage" id="stage_lead5">
+            <field name="name">Lost</field>
+            <field name="sequence">71</field>
+            <field name="is_lost">True</field>
+        </record>
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'crm'), ('name', '=', 'stage_lead2')]"/>
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record model="crm.stage" id="crm.stage_lead2">
+            <field name="name">Qualified</field>
+            <field name="sequence">2</field>
+            <field name="is_qualified">True</field>
+        </record>
+    </data>
+</odoo>

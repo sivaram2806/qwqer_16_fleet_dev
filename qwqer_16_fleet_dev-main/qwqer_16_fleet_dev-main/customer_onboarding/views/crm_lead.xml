@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="crm_lead_onboard_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.view.customer.onboard.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_show_potential_duplicates']" position="after">
+                <button class="oe_stat_button" type="object" name="action_view_onboard_customer"
+                        icon="fa-user" attrs="{'invisible': [('customer_onboard_id', '=', False)]}">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Onboarded Customer</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <field name="customer_onboard_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                <button string="Customer Onboard" name="action_customer_onboard" type="object" class="btn-primary"
+                        attrs="{'invisible': ['|','|','|', ('active','=',False), ('probability', '!=', 100), ('type', '=', 'lead'),('customer_onboard_id','!=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+

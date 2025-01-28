@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- res.country.state : Inherit Form View to Modify it -->
+    <record id="view_country_state_form" model="ir.ui.view">
+        <field name="name">res.country.state.form.inherit</field>
+        <field name="model">res.country.state</field>
+        <field name="inherit_id" ref="base.view_country_state_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/group" position="after">
+                <notebook>
+                    <page string="Sales Region" name="sale_region">
+                        <field name="regions_ids" nolabel="1">
+                            <tree string="Sale Region" editable="bottom" create="false" delete="false">
+                                <field name="name" readonly="1"/>
+                                <field name="region_code" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Sales Zone" name="sale_zone">
+                        <field name="zones_ids" nolabel="1">
+                            <tree string="Sale Zone" editable="bottom" create="false" delete="false">
+                                <field name="name" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+
+        </field>
+    </record>
+    
+    <!--  Modification in res.country.state action -->
+    <record id="base.action_country_state" model="ir.actions.act_window">
+        <field name="name">Federal States</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.country.state</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('country_id.code', '=', 'IN')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a State
+            </p><p>
+                Federal States belong to countries and are part of your contacts' addresses.
+            </p>
+        </field>
+    </record>
+    <!--  Modification in res.country.state tree view  -->
+    <record id="base.view_country_state_tree" model="ir.ui.view">
+        <field name="name">res.country.state.tree</field>
+        <field name="model">res.country.state</field>
+        <field name="arch" type="xml">
+            <tree string="State">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="country_id" options="{'no_create': True, 'no_open': True}"/>
+            </tree>
+        </field>
+    </record>
+    <!--  Menu item added for res.country.state  -->
+    <menuitem id="contacts.menu_country_state_partner"
+              action="base.action_country_state"
+              parent="contacts.menu_localisation"
+              name="Federal State"
+              sequence="2"/>
+
+</odoo>

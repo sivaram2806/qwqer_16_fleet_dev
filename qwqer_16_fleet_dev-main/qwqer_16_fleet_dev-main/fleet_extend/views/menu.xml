@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Fleet reports main menu, added for using it in ftl and urban haul  modules-->
+    	<menuitem id="menu_fleet_reports"
+                  name="Reporting"
+                  parent="fleet.menu_root"
+                  sequence="95"/>
+
+        <!-- Fleet reports other reports-->
+    	<menuitem id="menu_fleet_other_report"
+                  name="Reports"
+                  parent="fleet_extend.menu_fleet_reports"
+                  sequence="95"/>
+
+        <!-- Fleet reports Customer Credit Limit-->
+    	<menuitem id="menu_fleet_customer_summary_report"
+                  name="Customer Credit Limit"
+                  parent="fleet_extend.menu_fleet_other_report"
+                  action="account_base.action_customer_balance_summary"
+                  sequence="95"/>
+</odoo>

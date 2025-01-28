@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="change_req_res_partner_view_form_inherit" model="ir.ui.view">
+        <field name="name">change.req.res.partner.view.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="delivery_base.res_partner_form_view_delivery_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='pricing_plan']"
+                   position="after">
+                <page name='customer_update_log' string="Customer Update Log">
+                    <field name="customer_update_log_ids" string="Update Log" no_label="1">
+                        <tree string="Update Log" editable="bottom" delete="0" create="0">
+                            <field name="created_by" readonly="1"/>
+                            <field name="date_time" readonly="1"/>
+                            <field name="change_request_id" readonly="1"/>
+                            <button type="object" string="Open" name="open_change_request" icon="fa-exchange"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='pricing_plan']/field[@name='flat_pricing_plan_ids']"
+                   position="after">
+                <separator string="Pricing Plan Update Log" name="pricing_plan_update_log"/>
+                <field name="pricing_plan_update_log_ids" string="Pricing Plan Update Log" no_label="1">
+                    <tree string="Update Log" editable="bottom" delete="0" create="0" limit="4"
+                          default_order="updated_date_time desc">
+                        <field name="updated_by" readonly="1" width="100px"/>
+                        <field name="updated_date_time" readonly="1" width="80px"/>
+                        <field name="select_plan_type" readonly="1" width="20px"/>
+                        <field name="minimum_weight" readonly="1" width="100px"/>
+                        <field name="maximum_weight" readonly="1" width="100px"/>
+                        <field name="from_distance" readonly="1" width="100px"/>
+                        <field name="to_distance" readonly="1" width="100px"/>
+                        <field name="min_distance" readonly="1" width="100px"/>
+                        <field name="min_cost" readonly="1" width="100px"/>
+                        <field name="per_km_charge" readonly="1" width="100px"/>
+                        <field name="price" readonly="1" width="50px"/>
+                        <field name="action" readonly="1" width="190px"/>
+                    </tree>
+                </field>
+            </xpath>
+
+
+            <xpath expr="//page[@name='pricing_plan']/field[@name='additional_charges_ids']"
+                   position="after">
+                <separator string="Additional Charges Update Log" name="additional_charge_log"/>
+                        <field name="additional_charge_update_log_ids" no_label="1">
+                            <tree string="Update Log" editable="bottom" delete="0" create="0" limit="4"
+                                  default_order="updated_date_time desc">
+                                <field name="updated_by" readonly="1"/>
+                                <field name="updated_date_time" readonly="1"/>
+                                <field name="charge_type_id" readonly="1"/>
+                                <field name="amount_type" readonly="1"/>
+                                <field name="amount" readonly="1"/>
+                                <field name="action" readonly="1"/>
+                            </tree>
+                        </field>
+            </xpath>
+
+        </field>
+
+
+    </record>
+</odoo>

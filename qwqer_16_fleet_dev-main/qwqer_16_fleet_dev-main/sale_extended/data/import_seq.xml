@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+        <record id="so_order_manual_import_sequence" model="ir.sequence">
+            <field name="name">Sale Order Import Sequence</field>
+            <field name="code">sale.order.import.sequence</field>
+            <field name="prefix">SOI-</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+            <field name="company_id" eval="True"/>
+        </record>
+    </data>
+</odoo>

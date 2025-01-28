@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--ir_rule for Cashfree Configuration-->
+    <record id="cash_free_configuration_company_rule" model="ir.rule">
+        <field name="name">Company Rule Cashfree Configuration</field>
+        <field name="model_id" ref="model_cash_free_configuration"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for Cashfree Credentials-->
+    <record id="cash_free_credentials_details_company_rule" model="ir.rule">
+        <field name="name">Company Rule Cashfree Credentials</field>
+        <field name="model_id" ref="model_cash_free_credentials"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for  Cashfree Settlement-->
+    <record id="cash_free_settlement_company_rule" model="ir.rule">
+        <field name="name">Company Rule Cashfree Settlement</field>
+        <field name="model_id" ref="model_cash_free_settlement"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

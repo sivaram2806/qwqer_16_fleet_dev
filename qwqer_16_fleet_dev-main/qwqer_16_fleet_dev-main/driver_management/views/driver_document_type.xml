@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="driver_document_type_tree" model="ir.ui.view">
+            <field name="name">driver.document.type.tree</field>
+            <field name="model">driver.document.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="driver_document_type_action" model="ir.actions.act_window">
+            <field name="name">Document Type</field>
+            <field name="res_model">driver.document.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_driver_document_type" name="Document Type" sequence="2" action="driver_document_type_action" parent="menu_driver_mgmt_config"/>
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <!--ir_rule for customer onboarding-->
+        <record id="change_req_company_rule" model="ir.rule">
+            <field name="name">Company Rule Change Request</field>
+            <field name="model_id" ref="model_customer_master_change_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+        </record>
+
+        <record id="edit_change_req_record_only_assigned_user" model="ir.rule">
+            <field name="name">Approval User Can Edit Or Approve The Record</field>
+            <field name="model_id" ref="customer_master_change_request.model_customer_master_change_request"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="domain_force">[('is_approval_user','=',True)]</field>
+        </record>
+    </data>
+
+
+</odoo>

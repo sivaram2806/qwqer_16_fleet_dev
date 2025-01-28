@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="driver_payout_plan_change_wizard_form" model="ir.ui.view">
+            <field name="name">driver.payout.plan.change.wizard.form</field>
+            <field name="model">driver.payout.plan.change.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div><p>Default Driver pricing plan is already set for the region confirm to change it</p></div>
+                    <footer>
+                        <button name="change_driver_payout_plan" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

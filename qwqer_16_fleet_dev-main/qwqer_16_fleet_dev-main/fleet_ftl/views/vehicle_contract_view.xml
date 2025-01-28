@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="vehicle_contract_form_inherit" model="ir.ui.view">
+            <field name="name">vehicle.contract.inherit.form</field>
+            <field name="model">vehicle.contract</field>
+            <field name="inherit_id" ref="fleet_extend.vehicle_contract_form_views"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                 <div class="oe_button_box">
+                    <button class="oe_stat_button" type="object" name="get_work_orders"
+                        icon="fa-file-text">
+                        <field string="Work Orders" name="wo_count" widget="statinfo"/>
+                    </button>
+                </div>
+                <xpath expr="//field[@name='create_date']" position="after">
+                        <field name="wo_ids" widget="many2many_tags" invisible='1'/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+    <record id="ftl_contract_search" model="ir.ui.view">
+        <field name="name">ftl.contract.search</field>
+        <field name="model">vehicle.contract</field>
+        <field name="arch" type="xml">
+            <search>
+				<field name="contract_num" string = "Contract No" filter_domain = "[('contract_num', 'ilike', self)]"/>
+				<field name="customer_id" string = "Customer" filter_domain = "[('customer_id', 'ilike', self)]"/>
+				<field name="region_id" string = "Region" filter_domain = "[('region_id', 'ilike', self)]"/>
+				<filter name="filter_new" string = "New" domain = "[('state', '=', 'new')]"/>
+            	<filter name="filter_running" string = "Running" domain = "[('state', '=', 'running')]"/>
+            	<filter name="filter_expired" string = "Expired" domain = "[('state', '=', 'expired')]"/>
+            	<filter name="filter_closed" string = "Closed" domain = "[('state', '=', 'closed')]"/>
+            	<separator/>
+				<filter name="filter_new" string = "New" domain = "[('approval_stage', '=', 'new')]"/>
+            	<filter name="filter_send_for_approval" string = "Send For Approval" domain = "[('approval_stage', '=', 'send_for_approval')]"/>
+            	<filter name="filter_mu_head_approved" string = "MU Approved" domain = "[('approval_stage', '=', 'mu_head_approved')]"/>
+            	<filter name="filter_finance_approved" string = "Finance Approved" domain = "[('approval_stage', '=', 'finance_approved')]"/>
+            	<separator/>
+				<filter string = "State" name = "state" context = "{'group_by': 'state'}"/>
+				<filter string = "approval_stage" name = "approval_stage" context = "{'group_by': 'approval_stage'}"/>
+				<separator/>
+				<filter string = "Region" name = "group_by_region_id" context = "{'group_by': 'region_id'}"/>
+				<!-- <filter string = "Sales Zone" name = "group_by_substate_id" context = "{'group_by': 'substate_id'}"/> -->
+				<separator/>
+				<filter string = "Customer" name = "group_by_customer_id" context = "{'group_by': 'customer_id'}"/>
+				<filter string = "Created By" name = "create_uid" context = "{'group_by': 'create_uid'}"/>
+            </search>
+        </field>
+    </record>
+
+
+     <!--  Action for FTL vehicle.contract model  -->
+    <record id="vehicle_ftl_contract_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Contracts FTL</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vehicle.contract</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('contract_classification', '=', 'ftl')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new Contract.
+            </p>
+        </field>
+    </record>
+
+    <!--  Menu added for FTL Contracts: Fleet > Contracts > Vehicle Pricing  -->
+    <menuitem id="fleet_vehicle_contract_ftl_menu"
+              name="FTL Contracts"
+              parent="fleet_extend.fleet_vehicle_contract_menu"
+              action="fleet_ftl.vehicle_ftl_contract_action"
+              groups="fleet_ftl.fleet_group_vehicle_contract_ftl_menu_access,fleet_extend.fleet_group_vehicle_contract_finance_manager,fleet.fleet_group_manager"
+              sequence="20"/>
+
+</odoo>

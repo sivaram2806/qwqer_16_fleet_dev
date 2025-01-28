@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+fleet_ftl.ftl_track_history_access_right,ftl_track_history_access_right,model_ftl_track_history,base.group_user,1,1,1,0

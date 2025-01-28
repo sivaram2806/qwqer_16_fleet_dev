@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sales_import_xlsx" model="ir.actions.report">
+            <field name="name">Sale Import</field>
+            <field name="model">sale.order.manual.import</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sale_extended.report_sales_import_xlsx</field>
+            <field name="report_file">sale_extended.report_sales_import_xlsx</field>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

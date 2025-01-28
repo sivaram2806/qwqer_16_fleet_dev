@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--		E-Invoice scheduler failed log form view-->
+    	<record id="einvoice_scheduler_failed_log_view_form" model="ir.ui.view">
+            <field name="name">einvoice.scheduler.failed.log.form</field>
+            <field name="model">einvoice.scheduler.failed.log</field>
+            <field name="arch" type="xml">
+                <form string="E-Invoice Scheduler Failed Log">
+                <sheet>
+                	<group>
+                		<field name="invoice_id" readonly="1"/>
+                		<field name="gstin" />
+                		<field name="reason" />
+                	</group>
+
+                </sheet>
+             </form>
+          </field>
+      </record>
+
+<!--		E-Invoice scheduler failed log tree view-->
+      <record id="einvoice_scheduler_failed_log_tree" model="ir.ui.view">
+            <field name="name">einvoice.scheduler.failed.log.tree</field>
+            <field name="model">einvoice.scheduler.failed.log</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                	<field name="invoice_id" readonly="1"/>
+                	<field name="gstin" />
+                	<field name="reason" />
+                	<field name="create_date" />
+                </tree>
+            </field>
+      </record>
+
+<!--		E-Invoice scheduler failed log action-->
+      <record id="action_einvoice_scheduler_failed_log" model="ir.actions.act_window">
+            <field name="name">E-Invoice Scheduler Failed Log</field>
+            <field name="res_model">einvoice.scheduler.failed.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'create':0,'edit':0}</field>
+      </record>
+
+<!--		E-Invoice scheduler failed log menu accounting -> configuration-->
+      <menuitem id="einvoice_cancel_reason_menu" 
+    	    name="E-Invoice Scheduler Failed Log"
+			action="action_einvoice_scheduler_failed_log"
+            parent="account.menu_finance_configuration"
+            sequence="200" /> 
+                    
+    </data>
+</odoo>

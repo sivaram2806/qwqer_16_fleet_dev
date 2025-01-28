@@ -1,0 +1,140 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+		
+		<!--Mail template for generating mails if Send for approval button action is called-->
+        <record id="vendor_onboarding_send_for_approval_email_template" model="mail.template">
+            <field name="name">Vendor Onboarding: Send for Approval</field>
+            <field name="model_id" ref="vendor_onboarding.model_vendor_lead"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Vendor Onboarding {{object.name}} Send for Approval</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         <t t-out="user.partner_id.name"/> has submitted vendor onboarding <t t-out="object.name"/> and awaiting your approval.<br/>
+                         
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=vendor.lead&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+                         
+                    	 Regards<br/>
+						 QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Manager Approve button action is called-->
+        <record id="vendor_onboarding_manager_approved_email_template" model="mail.template">
+            <field name="name">Vendor Onboarding: Manager Approved</field>
+            <field name="model_id" ref="vendor_onboarding.model_vendor_lead"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Vendor Onboarding {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Vendor onboarding <t t-out="object.name"/> has been approved by reporting manager <t t-out="user.partner_id.name"/> and sent to finance manager.<br/>
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=vendor.lead&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+                        
+                        Regards<br/>
+						QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Finance Approve button action is called-->
+        <record id="vendor_onboarding_finance_approved_email_template" model="mail.template">
+            <field name="name">Vendor Onboarding: Finance Approved</field>
+            <field name="model_id" ref="vendor_onboarding.model_vendor_lead"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Vendor Onboarding {{object.name}} Approved</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Vendor onboarding <t t-out="object.name"/> has been approved by finance manager <t t-out="user.partner_id.name"/>.<br/>
+                         <div style="text-align: left; margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="/web?#id={{object.id}}&amp;action={{ctx.get('action_id', '')}}&amp;model=vendor.lead&amp;view_type=form&amp;cids=&amp;menu_id=774"
+        						style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px">
+        					Click Here</a>
+                        </div><br/><br/>
+                        
+                        Regards<br/>
+						QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Return Approve button action is called-->
+        <record id="vendor_onboarding_return_email_template" model="mail.template">
+            <field name="name">Vendor Onboarding: Returned</field>
+            <field name="model_id" ref="vendor_onboarding.model_vendor_lead"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Vendor Onboarding {{object.name}} Returned</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Vendor onboarding <t t-out="object.name"/> has been returned to you by
+                         <t t-if="object.state=='pending_approval'"> reporting manager <t t-out="user.partner_id.name"/>.</t>
+                         <t t-else=""> finance manager <t t-out="user.partner_id.name"/>.</t>
+                         <br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+                        
+                        Regards<br/>
+						QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+        <!--Mail template for generating mails if Rejected Approve button action is called-->
+        <record id="vendor_onboarding_rejection_email_template" model="mail.template">
+            <field name="name">Vendor Onboarding: Rejected</field>
+            <field name="model_id" ref="vendor_onboarding.model_vendor_lead"/>
+            <field name="email_to">{{object.get_email_to()}}</field>
+            <field name="subject">Vendor Onboarding {{object.name}} Rejected</field>
+            <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         
+                         Hi<br/><br/>
+                         
+                         Vendor onboarding <t t-out="object.name"/> has been rejected by
+                         <t t-if="object.state=='pending_approval'"> reporting manager <t t-out="user.partner_id.name"/>.</t>
+                         <t t-else=""> finance manager <t t-out="user.partner_id.name"/>.</t>
+                         <br/>
+                         Reason:<t t-out="ctx.get('body_content')"/>.<br/><br/>
+                        
+                        Regards<br/>
+						QWQER
+					     
+                     </p>
+                 </div>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

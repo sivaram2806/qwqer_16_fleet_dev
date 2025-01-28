@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <!--  Action for vendor partner.segment model  -->
+    <record id="vendor_segment_action" model="ir.actions.act_window">
+        <field name="name">Segment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.segment</field>
+        <field name="view_id" ref="qwqer_base.partner_segment_tree_view"/>
+        <field name='domain'>[('is_vendor','=', True)]</field>
+        <field name="context">{'default_is_vendor': True}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a Vendor Segment.
+            </p>
+        </field>
+    </record>
+
+    <!--  menu item of Vendor Onboarding -> Configuration -> Segment	-->
+    <menuitem id="menu_vendor_segment"
+           action="vendor_segment_action"
+           parent="vendor_onboarding.menu_vendor_onboarding_config"
+           name="Segment"
+           sequence="2"/>
+
+</odoo>

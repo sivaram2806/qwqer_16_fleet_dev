@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_merchant_consolidated_root"
+              name="Consolidated Merchant"
+              parent="sale_extended.menu_generate_sale_invoice"
+              sequence="5"/>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="system_source_form_view" model="ir.ui.view">
+        <field name="name">system.source.form.view</field>
+        <field name="model">sys.source</field>
+        <field name="arch" type="xml">
+            <form string="Source">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="system_category_form_view" model="ir.ui.view">
+        <field name="name">system_category_form_view</field>
+        <field name="model">sys.category</field>
+        <field name="arch" type="xml">
+            <form string="Issue Category">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="project_id" required="1"
+                                   options="{'no_quick_create':True,'no_create_edit':True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cause_config_settings_view_tree" model="ir.ui.view">
+        <field name="name">cause.config.settings.view.tree</field>
+        <field name="model">cause.config.settings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="cause_name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_source" model="ir.actions.act_window">
+        <field name="name">Source</field>
+        <field name="res_model">sys.source</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_issue_category" model="ir.actions.act_window">
+        <field name="name">Issue Category</field>
+        <field name="res_model">sys.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="cause_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Cause</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cause.config.settings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Sources"
+              id="menu_action_source"
+              action="action_source"
+              parent="project.menu_project_config" sequence="5"/>
+
+    <menuitem name="Issue Category"
+              id="menu_action_issue_category"
+              action="action_issue_category"
+              parent="project.menu_project_config" sequence="6"/>
+
+    <menuitem id="menu_cause_config_settings"
+              name="Cause"
+              action="cause_config_settings_action"
+              parent="project.menu_project_config" sequence="9"/>
+</odoo>

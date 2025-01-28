@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Group category for fleet management-->
+    <record id="module_category_customer_onboarding" model="ir.module.category">
+        <field name="name">Customer Onboarding</field>
+    </record>
+
+    <record id="customer_onboarding_mu_approval" model="res.groups">
+        <field name="name">MU Approval</field>
+        <field name="category_id" ref="customer_onboarding.module_category_customer_onboarding"/>
+    </record>
+    <record id="customer_onboarding_finance_approval" model="res.groups">
+        <field name="name">Finance Approval</field>
+        <field name="category_id" ref="customer_onboarding.module_category_customer_onboarding"/>
+    </record>
+    <record id="customer_onboarding_approval" model="res.groups">
+        <field name="name">Customer Onboarding Approval</field>
+        <field name="category_id" ref="customer_onboarding.module_category_customer_onboarding"/>
+    </record>
+    <record id="customer_onboarding_pricing_approval" model="res.groups">
+        <field name="name">Pricing Approval</field>
+        <field name="category_id" ref="customer_onboarding.module_category_customer_onboarding"/>
+    </record>
+    <record id="customer_onboarding_config_access" model="res.groups">
+        <field name="name">Configuration Access</field>
+        <field name="category_id" ref="customer_onboarding.module_category_customer_onboarding"/>
+    </record>
+
+
+    <!--ir_rule for customer onboarding-->
+    <record id="customer_onboard_company_rule" model="ir.rule">
+        <field name="name">Company Rule Service Type</field>
+        <field name="model_id" ref="model_customer_onboard"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="edit_customer_record_only_assigned_user" model="ir.rule">
+        <field name="name">Approval User Can Edit Or Approve The Record</field>
+        <field name="model_id" ref="customer_onboarding.model_customer_onboard"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">[('is_approval_user','=',True)]</field>
+    </record>
+</odoo>

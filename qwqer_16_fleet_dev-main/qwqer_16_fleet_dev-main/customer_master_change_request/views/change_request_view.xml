@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_master_change_request_tree" model="ir.ui.view">
+        <field name="name">customer.master.change.request.tree</field>
+        <field name="model">customer.master.change.request</field>
+        <field name="arch" type="xml">
+            <tree string="Change request" default_order="id desc" delete="0" duplicate="0">
+                <field name="rec_no" string="Change Request No"/>
+                <field name="customer_id"/>
+                <field name="type"/>
+                <field name="phn_number"/>
+                <field name="region_id"/>
+                <field name="state" string="Status"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="customer_master_change_request_form" model="ir.ui.view">
+        <field name="name">customer.master.change.request.form</field>
+        <field name="model">customer.master.change.request</field>
+        <field name="priority" eval="12"/>
+        <field name="arch" type="xml">
+            <form string="Change request" duplicate="0" delete="0">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="proceed_change_req" string="Proceed" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|','|',('is_proceed','=',True),('state','=','rejected'),('is_approval_user','=',False)]}"/>
+                    <button name="action_confirm" string="Submit" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|','|',('is_proceed','=',False),('state','!=','new'),('is_approval_user','=',False)]}"/>
+                    <button name="action_rejected" string="Reject" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|',('state','in',['new','approved']),('is_approval_user','=',False)]}"/>
+                    <button name="action_mu_approval" string="Approve" type="object" states="mu_approval_pending"
+                            class="oe_highlight" groups="customer_onboarding.customer_onboarding_mu_approval"/>
+                    <button name="action_finance_approval" string="Approve" type="object"
+                            states="fin_approval_pending" class="oe_highlight"
+                            groups="customer_onboarding.customer_onboarding_finance_approval"/>
+                    <button name="action_return_correction" string="Return For Correction" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': ['|',('state','in',['new','approved','rejected']),('is_approval_user','=',False)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="rec_no"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group attrs="{'invisible': [('is_proceed','=',True),('is_submitted','=',False)]}">
+                            <field name="customer_id" required="True" domain="[('customer_rank','>', 0) ]" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="type"/>
+                            <field name="phn_number"/>
+                            <field name="region_id"/>
+                            <field name="customer_service_type_id"/>
+                            <field name="company_id"/>
+                            <field name="field_to_change" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}" domain="[('id', 'in', change_field_domain)]" />
+                            <field name="change_field_domain" width="70px" force_save="1" invisible="1"/>
+                        </group>
+                        <group attrs="{'invisible': [('is_proceed','=',False)]}">>
+                            <label for="street" string="Address" attrs="{'invisible': [('is_address','=',False)]}"/>
+                            <div class="o_address_format" attrs="{'invisible': [('is_address','=',False)]}">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" class="o_address_state" placeholder="State"
+                                       options='{"no_open": True}'/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country"
+                                       options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group attrs="{'invisible': [('is_proceed','=',False)]}">
+                            <field name="invoice_frequency_id"
+                                   attrs="{'invisible': [('is_invoice_frequency_id','=',False)],'required': [('is_invoice_frequency_id', '=', True)]}"/>
+                            <field name="vat" attrs="{'invisible': [('is_vat','=',False)],'required': [('is_vat', '=', True)]}"/>
+                            <field name="l10n_in_pan" attrs="{'invisible': [('is_tax_id','=',False)],'required': [('is_tax_id', '=', True)]}"/>
+                            <field name="source_lead_type_id"
+                                   attrs="{'invisible': [('is_source_lead_type_id','=',False)],'required': [('is_source_lead_type_id', '=', True)]}"/>
+                            <field name="industry_id" attrs="{'invisible': [('is_industry_id','=',False)],'required': [('is_industry_id', '=', True)]}"/>
+                            <field name="potential_orders_id"
+                                   attrs="{'invisible': [('is_potential_orders_id','=',False)],'required': [('is_potential_orders_id', '=', True)]}"/>
+                            <field name="delivery_type_id"
+                                   attrs="{'invisible': [('is_delivery_type_ids','=',False)],'required': [('is_delivery_type_ids', '=', True)]}"/>
+                            <field name="pick_up_area" attrs="{'invisible': [('is_pick_up_area','=',False)],'required': [('is_pick_up_area', '=', True)]}"/>
+                            <field name="item_category_id" attrs="{'invisible': [('is_item_category_id','=',False)],'required': [('is_item_category_id', '=', True)]}"/>
+                            <field name="order_sales_person"
+                                   attrs="{'invisible': [('is_order_sales_person','=',False)],'required': [('is_order_sales_person', '=', True)],'required': [('is_order_sales_person', '=', True)]}"/>
+                            <field name="api_selection" attrs="{'invisible': [('is_api_selection','=',False)],'required': [('is_api_selection', '=', True)]}"/>
+                            <field name="distance_limitation"
+                                   attrs="{'invisible': [('is_distance_limitation','=',False)],'required': [('is_distance_limitation', '=', True)]}"/>
+                            <field name="followup_status_id"
+                                   attrs="{'invisible': [('is_followup_status_id','=',False)],'required': [('is_followup_status_id', '=', True)]}"/>
+                            <field name="payment_mode_ids" widget="many2many_checkboxes"
+                                   attrs="{'invisible': [('is_payment_mode','=',False)]}"/>
+                            <field name="merchant_amount_collection" widget="radio" options="{'horizontal': true}"
+                                   readonly="0" force_save="1" string="Merchant Amount Collection"
+                                   attrs="{'invisible': [('is_merchant_collection', '=', False)]}"/>
+                            <label for="amount_collection_sign" string="Amount Collection Limit"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                            <div class="o_row" style="width:90% !important;"
+                                 attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}">
+                                <div>
+                                    <field name="amount_collection_sign" readonly="1"/>
+                                </div>
+                                <div style="width:80% !important;">
+                                    <field name="amount_collection_limit" string="Amount Collection Limit"
+                                           placeholder="Limit set till 7000.."/>
+                                </div>
+                            </div>
+                            <field name="settlement_time_id" string="Settlement Time"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                            <label for="collection_charges" string="Collection Charges"
+                                   attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                            <div class="o_row" style="width:90% !important;"
+                                 attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}">
+                                <div>
+                                    <field name="collection_charges" string="Collection Charges"/>
+                                </div>
+                                <div style="width:60% !important;">
+                                    <field name="collection_charges_sign" readonly="1"/>
+                                </div>
+                            </div>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('is_proceed','=',False)]}">
+                        <group>
+                            <field name="sms_alert"
+                                   attrs="{'invisible': [('is_sms_alert','=',False)],'required': [('is_sms_alert', '=', True)]}"/>
+                            <field name="email_alert"
+                                   attrs="{'invisible': [('is_email_alert','=',False)],'required': [('is_email_alert', '=', True)]}"/>
+                            <field name="segment_id"
+                                   options="{'no_create': True, 'no_create_edit': True,'no_open':True}"
+                                   attrs="{'invisible': [('is_customer_segment_id','=',False)],'required': [('is_customer_segment_id', '=', True)]}"/>
+                            <field name="fleet_customer_segment_id"
+                                   options="{'no_create': True, 'no_create_edit': True,'no_open':True}"
+                                   attrs="{'invisible': [('is_fleet_customer_segment_id','=',False)],'required': [('is_fleet_customer_segment_id', '=', True)]}"/>
+                            <field name="customer_type"
+                                   attrs="{'invisible': [('is_customer_type','=',False)],'required': [('is_customer_type', '=', True)]}"/>
+                            <field name="pricing_type" widget="radio" force_save="1"
+                                   attrs="{'invisible': [('is_pricing_type','=',False)],'required': [('is_pricing_type', '=', True)]}"/>
+
+                            <field name="tds_threshold_check"
+                                   string="Apply TDS / Withholding if the turnover crosses the threshold"
+                                   attrs="{'invisible': [('is_tds','=',False)],'required': [('is_tds', '=', True)]}"/>
+                            <field name="fleet_hsn_id"
+                                   attrs="{'invisible': ['|',('is_fleet_hsn_id','=',False),('is_proceed','=',False)],'required': [('is_fleet_hsn_id', '=', True)],'required': [('is_fleet_hsn_id', '=', True)]}"/>
+
+
+                            <field name="credit_period_id"
+                                   options="{'no_create': True, 'no_create_edit': True,'no_open':True}"
+                                   attrs="{'invisible': [('is_credit_period_id','=',False)],'required': [('is_credit_period_id', '=', True)]}"/>
+                            <field name="active_limit" attrs="{'invisible': [('is_credit_limit','=',False)],'required': [('is_credit_limit', '=', True)]}"/>
+                            <field name="blocking_stage" attrs="{'invisible': [('is_credit_limit','=',False)],'required': [('is_credit_limit', '=', True)]}"/>
+                            <field name="contract_id"
+                                   options="{'no_create': True, 'no_create_edit': True,'no_open':True}"
+                                   attrs="{'invisible': [('is_contract_id','=',False)],'required': [('is_contract_id', '=', True)]}"/>
+                            <field name="contact_designation"
+                                   attrs="{'invisible': [('is_contact_designation','=',False)]}"/>
+                            <field name="is_fifo_flow"
+                                   attrs="{'invisible': [('is_fifo','=',False)],'required': [('is_fifo_flow', '=', True)]}"/>
+                            <field name="max_no_de"
+                                   attrs="{'invisible': ['|','|',('is_fifo','=',False),('is_proceed','=',False),('is_fifo_flow','=','no')],'required': [('is_fifo', '=', True)]}"/>
+                            <field name="product_line_id"
+                                   options="{'no_create': True, 'no_create_edit': True,'no_open':True}"
+                                   attrs="{'invisible': [('is_product_line','=',False)],'required': [('is_product_line', '=', True)]}"/>
+                            <field name="source_type_id"
+                                   options="{'no_create': True, 'no_create_edit': True,'no_open':True}"
+                                   attrs="{'invisible': [('is_source','=',False)],'required': [('is_source', '=', True)]}"/>
+                        </group>
+                    </group>
+                    <group invisible="1">
+                        <group invisible="1">
+                            <field name="is_payment_mode"/>
+                            <field name="is_address"/>
+                            <field name="is_invoice_frequency_id"/>
+                            <field name="is_vat"/>
+                            <field name="is_customer_type"/>
+                            <field name="is_tax_id"/>
+                            <field name="is_sms_alert"/>
+                            <field name="is_email_alert"/>
+                            <field name="is_customer_segment_id"/>
+                            <field name="is_fleet_customer_segment_id"/>
+                            <field name="is_source_lead_type_id"/>
+                            <field name="is_industry_id"/>
+                            <field name="is_potential_orders_id"/>
+                            <field name="is_delivery_type_ids"/>
+                            <field name="is_pick_up_area"/>
+                            <field name="is_item_category_id"/>
+                            <field name="is_pricing_type"/>
+                            <field name="is_tds"/>
+                            <field name="is_item_category_id"/>
+                            <field name="is_order_sales_person"/>
+                            <field name="is_api_selection"/>
+                            <field name="is_distance_limitation"/>
+                            <field name="is_followup_status_id"/>
+                            <field name="is_fleet_hsn_id"/>
+                            <field name="is_credit_period_id"/>
+                            <field name="is_contract_id"/>
+                            <field name="is_contact_designation"/>
+                            <field name="is_price_plan"/>
+                            <field name="is_merchant_collection"/>
+                            <field name="is_fleet_customer_segment"/>
+                            <field name="is_proceed"/>
+                            <field name="is_mu_user"/>
+                            <field name="is_fn_user"/>
+                            <field name="is_user"/>
+                            <field name="is_mu_user"/>
+                            <field name="is_fn_user"/>
+                            <field name="is_fifo"/>
+                            <field name="is_stop_charge"/>
+                            <field name="is_product_line"/>
+                            <field name="is_source"/>
+                            <field name="is_approval_user"/>
+                            <field name="is_user" string="user"/>
+                            <field name="is_submitted"/>
+                            <field name="is_credit_limit"/>
+                        </group>
+                        <group>
+                            <field name="comment" readonly="1" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="pricing_plan_details" string="Pricing Plan"
+                              attrs="{'invisible': ['|',('is_proceed','=',False),('is_stop_charge','=',False),('is_price_plan','=',False)]}">
+
+                            <group name="pricing_plan" attrs="{'invisible': [('is_price_plan','=',False)]}">
+                                <group>
+                                    <field name="pricing_model" widget="radio" string="Pricing Model"
+                                           options="{'horizontal': true}" force_save="1"
+                                           attrs="{'invisible': [('is_price_plan','=',False)]}"/>
+                                    <field name="agreement_document"
+                                           attrs="{'invisible': [('is_price_plan','=',False)]}"/>
+                                </group>
+
+                            </group>
+                            <separator string="Pricing Plan" name="pricing_plan"
+                                       attrs="{'invisible': [('is_price_plan','=',False)]}"/>
+                            <field name="new_km_pricing_plan_ids" string="Select Plan"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': ['|',('pricing_model','not in',('KM',True)),('is_price_plan','=',False)]}">
+                                <tree string="KM Pricing Plan" editable="bottom" class="select_plan_kilometer_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','KM')]}">
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="300px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                                    <field name="select_plan_type" string="Select Plan" force_save="1"
+                                           invisible="1"/>
+                                    <field name="min_distance" string="Minimum Distance(Km)" required="1"
+                                           width="300px"/>
+                                    <field name="min_cost" string="Minimum Cost(Rs)" required="1" width="300px"/>
+                                    <field name="per_km_charge" string="Per Kilometre Charge(Rs)" required="1"
+                                           width="300px"/>
+                                    <field name="pricing_plan_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <field name="new_slab_pricing_plan_ids" string="Select Plan"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': ['|',('pricing_model','not in',('slab',True)),('is_price_plan','=',False)]}">
+                                <tree string="Slab Pricing Plan" editable="bottom" class="select_plan_slab_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','slab')]}">
+                                    <field name="from_distance" string="From Distance(Km)" required="1"
+                                           width="300px"/>
+                                    <field name="to_distance" string="To Distance(Km)" required="1" width="300px"/>
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="300px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                                    <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                    <field name="price" string="Price(Rs)" required="1" width="300px"/>
+                                    <field name="pricing_plan_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <field name="new_flat_pricing_plan_ids" string="Select Plan"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': ['|',('pricing_model','not in',('flat',True)),('is_price_plan','=',False)]}">
+                                <tree string="Flat Pricing Plan" editable="bottom" class="select_plan_flat_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','flat')]}">
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="400px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="400px"/>
+                                    <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                    <field name="price" string="Price(Rs)"
+                                           attrs="{'invisible': [('select_plan_type','=','KM')]}" width="400px"/>
+                                    <field name="pricing_plan_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <separator string="Previous Pricing Plan" name="previous_pricing_plan"/>
+                            <group>
+                                <field name="previous_pricing_model" widget="radio" string="Pricing Model"
+                                       options="{'horizontal': true}" force_save="1" readonly="1"
+                                       attrs="{'invisible': [('is_price_plan','=',False)]}"/>
+                            </group>
+
+
+                            <field name="previous_km_pricing_plan_ids" string="Select Plan" readonly="1"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': ['|',('previous_pricing_model','not in',('KM',True)),('is_price_plan','=',False)]}">
+                                <tree string="KM Pricing Plan" editable="bottom" class="select_plan_kilometer_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','KM')]}"
+                                      options='{"no_open": True}'>
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="300px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                                    <field name="select_plan_type" string="Select Plan" force_save="1"
+                                           invisible="1"/>
+                                    <field name="min_distance" string="Minimum Distance(Km)" required="1"
+                                           width="300px"/>
+                                    <field name="min_cost" string="Minimum Cost(Rs)" required="1" width="300px"/>
+                                    <field name="per_km_charge" string="Per Kilometre Charge(Rs)" required="1"
+                                           width="300px"/>
+                                    <field name="pricing_plan_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <field name="previous_slab_pricing_plan_ids" string="Select Plan" readonly="1"
+                                   context="{'default_select_plan_type': pricing_model}"
+                                   attrs="{'invisible': ['|',('previous_pricing_model','not in',('slab',True)),('is_price_plan','=',False)]}">
+                                <tree string="Slab Pricing Plan" editable="bottom" class="select_plan_slab_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','slab')]}">options='{"no_open":
+                                    True}'
+                                    <field name="from_distance" string="From Distance(Km)" required="1"
+                                           width="300px"/>
+                                    <field name="to_distance" string="To Distance(Km)" required="1" width="300px"/>
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="300px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                                    <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                    <field name="price" string="Price(Rs)" required="1" width="300px"/>
+                                    <field name="pricing_plan_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <field name="previous_flat_pricing_plan_ids" string="Select Plan" readonly="1"
+                                   context="{'default_select_plan_type': pricing_model}" options='{"no_open": True}'
+                                   attrs="{'invisible': ['|',('previous_pricing_model','not in',('flat',True)),('is_price_plan','=',False)]}">
+                                <tree string="Flat Pricing Plan" editable="bottom" class="select_plan_flat_tree"
+                                      attrs="{'invisible': [('select_plan_type','!=','flat')]}">
+                                    <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                           width="400px"/>
+                                    <field name="maximum_weight" string="To Weight(Kg)" required="1" width="400px"/>
+                                    <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                    <field name="price" string="Price(Rs)"
+                                           attrs="{'invisible': [('select_plan_type','=','KM')]}" width="400px"/>
+                                    <field name="pricing_plan_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <separator string="Additional Charges" name="stop_charge"
+                                       attrs="{'invisible': [('is_stop_charge','=',False)]}"/>
+                            <field name="new_additional_charges_ids" string="Additional Charges"
+                                   attrs="{'invisible': [('is_stop_charge','=',False)]}">
+                                <tree string="Additional Charges" editable="bottom">
+                                    <field name="charge_type_id" required="1" context="{'crm_lead_form': True}"
+                                           width="400px"/>
+                                    <field name="amount_type" required="1" width="400px"/>
+                                    <field name="amount" required="1" width="400px"/>
+                                    <field name="additional_charge_id"/>
+                                </tree>
+                                <form string="Additional Charges">
+                                    <sheet>
+                                        <group>
+                                            <field name="charge_type_id" required="1"/>
+                                            <field name="amount_type" required="1"/>
+                                            <field name="amount" required="1"/>
+                                            <field name="additional_charge_id"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+
+                            <separator string="Previous Additional Charges" name="stop_charge"
+                                       attrs="{'invisible': [('is_stop_charge','=',False)]}"/>
+                            <field name="previous_additional_charges_ids" string="Additional Charges" readonly="1"
+                                   attrs="{'invisible': [('is_stop_charge','=',False)]}">
+                                <tree string="Additional Charges" editable="bottom">
+                                    <field name="charge_type_id" required="1" context="{'crm_lead_form': True}"
+                                           width="400px"/>
+                                    <field name="amount_type" required="1" width="400px"/>
+                                    <field name="amount" required="1" width="400px"/>
+                                </tree>
+                                <form string="Additional Charges">
+                                    <sheet>
+                                        <group>
+                                            <field name="charge_type_id" required="1"/>
+                                            <field name="amount_type" required="1"/>
+                                            <field name="amount" required="1"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                        <page name="user_actions" string="User Action Log"
+                              attrs="{'invisible': [('is_proceed','=',True),('is_submitted','=',False)]}">
+                            <field name="user_action_ids" string="User Action Log" no_label="1">
+                                <tree string="History" editable="bottom" delete="0" create="0">
+                                    <field name="res_user" readonly="1"/>
+                                    <field name="state_from" readonly="1"/>
+                                    <field name="state_to" readonly="1"/>
+                                    <field name="comments" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                <footer>
+
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!--    wizard form for adding comments-->
+    <record id="customer_master_change_request_comment_form" model="ir.ui.view">
+        <field name="name">customer.master.change.request.comment.add.form</field>
+        <field name="model">customer.master.change.request</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="comment" required="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_submit_form" string="Submit" type="object" class="btn-primary"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_customer_master_change_req" model="ir.actions.act_window">
+        <field name="name">Customer Master Change Request Form</field>
+        <field name="res_model">customer.master.change.request</field>
+        <field name="view_id" ref="customer_master_change_request.customer_master_change_request_tree"/>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+
+    <menuitem
+            id="menu_customer_request"
+            name="Change Request"
+            parent="crm.crm_menu_sales"
+            action="action_customer_master_change_req"
+            sequence="1"/>
+
+
+</odoo>
+

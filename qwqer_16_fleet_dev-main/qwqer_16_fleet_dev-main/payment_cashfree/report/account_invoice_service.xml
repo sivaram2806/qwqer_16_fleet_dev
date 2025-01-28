@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+<!--    invoice Template update base changes-->
+	<template id="accountinvoice_layout_document_inerit" inherit_id="account_base.accountinvoice_layout_document">
+		<xpath expr="//div[@id='terms_and_conditions']" position="replace">
+			<div id="terms_and_conditions" width="100%">
+                <t t-if="payment_method">
+                    <div align= "left" style = "width : 100%;">
+                        <t t-if="o.move_type == 'out_invoice' and o.state=='posted' and o.payment_state=='not_paid' and o.payment_link">
+                            <b>Payment Link: </b>
+                            <a t-attf-href="#{o.payment_link}" style="padding: 5px 10px; color: blue;">
+                                <span t-field="o.payment_link"/>
+                              </a>
+                        </t>
+                        <p style="font-size : 14px; padding-top: 75px;"> TERMS &amp; CONDITIONS </p>
+                        <p style="font-size : 12px;
+                            font-style: italic;">Invoices must be paid within seven days of receipt/presentment
+                         for payment or as per the specific agreement entered with the
+                         customer. Payment beyond applicable due date shall attract interest
+                         at the rate of 1.5% per month. The interest shall accrue daily and
+                         it shall run from the due date until the amount is paid in full.</p>
+                    </div>
+                </t>
+            </div>
+		</xpath>
+	</template>
+
+</odoo>

@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_delivery_type,access_delivery_type,model_delivery_type,sales_team.group_sale_manager,1,1,1,1
+access_delivery_type_user,access_delivery_type,model_delivery_type,base.group_user,1,0,0,0
+access_crm_bulk_import,access.crm.bulk.import,model_crm_bulk_import,sales_team.group_sale_manager,1,1,1,1
+access_crm_bulk_import_user,access.crm.bulk.import,model_crm_bulk_import,base.group_user,1,1,1,0
+access_crm_bulk_import_line,access.crm.bulk.import.line,model_crm_bulk_import_line,sales_team.group_sale_manager,1,1,1,1
+access_crm_bulk_import_line_user,access.crm.bulk.import.line,model_crm_bulk_import_line,base.group_user,1,1,1,0
+access_competition_master,access_competition_master,model_competition_master,,1,1,1,1
+
+
+
+
+

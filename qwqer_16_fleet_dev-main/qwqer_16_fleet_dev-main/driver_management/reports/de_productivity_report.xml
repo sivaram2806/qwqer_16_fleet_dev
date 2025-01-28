@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- DE Productivity Report Pivot -->
+    <record id="view_de_productivity_report_pivot" model="ir.ui.view">
+         <field name="name">driver.productivity.report.pivot</field>
+         <field name="model">de.productivity.report</field>
+         <field name="arch" type="xml">
+             <pivot string="DE Productivity" disable_linking="True">
+             	<field name="state_id" type="row"/>
+                <field name="region_id" type="row"/>
+                <field name="order_count"  type="measure" string="Order Count"/>
+                <field name="driver_count" type="measure" string="Driver Count"/>
+                <field name="productivity"  type="measure" string="Productivity"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_de_productivity_report_search" model="ir.ui.view">
+        <field name="name">de.productivity.report.search</field>
+        <field name="model">de.productivity.report</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="region_id" filter_domain="[('region_id','ilike',self)]"/>
+                <separator/>
+                <filter string="Today" name="today_created" domain="['&amp;',
+	                	('productivity_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('productivity_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <filter string="Yesterday" name="yesterday_created" domain="['&amp;',
+	                	('productivity_date', '&lt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('productivity_date', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <filter string="Current Week" name="current_week"
+                        domain="[('productivity_date', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+        						('productivity_date', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"/>
+                <filter string="Current Month" name="this_month"
+                        domain="[('productivity_date', '&gt;=', context_today().strftime('%%Y-%%m-01 00:00:00'))]"/>
+                <filter string="Last Week" name="week"
+                        domain="[('productivity_date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last Month" name="month"
+                        domain="[('productivity_date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last 3 Month" name="last3_month"
+                        domain="[('productivity_date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="State" name="state_gp" context="{'group_by':'state_id'}"/>
+                    <filter string="Region" name="region_gp" context="{'group_by':'region_id'}"/>
+                    <filter string="Manager" name="manager_gp" context="{'group_by':'manager_id'}"/>
+                    <filter string="Manager Position" name="job_id_gp" context="{'group_by':'job_id'}"/>
+                    <filter string="Vehicle Category" name="vehicle_categ_gp" context="{'group_by':'vehicle_category_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--  Action for DE Productivity Report  -->
+    <record id="action_de_productivity" model="ir.actions.act_window">
+        <field name="name">DE Productivity Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">de.productivity.report</field>
+        <field name="view_mode">pivot</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                No driver report available to show
+            </p>
+        </field>
+    </record>
+
+    <!-- menu for DE productivity report in driver management module -->
+    <menuitem id="menu_driver_mgmt_de_productivity"
+              action="action_de_productivity"
+              name="DE Productivity Report"
+              parent="driver_management.menu_driver_reports_main_menu" sequence="50"/>
+</odoo>

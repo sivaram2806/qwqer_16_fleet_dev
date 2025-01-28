@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="customer_onboard_api_form_view" model="ir.ui.view">
+            <field name="name">customer.onboard.api.form.view</field>
+            <field name="model">customer.onboard</field>
+            <field name="inherit_id" ref="customer_onboarding.customer_onboard_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='pricing_config_approval']" position="after">
+                    <page string="Api Details" groups="base.group_system">
+                        <field name="api_details_ids" string="Api Details">
+                            <tree editable="bottom" create="0">
+                                <field name="api_name"/>
+                                <field name="data"/>
+                                <field name="status"/>
+                                <field name="response"/>
+                                <button name="resync_create_customer"
+                                        string="Resync"
+                                        type="object"
+                                        class="btn-secondary"
+                                        icon="fa-refresh"/>
+                            </tree>
+                        </field>
+                        <group>
+                            <group>
+                                <field name="sync_status" readonly="1"/>
+                                <field name="v13_partner_id" readonly="1" force_save="1"/>
+                            </group>
+                            <group></group>
+                        </group>
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

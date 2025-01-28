@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--    view for import bank data-->
+        <record id="import_bank_xlsx_view_form" model="ir.ui.view">
+            <field name="name">import.bank.xlsx.view.form</field>
+            <field name="model">import.bank.xlxs.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import Bank Data">
+                    <group>
+                        <field name="xlxs_file"/>
+                    </group>
+                    <footer>
+                        <button type="object" name="import_file" class="oe_highlight" string="Import"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!--view action for import bank data-->
+        <record id="action_import_bank_xlxs_form" model="ir.actions.act_window">
+            <field name="name">Import Bank Details</field>
+            <field name="res_model">import.bank.xlxs.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="import_bank_xlsx_view_form"/>
+        </record>
+
+        <menuitem id="menu_import_bank_details" name="Import Bank Details"
+                  action="payment_request.action_import_bank_xlxs_form"
+                  parent="account.menu_finance_payables"
+                  sequence="201"/>
+    </data>
+
+</odoo>

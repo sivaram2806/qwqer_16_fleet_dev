@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--  Action for vendor service.type model  -->
+    <record id="vendor_service_type_action" model="ir.actions.act_window">
+        <field name="name">Service Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.service.type</field>
+        <field name="view_id" ref="qwqer_base.partner_service_type_tree_view"/>
+        <field name='domain'>[('is_vendor','=', True)]</field>
+        <field name="context">{'default_is_vendor': True}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a Vendor Service Type.
+            </p>
+        </field>
+    </record>
+    
+    <!--  menu item of Vendor Onboarding -> Configuration -> Service Type	-->
+    <menuitem id="menu_vendor_service_type"
+              action="vendor_service_type_action"
+              parent="vendor_onboarding.menu_vendor_onboarding_config"
+              name="Service Type"
+              sequence="1"/>
+</odoo>

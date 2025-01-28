@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Inherited and modified for res.partner model  -->
+    <record id="res_partner_form_view_delivery_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.delivery.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <group attrs="{'invisible':[('is_delivery_customer','=',False)]}">
+                    <group string="QWQER Delivery Tax" name="vehicle_tax">
+                        <field name="b2b_invoice_tax_ids" widget="many2many_tags"/>
+                        <field name="b2b_sale_order_tax_ids" widget="many2many_tags"/>
+                        <field name="is_delivery_customer" invisible="1"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//notebook/page[@name='internal_notes']"
+                   position="before">
+                <page name="pricing_plan" string="Pricing Plan"
+                      attrs="{'invisible':[('is_delivery_customer','=',False)]}">
+                    <group>
+                        <group>
+                            <field name="pricing_model" widget="radio" options="{'horizontal': true}"
+                                   force_save="1"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                    <field name="km_pricing_plan_ids" string="Select Plan"
+                           context="{'default_select_plan_type': pricing_model}"
+                           attrs="{'invisible': [('pricing_model','not in',('KM',True))]}">
+                        <tree string="KM Pricing Plan" editable="bottom" class="select_plan_kilometer_tree"
+                              attrs="{'invisible': [('select_plan_type','!=','KM')]}">
+                            <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                   width="300px"/>
+                            <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                            <field name="select_plan_type" string="Select Plan" force_save="1"
+                                   invisible="1"/>
+                            <field name="min_distance" string="Minimum Distance(Km)" required="1"
+                                   width="300px"/>
+                            <field name="min_cost" string="Minimum Cost(Rs)" required="1" width="300px"/>
+                            <field name="per_km_charge" string="Per Kilometre Charge(Rs)" required="1"
+                                   width="300px"/>
+                        </tree>
+                    </field>
+
+                    <field name="slab_pricing_plan_ids" string="Select Plan"
+                           context="{'default_select_plan_type': pricing_model}"
+                           attrs="{'invisible': [('pricing_model','not in',('slab',True))]}">
+                        <tree string="Slab Pricing Plan" editable="bottom" class="select_plan_slab_tree"
+                              attrs="{'invisible': [('select_plan_type','!=','slab')]}">
+                            <field name="from_distance" string="From Distance(Km)" required="1"
+                                   width="300px"/>
+                            <field name="to_distance" string="To Distance(Km)" required="1" width="300px"/>
+                            <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                   width="300px"/>
+                            <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                            <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                            <field name="price" string="Price(Rs)" required="1" width="300px"/>
+                        </tree>
+                    </field>
+                    <field name="flat_pricing_plan_ids" string="Select Plan"
+                           context="{'default_select_plan_type': pricing_model}"
+                           attrs="{'invisible': [('pricing_model','not in',('flat',True))]}">
+                        <tree string="Flat Pricing Plan" editable="bottom" class="select_plan_flat_tree"
+                              attrs="{'invisible': [('select_plan_type','!=','flat')]}">
+                            <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                   width="400px"/>
+                            <field name="maximum_weight" string="To Weight(Kg)" required="1" width="400px"/>
+                            <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                            <field name="price" string="Price(Rs)"
+                                   attrs="{'invisible': [('select_plan_type','=','KM')]}" width="400px"/>
+                        </tree>
+                    </field>
+                    <separator string="Additional Charges" name="stop_charge"/>
+                    <field name="additional_charges_ids" string="Additional Charges">
+                        <tree string="Additional Charges" editable="bottom">
+                            <field name="charge_type_id" required="1" context="{'crm_lead_form': True}"
+                                   width="400px"/>
+                            <field name="amount_type" required="1" width="400px"/>
+                            <field name="amount" required="1" width="400px"/>
+                        </tree>
+                        <form string="Additional Charges">
+                            <sheet>
+                                <group>
+                                    <field name="charge_type_id" required="1"/>
+                                    <field name="amount_type" required="1"/>
+                                    <field name="amount" required="1"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+
+
+

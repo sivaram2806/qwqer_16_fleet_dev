@@ -1,0 +1,14 @@
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_project_task" model="ir.sequence">
+            <field name="name">Project</field>
+            <field name="code">project.task</field>
+            <field name="prefix">QWY-</field>
+            <field name="padding">4</field>
+
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+
+        </record>
+    </data>
+</odoo>

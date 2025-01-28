@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Inherited and modified for res.partner model  -->
+    <record id="res_partner_form_view_qshop_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.qshop.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <group attrs="{'invisible':[('is_qshop_customer','=',False)]}">
+                    <group string="QWQER Shop Tax" name="vehicle_tax">
+                        <field name="qshop_invoice_tax_ids" widget="many2many_tags"/>
+                        <field name="qshop_sale_order_tax_ids" widget="many2many_tags"/>
+                        <field name="is_qshop_customer" invisible="1"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_form_view_delivery_inherit_by_qshop" model="ir.ui.view">
+        <field name="name">res.partner.view.delivery.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="delivery_base.res_partner_form_view_delivery_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='pricing_plan']" position="attributes">
+                <attribute name="attrs">{'invisible':
+                    [('is_delivery_customer','=',False),('is_qshop_customer','=',False)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_qwqershop_inherit_search" model="ir.ui.view">
+        <field name="name">res.partner.qwqershop.inherit.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/filter[@name='inactive']" position="before">
+                <separator/>
+                <filter string="Delivery Service" name="delivery"
+                        domain="[('service_type_id.is_delivery_service', '=', True)]"/>
+                <filter string="Qwqer Shop Service" name="qwqershop"
+                        domain="[('service_type_id.is_qshop_service', '=', True)]"/>
+                <separator/>
+                <filter string="Current Year" name="current_year"
+                        domain="['|', ('create_date', '=', False), '&amp;',('create_date','&lt;=', time.strftime('%%Y-12-31')),('create_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <filter string="Last 3 Month" name="last3_month"
+                        domain="[('create_date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                <filter string="Last 6 Month" name="last6_month"
+                        domain="[('create_date','&gt;=',(datetime.datetime.now() - relativedelta(months=5)).strftime('%Y-%m-01'))]"/>
+                <separator/>
+            </xpath>
+            <xpath expr="//search" position="inside">
+                <field name="service_type_id"/>
+                <separator/>
+                <filter name="group_service_type_id" string="Service Type"
+                        context="{'group_by':'service_type_id'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_view_buttons_inherited" model="ir.ui.view">
+        <field name="name">res.partner.custom.buttons.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale.res_partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_view_sale_order']" position="replace">
+                <button class="oe_stat_button" width="300" type="object" name="action_view_partner_qshop_orders"
+                        groups="sales_team.group_sale_salesman" icon="fa-inr">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Delivery Sales:</span>
+                        <span class="o_stat_text">QShop Sales:</span>
+                    </div>
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="sale_order_count" class="oe_clear"/>
+                        </span>
+                        <span class="o_stat_value">
+                            <field name="qshop_sale_order_count" class="oe_clear"/>
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="res_partner_account_buttons_inherit" model="ir.ui.view">
+        <field name="name">res.partner.account.buttons.formview</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.partner_view_buttons"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_view_partner_invoices']" position="replace">
+                <button type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                        name="action_view_partner_invoices"
+                        context="{'default_partner_id': active_id,'merchant_amt_validate':False}">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Delivery Invoiced:</span>
+                        <span class="o_stat_text">QShop Invoiced:</span>
+                    </div>
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="total_invoiced" string="Invoiced" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                        </span>
+                        <span class="o_stat_value">
+                            <field name="total_qshop_invoiced" string="QWQER Shop Invoiced" widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                        </span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

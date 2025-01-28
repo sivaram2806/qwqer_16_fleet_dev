@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- sequence for Manual wallet adding -->
+        <record id="manual_wallet_recharge_seq_number" model="ir.sequence">
+            <field name="name">Manual Wallet Recharge Sequence Number</field>
+            <field name="code">manual.wallet.recharge.sequence</field>
+            <field name="prefix">MWR_</field>
+            <field name="padding">4</field>
+            <field name="implementation">no_gap</field>
+
+        </record>
+        
+        <!-- sequence for Manual wallet deduction -->
+        <record id="manual_wallet_deduct_seq_number" model="ir.sequence">
+            <field name="name">Manual Wallet Deduction Sequence Number</field>
+            <field name="code">manual.wallet.deduction.sequence</field>
+            <field name="prefix">MWD_</field>
+            <field name="padding">4</field>
+            
+        </record>
+    </data>
+</odoo>

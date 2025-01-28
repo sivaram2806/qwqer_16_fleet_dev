@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vendor Lead form view -->
+    <record id="vendor_lead_form" model="ir.ui.view">
+        <field name="name">vendor.lead.form</field>
+        <field name="model">vendor.lead</field>
+        <field name="arch" type="xml">
+            <form duplicate='0'>
+                <header>
+                	<button type="object" 
+							name="action_approve_comment" 
+							class="btn btn-primary" 
+							string="Send For Approval"
+							groups="vendor_onboarding.group_vendor_onboarding_create_access"
+							attrs="{'invisible': [('state', '!=', 'new')]}"
+							context="{'from_send_for_approve': True}"/>
+					<button type="object" 
+							name="action_approve_comment" 
+							class="btn btn-primary" 
+							string="Approve"
+							groups="vendor_onboarding.group_vendor_onboarding_rm_approver"
+							attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+							context="{'from_manager_approve': True}"/>
+					<button type="object" 
+							name="action_approve_comment" 
+							class="btn btn-primary" 
+							string="Approve" 
+							groups="vendor_onboarding.group_vendor_onboarding_finance_approver"
+							attrs="{'invisible': [('state', '!=', 'manager_approve')]}"
+							context="{'from_finance_approve': True}"/>
+					<button type="object" 
+							name="action_approve_comment" 
+							class="btn btn-primary" 
+							string="Return" 
+							groups="vendor_onboarding.group_vendor_onboarding_rm_approver"  
+							attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+							context="{'button_manager_user': True,'from_return': True}"/>
+					<button type="object" 
+							name="action_approve_comment" 
+							class="btn btn-primary" 
+							string="Return" 
+							groups="vendor_onboarding.group_vendor_onboarding_finance_approver"
+							attrs="{'invisible': [('state', '!=', 'manager_approve')]}"
+							context="{'button_finance_user': True,'from_return': True}"/>
+					<button type="object" 
+							name="action_approve_comment" 
+							string="Reject" 
+							groups="vendor_onboarding.group_vendor_onboarding_rm_approver"  
+							attrs="{'invisible': [('state', '!=', 'pending_approval')]}"
+							context="{'button_manager_user': True,'from_reject': True}"/>
+					<button type="object" 
+							name="action_approve_comment" 
+							string="Reject" 
+							groups="vendor_onboarding.group_vendor_onboarding_finance_approver"
+							attrs="{'invisible': [('state', '!=', 'manager_approve')]}"
+							context="{'button_finance_user': True,'from_reject': True}"/>
+                	<field name="state" widget="statusbar"
+                         	statusbar_visible="new,pending_approval,manager_approve,finance_approve"
+                         	required="1"/>
+              	</header>
+              	<sheet>
+              		<div class="oe_button_box" name='button_box'>
+						<button class="oe_stat_button" type="object" name="action_view_vendor" icon="fa-pencil-square-o" attrs="{'invisible': [('partner_id', '=', False)]}">
+							<div class="o_form_field o_stat_info">
+                        		<span class="o_stat_text">Vendor</span>
+                    		</div>
+						</button>
+					</div>
+					<br/>
+              		<div class="oe_title mb24">
+		               	<div class="o_row">
+		                	<h2><field name="name" placeholder="NAME" required="1" attrs="{'readonly': [('is_editable', '=', False)]}"/></h2>
+						</div>
+					</div>
+	                <group>
+	                	<group>
+	                		<span class="o_form_label o_td_label" name="address_name">
+                                <b>Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" 
+                                		attrs="{'readonly': [('is_editable', '=', False)]}" domain="[('country_id','=',country_id)]"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                <div name="partner_address_country" class="d-flex justify-content-between">
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+                                </div>
+                            </div>
+                            
+	                       <field name="region_id" options="{'no_create': True}" required="1" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+	                       <field name="vat" placeholder="e.g. BE0477472701" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+	                       <field name="pan" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+	                       <field name="tax_tds_id" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+						</group>
+	                    <group>
+	                    	<label for="phone" string="Phone"/>
+		                    <div class="o_row" style="width:90% !important;">
+		                    	<div>
+			                        <field name="country_code" class="oe_inline" force_save="1" readonly="1"/>
+		                    	</div>
+		                    	<div style="width:80% !important;">
+				    		  		<field name="phone" attrs="{'readonly': [('is_editable', '=', False)]}" required="1"/>
+		                    	</div>
+		                    </div>
+		                    <label for="mobile" string="Mobile"/>
+		                    <div class="o_row" style="width:90% !important;">
+		                    	<div>
+			                        <field name="country_code" class="oe_inline" force_save="1" readonly="1"/>
+		                    	</div>
+		                    	<div style="width:80% !important;">
+				    		  		<field name="mobile" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+		                    	</div>
+		                    </div>
+	                    	<field name="email" widget="email" context="{'gravatar_image': True}" required="1" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+	                    	<field name="virtual_bank_acc" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+	                    	<field name="service_type_id" required='1' domain="[('is_vendor','=',True)]" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+	                    	<field name="segment_id" domain="[('is_vendor','=',True)]" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('is_editable', '=', False)]}"/> 
+							<field name="company_id"/>
+							<field name="partner_id" invisible='1'/>
+							<field name="approved_users" invisible='1'/>
+							<field name="is_editable" invisible="1"/>
+						</group>
+					</group>
+					<notebook>
+						<page name='documents' string="Documents">
+							<group></group>
+                    		<field name="document_ids" attrs="{'readonly': [('is_editable', '=', False)]}" >
+                    			<tree editable="bottom">
+									<field name="document_name" required='1'/>
+									<field name="file_name" invisible="1"/>
+									<field name="file" filename="file_name" widget="binary" required='1'/>
+								</tree>
+							</field>
+                		</page>
+                		<page name='bank_details' string="Bank Details">
+			                <group>
+			                	<field name="account_no" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+			            		<field name="ifsc_code" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+			            		<field name="bank_name" attrs="{'readonly': [('is_editable', '=', False)]}"/>
+			                </group>
+		                </page>
+						<page string="User Action History">
+							<group></group>
+							<field name="user_action_ids" options="{'no_create_edit': True}" readonly="1">
+								<tree editable="bottom">
+									<field name="create_uid" string="User" />
+									<field name="create_date" string="Time of Action" />
+									<field name="action"/>
+									<field name="description"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+              	</sheet>
+              	<div class="oe_chatter">
+                     <field name="message_follower_ids" widget="mail_followers"/>
+                     <field name="activity_ids" widget="mail_activity"/>
+                     <field name="message_ids" widget="mail_thread"/>
+                 </div>
+         	</form>
+      	</field>
+  	</record>
+  	
+  	<!-- Vendor Lead tree view -->
+    <record id="vendor_lead_tree" model="ir.ui.view">
+        <field name="name">vendor.lead.tree</field>
+        <field name="model">vendor.lead</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+				<field name="create_date"/>
+				<field name="phone"/>
+				<field name="email"/>
+				<field name="region_id"/>
+				<field name="service_type_id"/>
+				<field name="segment_id"/>
+				<field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Vendor Lead kanban view -->
+	<record id="vendor_lead_kanban" model="ir.ui.view">
+        <field name="name">vendor.lead.kanban</field>
+        <field name="model">vendor.lead</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" records_draggable='0'  group_create="false">
+            	<field name="name"/>
+                <field name="region_id"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <templates>
+                	<t t-name="kanban-box">
+                		<div class="oe_kanban_global_click">
+	                		<div class="oe_kanban_details">
+	                			<strong class="o kanban record title"><field name="name"/></strong>
+	                			<div class="o kanban_tags_section"/>
+	                			<ul>
+	                				<li><field name="region_id"/></li>
+	                				<li><field name="phone"/></li>
+	                				<li><field name="email"/></li>
+	                			</ul>
+	                		</div>
+	                	</div>
+                	</t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- search view for vendor lead-->
+    <record id="view_vendor_lead_search" model="ir.ui.view">
+        <field name="name">view.vendor.lead.search</field>
+        <field name="model">vendor.lead</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string = "Name" />
+				<field name="region_id" string="Region"/>
+				<filter name="filter_new" string = "New" domain = "[('state', '=', 'new')]"/>
+            	<filter name="filter_pending_approval" string = "Pending Approval" domain = "[('state', '=', 'pending_approval')]"/>
+            	<filter name="filter_rm_approved" string = "Manager Approved" domain = "[('state', '=', 'rm_approve')]"/>
+            	<separator/>
+            	<filter name="filter_rm_approved" string = "Finance Approved" domain = "[('state', '=', 'finance_approve')]"/>
+            	<filter name="filter_rejected" string = "Rejected" domain = "[('state', '=', 'reject')]"/>
+            	<separator/>
+            	<filter string = "Status" name = "groupby_state" context = "{'group_by': 'state'}"/>
+				<separator/>
+				<filter string = "Service Type" name = "groupby_service_type_id" context = "{'group_by': 'service_type_id'}"/>
+				<filter string = "Segment" name = "groupby_segment_id" context = "{'group_by': 'segment_id'}"/>
+				<separator/>
+				<filter string = "Region" name = "group_by_region_id" context = "{'group_by': 'region_id'}"/>
+            </search>
+        </field>
+    </record>
+    
+    <!--  Action for vendor.lead model  -->
+    <record id="vendor_lead_action" model="ir.actions.act_window">
+        <field name="name">Onboard Vendor</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vendor.lead</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new vendor.
+            </p>
+        </field>
+    </record>
+    
+    <!--  menu item of Vendor Onboarding 	-->
+    <menuitem id="vendor_onboarding_menu"
+              name="Onboard Vendor"
+              web_icon="vendor_onboarding,static/description/vendor_onboarding_icon.jpeg"
+			  groups="group_vendor_onboarding_create_access,group_vendor_onboarding_edit,group_vendor_onboarding_rm_approver,group_vendor_onboarding_finance_approver"
+              sequence="20"/>
+              
+	<!--  menu item of Vendor Onboarding -> Onboarding 	-->
+	<menuitem id="vendor_lead_menu" 
+			name="Onboarding"
+			action="vendor_lead_action"
+			parent="vendor_onboarding_menu"
+    		sequence="1"/>	
+    		
+    <!--  menu item of Vendor Onboarding -> Configuration 	-->
+    <menuitem id="menu_vendor_onboarding_config" 
+		name="Configuration"
+		parent="vendor_onboarding_menu"
+    	sequence="3"/>
+	
+</odoo>
+

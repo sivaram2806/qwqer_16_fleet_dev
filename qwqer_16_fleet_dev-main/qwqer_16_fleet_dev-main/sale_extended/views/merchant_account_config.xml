@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="merchant_payout_config_form" model="ir.ui.view">
+            <field name="name">merchant.payout.account.config.form</field>
+            <field name="model">merchant.payout.account.config</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Register Payment" id="register_payment">
+                                <field name="register_payment_journal_id" options="{'no_create_edit':True}"/>
+                                <field name="partner_type"/>
+                                <field name="payment_method_id" widget="selection"/>
+                            </group>
+                            <group id="configs">
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="merchant_payout_config_tree" model="ir.ui.view">
+            <field name="name">merchant.payout.account.config.tree</field>
+            <field name="model">merchant.payout.account.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="register_payment_journal_id" options="{'no_create_edit':True}"/>
+                    <field name="partner_type"/>
+                    <field name="payment_method_id" widget="selection"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="merchant_payout_config_action" model="ir.actions.act_window">
+            <field name="name">Merchant Payout Accounting Configuration</field>
+            <field name="res_model">merchant.payout.account.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_merchant_account_config_root"
+                  name="Consolidated Merchant"
+                  parent="account.menu_finance_configuration"
+                  sequence="100"/>
+        <menuitem id="menu_account_merchant_config" action="merchant_payout_config_action"
+                  parent="menu_merchant_account_config_root" sequence="1" name="Merchant Payout Accounting Configuration"/>
+    </data>
+</odoo>

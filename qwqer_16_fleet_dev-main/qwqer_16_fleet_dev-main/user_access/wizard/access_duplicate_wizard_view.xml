@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="user_access_duplicate_wizard_form" model="ir.ui.view">
+        <field name="name">user.access.rights.duplicate.wizard.form</field>
+        <field name="model">user.access.duplicate.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="reference_user" style="width:40%%" string = "Reference User"/>
+                </group>
+              
+                <footer>
+                    <button name="set_access_to_user_based_on_reference_user" string="Copy Access Rights" class="oe_right oe_highlight"
+                            type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+      <record id="action_user_access_duplicate" model="ir.actions.act_window">
+          <field name="name">Copy Access Rights</field>
+        <field name="binding_model_id" ref="base.model_res_users" />
+          <field name="res_model">user.access.duplicate.wizard</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+    </record>
+ 
+
+
+       
+</odoo>

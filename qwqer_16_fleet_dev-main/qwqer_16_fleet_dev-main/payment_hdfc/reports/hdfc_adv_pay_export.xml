@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--hdfc advance payment xlsx report-->
+        <record id="hdfc_wo_adv_pay_export_xlsx" model="ir.actions.report">
+            <field name="name">HDFC Advance Export</field>
+            <field name="model">work.order</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">payment_hdfc.hdfc_wo_adv_pay_export_xlsx</field>
+            <field name="report_file">payment_hdfc.hdfc_wo_adv_pay_export_xlsx</field>
+            <field name="binding_model_id" ref="fleet_ftl.model_work_order"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),(4, ref('fleet_ftl.group_ftl_work_order_finance_approve')),(4, ref('fleet_ftl.ftl_finance_manger'))]"/>
+        </record>
+    </data>
+</odoo>

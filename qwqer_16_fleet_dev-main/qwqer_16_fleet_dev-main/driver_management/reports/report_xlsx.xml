@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="week_month_xlsx"
+                model="driver.batch.payout"
+                string="Weekly/monthly payout"
+                report_type="xlsx"
+                file="driver_management.report_weekly_monthly_xlsx"
+                name="driver_management.report_weekly_monthly_xlsx"
+                menu="False"/>
+	</data>
+</odoo>

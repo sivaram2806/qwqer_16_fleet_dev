@@ -1,0 +1,2275 @@
+{
+  "version": 12.5,
+  "sheets": [
+    {
+      "id": "fleet_dashboard_uh_id",
+      "name": "Dashboard",
+      "colNumber": 16,
+      "rowNumber": 27,
+      "rows": {
+        "6": {
+          "size": 40
+        },
+        "7": {
+          "size": 40
+        },
+        "8": {
+          "size": 40
+        },
+        "9": {
+          "size": 40
+        },
+        "10": {
+          "size": 40
+        },
+        "11": {
+          "size": 40
+        },
+        "12": {
+          "size": 40
+        },
+        "13": {
+          "size": 40
+        },
+        "14": {
+          "size": 40
+        },
+        "15": {
+          "size": 40
+        },
+        "16": {
+          "size": 40
+        },
+        "17": {
+          "size": 40
+        },
+        "18": {
+          "size": 40
+        },
+        "19": {
+          "size": 40
+        }
+      },
+      "cols": {
+        "0": {
+          "size": 7
+        },
+        "1": {
+          "size": 100
+        },
+        "2": {
+          "size": 115
+        },
+        "3": {
+          "size": 201
+        },
+        "4": {
+          "size": 121
+        },
+        "5": {
+          "size": 90
+        },
+        "6": {
+          "size": 107
+        },
+        "7": {
+          "size": 115
+        },
+        "8": {
+          "size": 40
+        },
+        "9": {
+          "size": 111
+        },
+        "10": {
+          "size": 63
+        },
+        "11": {
+          "size": 107
+        },
+        "12": {
+          "size": 27
+        },
+        "13": {
+          "size": 84
+        },
+        "14": {
+          "size": 95
+        },
+        "15": {
+          "size": 141
+        }
+      },
+      "merges": [
+        "N14:O14",
+        "N15:O15",
+        "N16:O16",
+        "N17:O17",
+        "N18:O18",
+        "N19:O19",
+        "N20:O20",
+        "N21:O21",
+        "N22:O22",
+        "N23:O23",
+        "E14:F14",
+        "E17:F17",
+        "E21:F21",
+        "E22:F22",
+        "E19:F19",
+        "E18:F18",
+        "E15:F15",
+        "E20:F20",
+        "E23:F23",
+        "J14:K14",
+        "J15:K15",
+        "J16:K16",
+        "J17:K17",
+        "J18:K18",
+        "J19:K19",
+        "J20:K20",
+        "J21:K21",
+        "J22:K22",
+        "J23:K23",
+        "E16:F16",
+        "E24:F24",
+        "B13:H13",
+        "J13:L13",
+        "N13:P13"
+      ],
+      "cells": {
+        "A1": {
+          "style": 1
+        },
+        "A2": {
+          "style": 1
+        },
+        "A3": {
+          "style": 1
+        },
+        "A4": {
+          "style": 1
+        },
+        "A5": {
+          "style": 1
+        },
+        "A6": {
+          "style": 1
+        },
+        "A7": {
+          "style": 2
+        },
+        "A8": {
+          "style": 3
+        },
+        "A9": {
+          "style": 3
+        },
+        "A10": {
+          "style": 3
+        },
+        "A11": {
+          "style": 3
+        },
+        "A12": {
+          "style": 3
+        },
+        "A13": {
+          "style": 2,
+          "border": 1
+        },
+        "A14": {
+          "style": 4,
+          "border": 1
+        },
+        "A15": {
+          "style": 5,
+          "border": 1
+        },
+        "A16": {
+          "style": 5,
+          "border": 1
+        },
+        "A17": {
+          "style": 5,
+          "border": 1
+        },
+        "A18": {
+          "style": 5,
+          "border": 1
+        },
+        "A19": {
+          "style": 5,
+          "border": 1
+        },
+        "A20": {
+          "style": 5,
+          "border": 1
+        },
+        "A21": {
+          "style": 5,
+          "border": 1
+        },
+        "A22": {
+          "style": 5,
+          "border": 1
+        },
+        "A23": {
+          "style": 5,
+          "border": 1
+        },
+        "A24": {
+          "style": 5,
+          "border": 1
+        },
+        "A25": {
+          "style": 1
+        },
+        "B7": {
+          "style": 6
+        },
+        "B8": {
+          "style": 7
+        },
+        "B9": {
+          "style": 7
+        },
+        "B10": {
+          "style": 7
+        },
+        "B11": {
+          "style": 7
+        },
+        "B12": {
+          "style": 7,
+          "border": 2
+        },
+        "B13": {
+          "style": 6,
+          "content": "[Top Completed Trips](odoo://view/{\"viewType\":\"graph\",\"action\":{\"domain\":[[\"state\",\"in\",[\"completed\"]]],\"context\":{\"group_by\":[]},\"modelName\":\"batch.trip.uh\",\"views\":[[false,\"list\"],[false,\"kanban\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Trips\"})",
+          "border": 3
+        },
+        "B14": {
+          "style": 8,
+          "content": "=_t(\"Daily Trip\")",
+          "border": 4
+        },
+        "B15": {
+          "style": 9,
+          "content": "=ODOO.LIST(1,1,\"name\")",
+          "border": 5
+        },
+        "B16": {
+          "style": 5,
+          "content": "=ODOO.LIST(1,2,\"name\")",
+          "border": 6
+        },
+        "B17": {
+          "style": 9,
+          "content": "=ODOO.LIST(1,3,\"name\")",
+          "border": 6
+        },
+        "B18": {
+          "style": 5,
+          "content": "=ODOO.LIST(1,4,\"name\")",
+          "border": 6
+        },
+        "B19": {
+          "style": 9,
+          "content": "=ODOO.LIST(1,5,\"name\")",
+          "border": 6
+        },
+        "B20": {
+          "style": 5,
+          "content": "=ODOO.LIST(1,6,\"name\")",
+          "border": 6
+        },
+        "B21": {
+          "style": 9,
+          "content": "=ODOO.LIST(1,7,\"name\")",
+          "border": 6
+        },
+        "B22": {
+          "style": 5,
+          "content": "=ODOO.LIST(1,8,\"name\")",
+          "border": 6
+        },
+        "B23": {
+          "style": 9,
+          "content": "=ODOO.LIST(1,9,\"name\")",
+          "border": 6
+        },
+        "B24": {
+          "style": 5,
+          "content": "=ODOO.LIST(1,10,\"name\")",
+          "border": 7
+        },
+        "C8": {
+          "style": 7
+        },
+        "C9": {
+          "style": 7
+        },
+        "C10": {
+          "style": 7
+        },
+        "C11": {
+          "style": 7
+        },
+        "C12": {
+          "style": 7,
+          "border": 2
+        },
+        "C13": {
+          "style": 6,
+          "border": 9
+        },
+        "C14": {
+          "style": 8,
+          "content": "=_t(\"Trip Number\")",
+          "border": 4
+        },
+        "C15": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,1,\"trip_no\")",
+          "border": 8
+        },
+        "C16": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,2,\"trip_no\")"
+        },
+        "C17": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,3,\"trip_no\")"
+        },
+        "C18": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,4,\"trip_no\")"
+        },
+        "C19": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,5,\"trip_no\")"
+        },
+        "C20": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,6,\"trip_no\")"
+        },
+        "C21": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,7,\"trip_no\")"
+        },
+        "C22": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,8,\"trip_no\")"
+        },
+        "C23": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,9,\"trip_no\")"
+        },
+        "C24": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,10,\"trip_no\")",
+          "border": 2
+        },
+        "D8": {
+          "style": 7
+        },
+        "D9": {
+          "style": 7
+        },
+        "D10": {
+          "style": 7
+        },
+        "D11": {
+          "style": 7
+        },
+        "D12": {
+          "style": 7,
+          "border": 2
+        },
+        "D13": {
+          "style": 6,
+          "border": 9
+        },
+        "D14": {
+          "style": 8,
+          "content": "=_t(\"Customer\")",
+          "border": 4
+        },
+        "D15": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,1,\"customer_id\")",
+          "border": 8
+        },
+        "D16": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,2,\"customer_id\")"
+        },
+        "D17": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,3,\"customer_id\")"
+        },
+        "D18": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,4,\"customer_id\")"
+        },
+        "D19": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,5,\"customer_id\")"
+        },
+        "D20": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,6,\"customer_id\")"
+        },
+        "D21": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,7,\"customer_id\")"
+        },
+        "D22": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,8,\"customer_id\")"
+        },
+        "D23": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,9,\"customer_id\")"
+        },
+        "D24": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,10,\"customer_id\")",
+          "border": 2
+        },
+        "E13": {
+          "style": 6,
+          "border": 9
+        },
+        "E14": {
+          "style": 8,
+          "content": "=_t(\"Vendor\")",
+          "border": 3
+        },
+        "E15": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,1,\"vendor_id\")",
+          "border": 8
+        },
+        "E16": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,2,\"vendor_id\")"
+        },
+        "E17": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,3,\"vendor_id\")"
+        },
+        "E18": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,4,\"vendor_id\")"
+        },
+        "E19": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,5,\"vendor_id\")"
+        },
+        "E20": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,6,\"vendor_id\")"
+        },
+        "E21": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,7,\"vendor_id\")"
+        },
+        "E22": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,8,\"vendor_id\")"
+        },
+        "E23": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,9,\"vendor_id\")"
+        },
+        "E24": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,10,\"vendor_id\")",
+          "border": 2
+        },
+        "F13": {
+          "style": 6,
+          "border": 9
+        },
+        "F14": {
+          "style": 8,
+          "border": 10
+        },
+        "F15": {
+          "style": 10,
+          "border": 8
+        },
+        "F16": {
+          "style": 1
+        },
+        "F17": {
+          "style": 10
+        },
+        "F18": {
+          "style": 1
+        },
+        "F19": {
+          "style": 10
+        },
+        "F20": {
+          "style": 1
+        },
+        "F21": {
+          "style": 10
+        },
+        "F22": {
+          "style": 1
+        },
+        "F23": {
+          "style": 10
+        },
+        "F24": {
+          "style": 1,
+          "border": 2
+        },
+        "G13": {
+          "style": 6,
+          "border": 9
+        },
+        "G14": {
+          "style": 11,
+          "content": "=_t(\"Trip Date\")",
+          "border": 4
+        },
+        "G15": {
+          "style": 12,
+          "content": "=ODOO.LIST(1,1,\"trip_date\")",
+          "border": 8
+        },
+        "G16": {
+          "style": 13,
+          "content": "=ODOO.LIST(1,2,\"trip_date\")"
+        },
+        "G17": {
+          "style": 12,
+          "content": "=ODOO.LIST(1,3,\"trip_date\")"
+        },
+        "G18": {
+          "style": 13,
+          "content": "=ODOO.LIST(1,4,\"trip_date\")"
+        },
+        "G19": {
+          "style": 12,
+          "content": "=ODOO.LIST(1,5,\"trip_date\")"
+        },
+        "G20": {
+          "style": 13,
+          "content": "=ODOO.LIST(1,6,\"trip_date\")"
+        },
+        "G21": {
+          "style": 12,
+          "content": "=ODOO.LIST(1,7,\"trip_date\")"
+        },
+        "G22": {
+          "style": 13,
+          "content": "=ODOO.LIST(1,8,\"trip_date\")"
+        },
+        "G23": {
+          "style": 12,
+          "content": "=ODOO.LIST(1,9,\"trip_date\")"
+        },
+        "G24": {
+          "style": 13,
+          "content": "=ODOO.LIST(1,10,\"trip_date\")",
+          "border": 2
+        },
+        "H13": {
+          "style": 6,
+          "border": 10
+        },
+        "H14": {
+          "style": 14,
+          "content": "=_t(\"Amount\")",
+          "border": 4
+        },
+        "H15": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,1,\"customer_amount\")",
+          "border": 11
+        },
+        "H16": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,2,\"customer_amount\")",
+          "border": 1
+        },
+        "H17": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,3,\"customer_amount\")",
+          "border": 1
+        },
+        "H18": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,4,\"customer_amount\")",
+          "border": 1
+        },
+        "H19": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,5,\"customer_amount\")",
+          "border": 1
+        },
+        "H20": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,6,\"customer_amount\")",
+          "border": 1
+        },
+        "H21": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,7,\"customer_amount\")",
+          "border": 1
+        },
+        "H22": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,8,\"customer_amount\")",
+          "border": 1
+        },
+        "H23": {
+          "style": 10,
+          "content": "=ODOO.LIST(1,9,\"customer_amount\")",
+          "border": 1
+        },
+        "H24": {
+          "style": 1,
+          "content": "=ODOO.LIST(1,10,\"customer_amount\")",
+          "border": 12
+        },
+        "I16": {
+          "style": 1,
+          "border": 13
+        },
+        "I18": {
+          "style": 1,
+          "border": 13
+        },
+        "I20": {
+          "style": 1,
+          "border": 13
+        },
+        "I22": {
+          "style": 1,
+          "border": 13
+        },
+        "I24": {
+          "style": 1,
+          "border": 13
+        },
+        "J13": {
+          "style": 6,
+          "content": "[Top Customers](odoo://view/{\"viewType\":\"graph\",\"action\":{\"domain\":[[\"state\",\"in\",[\"completed\"]]],\"context\":{\"group_by\":[]},\"modelName\":\"batch.trip.uh\",\"views\":[[false,\"list\"],[false,\"kanban\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Trips\"})",
+          "border": 3
+        },
+        "J14": {
+          "style": 15,
+          "content": "=_t(\"Customer\")",
+          "border": 3
+        },
+        "J15": {
+          "style": 16,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",1)",
+          "border": 5
+        },
+        "J16": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",2)",
+          "border": 6
+        },
+        "J17": {
+          "style": 16,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",3)",
+          "border": 6
+        },
+        "J18": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",4)",
+          "border": 6
+        },
+        "J19": {
+          "style": 16,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",5)",
+          "border": 6
+        },
+        "J20": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",6)",
+          "border": 6
+        },
+        "J21": {
+          "style": 16,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",7)",
+          "border": 6
+        },
+        "J22": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",8)",
+          "border": 6
+        },
+        "J23": {
+          "style": 16,
+          "content": "=ODOO.PIVOT.HEADER(4,\"#customer_id\",9)",
+          "border": 6
+        },
+        "J24": {
+          "style": 1,
+          "border": 7
+        },
+        "K13": {
+          "style": 6,
+          "border": 9
+        },
+        "K14": {
+          "style": 15,
+          "border": 10
+        },
+        "K15": {
+          "style": 16,
+          "border": 8
+        },
+        "K16": {
+          "style": 17
+        },
+        "K17": {
+          "style": 16
+        },
+        "K18": {
+          "style": 17
+        },
+        "K19": {
+          "style": 16
+        },
+        "K20": {
+          "style": 17
+        },
+        "K21": {
+          "style": 16
+        },
+        "K22": {
+          "style": 17
+        },
+        "K23": {
+          "style": 16
+        },
+        "K24": {
+          "style": 1,
+          "border": 2
+        },
+        "L13": {
+          "style": 6,
+          "border": 10
+        },
+        "L14": {
+          "style": 18,
+          "content": "=_t(\"Amount\")",
+          "border": 4
+        },
+        "L15": {
+          "style": 10,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",1)",
+          "border": 11
+        },
+        "L16": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",2)",
+          "border": 1
+        },
+        "L17": {
+          "style": 10,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",3)",
+          "border": 1
+        },
+        "L18": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",4)",
+          "border": 1
+        },
+        "L19": {
+          "style": 10,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",5)",
+          "border": 1
+        },
+        "L20": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",6)",
+          "border": 1
+        },
+        "L21": {
+          "style": 10,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",7)",
+          "border": 1
+        },
+        "L22": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",8)",
+          "border": 1
+        },
+        "L23": {
+          "style": 10,
+          "format": 1,
+          "content": "=ODOO.PIVOT(5,\"customer_total_amount\",\"#customer_id\",9)",
+          "border": 1
+        },
+        "L24": {
+          "style": 1,
+          "border": 12
+        },
+        "M16": {
+          "style": 1,
+          "border": 13
+        },
+        "M18": {
+          "style": 1,
+          "border": 13
+        },
+        "M20": {
+          "style": 1,
+          "border": 13
+        },
+        "M22": {
+          "style": 1,
+          "border": 13
+        },
+        "M24": {
+          "style": 1,
+          "border": 13
+        },
+        "N13": {
+          "style": 6,
+          "content": "[Top Vendors](odoo://view/{\"viewType\":\"graph\",\"action\":{\"domain\":[[\"state\",\"not in\",[\"new\",\"pending_approval\",\"ops_approved\",\"finance_approved\",\"rejected\"]]],\"context\":{\"group_by\":[]},\"modelName\":\"batch.trip.uh\",\"views\":[[false,\"list\"],[false,\"kanban\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Trips\"})",
+          "border": 3
+        },
+        "N14": {
+          "style": 19,
+          "content": "=_t(\"Vendor\")",
+          "border": 3
+        },
+        "N15": {
+          "style": 20,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",1)",
+          "border": 5
+        },
+        "N16": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",2)",
+          "border": 6
+        },
+        "N17": {
+          "style": 20,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",3)",
+          "border": 6
+        },
+        "N18": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",4)",
+          "border": 6
+        },
+        "N19": {
+          "style": 20,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",5)",
+          "border": 6
+        },
+        "N20": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",6)",
+          "border": 6
+        },
+        "N21": {
+          "style": 21,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",7)",
+          "border": 6
+        },
+        "N22": {
+          "style": 17,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",8)",
+          "border": 6
+        },
+        "N23": {
+          "style": 20,
+          "content": "=ODOO.PIVOT.HEADER(6,\"#vendor_id\",9)",
+          "border": 6
+        },
+        "N24": {
+          "style": 1,
+          "border": 7
+        },
+        "O13": {
+          "style": 6,
+          "border": 9
+        },
+        "O14": {
+          "style": 19,
+          "border": 10
+        },
+        "O15": {
+          "style": 20,
+          "border": 8
+        },
+        "O16": {
+          "style": 17
+        },
+        "O17": {
+          "style": 20
+        },
+        "O18": {
+          "style": 17
+        },
+        "O19": {
+          "style": 20
+        },
+        "O20": {
+          "style": 17
+        },
+        "O21": {
+          "style": 21
+        },
+        "O22": {
+          "style": 17
+        },
+        "O23": {
+          "style": 20
+        },
+        "O24": {
+          "style": 1,
+          "border": 2
+        },
+        "P13": {
+          "style": 6,
+          "border": 10
+        },
+        "P14": {
+          "style": 22,
+          "content": "=_t(\"Amount\")",
+          "border": 4
+        },
+        "P15": {
+          "style": 23,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",1)",
+          "border": 11
+        },
+        "P16": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",2)",
+          "border": 1
+        },
+        "P17": {
+          "style": 23,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",3)",
+          "border": 1
+        },
+        "P18": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",4)",
+          "border": 1
+        },
+        "P19": {
+          "style": 23,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",5)",
+          "border": 1
+        },
+        "P20": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",6)",
+          "border": 1
+        },
+        "P21": {
+          "style": 24,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",7)",
+          "border": 1
+        },
+        "P22": {
+          "style": 1,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",8)",
+          "border": 1
+        },
+        "P23": {
+          "style": 23,
+          "format": 1,
+          "content": "=ODOO.PIVOT(6,\"customer_total_amount\",\"#vendor_id\",9)",
+          "border": 1
+        },
+        "P24": {
+          "style": 1,
+          "border": 12
+        },
+        "B25": {
+          "border": 8
+        },
+        "C25": {
+          "border": 8
+        },
+        "D25": {
+          "border": 8
+        },
+        "E12": {
+          "border": 2
+        },
+        "E25": {
+          "border": 8
+        },
+        "F12": {
+          "border": 2
+        },
+        "F25": {
+          "border": 8
+        },
+        "G12": {
+          "border": 2
+        },
+        "G25": {
+          "border": 8
+        },
+        "H12": {
+          "border": 2
+        },
+        "H25": {
+          "border": 8
+        },
+        "I13": {
+          "border": 13
+        },
+        "I14": {
+          "border": 13
+        },
+        "I15": {
+          "border": 13
+        },
+        "I17": {
+          "border": 13
+        },
+        "I19": {
+          "border": 13
+        },
+        "I21": {
+          "border": 13
+        },
+        "I23": {
+          "border": 13
+        },
+        "J12": {
+          "border": 2
+        },
+        "J25": {
+          "border": 8
+        },
+        "K12": {
+          "border": 2
+        },
+        "K25": {
+          "border": 8
+        },
+        "L12": {
+          "border": 2
+        },
+        "L25": {
+          "border": 8
+        },
+        "M13": {
+          "border": 13
+        },
+        "M14": {
+          "border": 13
+        },
+        "M15": {
+          "border": 13
+        },
+        "M17": {
+          "border": 13
+        },
+        "M19": {
+          "border": 13
+        },
+        "M21": {
+          "border": 13
+        },
+        "M23": {
+          "border": 13
+        },
+        "N12": {
+          "border": 2
+        },
+        "N25": {
+          "border": 8
+        },
+        "O12": {
+          "border": 2
+        },
+        "O25": {
+          "border": 8
+        },
+        "P12": {
+          "border": 2
+        },
+        "P25": {
+          "border": 8
+        }
+      },
+      "conditionalFormats": [],
+      "figures": [
+        {
+          "id": "a527960b-0812-4291-baba-f6b4b5280a0d",
+          "x": 5,
+          "y": 94,
+          "width": 738,
+          "height": 272,
+          "tag": "chart",
+          "data": {
+            "title": "Monthly Trips",
+            "background": "#F3F3F3",
+            "legendPosition": "none",
+            "metaData": {
+              "groupBy": [
+                "trip_date:month",
+                "batch_trip_uh_id"
+              ],
+              "measure": "customer_amount",
+              "order": null,
+              "resModel": "batch.trip.uh.report"
+            },
+            "searchParams": {
+              "comparison": null,
+              "context": {
+                "group_by_no_leaf": 1,
+                "group_by": []
+              },
+              "domain": [],
+              "groupBy": [
+                "trip_date:month",
+                "batch_trip_uh_id"
+              ],
+              "orderBy": []
+            },
+            "type": "odoo_bar",
+            "verticalAxisPosition": "left",
+            "stacked": false,
+            "fieldMatching": {
+              "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+                "chain": "trip_date",
+                "type": "datetime",
+                "offset": 0
+              },
+              "7d95fe28-fd13-4805-948c-95742e7d6744": {
+                "chain": "batch_trip_uh_id",
+                "type": "many2one"
+              }
+            }
+          }
+        },
+        {
+          "id": "b730b396-69b8-48b1-a581-1ddd227877b6",
+          "x": 750,
+          "y": 94,
+          "width": 773,
+          "height": 272,
+          "tag": "chart",
+          "data": {
+            "title": "Region ",
+            "background": "#F3F3F3",
+            "legendPosition": "bottom",
+            "metaData": {
+              "groupBy": [
+                "trip_date:month",
+                "region_id"
+              ],
+              "measure": "customer_amount",
+              "order": null,
+              "resModel": "batch.trip.uh.report"
+            },
+            "searchParams": {
+              "comparison": null,
+              "context": {
+                "group_by_no_leaf": 1,
+                "group_by": []
+              },
+              "domain": [],
+              "groupBy": [
+                "trip_date:month",
+                "region_id"
+              ],
+              "orderBy": []
+            },
+            "type": "odoo_bar",
+            "verticalAxisPosition": "left",
+            "stacked": false,
+            "fieldMatching": {}
+          }
+        },
+        {
+          "id": "d6e51d72-8c3f-4226-9844-e3ee9c7f0da9",
+          "x": 1301,
+          "y": 0,
+          "width": 224,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "Avg Completed Trip Value",
+            "type": "scorecard",
+            "keyValue": "Data!D9"
+          }
+        },
+        {
+          "id": "54d6df7d-322f-494f-8a76-394786e45c27",
+          "x": 6,
+          "y": 0,
+          "width": 217,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "New Trips",
+            "type": "scorecard",
+            "keyValue": "Data!D2"
+          }
+        },
+        {
+          "id": "971d5d30-998f-4f81-b77d-f8fff8677ee7",
+          "x": 224,
+          "y": 0,
+          "width": 216,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "Pending Approval",
+            "type": "scorecard",
+            "background": "#CFE2F3",
+            "keyValue": "Data!D3"
+          }
+        },
+        {
+          "id": "9818adbd-e27b-4453-b32d-2b2a180c11e9",
+          "x": 439,
+          "y": 0,
+          "width": 215,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "Ops Approved",
+            "type": "scorecard",
+            "keyValue": "Data!D4"
+          }
+        },
+        {
+          "id": "5c487874-62fc-4369-b94c-0e966aa61558",
+          "x": 653,
+          "y": 0,
+          "width": 216,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "Finance Approved",
+            "type": "scorecard",
+            "background": "#CFE2F3",
+            "keyValue": "Data!D5"
+          }
+        },
+        {
+          "id": "37190fa0-9d43-4876-9dd1-8330392d7878",
+          "x": 870,
+          "y": 0,
+          "width": 219,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "Completed",
+            "type": "scorecard",
+            "keyValue": "Data!D6"
+          }
+        },
+        {
+          "id": "e43ccc6d-d2e8-4b1e-8ca9-f9da7e666dad",
+          "x": 1088,
+          "y": 0,
+          "width": 213,
+          "height": 89,
+          "tag": "chart",
+          "data": {
+            "baselineColorDown": "#DC6965",
+            "baselineColorUp": "#00A04A",
+            "baselineMode": "difference",
+            "title": "Total Trips",
+            "type": "scorecard",
+            "background": "#CFE2F3",
+            "keyValue": "Data!D7"
+          }
+        }
+      ],
+      "filterTables": [],
+      "areGridLinesVisible": true,
+      "isVisible": true
+    },
+    {
+      "id": "eae01f9c-c461-4489-ade4-957ef2459d40",
+      "name": "Data",
+      "colNumber": 26,
+      "rowNumber": 104,
+      "rows": {},
+      "cols": {
+        "0": {
+          "size": 160
+        },
+        "1": {
+          "size": 89
+        },
+        "2": {
+          "size": 89
+        },
+        "3": {
+          "size": 89
+        },
+        "4": {
+          "size": 89
+        }
+      },
+      "merges": [],
+      "cells": {
+        "A1": {
+          "style": 15,
+          "content": "=_t(\"KPI\")"
+        },
+        "A2": {
+          "content": "=_t(\"New\")"
+        },
+        "A3": {
+          "content": "=_t(\"Pending Approval\")"
+        },
+        "A4": {
+          "content": "=_t(\"Ops Approved\")"
+        },
+        "A5": {
+          "content": "=_t(\"Finance Approved\")"
+        },
+        "A6": {
+          "content": "=_t(\"Completed\")"
+        },
+        "A7": {
+          "content": "=_t(\"Total orders\")"
+        },
+        "A8": {
+          "content": "=_t(\"Revenue\")"
+        },
+        "A9": {
+          "content": "=_t(\"Average order amount\")"
+        },
+        "A10": {
+          "content": "=_t(\"FTL Trips\")"
+        },
+        "A11": {
+          "content": "=_t(\"Total Km Driven\")"
+        },
+        "A12": {
+          "content": "=_t(\"Total Km Driven\")"
+        },
+        "B1": {
+          "style": 15,
+          "content": "=_t(\"Current\")"
+        },
+        "B2": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\",\"state\",\"new\")"
+        },
+        "B3": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\",\"state\",\"pending_approval\")"
+        },
+        "B4": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\",\"state\",\"approved\")"
+        },
+        "B5": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\",\"state\",\"completed\")"
+        },
+        "B6": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\",\"state\",\"rejected\")"
+        },
+        "B7": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\")"
+        },
+        "B8": {
+          "content": "=ODOO.PIVOT(11,\"customer_amount\",\"state\",\"completed\")"
+        },
+        "B9": {
+          "content": "=IFERROR(B8/B7)"
+        },
+        "B10": {
+          "content": "=ODOO.PIVOT(11,\"batch_trip_uh_id\",\"state\",\"completed\")"
+        },
+        "B11": {
+          "content": "=ODOO.PIVOT(11,\"total_km\",\"state\",\"completed\")"
+        },
+        "B12": {
+          "content": "=ODOO.PIVOT(11,\"tonnage\",\"state\",\"completed\")"
+        },
+        "C1": {
+          "style": 15,
+          "content": "=_t(\"Previous\")"
+        },
+        "C2": {
+          "content": "=ODOO.PIVOT(12,\"batch_trip_uh_id\",\"state\",\"new\")"
+        },
+        "C3": {
+          "content": "=ODOO.PIVOT(12,\"batch_trip_uh_id\",\"state\",\"pending_approval\")"
+        },
+        "C4": {
+          "content": "=ODOO.PIVOT(12,\"batch_trip_uh_id\",\"state\",\"approved\")"
+        },
+        "C5": {
+          "content": "=ODOO.PIVOT(12,\"batch_trip_uh_id\",\"state\",\"completed\")"
+        },
+        "C6": {
+          "content": "=ODOO.PIVOT(12,\"batch_trip_uh_id\",\"state\",\"rejected\")"
+        },
+        "C7": {
+          "content": "=ODOO.PIVOT(12,\"batch_trip_uh_id\")"
+        },
+        "C8": {
+          "content": "=ODOO.PIVOT(12,\"customer_amount\",\"state\",\"completed\")"
+        },
+        "C9": {
+          "content": "=IFERROR(C8/C7)"
+        },
+        "C10": {
+          "content": "=ODOO.PIVOT(12,\"customer_amount\",\"state\",\"completed\")"
+        },
+        "D1": {
+          "style": 15,
+          "content": "=_t(\"Current\")"
+        },
+        "D2": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B2)"
+        },
+        "D3": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B3)"
+        },
+        "D4": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B4)"
+        },
+        "D5": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B5)"
+        },
+        "D6": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B6)"
+        },
+        "D7": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B7)"
+        },
+        "D8": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B8)"
+        },
+        "D9": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(B9)"
+        },
+        "E1": {
+          "style": 15,
+          "content": "=_t(\"Previous\")"
+        },
+        "E2": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(C2)"
+        },
+        "E3": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(C3)"
+        },
+        "E4": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(C4)"
+        },
+        "E5": {
+          "style": 10,
+          "content": "=FORMAT.LARGE.NUMBER(C5)"
+        },
+        "E6": {
+          "style": 15,
+          "content": "=FORMAT.LARGE.NUMBER(C6)"
+        },
+        "E7": {
+          "style": 15,
+          "content": "=FORMAT.LARGE.NUMBER(C7)"
+        },
+        "E8": {
+          "style": 15,
+          "content": "=FORMAT.LARGE.NUMBER(C8)"
+        },
+        "E9": {
+          "style": 15,
+          "content": "=FORMAT.LARGE.NUMBER(C9)"
+        },
+        "E10": {
+          "style": 15,
+          "content": "=FORMAT.LARGE.NUMBER(C10)"
+        },
+        "F1": {
+          "style": 15
+        },
+        "G1": {
+          "style": 15
+        },
+        "H1": {
+          "style": 15
+        },
+        "I1": {
+          "style": 15
+        },
+        "J1": {
+          "style": 15
+        },
+        "K1": {
+          "style": 15
+        },
+        "L1": {
+          "style": 15
+        },
+        "M1": {
+          "style": 15
+        },
+        "N1": {
+          "style": 15
+        },
+        "O1": {
+          "style": 15
+        },
+        "P1": {
+          "style": 15
+        },
+        "Q1": {
+          "style": 15
+        },
+        "R1": {
+          "style": 15
+        },
+        "S1": {
+          "style": 15
+        },
+        "T1": {
+          "style": 15
+        },
+        "U1": {
+          "style": 15
+        },
+        "V1": {
+          "style": 15
+        },
+        "W1": {
+          "style": 15
+        },
+        "X1": {
+          "style": 15
+        },
+        "Y1": {
+          "style": 15
+        },
+        "Z1": {
+          "style": 15
+        }
+      },
+      "conditionalFormats": [],
+      "figures": [],
+      "filterTables": [],
+      "areGridLinesVisible": true,
+      "isVisible": true
+    }
+  ],
+  "entities": {},
+  "styles": {
+    "1": {
+      "fillColor": "#FFFFFF"
+    },
+    "2": {
+      "textColor": "#01666b",
+      "bold": true,
+      "fontSize": 16,
+      "fillColor": "#FFFFFF"
+    },
+    "3": {
+      "textColor": "#01666b",
+      "bold": true,
+      "fontSize": 16,
+      "strikethrough": false,
+      "underline": true,
+      "fillColor": "#FFFFFF"
+    },
+    "4": {
+      "bold": true,
+      "fillColor": "#FFFFFF"
+    },
+    "5": {
+      "fillColor": "#FFFFFF",
+      "textColor": "#01666b"
+    },
+    "6": {
+      "textColor": "#01666b",
+      "bold": true,
+      "fontSize": 16
+    },
+    "7": {
+      "textColor": "#01666b",
+      "bold": true,
+      "fontSize": 16,
+      "strikethrough": false,
+      "underline": true
+    },
+    "8": {
+      "bold": true,
+      "fillColor": ""
+    },
+    "9": {
+      "fillColor": "#f2f2f2",
+      "textColor": "#01666b"
+    },
+    "10": {
+      "fillColor": "#f2f2f2"
+    },
+    "11": {
+      "bold": true,
+      "fillColor": "",
+      "align": "center"
+    },
+    "12": {
+      "fillColor": "#f2f2f2",
+      "align": "center"
+    },
+    "13": {
+      "fillColor": "#FFFFFF",
+      "align": "center"
+    },
+    "14": {
+      "bold": true,
+      "fillColor": "",
+      "align": "right"
+    },
+    "15": {
+      "bold": true
+    },
+    "16": {
+      "fillColor": "#f2f2f2",
+      "textColor": "#741b47"
+    },
+    "17": {
+      "textColor": "#741b47",
+      "fillColor": "#FFFFFF"
+    },
+    "18": {
+      "bold": true,
+      "align": "right"
+    },
+    "19": {
+      "bold": true,
+      "align": "center"
+    },
+    "20": {
+      "fillColor": "#EFEFEF",
+      "textColor": "#741b47"
+    },
+    "21": {
+      "fillColor": "#F3F3F3",
+      "textColor": "#741b47"
+    },
+    "22": {
+      "bold": true,
+      "align": "right",
+      "fillColor": "#FFFFFF"
+    },
+    "23": {
+      "fillColor": "#EFEFEF"
+    },
+    "24": {
+      "fillColor": "#F3F3F3"
+    }
+  },
+  "formats": {
+    "1": "#,##0"
+  },
+  "borders": {
+    "1": {
+      "right": [
+        "thin",
+        "#000"
+      ]
+    },
+    "2": {
+      "bottom": [
+        "thin",
+        "#000"
+      ]
+    },
+    "3": {
+      "top": [
+        "thin",
+        "#000"
+      ],
+      "bottom": [
+        "thin",
+        "#000"
+      ],
+      "left": [
+        "thin",
+        "#000"
+      ]
+    },
+    "4": {
+      "top": [
+        "thin",
+        "#000"
+      ],
+      "bottom": [
+        "thin",
+        "#000"
+      ],
+      "left": [
+        "thin",
+        "#000"
+      ],
+      "right": [
+        "thin",
+        "#000"
+      ]
+    },
+    "5": {
+      "top": [
+        "thin",
+        "#000"
+      ],
+      "left": [
+        "thin",
+        "#000"
+      ]
+    },
+    "6": {
+      "left": [
+        "thin",
+        "#000"
+      ]
+    },
+    "7": {
+      "bottom": [
+        "thin",
+        "#000"
+      ],
+      "left": [
+        "thin",
+        "#000"
+      ]
+    },
+    "8": {
+      "top": [
+        "thin",
+        "#000"
+      ]
+    },
+    "9": {
+      "top": [
+        "thin",
+        "#000"
+      ],
+      "bottom": [
+        "thin",
+        "#000"
+      ]
+    },
+    "10": {
+      "top": [
+        "thin",
+        "#000"
+      ],
+      "bottom": [
+        "thin",
+        "#000"
+      ],
+      "right": [
+        "thin",
+        "#000"
+      ]
+    },
+    "11": {
+      "top": [
+        "thin",
+        "#000"
+      ],
+      "right": [
+        "thin",
+        "#000"
+      ]
+    },
+    "12": {
+      "bottom": [
+        "thin",
+        "#000"
+      ],
+      "right": [
+        "thin",
+        "#000"
+      ]
+    },
+    "13": {
+      "left": [
+        "thin",
+        "#000"
+      ],
+      "right": [
+        "thin",
+        "#000"
+      ]
+    }
+  },
+  "revisionId": "0eebc90a-964c-44a8-9140-57aec10593b7",
+  "uniqueFigureIds": true,
+  "odooVersion": 5,
+  "globalFilters": [
+    {
+      "id": "13d30fda-b14d-4a56-b186-25468af3b1e9",
+      "type": "date",
+      "label": "Period",
+      "defaultValue": "last_three_months",
+      "rangeType": "relative",
+      "defaultsToCurrentPeriod": false
+    },
+    {
+      "id": "7d95fe28-fd13-4805-948c-95742e7d6733",
+      "type": "relation",
+      "label": "Customer",
+      "modelName": "res.partner",
+      "defaultValue": [],
+      "defaultValueDisplayNames": [],
+      "rangeType": "year",
+      "defaultsToCurrentPeriod": false
+    }
+  ],
+  "pivots": {
+    "4": {
+      "colGroupBys": [],
+      "context": {
+        "params": {
+          "action": 1275,
+          "model": "batch.trip.uh.report",
+          "view_type": "pivot",
+          "menu_id": 878,
+          "cids": 1
+        },
+        "group_by_no_leaf": 1,
+        "group_by": []
+      },
+      "domain": [
+        [
+          "customer_id",
+          "!=",
+          false
+        ],
+        [
+          "state",
+          "in",
+          [
+            "completed"
+          ]
+        ]
+      ],
+      "id": "4",
+      "measures": [
+        {
+          "field": "batch_trip_uh_id"
+        },
+        {
+          "field": "customer_total_amount"
+        }
+      ],
+      "model": "batch.trip.uh.report",
+      "rowGroupBys": [
+        "customer_id"
+      ],
+      "name": "Trip Analysis by Customer",
+      "sortedColumn": {
+        "groupId": [
+          [],
+          []
+        ],
+        "measure": "customer_total_amount",
+        "order": "desc"
+      },
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": 0
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "customer_id",
+          "type": "many2one"
+        }
+      }
+    },
+    "5": {
+      "colGroupBys": [],
+      "context": {
+        "params": {
+          "action": 1275,
+          "model": "batch.trip.uh.report",
+          "view_type": "pivot",
+          "menu_id": 878,
+          "cids": 1
+        },
+        "group_by_no_leaf": 1,
+        "group_by": []
+      },
+      "domain": [
+        [
+          "customer_id",
+          "!=",
+          false
+        ],
+        [
+          "state",
+          "in",
+          [
+            "completed"
+          ]
+        ]
+      ],
+      "id": "5",
+      "measures": [
+        {
+          "field": "batch_trip_uh_id"
+        },
+        {
+          "field": "customer_amount"
+        },
+        {
+          "field": "customer_total_amount"
+        }
+      ],
+      "model": "batch.trip.uh.report",
+      "rowGroupBys": [
+        "customer_id"
+      ],
+      "name": "Trip Analysis by Customer",
+      "sortedColumn": {
+        "groupId": [
+          [],
+          []
+        ],
+        "measure": "customer_total_amount",
+        "order": "desc"
+      },
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": 0
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "customer_id",
+          "type": "many2one"
+        }
+      }
+    },
+    "6": {
+      "colGroupBys": [],
+      "context": {
+        "params": {
+          "action": 1275,
+          "model": "batch.trip.uh.report",
+          "view_type": "pivot",
+          "menu_id": 878,
+          "cids": 1
+        },
+        "group_by_no_leaf": 1,
+        "group_by": []
+      },
+      "domain": [
+        [
+          "vendor_id",
+          "!=",
+          false
+        ],
+        [
+          "state",
+          "in",
+          [
+            "completed"
+          ]
+        ]
+      ],
+      "id": "6",
+      "measures": [
+        {
+          "field": "batch_trip_uh_id"
+        },
+        {
+          "field": "customer_total_amount"
+        },
+        {
+          "field": "vendor_id"
+        }
+      ],
+      "model": "batch.trip.uh.report",
+      "rowGroupBys": [
+        "vendor_id"
+      ],
+      "name": "Trip Analysis by Customer",
+      "sortedColumn": {
+        "groupId": [
+          [],
+          []
+        ],
+        "measure": "customer_total_amount",
+        "order": "desc"
+      },
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": 0
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "vendor_id",
+          "type": "many2one"
+        }
+      }
+    },
+    "7": {
+      "colGroupBys": [],
+      "context": {
+        "group_by": [
+          "trip_date"
+        ],
+        "group_by_no_leaf": 1
+      },
+      "domain": [
+        [
+          "state",
+          "in",
+          [
+            "completed"
+          ]
+        ]
+      ],
+      "id": "7",
+      "measures": [
+        {
+          "field": "batch_trip_uh_id"
+        }
+      ],
+      "model": "batch.trip.uh.report",
+      "rowGroupBys": [],
+      "name": "KPI - Unpaid Invoices",
+      "sortedColumn": null,
+      "fieldMatching": {}
+    },
+    "11": {
+      "colGroupBys": [],
+      "context": {
+        "group_by": [
+          "trip_date"
+        ],
+        "group_by_no_leaf": 1
+      },
+      "domain": [],
+      "id": "11",
+      "measures": [
+        {
+          "field": "batch_trip_uh_id"
+        },
+        {
+          "field": "customer_total_amount"
+        },
+        {
+          "field": "customer_amount"
+        }
+      ],
+      "model": "batch.trip.uh.report",
+      "rowGroupBys": [
+        "state"
+      ],
+      "name": "so stats - current",
+      "sortedColumn": null,
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": 0
+        },
+        "13d30fda-b14d-4a56-b186-25468af3b1e0": {
+          "chain": "batch_trip_uh_id",
+          "type": "many2one",
+          "offset": 0
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "customer_id",
+          "type": "many2one"
+        }
+      }
+    },
+    "12": {
+      "colGroupBys": [],
+      "context": {
+        "params": {
+          "action": 1275,
+          "model": "batch.trip.uh.report",
+          "view_type": "pivot",
+          "menu_id": 878,
+          "cids": 1
+        },
+        "group_by_no_leaf": 1,
+        "group_by": []
+      },
+      "domain": [],
+      "id": "12",
+      "measures": [
+        {
+          "field": "batch_trip_uh_id"
+        },
+        {
+          "field": "customer_total_amount"
+        },
+        {
+          "field": "customer_amount"
+        }
+      ],
+      "model": "batch.trip.uh.report",
+      "rowGroupBys": [
+        "state"
+      ],
+      "name": "Trip Analysis by Customer",
+      "sortedColumn": {
+        "groupId": [
+          [],
+          []
+        ],
+        "measure": "customer_amount",
+        "order": "desc"
+      },
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": -1
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "customer_id",
+          "type": "many2one"
+        }
+      }
+    }
+  },
+  "pivotNextId": 13,
+  "lists": {
+    "1": {
+      "columns": [
+        "name",
+        "customer_id",
+        "customer_amount"
+      ],
+      "domain": [
+        [
+          "state",
+          "=",
+          "completed"
+        ]
+      ],
+      "model": "batch.trip.uh.report",
+      "context": {},
+      "orderBy": [
+        {
+          "name": "customer_amount",
+          "asc": false
+        }
+      ],
+      "id": "1",
+      "name": "Trips by Amount",
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": 0
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "customer_id",
+          "type": "many2one"
+        }
+      }
+    },
+    "2": {
+      "columns": [
+        "name",
+        "customer_id",
+        "customer_total_amount"
+      ],
+      "domain": [
+        [
+          "state",
+          "in",
+          [
+            "completed"
+          ]
+        ]
+      ],
+      "model": "batch.trip.uh",
+      "context": {},
+      "orderBy": [
+        {
+          "name": "customer_total_amount",
+          "asc": false
+        },
+        {
+          "name": "states",
+          "asc": true
+        }
+      ],
+      "id": "2",
+      "name": "Customer by Amount",
+      "fieldMatching": {
+        "13d30fda-b14d-4a56-b186-25468af3b1e9": {
+          "chain": "trip_date",
+          "type": "datetime",
+          "offset": 0
+        },
+        "7d95fe28-fd13-4805-948c-95742e7d6733": {
+          "chain": "customer_id",
+          "type": "many2one"
+        }
+      }
+    }
+  },
+  "listNextId": 3,
+  "chartOdooMenusReferences": {
+    "a527960b-0812-4291-baba-f6b4b5280a0d": "fleet_urban_haul.menu_daily_trip"
+  }
+}

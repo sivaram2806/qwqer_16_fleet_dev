@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="view_source_type_form" model="ir.ui.view">
+            <field name="name">view.source.type.form</field>
+            <field name="model">source.type</field>
+            <field name="arch" type="xml">
+                <form string="Product Lines">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Name" required="1"/>
+                                <field name="active" string="Active" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_source_type_tree" model="ir.ui.view">
+            <field name="name">view.source.type.tree</field>
+            <field name="model">source.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" string="Name"/>
+                    <field name="active" string="Active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_source_type" model="ir.actions.act_window">
+            <field name="name">Order Placement Types</field>
+            <field name="res_model">source.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_source_type"
+                  name="Source Type"
+                  action="action_source_type"
+                  parent="customer_onboarding.menu_config_customer_onboard"
+                  sequence="7"/>
+
+    </data>
+</odoo>

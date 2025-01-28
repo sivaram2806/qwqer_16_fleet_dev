@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    Sequence of ticket-->
+    <record id="sequence_help_ticket_seq" model="ir.sequence">
+        <field name="name">Helpdesk</field>
+        <field name="code">help.ticket</field>
+        <field name="prefix">TKT</field>
+        <field name="padding">5</field>
+        <field name="implementation">no_gap</field>
+    </record>
+<!--    Sequence of bulk import tickets-->
+    <record id="sequence_help_ticket_bulk_import_seq" model="ir.sequence">
+        <field name="name">Helpdesk Bulk Import</field>
+        <field name="code">help.ticket.bulk.import</field>
+        <field name="prefix">BLK/IMP/</field>
+        <field name="padding">5</field>
+        <field name="implementation">no_gap</field>
+    </record>
+
+</odoo>

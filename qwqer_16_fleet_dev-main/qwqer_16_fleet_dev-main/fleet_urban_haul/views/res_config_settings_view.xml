@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Added Urban Haul Back Days in the settings -->
+    <record id="res_config_settings_fleet_view_form_fleet_urban_haul" model="ir.ui.view">
+        <field name="name">res.config.settings.fleet.view.form.fleet.urban.haul</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="fleet.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//div[@id='fleet']/div/div/div[2]" position="after">
+				<div class="o_setting_right_pane">
+					<span class="o_form_label">Urban Haul Back Days</span>
+					<field name="back_days" class="text-center oe_inline" />
+				</div>
+			</xpath>
+        </field>
+    </record>
+</odoo>

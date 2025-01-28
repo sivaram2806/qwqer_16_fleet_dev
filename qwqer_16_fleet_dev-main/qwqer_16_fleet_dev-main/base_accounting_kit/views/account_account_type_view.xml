@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_account_account_type_tree" model="ir.ui.view">
+        <field name="name">account.account.type.tree</field>
+        <field name="model">account.account.type</field>
+        <field name="arch" type="xml">
+            <tree string="Account Types" editable="bottom" create="0">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="is_pl_account"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_account_account_type" model="ir.actions.act_window">
+        <field name="name">Account Types</field>
+        <field name="res_model">account.account.type</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create the first account type
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_account_account_type" name="Account Types" parent="account.account_account_menu"
+              action="action_account_account_type" sequence="10"/>
+</odoo>

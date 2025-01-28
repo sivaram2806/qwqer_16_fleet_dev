@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Modification in account journal record to add fields for hdfc bank details-->
+    <record id="account_journal_account_base_form_view" model="ir.ui.view">
+        <field name="name">account.journal.account.base.form.view</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_bank_journal']" position="after">
+                <field name='bank_name'
+                       attrs="{'invisible': [('is_bank_journal', '=', False), ('type', '!=', 'bank')],
+                       'required': ['|', ('is_bank_journal', '=', True), ('type', '=', 'bank')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

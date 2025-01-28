@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="sale_order_csv_export_wizard_view_form_view" model="ir.ui.view">
+        <field name="name">sale.order.csv.export.wizard.form</field>
+        <field name="model">sale.order.csv.report.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Csv Report">
+                <group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="state_ids" options="{'no_create': True,'no_create_edit':True}"
+                               widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="to_date"/>
+                        <field name="region_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="fields_to_export" widget="many2many_tags" required="1"/>
+
+                </group>
+                <div>
+                    <p>The Record Will Be Removed Automatically After 3 Days</p>
+                </div>
+                <footer>
+                    <button name="export_csv_sale_order" string="Export" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_order_wizard_tree_view" model="ir.actions.act_window">
+        <field name="name">Sale Order CSV Export</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.csv.report.export.wizard</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="sale_order_csv_export_wizard_view_form_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <menuitem id="menu_report_product_all"
+              name="Sales"
+              action="sale.action_order_report_all"
+              parent="sale.menu_sale_report"
+              sequence="1"/>
+
+    <menuitem id="menu_export_sale_order"
+              name="Sale Order Report"
+              action="action_sale_order_wizard_tree_view"
+              parent="sale.menu_sale_report"
+              sequence="2"/>
+
+</odoo>
+
+

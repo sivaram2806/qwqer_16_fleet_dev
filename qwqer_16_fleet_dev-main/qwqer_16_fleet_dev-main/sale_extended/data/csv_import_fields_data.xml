@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="export_csv_field_create_date" model="export.csv.fields">
+            <field name="field_name">create_date</field>
+            <field name="name">Create Date</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_commitment_date" model="export.csv.fields">
+            <field name="field_name">commitment_date</field>
+            <field name="name">Commitment Date</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_expected_date" model="export.csv.fields">
+            <field name="field_name">expected_date</field>
+            <field name="name">Expected Date</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_partner_id" model="export.csv.fields">
+            <field name="field_name">partner_id</field>
+            <field name="name">Customer</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_customer_type" model="export.csv.fields">
+            <field name="field_name">customer_type</field>
+            <field name="name">Customer Type</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_order_id" model="export.csv.fields">
+            <field name="field_name">order_id</field>
+            <field name="name">Order ID</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_region_id" model="export.csv.fields">
+            <field name="field_name">region_id</field>
+            <field name="name">Region</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_payment_mode_id" model="export.csv.fields">
+            <field name="field_name">payment_mode_id</field>
+            <field name="name">Payment Mode</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_driver_name" model="export.csv.fields">
+            <field name="field_name">driver_name</field>
+            <field name="name">Driver Name</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_driver_ph" model="export.csv.fields">
+            <field name="field_name">driver_phone</field>
+            <field name="name">Driver Phone</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_driver_new_id" model="export.csv.fields">
+            <field name="field_name">driver_uid</field>
+            <field name="name">Driver ID</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_order_sales_person" model="export.csv.fields">
+            <field name="field_name">order_sales_person</field>
+            <field name="name">Order Salesperson</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_industry_id" model="export.csv.fields">
+            <field name="field_name">industry_id</field>
+            <field name="name">Industry</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_pricing_plan" model="export.csv.fields">
+            <field name="field_name">pricing_plan</field>
+            <field name="name">Pricing Plan</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_customer_phone" model="export.csv.fields">
+            <field name="field_name">customer_phone</field>
+            <field name="name">Customer Phone</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_from_address" model="export.csv.fields">
+            <field name="field_name">from_address</field>
+            <field name="name">From Address</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_to_address" model="export.csv.fields">
+            <field name="field_name">to_address</field>
+            <field name="name">To Address</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_user_id" model="export.csv.fields">
+            <field name="field_name">user_id</field>
+            <field name="name">User</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_team_id" model="export.csv.fields">
+            <field name="field_name">team_id</field>
+            <field name="name">Team</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_company_id" model="export.csv.fields">
+            <field name="field_name">company_id</field>
+            <field name="name">Company</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_amount_untaxed" model="export.csv.fields">
+            <field name="field_name">amount_untaxed</field>
+            <field name="name">Amount Untaxed</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_amount_tax" model="export.csv.fields">
+            <field name="field_name">amount_tax</field>
+            <field name="name">Amount Tax</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_amount_total" model="export.csv.fields">
+            <field name="field_name">amount_total</field>
+            <field name="name">Amount Total</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_currency_id" model="export.csv.fields">
+            <field name="field_name">currency_id</field>
+            <field name="name">Currency</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_vehicle_cteg_id" model="export.csv.fields">
+            <field name="field_name">vehicle_category_id</field>
+            <field name="name">Vehicle Category</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_state" model="export.csv.fields">
+            <field name="field_name">state</field>
+            <field name="name">Status</field>
+            <field name="is_default">1</field>
+        </record>
+        <record id="export_csv_field_invoice_status" model="export.csv.fields">
+            <field name="field_name">invoice_status</field>
+            <field name="name">Invoice Status</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_activity_exception_decoration" model="export.csv.fields">
+            <field name="field_name">activity_exception_decoration</field>
+            <field name="name">Activity Exception Decoration</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_validity_date" model="export.csv.fields">
+            <field name="field_name">validity_date</field>
+            <field name="name">Validity Date</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_date_order" model="export.csv.fields">
+            <field name="field_name">date_order</field>
+            <field name="name">Order Date</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_pricelist_id" model="export.csv.fields">
+            <field name="field_name">pricelist_id</field>
+            <field name="name">Price list</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_invoice_status" model="export.csv.fields">
+            <field name="field_name">invoice_status</field>
+            <field name="name">Invoice Status</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_activity_exception_decoration" model="export.csv.fields">
+            <field name="field_name">activity_exception_decoration</field>
+            <field name="name">Activity Exception Decoration</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_validity_date" model="export.csv.fields">
+            <field name="field_name">validity_date</field>
+            <field name="name">Validity Date</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_date_order" model="export.csv.fields">
+            <field name="field_name">date_order</field>
+            <field name="name">Date Order</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_pricelist_id" model="export.csv.fields">
+            <field name="field_name">pricelist_id</field>
+            <field name="name">Pricelist</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_payment_term_id" model="export.csv.fields">
+            <field name="field_name">payment_term_id</field>
+            <field name="name">Payment Term</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_credit_journal_entry_id" model="export.csv.fields">
+            <field name="field_name">credit_journal_entry_id</field>
+            <field name="name">Credit Journal Entry</field>
+            <field name="is_default">0</field>
+        </record>
+<!--        <record id="export_csv_field_total_customer_under_salesperson" model="export.csv.fields">-->
+<!--            <field name="field_name">total_customer_under_salesperson</field>-->
+<!--            <field name="name">Total Customer Under Salesperson</field>-->
+<!--            <field name="is_default">0</field>-->
+<!--        </record>-->
+        <record id="export_csv_field_require_signature" model="export.csv.fields">
+            <field name="field_name">require_signature</field>
+            <field name="name">Require Signature</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_require_payment" model="export.csv.fields">
+            <field name="field_name">require_payment</field>
+            <field name="name">Require Payment</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_client_order_ref" model="export.csv.fields">
+            <field name="field_name">client_order_ref</field>
+            <field name="name">Client Order Reference</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_picking_policy" model="export.csv.fields">
+            <field name="field_name">picking_policy</field>
+            <field name="name">Picking Policy</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_fiscal_position_id" model="export.csv.fields">
+            <field name="field_name">fiscal_position_id</field>
+            <field name="name">Fiscal Position</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_analytic_account_id" model="export.csv.fields">
+            <field name="field_name">analytic_account_id</field>
+            <field name="name">Analytic Account</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_l10n_in_journal_id" model="export.csv.fields">
+            <field name="field_name">l10n_in_journal_id</field>
+            <field name="name">Journal ID</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_origin" model="export.csv.fields">
+            <field name="field_name">origin</field>
+            <field name="name">Origin</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_opportunity_id" model="export.csv.fields">
+            <field name="field_name">opportunity_id</field>
+            <field name="name">Opportunity</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_campaign_id" model="export.csv.fields">
+            <field name="field_name">campaign_id</field>
+            <field name="name">Campaign</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_medium_id" model="export.csv.fields">
+            <field name="field_name">medium_id</field>
+            <field name="name">Medium</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_source_id" model="export.csv.fields">
+            <field name="field_name">source_id</field>
+            <field name="name">Source</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_order_status_id" model="export.csv.fields">
+            <field name="field_name">order_status_id</field>
+            <field name="name">Order Status</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_order_date" model="export.csv.fields">
+            <field name="field_name">order_date</field>
+            <field name="name">Order Date</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_discount_amount" model="export.csv.fields">
+            <field name="field_name">discount_amount</field>
+            <field name="name">Discount Amount</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_amount" model="export.csv.fields">
+            <field name="field_name">total_amount</field>
+            <field name="name">Amount</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_accept_sla" model="export.csv.fields">
+            <field name="field_name">accept_sla</field>
+            <field name="name">Accept SLA</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_pickup_sla" model="export.csv.fields">
+            <field name="field_name">pickup_sla</field>
+            <field name="name">Pickup SLA</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_estimated_distance" model="export.csv.fields">
+            <field name="field_name">estimated_distance</field>
+            <field name="name">Estimated Distance</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_estimated_time" model="export.csv.fields">
+            <field name="field_name">estimated_time</field>
+            <field name="name">Estimated Time</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_pickup_distance" model="export.csv.fields">
+            <field name="field_name">pickup_distance</field>
+            <field name="name">Pickup Distance</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_customer_rating" model="export.csv.fields">
+            <field name="field_name">customer_rating</field>
+            <field name="name">Customer Rating</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_customer_feedback" model="export.csv.fields">
+            <field name="field_name">customer_feedback</field>
+            <field name="name">Customer Feedback</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_customer_comment" model="export.csv.fields">
+            <field name="field_name">customer_comment</field>
+            <field name="name">Customer Comment</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_time_to_accept" model="export.csv.fields">
+            <field name="field_name">time_to_accept</field>
+            <field name="name">Time to Accept</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_time_to_pickup" model="export.csv.fields">
+            <field name="field_name">time_to_pickup</field>
+            <field name="name">Time to Pickup</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_time_to_deliver" model="export.csv.fields">
+            <field name="field_name">time_to_deliver</field>
+            <field name="name">Time to Deliver</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_overall_order_time" model="export.csv.fields">
+            <field name="field_name">overall_order_time</field>
+            <field name="name">Overall Order Time</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_order_source" model="export.csv.fields">
+            <field name="field_name">order_source</field>
+            <field name="name">Order Source</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_cancellation_comments" model="export.csv.fields">
+            <field name="field_name">cancellation_comments</field>
+            <field name="name">Cancellation Comments</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_promo_code" model="export.csv.fields">
+            <field name="field_name">promo_code</field>
+            <field name="name">Promo Code</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_merchant_order_amount" model="export.csv.fields">
+            <field name="field_name">merchant_order_amount</field>
+            <field name="name">Merchant Order Amount</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_payment_id" model="export.csv.fields">
+            <field name="field_name">payment_id</field>
+            <field name="name">Payment ID</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_payment_status" model="export.csv.fields">
+            <field name="field_name">payment_status</field>
+            <field name="name">Payment Status</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_from_name" model="export.csv.fields">
+            <field name="field_name">from_name</field>
+            <field name="name">From Name</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_from_phone_no" model="export.csv.fields">
+            <field name="field_name">from_phone_no</field>
+            <field name="name">From Phone Number</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_sender_locality" model="export.csv.fields">
+            <field name="field_name">sender_locality</field>
+            <field name="name">Sender Locality</field>
+            <field name="is_default">0</field>
+        </record>
+        <record id="export_csv_field_from_postal_code" model="export.csv.fields">
+            <field name="field_name">from_postal_code</field>
+            <field name="name">Postal Code</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_driver_comment" model="export.csv.fields">
+            <field name="name">Driver Comment</field>
+            <field name="field_name">driver_comment</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_driver_rating" model="export.csv.fields">
+            <field name="name">Driver Rating</field>
+            <field name="field_name">driver_rating</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_order_accepted_date" model="export.csv.fields">
+            <field name="name">Order Accepted Date</field>
+            <field name="field_name">order_accepted_date</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_order_picked_up_date" model="export.csv.fields">
+            <field name="name">Order Picked Up Date</field>
+            <field name="field_name">order_picked_up_date</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_order_delivered_date" model="export.csv.fields">
+            <field name="name">Order Delivered Date</field>
+            <field name="field_name">order_delivered_date</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_merchant_payment_mode_id" model="export.csv.fields">
+            <field name="name">Merchant Payment Mode</field>
+            <field name="field_name">merchant_payment_mode_id</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_stop_count" model="export.csv.fields">
+            <field name="name">Stop Count</field>
+            <field name="field_name">stop_count</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_stop_details" model="export.csv.fields">
+            <field name="name">Stop Details</field>
+            <field name="field_name">stop_details</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_merchant_order_id" model="export.csv.fields">
+            <field name="name">Merchant Order ID</field>
+            <field name="field_name">merchant_order_id</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_delivery_sla" model="export.csv.fields">
+            <field name="name">Delivery SLA</field>
+            <field name="field_name">delivery_sla</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_special_instruction" model="export.csv.fields">
+            <field name="name">Special Instruction</field>
+            <field name="field_name">special_instruction</field>
+            <field name="is_default">0</field>
+        </record>
+
+        <record id="export_csv_field_scheduled" model="export.csv.fields">
+            <field name="name">Scheduled</field>
+            <field name="field_name">scheduled</field>
+            <field name="is_default">0</field>
+        </record>
+    </data>
+</odoo>
+

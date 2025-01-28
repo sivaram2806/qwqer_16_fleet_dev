@@ -1,0 +1,54 @@
+<odoo>
+    <!--            State Journals tree view-->
+    <record id="view_state_journal_tree" model="ir.ui.view">
+        <field name="name">state.journal.tree</field>
+        <field name="model">state.journal</field>
+        <field name="arch" type="xml">
+            <tree string="State Journal">
+                <field name="state_id"/>
+                <field name="fleet_journal_id"/>
+            </tree>
+        </field>
+    </record>
+    <!--            State Journals form view-->
+    <record model="ir.ui.view" id="view_state_journal_form">
+        <field name="name">state.journal.form</field>
+        <field name="model">state.journal</field>
+        <field name="arch" type="xml">
+            <form string="State Journal">
+                <sheet>
+                    <group id="state_journal">
+                        <group>
+                            <field name="state_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <notebook name="main">
+                            <page string='Fleet Journal' name="fleet_journal">
+                                <group>
+                                    <group>
+                                        <field name="fleet_journal_id" string='Invoice Journal'/>
+                                        <field name="vendor_bill_journal_id" string='Bill Journal'/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    action for State Journals -->
+    <record id="action_state_journal" model="ir.actions.act_window">
+        <field name="name">State Journal</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">state.journal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--    adding new State Journals in accounting configuration-->
+    <menuitem id="menu_state_wise_journal"
+              name="State Journals"
+              parent="account.menu_finance_configuration"
+              action="qwqer_base.action_state_journal"
+              sequence="1"/>
+
+</odoo>

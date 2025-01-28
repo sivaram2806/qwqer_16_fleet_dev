@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--    Form view inherited  to add custom fields -->
+    <record id="view_res_bank_inherit" model="ir.ui.view">
+        <field name="name">res.bank.form.inherit</field>
+        <field name="model">res.bank</field>
+        <field name="inherit_id" ref="base.view_res_bank_form"/>
+        <field name="arch" type="xml">
+            <field name="bic" position="after">
+                <field name="swift_code"/>
+                <field name="is_virtual_account" />
+            </field>
+        </field>
+    </record>
+</odoo>

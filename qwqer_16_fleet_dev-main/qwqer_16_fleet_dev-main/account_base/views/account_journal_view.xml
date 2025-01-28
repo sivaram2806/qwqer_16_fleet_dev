@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--Modification in account journal record to add fields	-->
+	<record id="account_journal_account_base_form_view" model="ir.ui.view">
+		<field name="name">account.journal.account.base.form.view</field>
+		<field name="model">account.journal</field>
+		<field name="inherit_id" ref="account.view_account_journal_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='type']" position="after">
+				<field name='is_cashfree'/>
+				<field name='is_bank_journal'/>
+				<field name="l10n_in_gstin_partner_id" context="{'show_vat':True}"
+					   options='{"no_create": True,"always_reload": True}'
+					   attrs="{'invisible': [('country_code', '!=', 'IN')]}"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_account_journal_form_inherit_l10n_in_inherited" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.l10n.in.inherited</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="l10n_in.view_account_journal_form_inherit_l10n_in"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='l10n_in_gstin_partner_id']"  position="attributes">
+				  <attribute name="attrs">{'invisible': 1}</attribute>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

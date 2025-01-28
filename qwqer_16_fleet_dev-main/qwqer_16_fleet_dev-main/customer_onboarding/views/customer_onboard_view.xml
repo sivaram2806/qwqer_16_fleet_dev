@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        customer onboard form view-->
+        <record id="customer_onboard_form_view" model="ir.ui.view">
+            <field name="name">customer.onboard.form.view</field>
+            <field name="model">customer.onboard</field>
+            <field name="arch" type="xml">
+                <form delete="0" duplicate="0">
+                    <header>
+                        <button type="object"
+                                name="action_send_for_approval"
+                                class="btn btn-primary"
+                                string="Send For Approval"
+                                attrs="{'invisible':['|',('is_approval_user','=',False),('state','!=','draft')]}"
+                        />
+                        <button type="object"
+                                name="action_change_sale_executive"
+                                class="btn btn-primary"
+                                string="Assign Sale Executive"
+                                attrs="{'invisible':['|',('is_approval_user','=',False),('state','!=','draft')]}"
+                        />
+                        <button type="object"
+                                name="action_mu_approval"
+                                class="btn btn-primary"
+                                string="Unit Head Approval"
+                                states="mu_approvals"
+                                groups="customer_onboarding.customer_onboarding_mu_approval"
+                        />
+                        <button type="object"
+                                name="action_change_sale_executive"
+                                string="Assign Sales Executive"
+                                class="btn btn-primary"
+                                states="mu_approvals"
+                                groups="customer_onboarding.customer_onboarding_mu_approval"
+                        />
+
+                        <button type="object"
+                                name="action_finance_approval"
+                                class="btn btn-primary"
+                                string="Finance Approval"
+                                states="finance_approvals"
+                                groups="customer_onboarding.customer_onboarding_finance_approval"
+                        />
+                        <button type="object"
+                                name="action_pricing_approval"
+                                class="btn btn-primary"
+                                string="Approve Pricing"
+                                states="under_pricing_config"
+                                groups="customer_onboarding.customer_onboarding_pricing_approval"
+                        />
+                        <button type="object"
+                                name="action_reject"
+                                class="btn btn-primary"
+                                string="Reject"
+                                attrs="{'invisible':['|',('is_approval_user','=',False),('state','in',['draft','rejected','configurations_completed'])]}"
+                        />
+                        <button type="object"
+                                name="reset_to_draft"
+                                class="btn btn-primary"
+                                string="Reset To Draft"
+                                states="rejected"
+                                groups="customer_onboarding.customer_onboarding_mu_approval"
+                        />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <div class="alert  alert-info" role="alert"
+                         style="margin-bottom: 0px;"
+                         attrs="{'invisible': ['|',('is_customer_exist', '=', False),('state','=','configurations_completed')]}">
+                        <b>
+                            <field name="customer_exist_msg" readonly="True"/>
+                        </b>
+                    </div>
+
+
+                    <sheet name="customer_onboard">
+                        <div class="oe_button_box" name='button_box'>
+                            <button class="oe_stat_button" type="object" name="action_view_customer"
+                                    icon="fa-user" attrs="{'invisible': [('partner_id', '=', False)]}">
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_text">Customer</span>
+                                </div>
+                            </button>
+
+                        </div>
+
+                        <widget name="web_ribbon" title="Rejected" bg_color="bg-danger"
+                                attrs="{'invisible': [('state', '!=', 'rejected')]}"/>
+
+                        <div class="oe_title">
+                            <label for="customer_name" string="Customer Name"/>
+                            <h1>
+                                <div class="d-flex">
+                                    <field class="text-break" name="customer_name"
+                                           attrs="{'readonly': [('state','=','rejected')]}"
+                                           placeholder="e.g. Benjamin Jack"/>
+                                </div>
+                            </h1>
+                        </div>
+                        <br/>
+
+                        <group>
+                            <group>
+                                <field name="customer_service_type_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'readonly': [('state','=','rejected')]}"
+                                       domain="['&amp;',('is_customer','=',True),('company_id', '=', company_id)]"/>
+                                <field name="customer_segment_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'readonly': [('state','=','rejected')]}" required="1"/>
+                                <field name="customer_exist_msg" invisible="1"/>
+                                <field name="customer_status"
+                                       attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <field name="parent_partner_id" domain="[('customer_type', '=', 'b2b')]"
+                                       string="Parent Merchant"
+                                       attrs="{'invisible': [('customer_status', 'not in', ('existing_customer'))]}"/>
+                                <field name="merchant_phone_number" string="Merchant Phone Number"
+                                       attrs="{'invisible': [('customer_status', 'not in', ('existing_customer'))]}"/>
+                                <field name="submerchant_billing"
+                                       attrs="{'invisible': [('customer_status', 'not in', ('existing_customer'))]}"
+                                       force_save="1"/>
+                                <field name="source_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <field name="brand_name" attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <field name="is_customer_exist" invisible="1"/>
+                                <field name="customer_type" invisible="1"
+                                       attrs="{'readonly': ['|',('is_fleet_service_customer', '=',True),('is_qshop_service_customer','=',True)]}"/>
+                                <field name="industry_id" options="{'no_open': True, 'no_create': True}" required="1"
+                                       attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <field name="followup_status_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <field name="potential_orders_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'invisible':[('is_fleet_service_customer','=',True)],'required':[('is_fleet_service_customer','!=',True)]}"/>
+                                <field name="pricing_type"
+                                       attrs="{'invisible':[('is_fleet_service_customer','=',True)]}"/>
+                                <field name="company_id" options="{'no_open': True, 'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="contact_name"
+                                       attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <label for="phone" string="Phone (User Login Number) *"/>
+                                <div class="o_row" style="width:90% !important;">
+                                    <div>
+                                        <field name="phone_code" class="oe_inline" force_save="1" readonly="1"/>
+                                    </div>
+                                    <div style="width:80% !important;">
+                                        <field name="phone" widget="phone" options="{'enable_sms': True}" required="1"
+                                               attrs="{'readonly': [('state','=','rejected')]}"/>
+                                    </div>
+                                </div>
+                                <field name="quotation_doc_filename" invisible="1"/>
+                                <field name="quotation_document" widget="binary" filename="quotation_doc_filename"
+                                       attrs="{'invisible':[('is_fleet_service_customer','=',True)]}"/>
+                                <field name="agreement_doc_filename" invisible="1"/>
+                                <field name="agreement_document" widget="binary" filename="agreement_doc_filename"
+                                       attrs="{'invisible':['|',('is_fleet_service_customer','=',True),('state','=','rejected')]}"/>
+                                <field name="region_id" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="item_category_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'readonly': [('state','=','rejected')]}"/>
+                                <field name="product_line_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'invisible':[('is_fleet_service_customer','=',True)]}"/>
+                                <field name="source_type_id" options="{'no_open': True, 'no_create': True}"
+                                       attrs="{'invisible':[('is_fleet_service_customer','=',True)],'readonly': [('state','=','rejected')]}"/>
+                                <field name="is_fifo_flow"
+                                       attrs="{'invisible':[('is_fleet_service_customer','=',True)],'readonly': [('state','=','rejected')]}"/>
+                                <field name="max_no_de"
+                                       attrs="{'invisible': ['|',('customer_type', '!=', 'b2b'),('is_fifo_flow','=','no')], 'required': [('is_fifo_flow', '=', 'yes')],'readonly': [('state','=','rejected')]}"/>
+                                <field name="credit_period_id"
+                                       attrs="{'invisible':[('is_ftl_customer','!=',True)],'readonly': [('state','=','rejected')]}"/>
+                                <field name="contact_designation"
+                                       attrs="{'invisible':[('is_ftl_customer','!=',True)],'readonly': [('state','=','rejected')]}"/>
+                                <field name="is_fleet_service_customer" invisible="1"/>
+                                <field name="is_qshop_service_customer" invisible="1"/>
+                                <field name="is_delivery_service_customer" invisible="1"/>
+                                <field name="is_ftl_customer" invisible="1"/>
+                                <field name="is_approval_user" invisible="1"/>
+                                <field name="is_active_credit_limit"
+                                       string="Active Credit Limit"
+                                       attrs="{'invisible':[('is_fleet_service_customer','!=',True)],'readonly': [('state','=','rejected')]}"/>
+                                <field name="credit_limit"
+                                       attrs="{'invisible':[('is_active_credit_limit','=',False)],'readonly': [('state','=','rejected')]}"/>
+                            </group>
+                        </group>
+                        <notebook name="customer_onboard_note">
+                            <page name="follow_up_status" string="Follow-Up">
+                                <group>
+                                    <group>
+                                        <field name="sales_person_id" readonly="1" force_save="1"
+                                               options="{'no_open': True, 'no_create': True}"/>
+                                        <field name="user_id" readonly="1" force_save="1"
+                                               options="{'no_open': True, 'no_create': True}"/>
+                                        <field name="reporting_mu_id" options="{'no_open': True, 'no_create': True}"
+                                               readonly="1" force_save="1"/>
+                                        <field name="preferred_slot"
+                                               attrs="{'invisible':[('is_fleet_service_customer','=',True)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="expected_revenue"
+                                               attrs="{'readonly': [('state','=','rejected')]}"/>
+                                        <field name="date_deadline"
+                                               attrs="{'readonly': [('state','=','rejected')]}"/>
+                                        <field name="lead_generated_by" readonly="1" force_save="1"/>
+                                        <field name="last_updated_on"
+                                               attrs="{'readonly': [('state','=','rejected')]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="user_comment"
+                                    />
+
+                                </group>
+                            </page>
+                            <page name="pricing_plan" string="Pricing Plan"
+                                  attrs="{'invisible':[('is_fleet_service_customer','=',True)],}">
+                                <group>
+                                    <group>
+                                        <field name="pricing_model" widget="radio" options="{'horizontal': true}"
+                                               force_save="1"/>
+                                    </group>
+                                    <group>
+
+                                    </group>
+                                </group>
+                                <field name="km_pricing_plan_ids" string="Select Plan"
+                                       context="{'default_select_plan_type': pricing_model}"
+                                       attrs="{'invisible': [('pricing_model','not in',('KM',True))],}">
+                                    <tree string="KM Pricing Plan" editable="bottom" class="select_plan_kilometer_tree"
+                                          attrs="{'invisible': [('select_plan_type','!=','KM')]}">
+                                        <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                               width="300px"/>
+                                        <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                                        <field name="select_plan_type" string="Select Plan" force_save="1"
+                                               invisible="1"/>
+                                        <field name="min_distance" string="Minimum Distance(Km)" required="1"
+                                               width="300px"/>
+                                        <field name="min_cost" string="Minimum Cost(Rs)" required="1" width="300px"/>
+                                        <field name="per_km_charge" string="Per Kilometre Charge(Rs)" required="1"
+                                               width="300px"/>
+                                    </tree>
+                                </field>
+                                <field name="slab_pricing_plan_ids" string="Select Plan"
+                                       context="{'default_select_plan_type': pricing_model}"
+                                       attrs="{'invisible': [('pricing_model','not in',('slab',True))]}">
+                                    <tree string="Slab Pricing Plan" editable="bottom" class="select_plan_slab_tree"
+                                          attrs="{'invisible': [('select_plan_type','!=','slab')]}">
+                                        <field name="from_distance" string="From Distance(Km)" required="1"
+                                               width="300px"/>
+                                        <field name="to_distance" string="To Distance(Km)" required="1" width="300px"/>
+                                        <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                               width="300px"/>
+                                        <field name="maximum_weight" string="To Weight(Kg)" required="1" width="300px"/>
+                                        <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                        <field name="price" string="Price(Rs)" required="1" width="300px"/>
+                                    </tree>
+                                </field>
+                                <field name="flat_pricing_plan_ids" string="Select Plan"
+                                       context="{'default_select_plan_type': pricing_model}"
+                                       attrs="{'invisible': [('pricing_model','not in',('flat',True))]}">
+                                    <tree string="Flat Pricing Plan" editable="bottom" class="select_plan_flat_tree"
+                                          attrs="{'invisible': [('select_plan_type','!=','flat')]}">
+                                        <field name="minimum_weight" string="From Weight(Kg)" required="1"
+                                               width="400px"/>
+                                        <field name="maximum_weight" string="To Weight(Kg)" required="1" width="400px"/>
+                                        <field name="select_plan_type" string="Select Plan" invisible="1"/>
+                                        <field name="price" string="Price(Rs)"
+                                               attrs="{'invisible': [('select_plan_type','=','KM')]}" width="400px"/>
+                                    </tree>
+                                </field>
+                                <separator string="Additional Charges" name="stop_charge"/>
+                                <field name="additional_charges_ids" string="Additional Charges">
+                                    <tree string="Additional Charges" editable="bottom">
+                                        <field name="charge_type_id" required="1" context="{'crm_lead_form': True}"
+                                               width="400px"/>
+                                        <field name="amount_type" required="1" width="400px"/>
+                                        <field name="amount" required="1" width="400px"/>
+                                    </tree>
+                                    <form string="Additional Charges">
+                                        <sheet>
+                                            <group>
+                                                <field name="charge_type_id" required="1"/>
+                                                <field name="amount_type" required="1"/>
+                                                <field name="amount" required="1"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+
+
+                            </page>
+                            <page name="other_details" string="Other Details"
+                                  attrs="{'invisible':[('is_fleet_service_customer','=',True)]}">
+                                <group>
+                                    <group>
+                                        <field name="delivery_type_id"/>
+                                        <field name="pick_up_area"/>
+                                        <field name="distance_limitation"/>
+                                        <field name="payment_mode_ids" widget="many2many_checkboxes"/>
+
+                                        <field name="merchant_amount_collection" widget="radio"
+                                               options="{'horizontal': true}" readonly="0" force_save="1"
+                                               string="Merchant Amount Collection"
+                                        />
+
+                                        <field name="gstin_number" string="GSTIN"
+                                               attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                        <field name="invoice_frequency_id" readonly="0" force_save="1"
+                                               string="Invoice Frequency"
+                                               attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                        <label for="amount_collection_sign" string="Amount Collection Limit"
+                                               attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                        <div class="o_row" style="width:90% !important;"
+                                             attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}">
+                                            <div>
+                                                <field name="amount_collection_sign" readonly="1"
+                                                       attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                            </div>
+                                            <div style="width:80% !important;">
+                                                <field name="amount_collection_limit" string="Amount Collection Limit"
+                                                       placeholder="Limit set till 7000.."
+                                                       attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                            </div>
+                                        </div>
+
+                                        <field name="settlement_time_id" string="Settlement Time"
+                                               attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                        <label for="collection_charges" string="Collection Charges"
+                                               attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                        <div class="o_row" style="width:90% !important;"
+                                             attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}">
+                                            <div>
+                                                <field name="collection_charges" string="Collection Charges"
+                                                       attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                            </div>
+                                            <div style="width:60% !important;">
+                                                <field name="collection_charges_sign" readonly="1"
+                                                       attrs="{'invisible': [('merchant_amount_collection', '!=', 'yes')]}"/>
+                                            </div>
+                                        </div>
+                                    </group>
+                                    <group>
+                                        <field name="sms_alert" widget="radio"/>
+                                        <field name="email_alert" widget="radio"/>
+                                        <field name="api_selection" widget="radio"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                            <page name="address_details" string="Address Details">
+                                <group>
+                                    <group>
+                                        <field name="customer_email" attrs="{'readonly': [('state','=','rejected')]}"/>
+                                    </group>
+                                    <group>
+                                        <label for="street" string="Address"/>
+                                        <div class="o_address_format">
+                                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                            <field name="city" placeholder="City" class="o_address_city"/>
+                                            <field name="state_id" class="o_address_state" placeholder="State"
+                                                   options="{&quot;no_open&quot;: True}"/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country"
+                                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                        </div>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="documents" string="Documents">
+                                <field name="documents_ids">
+                                    <tree editable="bottom">
+                                        <field name="document_name" required="1"/>
+                                        <field name="file_name" invisible="1"/>
+                                        <field name="file" widget="binary"
+                                               filename="file_name" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="comments" string="Comments">
+                                <field name="user_comments_ids" readonly="1">
+                                    <tree>
+                                        <field name="user_id"/>
+                                        <field name="user_comment"/>
+                                        <field name="commented_on"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page name="user_action_history" string="User Action History">
+                                <field name="user_action_ids" readonly="1">
+                                    <tree default_order='last_updated_on desc'>
+                                        <field name="user_id"/>
+                                        <field name="state_from"/>
+                                        <field name="state_to"/>
+                                        <field name="description"/>
+                                        <field name="last_updated_on"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="lead_mu_approval" string="MU Approval"
+                                  attrs="{'invisible': [('state', 'not in',
+                                  ('finance_approvals','under_pricing_config','configurations_completed','rejected'))]}">
+                                <group>
+                                    <field name="mu_pricing_plan_status" readonly="1"/>
+                                    <field name="mu_agreement_status" readonly="1"/>
+                                    <field name="mu_payment_option_status" readonly="1"/>
+                                </group>
+                            </page>
+                            <page name="lead_finance_approval" string="Finance Approval"
+                                  attrs="{'invisible': [('state', 'not in',
+                                  ('under_pricing_config','configurations_completed','rejected'))]}">
+                                <group>
+                                    <group>
+                                        <field name="partner_id" readonly="1" force_save="1" invisible="1"/>
+                                        <field name="contact_partner_id" readonly="1" force_save="1" invisible="1"/>
+                                        <field name="gstin_number" readonly="1" force_save="1"/>
+                                        <field name="tax_id" readonly="1" force_save="1"
+                                               attrs="{'invisible': [('customer_type', '=', 'b2c')]}"/>
+                                        <field name="fleet_hsn_id" readonly="1"
+                                               options="{'no_open': True, 'no_create': True}"
+                                               attrs="{'invisible': [('is_fleet_service_customer','=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="vehicle_invoice_tax_ids" widget="many2many_tags" readonly="1"
+                                               options="{'no_open': True, 'no_create': True}"
+                                               domain="[('price_include','=', False)]"
+                                               attrs="{'invisible': [('is_fleet_service_customer','=',False)]}"/>
+                                        <field name="b2b_invoice_tax_ids" widget="many2many_tags"
+                                               domain="[('price_include','=', False)]"
+                                               attrs="{'invisible': [('is_delivery_service_customer','!=',True)]}"/>
+                                        <field name="b2b_sale_order_tax_ids" widget="many2many_tags"
+                                               domain="[('price_include','=', True)]"
+                                               attrs="{'invisible': [('is_delivery_service_customer','!=',True)]}"/>
+                                        <field name="qshop_invoice_tax_ids" widget="many2many_tags" readonly="0"
+                                               domain="[('price_include','=', False)]"
+                                               force_save="1"
+                                               attrs="{'invisible': ['|',('is_qshop_service_customer', '!=', True),('customer_type', '=', 'b2c')]}"/>
+                                        <field name="qshop_sale_order_tax_ids" widget="many2many_tags" readonly="0"
+                                               domain="[('price_include','=', True)]"
+                                               force_save="1"
+                                               attrs="{'invisible': ['|',('is_qshop_service_customer', '!=', True),('customer_type', '=', 'b2c')]}"/>
+                                        <field name="vehicle_invoice_frequency" readonly="1"
+                                               options="{'no_open': True, 'no_create': True}"
+                                               attrs="{'invisible': [('is_fleet_service_customer','=',False)]}"/>
+                                    </group>
+
+
+                                </group>
+                                <group>
+                                    <field name="kyc_upload_document_ids" readonly="1">
+                                        <tree>
+                                            <field name="document_name" required="1"/>
+                                            <field name="file_name" invisible="1"/>
+                                            <field name="file" widget="binary" filename="file_name" required="1"/>
+                                        </tree>
+
+                                    </field>
+
+                                    <field name="pricing_plan_document_ids" readonly="1"
+                                           attrs="{'invisible': [('is_fleet_service_customer','=',True)]}"/>
+                                </group>
+
+                            </page>
+                            <page name="pricing_config_approval" string="Pricing Configuration"
+                                  attrs="{'invisible': ['|',('state', 'not in',
+                                  ('configurations_completed')),('is_fleet_service_customer','=',True)]}">
+                                <group>
+                                    <group>
+                                        <field name="pricing_configuration"/>
+
+                                    </group>
+                                    <group>
+                                        <field name="b2b_merchant_creation"/>
+                                    </group>
+                                </group>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+                </form>
+            </field>
+        </record>
+        <!--        customer onboard tree view-->
+        <record id="customer_onboard_tree_view" model="ir.ui.view">
+            <field name="name">customer.onboard.tree.view</field>
+            <field name="model">customer.onboard</field>
+            <field name="arch" type="xml">
+                <tree default_order="id desc" delete="0" duplicate="0">
+                    <field name="customer_name"/>
+                    <field name="customer_email"/>
+                    <field name="phone" optional="show" class="o_force_ltr"/>
+                    <field name="sales_person_id" optional="show" string="Sales Person"/>
+                    <field name="source_id" string="Source/Lead Type"/>
+                    <field name="followup_status_id" string="Followup Status"/>
+                    <field name="contact_name" optional="show"/>
+                    <field name="customer_email" optional="show"/>
+                    <field name="region_id" string="Region"/>
+                    <field name="create_date"/>
+                    <field name="industry_id"/>
+                    <field name="state"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="customer_onboard_view_kanban" model="ir.ui.view">
+            <field name="name">customer.onboard.view.kanban</field>
+            <field name="model">customer.onboard</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="o_kanban_small_column"
+                        quick_create='0' records_draggable='0' default_order="id desc">
+                    <field name="customer_name"/>
+                    <field name="state"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} #{lost_ribbon ? 'oe_kanban_card_ribbon' : ''} oe_kanban_global_click oe_kanban_card d-flex flex-column">
+                                <div class="oe_kanban_content">
+                                    <div class="row">
+                                        <div class="col">
+                                            <strong>
+                                                <field name="customer_name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <field name="customer_email"/>
+                                    </div>
+                                    <div>
+                                        <field name="phone"/>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record id="view_customer_onboard_filter" model="ir.ui.view">
+            <field name="name">view.customer.onboard.filter</field>
+            <field name="model">customer.onboard</field>
+            <field name="priority">15</field>
+            <field name="arch" type="xml">
+                <search string="Search Onboard Customer">
+                    <field name="customer_name" string="Opportunity" filter_domain="[
+                        '|', '|', '|', '|',
+                        ('customer_name', 'ilike', self),
+                        ('partner_id', 'ilike', self),
+                        ('customer_email', 'ilike', self),
+                        ('phone', 'ilike', self),
+                        ('contact_name', 'ilike', self)]"/>
+                    <field name="partner_id" operator="child_of" string="Customer" filter_domain="[
+                        '|', '|', '|',
+                        ('partner_id', 'ilike', self),
+                        ('customer_name', 'ilike', self),
+                        ('customer_email', 'ilike', self),
+                        ('phone', 'ilike', self)]"/>
+                    <field name="user_id"/>
+                    <field name="country_id"/>
+                    <field name="city"/>
+                    <field name="state"/>
+                    <separator/>
+                    <filter string="My Pipeline" name="assigned_to_me"
+                            domain="[('user_id', '=', uid)]"
+                            help="Onboard that are assigned to me"/>
+                    <filter string="Unassigned" name="unassigned"
+                            domain="[('user_id', '=', False)]" help="No salesperson"/>
+                    <filter string="Under Sales Executive" name="under_sales_executive"
+                            domain="[('state', '=', 'draft')]"/>
+                    <filter string="Unit Head Approval" name="mu_approval" domain="[('state', '=', 'mu_approvals')]"/>
+                    <filter string="Finance Approval" name="finance_approval"
+                            domain="[('state', '=', 'finance_approvals')]"/>
+                    <filter string="Pricing Configuration" name="it_approval"
+                            domain="[('state', '=', 'under_pricing_config')]"/>
+                    <filter string="Configuration Completed" name="configuration_completed"
+                            domain="[('state', '=', 'configurations_completed')]"/>
+                    <filter string="Reject" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                    <group expand="0" string="Group By" colspan="16">
+                        <filter string="Salesperson" name="salesperson" context="{'group_by':'user_id'}"/>
+                        <filter name="state" string="State" context="{'group_by':'state'}"/>
+                        <filter name="city" string="City" context="{'group_by': 'city'}"/>
+                        <filter string="Country" name="country" context="{'group_by':'country_id'}"/>
+                        <filter string="Company" name="company" context="{'group_by':'company_id'}"
+                                groups="base.group_multi_company"/>
+                        <filter string="Creation Date" name="month" context="{'group_by':'create_date:month'}"
+                                invisible="context.get('crm_lead_view_hide_month')"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!--        action for customer onboard-->
+        <record id="action_view_customer_onboard" model="ir.actions.act_window">
+            <field name="name">Onboard Customer</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{
+                'search_default_assigned_to_me': 1}
+            </field>
+
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new customer Lead
+                </p>
+            </field>
+        </record>
+        <!--        action for menus-->
+        <!--        draft-->
+        <record id="action_new_onboard_under_sales_executive" model="ir.actions.act_window">
+            <field name="name">Under Sales Executive</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="context">{'default_lead_generated_by': uid}</field>
+        </record>
+        <!--        mu approval-->
+        <record id="action_new_onboard_under_mu_approval" model="ir.actions.act_window">
+            <field name="name">Under UH Approval</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'mu_approvals')]
+            </field>
+            <field name="context">{'default_lead_generated_by': uid}</field>
+        </record>
+        <!--        finance approval-->
+        <record id="action_onboard_under_finance_approval" model="ir.actions.act_window">
+            <field name="name">Under Finance Approvals</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'finance_approvals')]
+            </field>
+            <field name="context">{'default_lead_generated_by': uid}</field>
+        </record>
+        <!--pricing config-->
+        <record id="action_onboard_under_pricing_approval" model="ir.actions.act_window">
+            <field name="name">Under Pricing Configuration</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'under_pricing_config')]
+            </field>
+            <field name="context">{'default_lead_generated_by': uid}</field>
+        </record>
+        <record id="action_configurations_completed" model="ir.actions.act_window">
+            <field name="name">Configurations Completed</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'configurations_completed')]</field>
+            <field name="context">{'default_lead_generated_by': uid, 'crm_lead_form':True}</field>
+        </record>
+        <record id="action_customer_onboard_lost" model="ir.actions.act_window">
+            <field name="name">Lost</field>
+            <field name="res_model">customer.onboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'rejected')]</field>
+            <field name="context">{'default_lead_generated_by': uid, 'crm_lead_form':True}</field>
+        </record>
+
+
+        <!--        menu for customer onboard-->
+        <menuitem id="menu_customer_onboard" web_icon="customer_onboarding,static/description/icon.jpeg"
+                  name="Onboard Customer" sequence="26"/>
+        <menuitem id="menu_customer_onboard_view_action" action="action_view_customer_onboard"
+                  parent="customer_onboarding.menu_customer_onboard" name="Onboard Customer" sequence="1"/>
+        <menuitem id="menu_config_customer_onboard" name="Configuration"
+                  parent="customer_onboarding.menu_customer_onboard" sequence="2"
+                  groups="customer_onboarding.customer_onboarding_config_access"/>
+
+        <menuitem
+                id="sub_menu_customer_onboard"
+                name="Onboard Customer"
+                parent="customer_onboarding.menu_customer_onboard_view_action"
+                sequence="1"/>
+        <menuitem id="menu_under_sale_executive_action" action="action_new_onboard_under_sales_executive"
+                  parent="customer_onboarding.sub_menu_customer_onboard" sequence="1"
+                  groups="customer_onboarding.customer_onboarding_approval"/>
+        <menuitem id="menu_under_mu_approval_action" action="action_new_onboard_under_mu_approval"
+                  parent="customer_onboarding.sub_menu_customer_onboard" sequence="2"
+                  groups="customer_onboarding.customer_onboarding_mu_approval"/>
+        <menuitem id="menu_under_finance_approval_action" action="action_onboard_under_finance_approval"
+                  parent="customer_onboarding.sub_menu_customer_onboard" sequence="3"
+                  groups="customer_onboarding.customer_onboarding_finance_approval"/>
+        <menuitem id="menu_under_pricing_approval_action" action="action_onboard_under_pricing_approval"
+                  parent="customer_onboarding.sub_menu_customer_onboard" sequence="4"
+                  groups="customer_onboarding.customer_onboarding_pricing_approval"/>
+        <menuitem id="menu_configuration_completed_action" action="action_configurations_completed"
+                  parent="customer_onboarding.sub_menu_customer_onboard" sequence="5"/>
+        <menuitem id="menu_configuration_completed_action" action="action_customer_onboard_lost"
+                  parent="customer_onboarding.sub_menu_customer_onboard" sequence="6"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="driver_payout_plans_form" model="ir.ui.view">
+        <field name="name">driver.payout.plans.form</field>
+        <field name="model">driver.payout.plans</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="%(add_driver_wiz_action)d" string="Add Driver" type="action"
+                            groups="driver_management.group_add_remove_driver"/>
+                    <button name="%(remove_driver_wiz_action)d" string="Remove Driver" type="action"
+                            groups="driver_management.group_add_remove_driver"/>
+                    <button name="set_default_region_plan" string="Set As Default Plan" type="object"
+                            attrs="{'invisible': ['|',('id', '=', False),('is_default_region_plan', '=', True)]}"
+                            groups="driver_management.group_set_default_region_plan"/>
+                    <button name="remove_default_region_plan" string="Remove From Default Plan" type="object"
+                            attrs="{'invisible': ['|',('id', '=', False),('is_default_region_plan', '=', False)]}"
+                            groups="driver_management.group_remove_default_region_plan"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_driver_list"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-archive icon">
+                            <field name="driver_count" widget="statinfo" string='Drivers'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="plan_seq" required="True" force_save="1" readonly="1"
+                            attrs="{'invisible': [('plan_seq', '=', False)]}"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="region_id" required="1"/>
+                        <field name="is_default_region_plan" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Minimum Wages">
+                            <field name="driver_minimum_wage_ids">
+                                <tree editable="bottom">
+                                    <field name="min_hrs"/>
+                                    <field name="min_orders"/>
+                                    <field name="min_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Distance Incentives">
+                            <group>
+                                <separator name="dist_incentive_day_km"
+                                           string="Incentive Day KM(Punch-In to Punch-Out)"/>
+                                <field name="day_incentive_order_km_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="start_km"/>
+                                        <field name="end_km"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                                <separator name="dist_incentive_order_km" string="Incentive Order KM (Pickup to Drop)"/>
+                                <field name="incentive_order_km_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="start_km"/>
+                                        <field name="end_km"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Daily Incentives">
+                            <group>
+                                <separator name="daily_incentives_orders" string="Daily Incentives(Orders)"/>
+                                <field name="daily_incentive_per_order_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="min_orders"/>
+                                        <field name="max_orders"/>
+                                        <field name="amount_per_order"/>
+                                    </tree>
+                                </field>
+                                <separator name="daily_incentives_hours" string="Daily Incentives(Hours)"/>
+                                <field name="daily_incentive_per_hours_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="min_hours"/>
+                                        <field name="max_hours"/>
+                                        <field name="amount_per_hour"/>
+                                    </tree>
+                                </field>
+                                <separator name="daily_incentives_stop_count" string="Daily Incentives(Stop Count)"/>
+                                <field name="daily_incentive_stop_count_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="start_count"/>
+                                        <field name="end_count"/>
+                                        <field name="amount_per_stop_count"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Weekly/Monthly Incentive">
+                            <group>
+                                <separator name="weekly_incentive" string="Weekly Incentive"/>
+                                <field name="weekly_incentive_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="no_of_days"/>
+                                        <field name="min_hours"/>
+                                        <field name="min_orders"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                                <separator name="monthly_incentive" string="Monthly Incentive"/>
+                                <field name="monthly_incentive_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="no_of_days"/>
+                                        <field name="min_hours"/>
+                                        <field name="min_orders"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Weekend/Holiday Incentive">
+                            <group>
+                                <separator name="holiday_weekend_incentive" string="Weekend Incentive"/>
+                                <field name="weekend_incentive_ids" string="">
+                                    <tree editable="bottom">
+                                        <field name="week_days" required="1" width="40px"/>
+                                        <field name="min_orders"/>
+                                        <field name="min_hours"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                                <separator name="holiday_holiday_incentive" string="Holiday Incentive"/>
+                                <field name="holiday_incentive_ids" string="" readonly="1">
+                                    <tree>
+                                        <field name="holiday_day" required="1"/>
+                                        <field name="holiday_date" required="1"/>
+                                        <field name="min_no_of_order"/>
+                                        <field name="min_no_of_hr"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+                 </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_payout_plans_search_view" model="ir.ui.view">
+        <field name="name">driver.payout.plans.search</field>
+        <field name="model">driver.payout.plans</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="plan_seq"/>
+                <field name="region_id"/>
+                <separator/>
+                    <filter string="Archived" name="archived" domain="[('active', '=', False)]" />
+                    <filter string="Driver Not Set" name="driver_not_set" domain="[('emp_ids', '=', False)]" />
+                    <filter string="Region" name="region_id_gp" context="{'group_by':'region_id'}" />
+                    <filter string="Default Plan" name="is_default_region_plan_gp" context="{'group_by':'is_default_region_plan'}" />
+                    <filter string="Default Plan" name="is_default_region_plan_set" domain="[('is_default_region_plan', '=', True)]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="driver_payout_plans_tree" model="ir.ui.view">
+            <field name="name">driver.payout.plans.tree</field>
+            <field name="model">driver.payout.plans</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="plan_seq"/>
+                    <field name="name" optional="hide"/>
+                    <field name="region_id"/>
+                    <field name="driver_count" />
+					<field name="is_default_region_plan" string="Default Plan" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="driver_payout_plans_action" model="ir.actions.act_window">
+            <field name="name">Driver Payout Plans</field>
+            <field name="res_model">driver.payout.plans</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    <menuitem id="menu_driver_payout_plans"
+              name="Driver Payout Plans"
+              sequence="6"
+              action="driver_payout_plans_action"
+              parent="menu_driver_payout_main_menu"/>
+</odoo>

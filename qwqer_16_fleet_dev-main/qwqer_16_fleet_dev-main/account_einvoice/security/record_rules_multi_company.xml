@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--ir_rule for E-Invoice Config-->
+    <record id="einvoice_config_company_rule" model="ir.rule">
+        <field name="name">Company Rule E-Invoice Config</field>
+        <field name="model_id" ref="model_einvoice_config"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for E-Invoice Details-->
+    <record id="einvoice_details_company_rule" model="ir.rule">
+        <field name="name">Company Rule E-Invoice Details</field>
+        <field name="model_id" ref="model_einvoice_details"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for  E-Invoice scheduler failed log-->
+    <record id="einvoice_scheduler_failed_log_company_rule" model="ir.rule">
+        <field name="name">Company Rule E-Invoice Details</field>
+        <field name="model_id" ref="model_einvoice_scheduler_failed_log"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for outgoing api log-->
+    <record id="outgoing_api_log_company_rule" model="ir.rule">
+        <field name="name">Company Rule E-Invoice Details</field>
+        <field name="model_id" ref="model_outgoing_api_log"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

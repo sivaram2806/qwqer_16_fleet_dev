@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <menuitem id="menu_account_type" name="Account Type" parent="account.menu_finance_configuration" -->
+<!--        		action="account.action_account_type_form" groups="account.group_account_user"/>-->
+        <record id="paperformat_landscape_Financial_report" model="report.paperformat">
+            <field name="name">Financial Reports</field>
+            <field name="orientation">Portrait</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">269</field>
+            <field name="page_width">200</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">80</field>
+        </record>
+
+        <record id="action_report_financial" model="ir.actions.report">
+            <field name="name">Financial Report</field>
+            <field name="model">account.financial.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">base_accounting_kit.report_financial</field>
+            <field name="paperformat_id" ref="account_financial_pl_bs.paperformat_landscape_Financial_report"/>
+            <field name="binding_model_id" ref="model_account_financial_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <record id="action_account_trial_balance_report" model="ir.actions.act_window">
+            <field name="name">Trial Balance</field>
+            <field name="res_model">accounting.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="accounting_pdf_reports.accounting_report_view"/>
+            <field name="target">new</field>
+           <!--  <field name="context" eval="{'default_account_report_id':162}"/> -->
+        </record>
+
+        <menuitem id="accounting_pdf_reports.menu_general_Balance_report"
+            name="Trial Balance"
+            parent="accounting_pdf_reports.menu_finance_legal_statement"
+            action="action_account_trial_balance_report" active = "False"/>
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="virtual_configuration_tree" model="ir.ui.view">
+		<field name="name">virtual.configuration.tree</field>
+		<field name="model">virtual.account.configuration</field>
+		<field name="arch" type="xml">
+			<tree string="Virtual Account Configuration">
+				 <field name="partner_type" required="True"/>
+				 <field name="journal_id" required="True"/>
+				 <field name="payment_method_id"  required="True" />
+				 <field name="payment_type"  required="True"/>
+			</tree>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="virtual_configuration_form">
+		<field name="name">virtual.configuration.form</field>
+		<field name="model">virtual.account.configuration</field>
+		<field name="arch" type="xml">
+			<form string="Virtual Account Configuration">
+				<sheet>
+					<group>
+						<group>
+							 <field name="partner_type" required="True" />
+							 <field name="journal_id" required="True"/>
+							 <field name="payment_type"  widget="radio" options="{'horizontal': True}" required="True"/>
+							 <field name="payment_method_id" required="True" domain="[('payment_type', '=', payment_type)]"/>
+							 <field name="is_validated"/>
+							 <field name="company_id" readonly="1"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_virtual_account_configuration" model="ir.actions.act_window">
+		<field name="name">Virtual Account Configuration</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">virtual.account.configuration</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <menuitem id="menu_action_virtual_account_configuration" action="action_virtual_account_configuration" parent="menu_virtual_account"
+			  sequence="2" />
+</odoo>

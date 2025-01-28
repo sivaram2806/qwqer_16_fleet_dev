@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_re_initiate_qshop_wiz_form" model="ir.ui.view">
+        <field name="name">re.initiated.qshop.wiz.form</field>
+        <field name="model">re.init.qshop.payout.wiz</field>
+        <field name="arch" type="xml">
+            <form string="ReInitiate Payment">
+                <field name="payout_ids" required="1" nolabel="1" options="{'no_create': True}" readonly="1"/>
+                <footer>
+                    <button name="action_repayment"
+                            string="ReInitiate"
+                            type="object"
+                            class="oe_highlight"/>
+
+                    <button string="Cancel"
+                            class="oe_link"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="re_initiate_qshop_wiz_action" model="ir.actions.act_window">
+        <field name="name">ReInitiate Payment</field>
+        <field name="res_model">re.init.qshop.payout.wiz</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_re_initiate_qshop_wiz_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>
+

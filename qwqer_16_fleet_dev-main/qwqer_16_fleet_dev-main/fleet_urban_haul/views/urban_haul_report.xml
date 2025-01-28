@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- pivot view for urban haul daily trip-->
+    <record id="batch_trip_uh_pivot_fleet_urban_haul" model="ir.ui.view">
+        <field name="name">batch.trip.uh.tree.fleet_urban_haul</field>
+        <field name="model">batch.trip.uh</field>
+        <field name="arch" type="xml">
+            <pivot string="Urban Haul Report">
+                <field name="trip_date" interval="month" type="col"/>
+                <field name="region_id" type="row"/>
+                <field name="sales_person_id" type="row"/>
+                <field name='customer_total_amount' type="measure"/>
+                <field name='vendor_total_amount' type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--	action for Urban Haul Trip-->
+    <record id="action_pivot_batch_trip_uh" model="ir.actions.act_window">
+        <field name="name">Urban Haul - Daily Trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">batch.trip.uh</field>
+        <field name="view_mode">pivot</field>
+        <field name="domain">[('is_vendor_trip', '=', False)]</field>
+        <field name="context">{'default_is_vendor_trip':False ,  'search_default_filter_uh_trip_date_365': 1,
+            'pivot_measures': ['__count__', 'customer_total_amount', 'vendor_total_amount']}</field>
+    </record>
+</odoo>
+
+
+

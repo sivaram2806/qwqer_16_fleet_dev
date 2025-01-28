@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_report_wizard,access.sale.order.report.wizard,model_sale_order_report_wizard,base.group_user,1,1,1,1
+access_invoice_summary_report_wizard,access.invoice.summary.report_wizard,model_invoice_summary_report_wizard,base.group_user,1,1,1,1
+access_sales_person_summary_report_wizard,access.sales.person.summary.report.wizard,model_sales_person_summary_report_wizard,base.group_user,1,1,1,1
+access_revenue_report_wizard,access.revenue.report.wizard,model_revenue_report_wizard,base.group_user,1,1,1,1

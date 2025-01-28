@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.view.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="consolidated_invoice_id" readonly="1" string="Order Lines"
+                           attrs="{'invisible': [('consolidated_invoice_id', '=', False)]}"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="selling_partner_id"/>
+                </field>
+                <xpath expr="//field[@name='l10n_in_gst_treatment']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='l10n_in_state_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='l10n_in_state_id']" position="after">
+                    <label for="ref" string="Reference" attrs="{'invisible':[('move_type', 'not in', ('out_invoice', 'out_receipt', 'out_refund'))]}"/>
+                                <field name="ref" nolabel="1" attrs="{'invisible':[('move_type', 'not in', ('out_invoice', 'out_receipt', 'out_refund'))]}"/>
+                </xpath>
+                <xpath expr="//page[@name='other_info']" position="after">
+                    <page string="Service Details" name="service_details"
+                          attrs="{'invisible': [('move_type', 'not in',('out_invoice','out_refund'))]}">
+                        <group>
+                            <group string="Order Info" name="order_info">
+                                <field name="order_id" attrs="{'readonly': [('state', 'in', ('posted','cancel'))]}"/>
+                                <field name="payment_mode_id" attrs="{'readonly': [('state', 'in', ('posted','cancel'))]}"/>
+                            </group>
+                            <group string="Driver Info" name="driver_info">
+                                <field name="driver_id" invisible="1"/>
+                                <field name="driver_uid"/>
+                                <field name="driver_name" attrs="{'readonly': [('state', 'in', ('posted','cancel'))]}"/>
+                                <field name="driver_phone" attrs="{'readonly': [('state', 'in', ('posted','cancel'))]}"/>
+                            </group>
+
+                        </group>
+
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="after">
+                                        <field name="price_subtotal" string="Untaxed Amount"/>
+
+                </xpath>
+            </field>
+        </record>
+        <!--tree view account move-->
+        <record id="view_account_move_tree_sale_extended" model="ir.ui.view">
+            <field name="name">account.move.tree.sale.extended</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="qwqer_base.view_account_move_invoice_tree_qwqer_base"/>
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='sales_person_id']" position="after">
+                    <field name="order_id"/>
+                    <field name="driver_uid"/>
+                    <field name="driver_name"/>
+                    <field name="driver_phone"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- bill tree view account move-->
+
+        <record id="view_account_move_bill_tree_sale_extended" model="ir.ui.view">
+            <field name="name">account.move.tree.bill.sale.extended</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="qwqer_base.view_account_move_bill_tree_qwqer_base"/>
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='sales_person_id']" position="after">
+                    <field name="order_id"/>
+                    <field name="driver_uid"/>
+                    <field name="driver_name"/>
+                    <field name="driver_phone"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--credit note tree view-->
+        <record id="view_account_move_credit_note_tree_sale_extended" model="ir.ui.view">
+            <field name="name">account.move.tree.credit.note.sale.extended</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="qwqer_base.view_account_move_credit_note_tree_qwqer_base"/>
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='sales_person_id']" position="after">
+                    <field name="order_id"/>
+                    <field name="driver_uid"/>
+                    <field name="driver_name"/>
+                    <field name="driver_phone"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!--refund tree view-->
+        <record id="view_account_move_refund_tree_sale_extended" model="ir.ui.view">
+            <field name="name">account.move.tree.refund.sale.extended</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="qwqer_base.view_account_move_refund_tree_qwqer_base"/>
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='sales_person_id']" position="after">
+                    <field name="order_id"/>
+                    <field name="driver_uid"/>
+                    <field name="driver_name"/>
+                    <field name="driver_phone"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="inherit_account_invoice_search_view_sale_extended" model="ir.ui.view">
+            <field name="name">inherit.account.invoice.search.sale.extended</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_user_id']" position="after">
+                    <field name="order_id"/>
+                    <field name="driver_id"/>
+                    <field name="driver_uid"/>
+                    <field name="driver_name"/>
+                    <field name="driver_phone"/>
+                    <field name="payment_mode_id"/>
+                </xpath>
+                <xpath expr="//group/filter[@name='status']" position="after">
+                    <filter string="Customer" name="customer" domain="[]"
+                            context="{'group_by':'invoice_partner_display_name'}"/>
+                </xpath>
+                <xpath expr="//group/filter[@name='status']" position="after">
+                    <filter string="Employee" name="employee" domain="[]" context="{'group_by':'sales_person_id'}"/>
+                </xpath>
+                <xpath expr="//search/filter[@name='date']" position="after">
+                    <separator/>
+                    <separator/>
+
+                    <filter string="Current Year" name="current_year"
+                            domain="['|', ('date', '=', False), '&amp;',('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter string="Last 3 Month" name="last3_month"
+                            domain="[('date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                    <filter string="Last 6 Month" name="last6_month"
+                            domain="[('date','&gt;=',(datetime.datetime.now() - relativedelta(months=5)).strftime('%Y-%m-01'))]"/>
+
+                </xpath>
+
+                <group expand="0" string="Group By">
+                    <filter string="Driver ID" name="driver_uid" domain="[]"
+                            context="{'group_by': 'driver_uid'}"/>
+                    <filter name="driver_name" string="Driver Name" domain="[]" context="{'group_by': 'driver_name'}"/>
+                    <filter name="order_id" string="Order ID" domain="[]" context="{'group_by': 'order_id'}"/>
+                    <filter name="driver_phone" string="Driver Phone Number" domain="[]"
+                            context="{'group_by': 'driver_phone'}"/>
+                    <filter name="region_id" string="Region" domain="[]" context="{'group_by': 'region_id'}"/>
+                    <filter name="customer_type" string="Customer Type" domain="[]"
+                            context="{'group_by': 'customer_type'}"/>
+                    <filter name="payment_mode_id" string="Payment Mode" domain="[]"
+                            context="{'group_by': 'payment_mode_id'}"/>
+                </group>
+            </field>
+        </record>
+
+
+        <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+            <field name="name">Invoices</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="account.view_out_invoice_tree"/>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="domain">[('move_type', '=', 'out_invoice')]</field>
+            <field name="context">{'default_move_type': 'out_invoice','search_default_last3_month':1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a customer invoice
+                </p>
+                <p>
+                    Create invoices, register payments and keep track of the discussions with your customers.
+                </p>
+            </field>
+        </record>
+
+        <!--action for updating order sales person-->
+        <record id="model_invoice_order_sale_person" model="ir.actions.server">
+            <field name="name">Update Order Sales Person</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_update_order_sales_person()</field>
+        </record>
+
+<!--action for updating segment-->
+        <record id="action_update_customer_segment" model="ir.actions.server">
+            <field name="name">Update Customer Segment</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">records.action_update_customer_segment()</field>
+        </record>
+
+
+    </data>
+
+
+    <data>
+        <menuitem id="menu_action_sales_customer_invoice" action="account.action_move_out_invoice_type"
+                  name="Customers Invoice"
+                  parent="sale.menu_sale_invoicing" sequence="1"/>
+    </data>
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="scheduled_action_update_wiz_form_view" model="ir.ui.view">
+        <field name="name">update.scheduled.action.wiz.form.view</field>
+        <field name="model">update.scheduled.action.wiz</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" required="1"/>
+                            <field name="days"
+                                   attrs="{'invisible': ['|',('action_type', '!=','week_month'),('payout_type', '!=','week')]}"/>
+                            <field name="action_type" invisible="1"/>
+                            <field name="so_daily_trans" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="payout_type"
+                                   attrs="{'required': [('action_type', '=','week_month')],'invisible': [('action_type', '=','daily')]}"/>
+                            <field name="region_id" options="{'no_create_edit':True}"
+                                   attrs="{'invisible': [('action_type', '!=','week_month')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Update" name="update_so_daily_transaction_manually" type="object" class="btn-primary"
+                            attrs="{'invisible': ['|',('action_type', '!=','daily'),('so_daily_trans','=',False)]}"/>
+                    <button string="Update" name="action_attendance_transaction_daily" type="object" class="btn-primary"
+                            attrs="{'invisible': ['|',('action_type', '!=','daily'),('so_daily_trans','!=',False)]}"/>
+                    <button string="Update"  name="action_submit_week_month" type="object" class="btn-primary"
+                            attrs="{'invisible': [('action_type', '!=','week_month')]}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="daily_scheduled_action_update_action" model="ir.actions.act_window">
+        <field name="name">Attendance Driver Transaction</field>
+        <field name="res_model">update.scheduled.action.wiz</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="scheduled_action_update_wiz_form_view"/>
+        <field name="context">{'default_action_type':'daily'}</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <record id="so_daily_scheduled_action_update_action" model="ir.actions.act_window">
+        <field name="name">Sales Driver Transaction</field>
+        <field name="res_model">update.scheduled.action.wiz</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="scheduled_action_update_wiz_form_view"/>
+        <field name="context">{'default_action_type':'daily','default_so_daily_trans':True}</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <record id="week_month_scheduled_action_update_action" model="ir.actions.act_window">
+	    <field name="name">Weekly/Monthly Payouts</field>
+	    <field name="res_model">update.scheduled.action.wiz</field>
+	    <field name="type">ir.actions.act_window</field>
+	    <field name="view_mode">form</field>
+	    <field name="view_id" ref="scheduled_action_update_wiz_form_view"/>
+	    <field name="context">{'default_action_type':'week_month'}</field>
+	    <field name="target">new</field>
+	    <field name="binding_model_id" eval="False"/>
+	</record>
+
+</odoo>

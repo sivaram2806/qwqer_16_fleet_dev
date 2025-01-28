@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--Modification in account journal record to add driver mgmt fields-->
+	<record id="account_journal_form_view_diver_mgmt" model="ir.ui.view">
+		<field name="name">account.journal.form.view.driver.mgmt</field>
+		<field name="model">account.journal</field>
+		<field name="inherit_id" ref="account.view_account_journal_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='type']" position="after">
+				<field name='is_driver_journal'/>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

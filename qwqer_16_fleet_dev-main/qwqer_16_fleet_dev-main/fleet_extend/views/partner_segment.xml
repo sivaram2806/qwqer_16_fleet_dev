@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--	this form is inherited to modify account.move form view to add work order and trip summary related fields-->
+    <record id="partner_segment_tree_view_fleet_extend" model="ir.ui.view">
+        <field name="name">partner.segment.tree.view.fleet.extend</field>
+        <field name="model">partner.segment</field>
+        <field name="inherit_id" ref="qwqer_base.partner_segment_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name='is_fleet_service'/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

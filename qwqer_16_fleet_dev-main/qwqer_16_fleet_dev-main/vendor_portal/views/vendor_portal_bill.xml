@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    extend the invoice and bill breadcrumb-->
+    <template id="portal_my_home_menu_invoice_custom" inherit_id="account.portal_my_home_menu_invoice"
+              name="Custom Portal layout : invoice menu entries" priority="30">
+        <xpath expr="//li[hasclass('breadcrumb-item')][4]" position="replace">
+            <li t-if="page_name == 'invoice' and invoice" class="breadcrumb-item active">
+                <t t-esc="invoice.name" t-if="invoice.name != '/'"/>
+                <t t-else="">
+                    <em>Draft Invoice</em>
+                </t>
+            </li>
+        </xpath>
+    </template>
+
+    <!--    portal_breadcrumbs for bills-->
+    <template id="portal_my_home_menu_vendor_bills" name="Portal layout : Vendor Bills"
+              inherit_id="portal.portal_breadcrumbs" priority="31">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'bill'" t-attf-class="breadcrumb-item #{'active ' if not invoice else ''}">
+                <a t-if="invoice" t-attf-href="/my/bills?{{ keep_query() }}">Bills</a>
+                <t t-else="">Bills</t>
+            </li>
+            <li t-if="page_name == 'bill' and invoice" class="breadcrumb-item active">
+                <t t-esc="invoice.name" t-if="invoice.name != '/'"/>
+                <t t-else=""><em>Draft Bill</em></t>
+            </li>
+        </xpath>
+    </template>
+
+<!--    bills portal menu template-->
+    <template id="portal_menu_vendor_bill" name="Vendor Portal Menu"
+              inherit_id="vendor_portal.portal_menu_vendor_portal"
+              customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Bills</t>
+                <t t-set="url" t-value="'/my/bills'"/>
+                <t t-set="placeholder_count" t-value="'bill_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!--    bills portal list view template-->
+    <template id="portal_vendor_bill_page" name="Vendor Bills">
+        <t t-call="portal.portal_layout">
+            <t t-set="no_footer" t-value="True"/>
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Bills</t>
+            </t>
+            <t t-if="not bills">
+                <p>There are currently no Bills for you.</p>
+            </t>
+            <t t-if="bills" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Bill No.</th>
+                        <th>Vendor</th>
+                        <th>Vehicle Consolidate No</th>
+                        <th>UTR Reference</th>
+                        <th>Bill Date</th>
+                        <th>Tax Excluded</th>
+                        <th>Net Total</th>
+                        <th>Amount Due</th>
+                        <th>Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="bills" t-as="bill">
+                        <tr>
+                            <td>
+                                <a t-att-href="bill.get_portal_url()" t-att-title="bill.name">
+                                    <t t-esc="bill.name" t-if="bill.name != '/'"/>
+                                    <em t-else="">Draft BILL</em>
+                                </a>
+                            </td>
+                            <td>
+                                <span t-field="bill.invoice_partner_display_name"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.vehicle_customer_consolidate_id"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.utr_ref"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.invoice_date"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.amount_untaxed_signed"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.amount_total_signed"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.due_amount"/>
+                            </td>
+                            <td>
+                                <span t-field="bill.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+</odoo>

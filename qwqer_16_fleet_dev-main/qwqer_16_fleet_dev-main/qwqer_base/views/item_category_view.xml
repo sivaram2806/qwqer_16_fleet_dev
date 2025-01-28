@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="item_category_view_tree_master" model="ir.ui.view">
+            <field name="name">item.category.view.tree.master</field>
+            <field name="model">item.category</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="item_category_tree_action" model="ir.actions.act_window">
+            <field name="name">Item Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">item.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- This Menu for item category -->
+        <menuitem id="menu_item_category" name="Item Category"  parent="sale.menu_sale_config"
+                  action="item_category_tree_action" sequence="1"/>
+    </data>
+</odoo>

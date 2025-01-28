@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    Sequence for bulk import Leads-->
+    <record id="sequence_bulk_import_lead" model="ir.sequence">
+        <field name="name">CRM Bulk Import</field>
+        <field name="code">crm.bulk.import.sequence</field>
+        <field name="prefix">BLK/CRM/</field>
+        <field name="padding">4</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

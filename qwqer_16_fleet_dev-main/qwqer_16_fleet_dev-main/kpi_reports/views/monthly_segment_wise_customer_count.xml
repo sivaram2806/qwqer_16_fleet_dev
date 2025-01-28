@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="segment_wise_monthly_customer_count_pivot" model="ir.ui.view">
+        <field name="name">segment.wise.monthly.customer.count.pivot</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <pivot string="Monthly Segment Wise Customer Count">
+                <field name="create_date" type="col"/>
+                <field name="segment_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--     customer segment wise partner count tree view-->
+
+    <record id="segment_wise_monthly_customer_tree_view" model="ir.ui.view">
+        <field name="name">>segment.wise.monthly.customer.count.tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree string="Contacts">
+                <field name="customer_ref_key" string="Customer Ref Key"/>
+                <field name="translated_display_name" string="Name"/>
+                <field name="order_sales_person" string="Order Sales Person"/>
+                <field name="customer_type" string="Customer Type" optional="hide"/>
+                <field name="region_id" string="Region" optional="hide"/>
+                <field name="create_date" string="Created on"/>
+                <field name="phone" class="o_force_ltr" optional="show"/>
+                <field name="email" optional="show"/>
+                <field name="sale_order_count" string="Delivery Sales"/>
+                <field name="qshop_sale_order_count" string="Qwqer Shop Sales"/>
+                <field name="total_invoiced" string="Delivery Invoiced"/>
+                <field name="total_qshop_invoiced" string="Qwqer Shop Invoiced"/>
+                <field name="credit" string="Total Receivable"/>
+                <field name="debit" string="Total Payable"/>
+                <field name="partner_age" string="Customer Age"/>
+                <field name="sale_order_age" string="Sale Order Age"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="city" optional="hide"/>
+                <field name="state_id" optional="hide"/>
+                <field name="country_id" optional="hide"/>
+                <field name="vat" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <record id="segment_wise_monthly_customer_count_filters" model="ir.ui.view">
+        <field name="name">segment.wise.monthly.customer.count.filters</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/filter[@name='current_year']" position="after">
+                <separator/>
+                <filter string="Current Month" name="last1_month"
+                        domain="[('create_date','&gt;=',(datetime.datetime.now() - relativedelta(months=0)).strftime('%Y-%m-01'))]"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_segment_wise_monthly_customer_count" model="ir.actions.act_window">
+        <field name="name">Segment-Wise Monthly Customer Count</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">pivot,tree</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('segment_wise_monthly_customer_count_pivot')}),
+             (0, 0, {'view_mode': 'tree', 'view_id': ref('segment_wise_monthly_customer_tree_view')})]"/>
+        <field name="context">{'search_default_last1_month': 1}</field>
+        <field name="domain">[('customer_type','!=',False),('parent_id','=',False),('segment_id','!=',False),
+            ('driver_uid','=',False),('customer_rank','&gt;', 0)]
+        </field>
+    </record>
+    <menuitem id="segment_wise_monthly_customer_count_menu"
+              name="Segment-Wise Monthly Customer Count"
+              parent="kpi_view_report_menu"
+              action="action_segment_wise_monthly_customer_count"
+              sequence="6"/>
+</odoo>

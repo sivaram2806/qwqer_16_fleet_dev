@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="delivery_merchant_payoutline_formview_xlsx_report" model="ir.actions.report">
+        <field name="name">Delivery Merchant Payout Details</field>
+        <field name="model">delivery.merchant.payout.lines</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">delivery_merchant_payout_lines_xlsx</field>
+        <field name="report_file">Delivery Merchant Payout Lines</field>
+    </record>
+
+</odoo>

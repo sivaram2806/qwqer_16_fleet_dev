@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="credit_period_view_form" model="ir.ui.view">
+        <field name="name">credit_period_view.form</field>
+        <field name="model">credit.period</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="from_period"/>
+                        </group>
+                        <group>
+                            <field name="to_period"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="credit_period_view_tree" model="ir.ui.view">
+        <field name="name">credit.period.view.tree</field>
+        <field name="model">credit.period</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="from_period"/>
+                <field name="to_period"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_credit_period" model="ir.actions.act_window">
+        <field name="name">credit Period</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">credit.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    	<menuitem id="menu_activity_period"
+ 		name="Credit Period"
+    	action="action_credit_period"
+    	parent="customer_onboarding.menu_config_customer_onboard"
+    	sequence="2"/>
+
+</odoo>

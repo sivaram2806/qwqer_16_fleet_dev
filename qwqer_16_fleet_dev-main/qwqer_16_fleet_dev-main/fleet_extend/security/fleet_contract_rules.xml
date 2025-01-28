@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--  Contracts: User can only edit his/her own records  -->
+	<record id="fleet_contract_user_rule" model="ir.rule">
+        <field name="name">Fleet contract creator user can only write own record</field>
+        <field name="model_id" ref="model_vehicle_contract"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('fleet_group_vehicle_contract_user'))]"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+<!--  Contracts: Reporting Manager can create/read/write/unlink any records  -->
+	<record id="fleet_contract_mu_manager_rule" model="ir.rule">
+        <field name="name">Fleet contract reporting manager can create/read/write/unlink any record</field>
+        <field name="model_id" ref="model_vehicle_contract"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('fleet_group_vehicle_contract_mu_manager'))]"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+<!--  Contracts: Finance Manager can create/read/write/unlink any records  -->
+	<record id="fleet_contract_finance_manager_rule" model="ir.rule">
+        <field name="name">Fleet contract finance manager can create/read/write/unlink any record</field>
+        <field name="model_id" ref="model_vehicle_contract"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('fleet_group_vehicle_contract_finance_manager'))]"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+<!--  Contracts: Administrator can create/read/write/unlink any records  -->
+	<record id="fleet_contract_admin_rule" model="ir.rule">
+        <field name="name">Fleet contract admin can create/read/write/unlink any record</field>
+        <field name="model_id" ref="model_vehicle_contract"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('fleet_group_vehicle_contract_user_admin_user'))]"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+    <!--ir_rule for vehicle contract-->
+    <record id="vehicle_contract_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Vehicle Contract</field>
+        <field name="model_id" ref="model_vehicle_contract"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for vehicle contract category-->
+    <record id="vehicle_contract_category_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Vehicle Contract Category</field>
+        <field name="model_id" ref="model_vehicle_contract_category"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for vehicle contract type-->
+    <record id="vehicle_contract_type_comp_rule" model="ir.rule">
+        <field name="name">Company Rule Vehicle Contract type</field>
+        <field name="model_id" ref="model_vehicle_contract_type"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

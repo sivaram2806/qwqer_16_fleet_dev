@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_cost_perorder_analysis_report_search" model="ir.ui.view">
+            <field name="name">cost_per_order.analysis.report.search</field>
+            <field name="model">cost.perorder.analysis.report</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="batch_payout_id" string="Payout" filter_domain="[('batch_payout_id','ilike',self)]"/>
+                    <field name="employee_id" string="Driver" filter_domain="[('employee_id','ilike',self)]"/>
+                    <field name="driver_uid" string="Driver ID" filter_domain="[('driver_code','ilike',self)]"/>
+                    <field name="region_id" filter_domain="[('region_id','ilike',self)]"/>
+                    <separator/>
+                    <filter string="Today" name="today_created" domain="['&amp;',
+	                	('create_date', '&gt;', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="Yesterday" name="yesterday_created" domain="['&amp;',
+	                	('create_date', '&lt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 23:59:59')),
+	                	('create_date', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="Current Week" name="current_week"
+                            domain="[('create_date', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+        						('create_date', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"/>
+                    <filter string="Current Month" name="this_month"
+                            domain="[('create_date', '&gt;=', context_today().strftime('%%Y-%%m-01 00:00:00'))]"/>
+                    <filter string="Last Week" name="week"
+                            domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="Last Month" name="month"
+                            domain="[('create_date','&gt;', (context_today() - datetime.timedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="Last 3 Month" name="last3_month"
+                            domain="[('create_date','&gt;=',(datetime.datetime.now() - relativedelta(months=2)).strftime('%Y-%m-01'))]"/>
+                    <separator/>
+                    <group expand="1" string="Group By">
+                        <filter string="Driver" name="driver_gp" context="{'group_by':'employee_id'}"/>
+                        <filter string="Region" name="company_gp" context="{'group_by':'region_id'}"/>
+                        <!--                        <filter string="Vehicle Category" name="vehicle_category_id_gp"-->
+                        <!--                                context="{'group_by':'vehicle_category_id'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_cost_perorder_analysis_report_pivot" model="ir.ui.view">
+            <field name="name">cost.per.order.analysis.report.pivot</field>
+            <field name="model">cost.perorder.analysis.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Driver Weekly/Monthly Cost">
+                    <field name="region_id" type="row"/>
+                    <field name="create_date" type="col"/>
+                    <field name="total" type="measure"/>
+                    <field name="no_of_orders" type="measure" invisible="1"/>
+                    <field name="order_qty" type="measure"/>
+                    <field name="order_cost" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_cost_report_lines_list1" model="ir.ui.view">
+            <field name="name">cost_perorder_analysis_report_list</field>
+            <field name="model">cost.perorder.analysis.report</field>
+            <field name="arch" type="xml">
+                <tree delete="0" create="0" edit="0" string="Driver Weekly/Monthly Cost">
+                    <field name="region_id"/>
+                    <field name="employee_id"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="batch_payout_id"/>
+                    <field name="total" sum="Total"/>
+                    <field name="no_of_orders" sum="Total"/>
+                    <field name="order_qty" sum="Total"/>
+                    <field name="order_cost"/>
+                    <!--                    <button class="oe_stat_button" type="object" name="action_get_payout_lines"-->
+                    <!--                            icon="fa-arrow-circle-right"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_costper_order_view" model="ir.actions.act_window">
+            <field name="name">Driver Weekly/Monthly Cost</field>
+            <field name="res_model">cost.perorder.analysis.report</field>
+            <field name="view_mode">pivot,tree</field>
+            <field name="view_id" ref="view_cost_perorder_analysis_report_pivot"/>
+            <field name="context">
+                {'tree_view_ref':'driver_management.view_cost_report_lines_list1','search_default_last3_month':1}
+            </field>
+            <field name="domain">[]</field>
+        </record>
+
+
+        <!--    driver weekly monthly cost menu item-->
+        <menuitem id="driver_weekly_monthly_cost"
+                  name="Driver Weekly/Monthly Cost"
+                  action="action_costper_order_view"
+                  parent="driver_management.menu_driver_reports_main_menu"
+                  sequence="2"/>
+
+    </data>
+</odoo>

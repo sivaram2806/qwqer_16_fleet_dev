@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sequence_bulk_upload_trip" model="ir.sequence">
+            <field name="name">Bulk Upload Trip</field>
+            <field name="code">bulk.upload.trip</field>
+            <field name="prefix">BU</field>
+            <field name="padding">5</field>
+            <field name="implementation">no_gap</field>
+        </record>
+        <record id="vendor_portal_base_url" model="ir.config_parameter">
+            <field name="key">web_fleet_url</field>
+            <field name="value"></field>
+        </record>
+    </data>
+</odoo>

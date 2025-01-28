@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="state_journal_qwqer_base_view_form" model="ir.ui.view">
+        <field name="name">state_journal_qwqer_base_view_form</field>
+        <field name="model">state.journal</field>
+        <field name="inherit_id" ref="delivery_base.state_journal_delivery_base_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='delivery_journal']" position="inside">
+                <group>
+                    <field name="qshop_journal_id" string='Qwqer Shop Invoice Journal'/>
+                    <field name="qshop_tcs_tax_id" string='Qwqer Shop TCS Tax'/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="state_journal_qshop_base_view_tree" model="ir.ui.view">
+        <field name="name">state_journal_qshop_base_view_tree</field>
+        <field name="model">state.journal</field>
+        <field name="inherit_id" ref="qwqer_base.view_state_journal_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="qshop_journal_id" string='Qwqer Shop Invoice Journal'/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

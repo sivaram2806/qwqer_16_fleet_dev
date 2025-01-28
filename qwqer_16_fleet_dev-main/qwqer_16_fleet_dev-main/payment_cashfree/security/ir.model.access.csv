@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+payment_cashfree.access_cash_free_settlement,access_cash_free_settlement,payment_cashfree.model_cash_free_settlement,base.group_user,1,1,1,1
+payment_cashfree.access_cash_free_credentials,access_cash_free_credentials,payment_cashfree.model_cash_free_credentials,base.group_user,1,1,1,1
+payment_cashfree.access_cash_free_configuration,access_cash_free_configuration,payment_cashfree.model_cash_free_configuration,base.group_user,1,1,1,1
+payment_cashfree.access_cash_free_api_settlement,access_cash_free_api_settlement,payment_cashfree.model_cash_free_api_settlement,base.group_user,1,1,1,1
+payment_cashfree.access_cashfree_payment_line,access_cashfree_payment_line,payment_cashfree.model_cashfree_payment_line,base.group_user,1,1,1,1
+payment_cashfree.access_cashfree_payin,access_cashfree_payin,payment_cashfree.model_cashfree_payin,base.group_user,1,1,1,1
+
+
+
+

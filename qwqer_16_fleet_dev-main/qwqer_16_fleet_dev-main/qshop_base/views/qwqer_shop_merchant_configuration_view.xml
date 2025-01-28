@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="merchant_configuration_tree_qwqershop_inherit" model="ir.ui.view">
+        <field name="name">merchant.journal.data.configuration.tree.qwqershop.inherit</field>
+        <field name="model">merchant.journal.data.configuration</field>
+        <field name="inherit_id" ref="sale_extended.merchant_configuration_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="qshop_journal_id"/>
+                <field name="shop_merchant_discount_accid"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="merchant_configuration_form_qwqershop_inherit" model="ir.ui.view">
+        <field name="name">merchant.journal.data.configuration.qwqershop.inherit</field>
+        <field name="model">merchant.journal.data.configuration</field>
+        <field name="inherit_id" ref="sale_extended.merchant_configuration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="qshop_journal_id"/>
+                <field name="shop_merchant_discount_accid"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

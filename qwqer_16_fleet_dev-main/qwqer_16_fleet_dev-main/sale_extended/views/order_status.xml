@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_status_tree" model="ir.ui.view">
+        <field name="name">order.status.tree</field>
+        <field name="model">order.status</field>
+        <field name="arch" type="xml">
+            <tree string="Order Status">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_order_status_form">
+        <field name="name">order.status.form</field>
+        <field name="model">order.status</field>
+        <field name="arch" type="xml">
+            <form string="Order Status">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="is_cancel_order"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_order_status" model="ir.actions.act_window">
+        <field name="name">Order Status</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">order.status</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_order_status"
+              name="Order Status"
+              parent="sale.menu_sale_config"
+              action="action_order_status"
+              sequence="6"/>
+
+</odoo>

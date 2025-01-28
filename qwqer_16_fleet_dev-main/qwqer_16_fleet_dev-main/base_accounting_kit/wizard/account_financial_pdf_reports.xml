@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--    Financial report common form view    -->
+        <record id="financial_report_wiz_modified1" model="ir.ui.view">
+            <field name="name">financial.report.extended.wiz.new</field>
+            <field name="model">financial.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="account_report_id" domain="[('parent_id','=',False)]"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="target_move" widget="radio"/>
+                            <field name="view_format" widget="radio" invisible="1"/>
+                            <field name="enable_filter"/>
+                            <field name="debit_credit" attrs="{'invisible': [('enable_filter','=',True)]}"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button string="Print" name="view_report_pdf" type="object"
+                                class="btn-primary"/>
+                        <button string="Export" name="view_report_xl" type="object"
+                                class="btn-primary"/>
+                        <button string="Discard" class="btn-secondary"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!--    Action for profit and loss    -->
+        <record id="action_account_report1" model="ir.actions.act_window">
+            <field name="name">Account Report</field>
+            <field name="res_model">financial.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="financial_report_wiz_modified1"/>
+            <field name="target">new</field>
+        </record>
+
+<!--        <menuitem id="account_reports_pdf" sequence="1"-->
+<!--                  action="base_accounting_kit.action_account_report1"-->
+<!--                  groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"-->
+<!--                  name="Account Reports Test" parent="account.menu_finance_reports"/>-->
+        <record id="financial_report_xl" model="ir.actions.report">
+            <field name="name">Financial Reports</field>
+            <field name="model">financial.report</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">base_accounting_kit.report_financial_xlsx</field>
+            <field name="report_file">Financial reports</field>
+        </record>
+
+<!--        &lt;!&ndash;    Action for balance sheet    &ndash;&gt;-->
+<!--        <record id="action_balance_sheet_report1" model="ir.actions.act_window">-->
+<!--            <field name="name">Balance Sheet</field>-->
+<!--            <field name="res_model">financial.report</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="financial_report_wiz_modified1"/>-->
+<!--            <field name="target">new</field>-->
+<!--        </record>-->
+
+
+    </data>
+</odoo>

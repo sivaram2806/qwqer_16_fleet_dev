@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<!-- wizard to update employee expense manager -->
+	<record id="hr_employee_update_wizard_form_view_inherit_hr_expense" model="ir.ui.view">
+		<field name="name">hr.employee.update.wizard.form.view.inherit.hr.expense</field>
+	    <field name="model">hr.employee.update.wizard</field>
+        <field name="inherit_id" ref="qwqer_base.hr_employee_update_wizard_form_view"/>
+	    <field name="arch" type="xml">
+			<xpath expr="//field[@name='department_id']" position="after">
+				<field name="expense_hr_manager_id"  options="{'no_create_edit':True}"
+					   attrs="{'required': [('action_type', '=','expense_mngr')],
+					   'invisible': [('action_type', '!=','expense_mngr')]}"/>
+			</xpath>
+			<xpath expr="//button[@name='action_update_region']" position="after">
+				<button string="Update Expense Manager"  name="update_expense_manager" type="object"
+						class="btn-primary" attrs="{'invisible': [('action_type', '!=','expense_mngr')]}"/>
+			</xpath>
+		</field>
+	</record>
+
+	<!-- server action to update expense manager -->
+	<record id="update_expense_mngr_wizard_action" model="ir.actions.act_window">
+	    <field name="name">Update Expense Manager</field>
+	    <field name="res_model">hr.employee.update.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+	    <field name="view_mode">form</field>
+		<field name="view_id" ref="qwqer_base.hr_employee_update_wizard_form_view"/>
+		<field name="target">new</field>
+		<field name="context">{'default_action_type': 'expense_mngr'}</field>
+		<field name="binding_model_id" ref="hr.model_hr_employee"/>
+	</record>
+       
+</odoo>

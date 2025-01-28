@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <menuitem id="menu_wallet_account_config_root" name="Wallet" parent="account.menu_finance"
+              groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"
+              sequence="13"/>
+    <menuitem id="menu_customer_wallet_config" action="action_customer_wallet_config"
+              parent="menu_wallet_account_config_root" sequence="4" name="Customer Wallet Configuration"/>
+
+    <menuitem id="menu_add_customer_wallet"
+              name="Add Amount to Customer Wallet"
+              parent="qwqer_wallet.menu_wallet_account_config_root"
+              action="action_add_amount_wallet_wizard_form"
+              sequence="2"/>
+
+    <menuitem id="menu_deduct_customer_wallet"
+              name="Deduct Amount from Customer Wallet"
+              parent="qwqer_wallet.menu_wallet_account_config_root"
+              action="action_deduct_amount_from_wallet"
+              sequence="3"/>
+
+    <!--customer wallet report menu-->
+    <menuitem id="menu_customer_wallet" action="action_customer_wallet_report"
+              parent="qwqer_wallet.menu_wallet_account_config_root" sequence="1" name="Customer Wallet"/>
+
+    <!--    menu for customer wallet intermediate transaction-->
+    <menuitem id="menu_action_driver_transaction"
+              action="qwqer_wallet.action_intermediate_wallet_transaction_journal"
+              parent="qwqer_wallet.menu_wallet_account_config_root"
+              sequence="4"/>
+</odoo>

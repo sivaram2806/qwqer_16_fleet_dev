@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+   <menuitem id="menu_reconciliation" name="Reconciliation"
+   			groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"
+   			parent="account.menu_finance" sequence="12"/>
+   <menuitem id="menu_virtual_account" name="Virtual Account Settlement" parent="menu_reconciliation" sequence="1"/>
+   <menuitem id="hr_expense.menu_hr_expense_account_employee_expenses" active="false"/>
+
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="ondc_project_config_settings_view_tree" model="ir.ui.view">
+        <field name="name">ondc.project.config.settings.view.tree</field>
+        <field name="model">ondc.project.config.settings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="project_name" required="1"/>
+                <field name="source_name" required="1"/>
+                <field name="gro_user_id" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ondc_project_config_settings_action" model="ir.actions.act_window">
+        <field name="name">ONDC Project</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ondc.project.config.settings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="ondc_project_config_settings"
+              name="ONDC Project"
+              action="ondc_project_config_settings_action"
+              parent="project.menu_project_config"/>
+
+
+        <record id="ondc_subcategory_config_settings_view_tree" model="ir.ui.view">
+        <field name="name">ondc.subcategory.config.settings.view.tree</field>
+        <field name="model">ondc.subcategory.config.settings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="subcategory_name" required="1"/>
+                <field name="cause_id" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ondc_subcategory_config_settings_action" model="ir.actions.act_window">
+        <field name="name">ONDC Subcategory</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ondc.subcategory.config.settings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="ondc_subcategory_config_settings"
+              name="ONDC Subcategory"
+              action="ondc_subcategory_config_settings_action"
+              parent="project.menu_project_config"/>
+
+</odoo>

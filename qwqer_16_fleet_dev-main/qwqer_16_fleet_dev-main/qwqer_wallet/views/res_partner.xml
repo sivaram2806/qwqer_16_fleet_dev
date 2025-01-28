@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="wallet_res_partner_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherit.wallet</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="qwqer_base.res_partner_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='segment_id']"
+                   position="after">
+                <field name="wallet_id" readonly="1"/>
+                <field name="is_wallet_active" readonly="1"/>
+                <field name="wallet_balance"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="wallet_res_partner_button_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherit.wallet</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object"
+                        name="action_customer_wallet_details"
+                        icon="fa-briefcase">
+                    <field string="Wallet" name="wallet_balance" widget="statinfo"/>
+                </button>
+            </div>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <!--todo add group for the buttons (enable_to_edit_customer_group)-->
+                    <button name="action_activate_wallet" string="Activate Wallet"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('is_wallet_active', '=', True)]}"
+                            groups="account.group_account_invoice"/>
+
+                    <button name="action_deactivate_wallet" string="De-activate Wallet"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('is_wallet_active', '=', False)]}"/>
+                    <button name="%(action_add_amount_wallet_wizard_form)d" string="Add Amount to Wallet"
+                            type="action"
+                            context="{'default_partner_id': active_id}"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('is_wallet_active', '=', False)]}"/>
+                    <button name="%(action_deduct_amount_from_wallet)d" string="Deduct Amount From Wallet"
+                            type="action"
+                            context="{'default_partner_id': active_id}"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('is_wallet_active', '=', False)]}"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="customer_wallet_search_view" model="ir.ui.view">
+        <field name="name">Search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="wallet_id" string="Wallet"
+                       filter_domain="[('wallet_id','ilike', self)]"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>

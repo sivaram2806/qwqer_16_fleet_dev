@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem id="base_accounting_kit.account_reports_audit" sequence="4"
+              parent="account.menu_finance_reports"
+              groups="account.group_account_manager,account.group_account_user,account_base.account_read_receivables_accounting_group"
+              name="Audit Reports"/>
+    <menuitem
+            parent="account.menu_finance_reports"
+            id="menu_oca_reports_ledger"
+            name="Ledger reports"
+            groups="account.group_account_manager,account.group_account_user,account_base.account_read_receivables_accounting_group"/>
+    <menuitem
+        parent="menu_oca_reports_ledger"
+        action="action_general_ledger_wizard"
+        id="menu_general_ledger_wizard"
+        groups="account.group_account_manager,account.group_account_user"
+        sequence="10"
+    />
+    <menuitem
+        parent="menu_oca_reports_ledger"
+        action="action_journal_ledger_wizard"
+        id="menu_journal_ledger_wizard"
+        groups="account.group_account_manager,account.group_account_user"
+        sequence="15"
+    />
+    <menuitem
+        parent="base_accounting_kit.account_reports_audit"
+        action="action_trial_balance_wizard"
+        active="0"
+        id="menu_trial_balance_wizard"
+        groups="account.group_account_manager,account.group_account_user"
+        sequence="20"
+    />
+    <menuitem
+        parent="base_accounting_kit.account_reports_audit"
+        action="action_open_items_wizard"
+        id="menu_open_items_wizard"
+        groups="account.group_account_manager,account.group_account_user"
+        sequence="30"
+    />
+    <menuitem
+        parent="base_accounting_kit.account_reports_audit"
+        action="action_aged_partner_balance_wizard"
+        active="1"
+        id="menu_aged_partner_balance_wizard"
+        sequence="40"
+    />
+    <menuitem
+        parent="base_accounting_kit.account_reports_audit"
+        action="action_vat_report_wizard"
+        active="0"
+        id="menu_vat_report_wizard"
+        groups="account.group_account_manager,account.group_account_user"
+        sequence="50"
+    />
+
+        <menuitem name="Partner Ledger"
+              id="base_accounting_kit.menu_partner_ledger" sequence="1"
+              parent="menu_oca_reports_ledger"
+              action="base_accounting_kit.action_partner_ledger_wizard_report_form"/>
+
+            <menuitem id="base_accounting_kit.account_ledger_report_menu" name="Account Ledger Report" parent="menu_oca_reports_ledger"
+              action="base_accounting_kit.action_account_ledger_wizard_form" sequence="9"/>
+
+        <menuitem name="Partner Ledger"
+              id="base_accounting_kit.menu_partner_ledger" sequence="1"
+              parent="menu_oca_reports_ledger"
+              action="base_accounting_kit.action_partner_ledger_wizard_report_form"/>
+</odoo>

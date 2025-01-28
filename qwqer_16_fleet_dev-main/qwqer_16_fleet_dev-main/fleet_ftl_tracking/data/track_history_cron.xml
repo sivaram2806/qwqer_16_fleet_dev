@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_auto_fetch_location_history" model="ir.cron">
+            <field name="name">Track Location History</field>
+            <field name="interval_number">4</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="model_id" ref="model_batch_trip_ftl"/>
+            <field name="code">model.with_context(from_cron=True).fetch_trip_tracking_details()</field>
+            <field name="state">code</field>
+            <field name="doall" eval="True"/>
+        </record>
+    </data>
+</odoo>

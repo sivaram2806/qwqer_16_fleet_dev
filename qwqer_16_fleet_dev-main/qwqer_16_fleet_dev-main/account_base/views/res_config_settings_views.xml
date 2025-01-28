@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_account_base" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.account.base</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='invoicing_setting_container']" position="after">
+
+                        <h2>API Sale Order Invoice POST Configuration</h2>
+                        <div class="row mt16 o_settings_container" name="so_inv_post_setting_container">
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 id="record_limit_setting">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="record_limit"/>
+                                    <div class="text-muted">
+                                        Record Fetch Limit
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="record_limit"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="days_limit">
+                                <div class="o_setting_right_pane">
+                                    <label for="days_limit"/>
+                                    <div class="text-muted">
+                                        Days Fetch Limit
+                                    </div>
+                                <div class="text-muted">
+                                    <field name="days_limit"/>
+                                </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="skip_start_time">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="skip_start_time"/>
+                                    <div class="text-muted">
+                                        API Invoice Post Skip Start Time
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="skip_start_time"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box" id="skip_end_time">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="skip_end_time"/>
+                                    <div class="text-muted">
+                                        API Invoice Post Skip End Time
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="skip_end_time"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6 o_setting_box" id="post_invoice_with_cron">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="post_invoice_with_cron"/>
+                                    <div class="text-muted">
+                                        Check this to POST API Invoices
+                                    </div>
+                                    <div class="text-muted">
+                                        <field name="post_invoice_with_cron"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

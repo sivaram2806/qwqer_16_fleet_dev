@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- groups for to enable edit button in res.partner -->
+	<record id="enable_to_edit_partner_group" model="res.groups">
+    	<field name="name">Enable to Edit Customer/Vendor</field>
+    	<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+    
+    <!-- groups for to enable create button in res.partner -->
+    <record id="enable_to_create_partner_group" model="res.groups">
+    	<field name="name">Enable to Create Customer/Vendor</field>
+    	<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+       
+    <record id="region_filter_group" model="res.groups">
+       <field name="name">List only allocated region</field>
+   </record>
+    <!--ir_rule for state Journal-->
+    <record id="state_journal_company_rule" model="ir.rule">
+        <field name="name">Company Rule state journal</field>
+        <field name="model_id" ref="model_state_journal"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for Service Type-->
+    <record id="partner_service_type_company_rule" model="ir.rule">
+        <field name="name">Company Rule Service Type</field>
+        <field name="model_id" ref="model_partner_service_type"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--ir_rule for Sale Zone-->
+    <record id="sale_zone_company_rule" model="ir.rule">
+        <field name="name">Company Rule Sale Zone</field>
+        <field name="model_id" ref="model_sales_zone"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <!--ir_rule for Sale Region-->
+    <record id="sale_region_company_rule" model="ir.rule">
+        <field name="name">Company Rule Sale Region</field>
+        <field name="model_id" ref="model_sales_region"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!--ir_rule for Service Type-->
+    <record id="partner_segment_company_rule" model="ir.rule">
+        <field name="name">Company Rule Service Type</field>
+        <field name="model_id" ref="model_partner_segment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+</odoo>

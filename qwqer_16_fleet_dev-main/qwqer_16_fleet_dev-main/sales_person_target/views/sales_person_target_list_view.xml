@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="view_sales_person_target_list_form" model="ir.ui.view">
+            <field name="name">salesperson.target.list.form</field>
+            <field name="model">salesperson.target.list</field>
+            <field name="arch" type="xml">
+                <form string="Sales Person Target List">
+                    <sheet>
+                        <group>
+                            <field name="region_id" width="70px"/>
+                            <field name="sales_person_id" width="70px"/>
+                            <field name="period" width="70px"/>
+                            <field name="target_revenue" width="50px"/>
+                            <field name="achieved_revenue" width="70px" force_save="1"/>
+                            <field name="achieved_revenue_percentage" width="70px" force_save="1"/>
+                            <field name="collection_target" width="70px" force_save="1"/>
+                            <field name="achieved_collection" width="70px" force_save="1"/>
+                            <field name="achieved_collection_percentage" width="70px" force_save="1"/>
+                            <field name="create_date" width="50px"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_sales_person_target_list_tree" model="ir.ui.view">
+            <field name="name">salesperson.target.list.tree</field>
+            <field name="model">salesperson.target.list</field>
+            <field name="arch" type="xml">
+                <tree create="0" edit="0" default_order="create_date desc">
+                    <field name="name" width="70px" readonly="1"/>
+                    <field name="state_id" width="70px"/>
+                    <field name="region_id" width="70px"/>
+                    <field name="sales_person_id" width="70px"/>
+                    <field name="user_id" width="70px" invisible="1"/>
+                    <field name="company_id" width="70px" optional="hide"/>
+                    <field name="period" width="70px"/>
+                    <field name="target_revenue" width="70px"/>
+                    <field name="achieved_revenue" width="70px" force_save="1"/>
+                    <field name="achieved_revenue_percentage" width="70px" force_save="1"/>
+                    <field name="collection_target" width="70px" force_save="1"/>
+                    <field name="achieved_collection" width="70px" force_save="1"/>
+                    <field name="achieved_collection_percentage" width="70px" force_save="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="target_configuration_view_pivot" model="ir.ui.view">
+            <field name="name">salesperson.target.pivot</field>
+            <field name="name">salesperson.target.pivot</field>
+            <field name="model">salesperson.target.list</field>
+            <field name="arch" type="xml">
+                <pivot string="Target Analysis" sample="1">
+                    <field name="state_id" type="row"/>
+                    <field name="region_id" type="row"/>
+                    <field name="sales_person_id" type="row"/>
+                    <field name="target_revenue" type="measure"/>
+                    <field name="achieved_revenue" type="measure"/>
+                    <field name="achieved_revenue_percentage" type="measure"/>
+                    <field name="collection_target" type="measure"/>
+                    <field name="achieved_collection" type="measure"/>
+                    <field name="achieved_collection_percentage" type="measure"/>
+                    <field name="period" type="col"/>
+                </pivot>
+            </field>
+        </record>
+        <record id="view_sales_person_target_filter" model="ir.ui.view">
+            <field name="name">sale.person.target.report</field>
+            <field name="model">salesperson.target.list</field>
+            <field name="arch" type="xml">
+                <search string="Search Sales Person Target">
+                    <field name="name" string="Target for" filter_domain="[('name', 'ilike', self)]"/>
+                    <field name="region_id"/>
+                    <field name="sales_person_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="state" domain="[]" context="{'group_by': 'state_id'}"/>
+                        <filter string="Period" name="period" domain="[]" context="{'group_by': 'period'}"/>
+                        <filter string="Region" name="region" domain="[]" context="{'group_by': 'region_id'}"/>
+                        <filter string="Salesperson" name="salesperson" domain="[]"
+                                context="{'group_by': 'sales_person_id'}"/>
+                    </group>
+                    <separator/>
+                    <filter string="Current Year" name="current_year"
+                            domain="['|', ('from_date', '=', False), '&amp;',('to_date','&lt;=', time.strftime('%%Y-12-31')),('from_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <filter string="Last 3 Month" name="last3_month"
+                            domain="['|',('from_date', '=', False),('from_date','&gt;=',(datetime.datetime.now() - relativedelta(months=3)).strftime('%Y-%m-01'))]"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_sales_person_target_list_view" model="ir.actions.act_window">
+            <field name="name">Target Analysis</field>
+            <field name="res_model">salesperson.target.list</field>
+            <field name="view_id" ref="view_sales_person_target_list_tree"/>
+            <field name="view_mode">tree,pivot</field>
+            <field name="context">{'search_default_last3_month': 1}</field>
+        </record>
+    </data>
+</odoo>

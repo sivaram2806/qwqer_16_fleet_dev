@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_payment_mode_tree" model="ir.ui.view">
+		<field name="name">payment.mode.tree</field>
+		<field name="model">payment.mode</field>
+		<field name="arch" type="xml">
+			<tree string="Payment Mode">
+				<field name="name"/>
+                <field name="code"/>
+                <field name="is_credit_payment" />
+			</tree>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="view_payment_mode_form">
+            <field name="name">payment.mode.form</field>
+            <field name="model">payment.mode</field>
+            <field name="arch" type="xml">
+                <form string="Payment Mode">
+                    <sheet>
+                    <group>
+                        <group>
+							<field name="name"/>
+                            <field name="code"/>
+                            <field name="is_credit_payment" />
+                            <field name="journal_id" widget = "selection"/>
+                        </group>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+	<record id="action_payment_mode" model="ir.actions.act_window">
+		<field name="name">Payment Mode</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">payment.mode</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+        <menuitem id="menu_payment_mode"
+              name="Payment Mode"
+              parent="sale.menu_sale_config"
+              action="action_payment_mode"
+              sequence="5"/>
+
+</odoo>

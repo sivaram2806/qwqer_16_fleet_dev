@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="customer_wallet_account" model="account.account">
+            <field name="code">200300</field>
+            <field name="name">Customer Wallet Account</field>
+            <field name="account_type">income_other</field>
+        </record>
+
+        <record id="intermediate_wallet_account" model="account.account">
+            <field name="code">200301</field>
+            <field name="name">Intermediate Wallet Account</field>
+            <field name="account_type">income_other</field>
+        </record>
+
+        <record id="merchant_intermediate_wallet_account" model="account.account">
+            <field name="code">200302</field>
+            <field name="name">Merchant Intermediate Wallet Account</field>
+            <field name="account_type">income_other</field>
+        </record>
+
+    </data>
+</odoo>
