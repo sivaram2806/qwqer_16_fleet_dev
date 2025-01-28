@@ -2,8 +2,6 @@ name: CI/CD for Odoo Custom Addons
 
 on:
   workflow_dispatch:  # Manually trigger the workflow
-    branches:
-      - main  # Run only on the 'development' branch
 
 jobs:
   deploy:
