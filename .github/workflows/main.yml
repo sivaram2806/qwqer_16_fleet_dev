@@ -26,8 +26,8 @@ jobs:
 
         echo "Connecting to the server and deploying the code..."
         ssh -i private_key.pem ${SERVER_USER}@${SERVER_IP} << EOF
-          echo "Navigating to /opt/odoo16/odoo16/custom_addons..."
-          cd /opt/odoo16/odoo16/custom_addons
+          echo "Navigating to /opt/odoo16/odoo16/custom..."
+          cd /opt/odoo16/odoo16/custom
 
           echo "Pulling the latest code from GitHub..."
           git pull https://github.com/QWYTECH/qwqer_16_fleet_dev.git development
