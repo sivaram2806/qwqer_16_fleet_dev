@@ -1,0 +1,43 @@
+name: CI/CD for Odoo Custom Addons
+
+on:
+  workflow_dispatch:  # Manually trigger the workflow
+    branches:
+      - development  # Run only on the 'development' branch
+
+jobs:
+  deploy:
+    name: Deploy Custom Addons to Odoo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add Server to Known Hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Custom Addons
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          echo "Connecting to the server and deploying the code..."
+          ssh ${SERVER_USER}@${SERVER_IP} << EOF
+            echo "Navigating to /opt/odoo16/odoo16/custom..."
+            cd /opt/odoo16/odoo16/custom
+
+            echo "Pulling the latest code from GitHub..."
+            git pull origin development
+
+            echo "Restarting the Odoo service..."
+            sudo systemctl restart odoo16.service
+            echo "Deployment completed successfully!"
+          EOF
+
