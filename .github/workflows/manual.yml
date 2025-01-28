@@ -9,7 +9,11 @@ jobs:
   deploy:
     name: Deploy Custom Addons to Odoo
     runs-on: ubuntu-latest
-
+    steps:
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -26,7 +30,7 @@ jobs:
 
         echo "Connecting to the server and deploying the code..."
         ssh -i private_key.pem ${SERVER_USER}@${SERVER_IP} << EOF
-          echo "Navigating to /opt/odoo16/odoo16/custom_addons..."
+          echo "Navigating to /opt/odoo16/odoo16/custom..."
           cd /opt/odoo16/odoo16/custom
 
           echo "Pulling the latest code from GitHub..."
