@@ -1,0 +1,36 @@
+name: CI/CD for Odoo Application
+
+on:
+  workflow_dispatch:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  deploy:
+    name: Deploy Odoo Application
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Server
+      env:
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      run: |
+        # Save the private key to a file
+        echo "${PRIVATE_KEY}" > private_key.pem
+        chmod 600 private_key.pem
+
+        # SSH into the server and execute deployment steps
+        ssh -i private_key.pem ${SERVER_USER}@${SERVER_IP} << EOF
+          echo "Connecting to the server..."
+          cd /opt/odoo16
+          echo "Pulling the latest code..."
+          git pull https://sivaqwy@github.com/QWYTECH/qwqer_16_fleet_dev.git main
+          echo "Restarting the Odoo server..."
+          sudo systemctl restart odoo16
+        EOF
+
