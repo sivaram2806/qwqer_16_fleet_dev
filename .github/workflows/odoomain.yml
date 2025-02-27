@@ -17,8 +17,8 @@ jobs:
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.10
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           eval "$(ssh-agent -s)"  # Start SSH Agent
