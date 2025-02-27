@@ -1,0 +1,42 @@
+name: CI/CD for Odoo Application
+
+on:
+  workflow_dispatch:  # Manually trigger the workflow
+    branches:
+      - main  # Run only for the main branch
+
+jobs:
+  deploy:
+    name: Deploy Odoo Application to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Deploy to EC2
+      env:
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      run: |
+        # Save the SSH private key
+        echo "${PRIVATE_KEY}" > private_key.pem
+        chmod 600 private_key.pem
+
+        # SSH into the EC2 instance and deploy
+        ssh -i private_key.pem -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_IP} << EOF
+          echo "✅ Connected to EC2: ${SERVER_IP}"
+          
+          # Navigate to Odoo project
+          cd /opt/odoo16/odoo16/custom || { echo "❌ Failed to access /opt/odoo16/odoo16/custom"; exit 1; }
+
+          echo "🔄 Pulling latest code..."
+          git pull git@github.com:QWYTECH/qwqer_16_fleet_dev.git main || { echo "❌ Git pull failed"; exit 1; }
+
+          echo "🚀 Restarting Odoo service..."
+          sudo systemctl restart odoo16 && echo "✅ Odoo restarted successfully!" || { echo "❌ Odoo restart failed"; exit 1; }
+        EOF
+
+        # Cleanup
+        rm -f private_key.pem
