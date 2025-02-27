@@ -14,14 +14,16 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-          - name: Deploy to EC2
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            git config --global --add safe.directory /opt/odoo16/odoo16
-            cd /opt/odoo16/odoo16/custom
-            git pull git@github.com:QWYTECH/qwqer_16_fleet_dev.git main
-            sudo systemctl restart odoo16
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          eval "$(ssh-agent -s)"  # Start SSH Agent
+          git config --global --add safe.directory /opt/odoo16/odoo16
+          cd /opt/odoo16/odoo16/custom
+          git pull origin main  # Corrected Git command
+          sudo systemctl restart odoo16  # Restart Odoo service
+
