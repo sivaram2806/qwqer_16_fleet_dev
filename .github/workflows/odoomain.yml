@@ -1,4 +1,4 @@
-name: CI/CD for Odoo Application
+name: odoo16-stage
 
 on:
   workflow_dispatch:  # Manually trigger the workflow
